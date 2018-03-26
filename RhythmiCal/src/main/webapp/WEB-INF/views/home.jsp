@@ -25,7 +25,14 @@ dkfjeopjfdopfjoepjopfjeodkf
 <h1>
 	Hello world!  
 </h1>
+<<<<<<< HEAD
 dfefd  JINJU
+=======
+Minah Kim
+dfefdfaa
+wydhfalkenflkdnfaefklnd./
+f!~!@#Tdfadsgaegadadafa
+>>>>>>> branch 'master' of https://github.com/highsare/rhythmiCal.git
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
