@@ -8,7 +8,7 @@
 <h1>
 	Hello world!  
 </h1>
-nojungghun 
+노정훈을 지워보겠습니다 Daniel 
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
