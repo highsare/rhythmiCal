@@ -39,6 +39,7 @@ f!~!@#Tdfadsgaegadadafa
 노정훈을 지워보겠습니다 Daniel ㅇㅇㅇ
 =======
 Minah Kim
+jinju
 >>>>>>> f51d1baa69881c558fb2c4f6cc4095d5b17e971a
 >>>>>>> cbd23fb468aa9b18606b2058f24ce814fdc52f58
 <P>  The time on the server is ${serverTime}. </P>
