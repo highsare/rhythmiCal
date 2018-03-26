@@ -21,7 +21,7 @@ dkfjeopjfdopfjoepjopfjeodkf
 <head>
 	<title>Home</title>
 	
-	JINJU
+	JINJU~~!!!
 </head>
 <body>
 <h1>
