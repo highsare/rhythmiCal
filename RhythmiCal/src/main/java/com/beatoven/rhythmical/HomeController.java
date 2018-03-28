@@ -28,4 +28,9 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	@RequestMapping(value = "town", method = RequestMethod.GET)
+	public String town() {
+		return "town";
+	}
 }
