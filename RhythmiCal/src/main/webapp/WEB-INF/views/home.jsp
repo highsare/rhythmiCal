@@ -101,15 +101,13 @@ td {
 <body class="responsive center">
 
 <div class="center">
-	<img src="resources/maplestory.png" style="width: 70%" class="center"><br>
+	<img src="resources/maplestory.png" style="width: 90%" class="center"><br>
 </div>
 
 <div class="center">
 	<!-- Game Button -->
-	<div class="center">
-	<input type="image" src="resources/button_new.png" style="width: 30%;" data-toggle="modal" data-target="#myModal">
-	<input type="image" src="resources/button_load.png" style="width: 30%;" data-toggle="modal" data-target="#myModal">
-	</div>
+	<input type="image" class="center" src="resources/button_new.png" style="width: 50%;" data-toggle="modal" data-target="#myModal">
+	<input type="image" class="center" src="resources/button_load.png" style="width: 50%;" data-toggle="modal" data-target="#myModal">
 	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
