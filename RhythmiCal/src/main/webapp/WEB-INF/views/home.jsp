@@ -59,10 +59,12 @@ body {
 .modal-open {
     overflow: scroll;
 }
+
 @media (min-width: 768px) {
 	.modal-dialog {
 	  width: 300px;
-	  margin: 30px auto;
+	  text-align: center;
+	  /* margin: 30px auto; */
 	}
 	.modal-content {
 	  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
@@ -72,9 +74,16 @@ body {
 	  width: 300px;
 	}
 	.modal-body {
-	   /* background-image: url(resources/honor_reply.png); */
+	  /* background-image: url(resources/honor_reply.png); */
 	}
 }
+
+
+
+
+
+
+
 
 /* 명예의 전당 table */
 td {
@@ -115,10 +124,10 @@ td {
 		
 			<!-- Modal content-->
 			<div class="modal-content">
-				<div class="modal-header">
+				<!-- <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Account</h4>
-				</div>
+				</div> -->
 				<div class="modal-body">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Account</h4>
@@ -127,9 +136,9 @@ td {
 					<p><input type="text" placeholder="PW"></p>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></p>
 				</div>
-				<div class="modal-footer">
+				<!-- <div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
