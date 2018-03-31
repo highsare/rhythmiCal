@@ -11,16 +11,15 @@
 <!-- title -->
 <title>Rhythmi-Cal</title>
 
-<!-- Bootstrap CDN -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"><!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"><!-- 부가적인 테마 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script><!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<!-- Road Bootstrap CDN and jQuery-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="resources/JavaScriptResource/jquery-3.2.1.min.js"></script><!-- jQuery -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<!-- infinitial scroll -->
 <script>
+<!-- infinitial scroll -->
 var page = 1;
-
 $(window).scroll(function() {
     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
       console.log(++page);
@@ -29,7 +28,63 @@ $(window).scroll(function() {
     }
 });
 
+<!-- jQuery -->
+$(function() {
+	<!-- signupMember -->
+	$('#signupMember').click(function() {
+		<!-- 아이디, 비밀번호, 비밀번호 체크 값을 가져온다. -->
+		var signupId = $('#signupId').val();
+		var signupPw = $('#signupPw').val();
+		var signupPwc = $('#signupPwc').val();
+		
+		<!-- 유효성 검사 -->
+		
+		
+		<!-- test code -->
+		alert('signupId: ' + signupId + '\n'
+			+ 'signupPw: ' + signupPw + '\n'
+			+ 'signupPwc: ' + signupPwc);
+		
+		$.ajax({
+		    url: 'signupMember'
+		    , type: 'POST'
+		    , dataType:'json'
+		    , data: {'id': signupId
+		    			, 'pw': signupPw
+		    			}
+		    , success: function(data) {
+		        alert(data);
+		    }
+		    , fail: function(data) {
+		    		alert(data);
+		    }
+		});
+	});
+	
+	<!-- loginMember -->
+	$('#loginMember').click(function() {
+		var loginId = $('#loginId').val();
+		var loginPw = $('#loginPw').val();
 
+		alert('loginId: ' + loginId + '\n'
+			+ 'loginPw: ' + loginPw + '\n');
+		
+		$.ajax({
+		    url: 'loginMember'
+		    , type: 'POST'
+		    , dataType:'json'
+		    , data: {'id': loginId
+		    			, 'pw': loginPw
+		    			}
+		    , success: function(data) {
+		        alert(data);
+		    }
+		    , fail: function(data) {
+		    		alert(data);
+		    }
+		});
+	});
+});
 </script>
 
 <!-- CSS -->
@@ -76,7 +131,7 @@ body {
 	  /* background-image: url(resources/honor_reply.png); */
 	}
 }
-
+																				
 
 
 
@@ -107,6 +162,12 @@ td {
 </style>
 </head>
 <body class="responsive center">
+<!-- 앱 연동이 필요함을 안내 또는 앱 다운로드를 안내하는 이미지 필요 -->
+<!-- Ajax를 통해 로그인 및 회원가입 구현해야 함. 로그인 시에는 유효성검사 필요. 아이디는 영문자만. 회원가입 시 패스워드는 두 번. 일치여부 체크. -->
+<!-- Ajax를 통해 DB에서 명예의전당 글 불러와야 함. -->
+<!-- Modal 모양을 게임과 어울리게 레트로로 해야 함. -->
+<!-- 시작화면에 BGM 깔아야 함. 게임과 잘 어울리는 핵심 BGM이어야 함. -->
+
 
 <div class="center">
 	<img src="resources/maplestory.png" style="width: 90%" class="center"><br>
@@ -114,30 +175,40 @@ td {
 
 <div class="center">
 	<!-- Game Button -->
-	<input type="image" class="center" src="resources/button_new.png" style="width: 50%;" data-toggle="modal" data-target="#myModal">
-	<input type="image" class="center" src="resources/button_load.png" style="width: 50%;" data-toggle="modal" data-target="#myModal">
+	<input type="image" class="center" src="resources/button_new.png" style="width: 50%;" data-toggle="modal" data-target="#myModal1">
+	<input type="image" class="center" src="resources/button_load.png" style="width: 50%;" data-toggle="modal" data-target="#myModal2">
 	
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
+	<!-- Signup Modal -->
+	<div class="modal fade" id="myModal1" role="dialog">
 		<div class="modal-dialog">
-		
 			<!-- Modal content-->
 			<div class="modal-content">
-				<!-- <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Account</h4>
-				</div> -->
 				<div class="modal-body">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Account</h4>
-					<p>Some text in the modal.</p>
-					<p><input type="text" placeholder="ID"></p>
-					<p><input type="text" placeholder="PW"></p>
-					<p><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></p>
+					<h4 class="modal-title">Signup</h4>
+					<p>Please input your new id and pw.</p>
+					<p><input type="text" placeholder="ID" id="signupId" name="signupId"></p>
+					<p><input type="text" placeholder="PW" id="signupPw" name="signupPw"></p>
+					<p><input type="text" placeholder="PW check" id="signupPwc" name="signupPwc"></p>
+					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="signupMember">New Game</button></p>
 				</div>
-				<!-- <div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div> -->
+			</div>
+		</div>
+	</div>
+
+	<!-- Login Modal -->	
+	<div class="modal fade" id="myModal2" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Login</h4>
+					<p>Please input your id and pw.</p>
+					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
+					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
+					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="loginMember">Load Game</button></p>
+				</div>
 			</div>
 		</div>
 	</div>
