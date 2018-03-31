@@ -37,7 +37,7 @@ $(function() {
 		var signupPw = $('#signupPw').val();
 		var signupPwc = $('#signupPwc').val();
 		
-		<!-- 유효성 검사 -->
+		<!-- 유효성 검사 해야 함 -->
 		
 		
 		<!-- test code -->
