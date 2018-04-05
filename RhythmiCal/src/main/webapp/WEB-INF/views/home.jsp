@@ -39,7 +39,6 @@ $(function() {
 		
 		<!-- 유효성 검사 해야 함 -->
 		
-		
 		<!-- test code -->
 		alert('signupId: ' + signupId + '\n'
 			+ 'signupPw: ' + signupPw + '\n'
