@@ -143,7 +143,7 @@ function popupCombo(clickTime) {
 var image;
 function popupImage(x, y, imageName, fps, loop) {
 	console.log('popupImage');
-	
+
 	image = game.add.sprite(x, y, imageName);
 	image.animations.add('popup');
 	image.animations.play('popup', fps, loop);

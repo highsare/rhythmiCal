@@ -7,8 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="resources/JavaScriptResource/phaser-2.10.2.js"></script>
 </head>
 <body>
+
+<script type="text/javascript" src="resources/Phaser/Stage.js"></script>
 
 </body>
 </html>

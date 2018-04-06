@@ -52,4 +52,9 @@ public class HomeController {
 		//TODO : minah - readHonorPost
 		return null;
 	}
+	
+	@RequestMapping("game")
+	public String toGamePage() {
+		return "game";
+	}
 }
