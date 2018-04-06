@@ -13,7 +13,7 @@
 		game.load.spritesheet('player', 'resources/spaceman.png', 16, 16);
 	    //글자  나올때 소리 로드
 	    //this.load.audio('track', ['resources/pencilsketching.mp3']);
-	
+		
 	    //비트맵형 글자폰트 로드
 	    game.load.bitmapFont('carrier_command', 'resources/carrier_command.png', 'resources/carrier_command.xml');
 	    
@@ -49,7 +49,7 @@
 		//움직임 enable 정의
 	   	game.physics.enable(player, Phaser.Physics.ARCADE);
 		
-	   		   	
+	   	////////////////////NPC 대화문시작////////////////////	   	
 		//대화할 npc1 생성
 		this.npc1 = this.add.sprite(100, 100, 'npc1');
 	    this.physics.arcade.enableBody(this.npc1);
@@ -74,15 +74,15 @@
         this.storyText = new Array();
         
         //대화문 어레이에 저장
-        this.storyText[0]="gogogogogogoogogoogogoogogo";
-   		this.storyText[1]="WHY?WHY?WHY?WHY?WHY?WHY?WHY?WHY?WHY?WHY?WHY?WHY?";
-        this.storyText[2]="IT TIME TO GO MEN";
+        this.storyText[0]="gogogogogog";
+   		this.storyText[1]="WHY?WHY??";
+        this.storyText[2]="IT TIME TO GO MAN";
         this.storyText[3]="sure?";
         this.storyText[4]="WHAT AR YOU WAITNG FOR";
         this.storyText[5]="but ........................";
-        this.storyText[6]="iam YOURS TAKE ME IN";
+        this.storyText[6]="I'M YOURS TAKE ME IN";
         this.storyText[7]="hmmmmm?";
-        this.storyText[8]="YOU KNOW IAM VERY POWERFUL KNIFE";
+        this.storyText[8]="YOU KNOW I'M A VERY POWERFUL KNIFE";
         
         //화자순서 어레이 생성
         this.storyNPCSequence = new Array();
@@ -111,13 +111,11 @@
         this.storyNPCFrame[7]=1;
         this.storyNPCFrame[8]=1;
         
-        //var styleDescritpion = {font: '35px Arial', fill: '#ffffff', align: 'center', fontWeight: 'bold', stroke: '#ffffff', strokeThickness: 0};
-    	
-        //this.textArea = this.add.text(0, 0, "", styleDescritpion);
         //텍스트 속성 정의
         this.textArea = this.add.bitmapText(0, 0, 'carrier_command','',35);
     	this.textArea.anchor.set(0.5);
     	this.textArea.fixedToCamera = true;
+    	//텍스트 위치 조정
     	this.textArea.cameraOffset.x = game.width/2;
     	this.textArea.cameraOffset.y = game.height-200;
     	this.world.bringToTop(this.textArea);
@@ -141,7 +139,6 @@
 		if(this.storyNPCSequence[this.storyOrder]==1) this.npc1.frame=this.storyNPCFrame[this.storyOrder];
 		if(this.storyNPCSequence[this.storyOrder]==2) this.npc2.frame=this.storyNPCFrame[this.storyOrder];
 	
-
    		//텍스트 화면에 대화문 어레이에서 문자 불러와서 붙여줌
    		this.textArea.text = this.storyText[this.storyOrder];
    		
