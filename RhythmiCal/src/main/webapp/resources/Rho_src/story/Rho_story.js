@@ -1,34 +1,35 @@
-	var game = new Phaser.Game(1024, 576, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+	var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 	var reg = {};//음악 로드시 저장
 	var player;//주인공
 	var right;//오른쪽발걸음
 	var typewriter = new Typewriter(); // 글자 타이핑 효과
 	var npc1;
 	var npc2;
+	
 	function preload() {
 		
 		// 배경화면 로드
-		game.load.image("background", "resources/loof_forest.png"); 
+		game.load.image("background", "resources/Rho_src/story/loof_forest.png"); 
 	    // 캐릭터 움직이 시트 로드
-		game.load.spritesheet('player', 'resources/spaceman.png', 16, 16);
+		game.load.spritesheet('player', 'resources/Rho_src/story/spaceman.png', 16, 16);
 	    //글자  나올때 소리 로드
 	    //this.load.audio('track', ['resources/pencilsketching.mp3']);
 		
 	    //비트맵형 글자폰트 로드
-	    game.load.bitmapFont('carrier_command', 'resources/carrier_command.png', 'resources/carrier_command.xml');
+	    game.load.bitmapFont('carrier_command', 'resources/Rho_src/story/carrier_command.png', 'resources/Rho_src/story/carrier_command.xml');
 	    
 	    //npc 이미지 로드
-		npc1 = this.load.spritesheet('npc1', 'resources/234.png', 300,380);
-	    npc2 = this.load.spritesheet('npc2', 'resources/123.png', 300,380);
+		npc1 = this.load.spritesheet('npc1', 'resources/Rho_src/story/234.png', 300,380);
+	    npc2 = this.load.spritesheet('npc2', 'resources/Rho_src/story/123.png', 300,380);
 	    
 	}
 
 	function create() {
 		
-	   //글자 나올때 소리 추가
+		//글자 나올때 소리 추가
 	    reg.track = game.add.audio('track');
-	  //배경화면 추가
-	   var image = game.add.image(0, 0, "background");image.width = game.width;image.height = game.height;
+	    //배경화면 추가
+	    var image = game.add.image(0, 0, "background");image.width = game.width;image.height = game.height;
 	    
 	    ///스프라이트생성
 	    player = game.add.sprite(100, 500, 'player', 1);
@@ -173,9 +174,9 @@
 	      text: "Welcome ! coffee is the thing i like the best. let me drink some cup of a coffee......"
 	    });
 		//타이핑 시작
-	    typewriter.start();
-	    
+	    typewriter.start();   
 	}
+	
 	function update() {
 		//Ajax로 컨트롤러에게 계속 [다음으로 넘어가는지] 묻는다
 		

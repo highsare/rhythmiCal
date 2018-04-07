@@ -6,7 +6,7 @@
  *4.종료 후 적절한 STATE START
  */
 
-var game = new Phaser.Game(1024, 576, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create, render: render, update: update});
+var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create, render: render, update: update});
 
 var text = 0;
 var explosions;
@@ -75,6 +75,11 @@ function preload(){
 }
 
 function create(){
+	
+	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+	
+	game.input.onDown.add(gofull, this);
+	
 	//  배경색
     game.stage.backgroundColor = '#6688ee';
     
@@ -127,7 +132,7 @@ function create(){
 	//Timer functions here
 	//game.time.events.loop(Phaser.Timer.SECOND, loopFunction, this);
 	
-	
+	addLife();
     //1초마다 움직이는 루프
     game.time.events.loop(Phaser.Timer.SECOND, updateCurrentTime, this);
     //1초마다 실행
@@ -136,11 +141,41 @@ function create(){
     game.time.events.loop(Phaser.Timer.SECOND, createNotes, this);
     //loop depend by beat
 	game.time.events.loop(Phaser.Timer.SECOND, start, this);
+	
+	game.time.events.loop(Phaser.Timer.SECOND / 5 , toggleBeatZone, this);
+}
+
+
+var beatZone = false;
+var beat = 0;
+function toggleBeatZone(){
+	beat++;
+	if(beat == 5){
+		beat = 0;
+	}
+	if(beat % 5 == 4){
+		beatZone = true;
+	}else if(beat % 5 == 1){
+		beatZone = false;
+	}
 }
 
 //나중에 이곳으로 모은다.
 function loopFunction(){
 	
+}
+
+function gofull() {
+
+    if (game.scale.isFullScreen)
+    {
+        game.scale.stopFullScreen();
+    }
+    else
+    {
+        game.scale.startFullScreen(false);
+    }
+
 }
 
 function render(){
@@ -149,10 +184,65 @@ function render(){
     game.debug.text("Group size: " + sprites.total, 32, 96);
     game.debug.text("Destroyed: " + rip, 32, 128);
     game.debug.text("유저 넘버: " + userNumber+"등장!", game.width/2+150, 500);
+    game.debug.text("BeatZone : "+ beatZone, game.width/2, game.height/2+100);
 }
 
 function update(){
-	addLife();
+	if(beatZone){
+		motionCheck();
+	}else{
+		wrongTiming();
+	}
+}
+
+function motionCheck(){
+	//여기서 모션의 값이 있는지 확인한 뒤 적절한 반응을 준다.
+	
+	//모션 확인
+	$.ajax({
+		url:"requestMotion"
+		,type:"post"
+		,success:function(motion){
+			if(motion == "UP"){
+				
+			}else if(motion == "DOWN"){
+				var notePop =game.add.sprite(game.width/2+20,520,'imgX');
+	    		notePop.anchor.setTo(0.5,0.5);
+	    		notePop.scale.setTo(1,1);
+	    		//이벤트 발생시킴  ( o, x )
+	    		game.time.events.add(
+		    		0 
+					,function() {    
+		    			//y좌표까지 이동
+		    			game.add.tween(notePop).to({y: 450}, 500, Phaser.Easing.Linear.None, true);    
+		    			//그러면서 투명도0 까지 변화면서 사라짐
+		    			game.add.tween(notePop).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
+		    			}
+					, this);
+			}else if(motion == "LEFT"){
+				
+			}else if(motion == "RIGHT"){
+				
+			}else if(motion == "POINT"){
+				pressdownone();
+			}else if(motion == "NOTHING"){
+				
+			}
+		},error:function(){
+		}
+	})
+	
+	//적절한 이벤트 함수 호출
+}
+
+function wrongTiming(){
+	$.ajax({
+		url:"requestMotion"
+		,type:"post"
+		,success:function(){
+			
+		}
+	})
 }
 
 //Monster Entity
@@ -229,6 +319,7 @@ function popupCombo(clickTime) {
 		//콤보가 20의 배수일 경우에는 생명력을 1 증가 (임시로 5를 주었음) // TODO
 		if (counter % 5 == 0) {
 			life++;
+			addLife();
 		}
 		
 	    //숫자 애니메이션 실행
@@ -320,7 +411,7 @@ function createNotes() {
 	userNumber = 'note' + game.rnd.integerInRange(1,4); //ex: note3
 	//랜덤유저 음표 생성(생성하는 위치)
 	var note = game.add.sprite(game.width/2+150,500,userNumber);
-	game.add.tween(note).to({x:game.width/2-150},3000,'Linear',true,0).onComplete.add(function(note){
+	game.add.tween(note).to({x:game.width/2-150},2000,'Linear',true,0).onComplete.add(function(note){
 		note.kill();
 	},note);
 }
@@ -333,16 +424,19 @@ function checkNotes(sprite) {
     		//console.log(sprite.번호 +"범위에 들어갔다?!");
     		
     		//도달하면  발생하는 매소드
-    		var notePop =game.add.sprite(game.width/2+20,520,'imgX');
+    		/*var notePop =game.add.sprite(game.width/2+20,520,'imgX');
     		notePop.anchor.setTo(0.5,0.5);
     		notePop.scale.setTo(1,1);
     		//이벤트 발생시킴  ( o, x )
-    		game.time.events.add(0, function() {    
-    			//y좌표까지 이동
-    			game.add.tween(notePop).to({y: 450}, 500, Phaser.Easing.Linear.None, true);    
-    			//그러면서 투명도0 까지 변화면서 사라짐
-    			game.add.tween(notePop).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);}
-    		, this);
+    		game.time.events.add(
+	    		0 
+				,function() {    
+	    			//y좌표까지 이동
+	    			game.add.tween(notePop).to({y: 450}, 500, Phaser.Easing.Linear.None, true);    
+	    			//그러면서 투명도0 까지 변화면서 사라짐
+	    			game.add.tween(notePop).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
+	    			}
+				, this);*/
     	}
     	
     	//해당 범위를 지나면 음표 삭제
