@@ -9,6 +9,7 @@ function Monster(game, attackLine, speed, lineXIndex, appearanceBeat, startYOnAt
 	this.attackLine = attackLine;
 	this.speed = speed;
 	this.health = 1;
+	this.status = "STAY"; //STAY , MOVE , STUN
 	this.lineXIndex = lineXIndex;
 	this.appearanceBeat = appearanceBeat;
 	this.monsterSprite = game.add.sprite(1075, startYOnAttackLine, 'mummy', 5);
@@ -79,7 +80,6 @@ function singleJump (unit, maximumHightOnAttackLine, destinationOnlineXLocation)
 	} else if (unit.speed == 2) {
 		unit.lineXIndex += 2;
 	}
-
 }
 
 
@@ -88,16 +88,32 @@ function hitMonster(unit, damage){
 	unit.damage(damage);
 }
 
-//monster arrive destination //kill monster and reduce damage beathoven
+//monster arrive destination //kill monster and reduce damage beatoven
 function arriveDestination(unit){
 	
 	if (unit.speed == 1) {
-		if (unit.lineXIndex > 10) {
+		if (unit.lineXIndex == 10) {
 			unit.monsterSprite.kill();
+			life--;
+			updateLife();
 		}
 	} else if (unit.speed == 2) {
-		if (unit.lineXIndex > 12) {
+		if (unit.lineXIndex == 11) {
 			unit.monsterSprite.kill();
-		}					
+			life--;
+			updateLife();
+		}
 	}
 }
+
+
+//가장 단순하게 데미지를 주는 메소드
+function attackLine(unitArray,damage){
+	for(var i = 0; i < unitArray.length; i++){
+		var unit = unitArray[i];
+		if(unit.lineXIndex != 0){
+			hitMonster(unit,damage);
+		}
+	}
+}
+

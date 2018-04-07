@@ -12,18 +12,16 @@ var text = 0;
 var explosions;
 var bmpText;
 
-var syuzincou;
+//syuzincou => beatoven
+var beatoven;
 var anim;
-var key;
 
-//음표스프라이트
-var sprites;
+//음표스프라이트 sprites =>noteSprites
+var noteSprites;
 //음표배경화면
 var noteBgGroup;
 //멀티유저번호
 var userNumber;
-//생성뒤 사라진 음표스프라이트 갯수 
-var rip=0;
 
 
 //attackLine Info
@@ -34,21 +32,21 @@ var monstersA;
 var monstersB;
 var monstersC;
 
-//monster
-var monster1;
-var monster2;
-var monster3;
-
 //Beat counter
 var currentBeat = 0;
 
-var image;
+//image => popUpImage
+var popUpImage;
 
 var counter = 0;
 var isComboNow = false;
 
 var beatZone = false;
 var beat = 0;
+
+var life = 3; //생명력. DB에서 불러와야 하는 값이며, 현재 임의로 상수를 주었다. // TODO
+var lifeArray;
+
 
 function preload(){
 	//  콤보 효과음 로드
@@ -104,14 +102,9 @@ function create(){
     comboSound.addMarker('comboSound', 0, 1);
     
     // 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
-	syuzincou = game.add.sprite(100,game.world.centerY, 'beatoben',1);
-	syuzincou.scale.set(4); 
-	syuzincou.smoothed = false;
-	
-	//1번 버튼을 눌렀을 때
-	key = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-    key.onDown.add(pressdownone, this); 
-    
+	beatoven = game.add.sprite(100,game.world.centerY, 'beatoben',1);
+	beatoven.scale.set(4); 
+	beatoven.smoothed = false;
 	
 	//하나씩 나타나는 음표를 그룹으로 주기
 	sprites = game.add.group();
@@ -121,6 +114,7 @@ function create(){
     
     //음표 흐르는 거 배경을 그룹으로 주기
     noteBgGroup = game.add.group();
+    
     //그룹에  noteBG이미지 넣기
     noteBgGroup.add(noteBG);
     
@@ -129,28 +123,26 @@ function create(){
     monstersC = new Array();
     
 	//createMonster (game, attackLine, speed, lineXIndex, appearanceBeat, startYOnAttackLine)
-	monstersA[0] = new Monster(game, 0, 1, 0, 2, 100);
-	monstersA[1] = new Monster(game, 0, 1, 0, 7, 100);
-	monstersA[2] = new Monster(game, 0, 1, 0, 4, 100);
+	monstersA[0] = new Monster(game, 0, 1, 0, 2, lineYLocation[0]);
+	monstersA[1] = new Monster(game, 0, 1, 0, 7, lineYLocation[0]);
+	monstersA[2] = new Monster(game, 0, 1, 0, 4, lineYLocation[0]);
 	
-	monstersB[0] = new Monster(game, 1, 1, 0, 1, 292);
-	monstersB[1] = new Monster(game, 1, 1, 0, 6, 292);
+	monstersB[0] = new Monster(game, 1, 1, 0, 1, lineYLocation[1]);
+	monstersB[1] = new Monster(game, 1, 1, 0, 6, lineYLocation[1]);
 	
-	monstersC[0] = new Monster(game, 2, 2, 0, 3, 484);
-	monstersC[1] = new Monster(game, 2, 2, 0, 5, 484);
+	monstersC[0] = new Monster(game, 2, 2, 0, 3, lineYLocation[2]);
+	monstersC[1] = new Monster(game, 2, 2, 0, 5, lineYLocation[2]);
 	
 	//background
 	game.stage.backgroundColor = '#1873CE';
 	
-	
 	//physics
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-    
 	//Timer functions here
 	//game.time.events.loop(Phaser.Timer.SECOND, loopFunction, this);
 	
-	addLife();
+	updateLife();
     //1초마다 실행
     game.time.events.loop(Phaser.Timer.SECOND, jumpchar, this);
     //Phaser.Timer.SECOND 초 마다 creatNotes함수 실행
@@ -159,23 +151,6 @@ function create(){
 	game.time.events.loop(Phaser.Timer.SECOND, start, this);
 	
 	game.time.events.loop(Phaser.Timer.SECOND / 5 , toggleBeatZone, this);
-}
-
-//나중에 이곳으로 모은다.
-function loopFunction(){
-	
-}
-
-function gofull() {
-
-    if (game.scale.isFullScreen)
-    {
-        game.scale.stopFullScreen();
-    }
-    else
-    {
-        game.scale.startFullScreen(false);
-    }
 }
 
 function render(){
@@ -194,20 +169,19 @@ function update(){
 }
 
 
-function attackLine(unitArray){
-	for(var i = 0; i < unitArray.length; i++){
-		var unit = unitArray[i];
-		hitMonster(unit,1);
-	}
+//나중에 이곳으로 모은다.
+function loopFunction(){
+	
 }
 
-/*
- * addLife(): 생명력을 증가시키는 함수. 생명력을 나타내는 변수 life는 콤보가 (카운터 % 20 == 0)일 때 1 증가하도록 되어있음 
- */
-var life = 3; //생명력. DB에서 불러와야 하는 값이며, 현재 임의로 상수를 주었다. // TODO
-function addLife() {
-	for (var f = 1; f <= life; f++) {
-		var image = game.add.image(f * 30, 30, 'life');
-	}
-}
+function gofull() {
 
+  if (game.scale.isFullScreen)
+  {
+      game.scale.stopFullScreen();
+  }
+  else
+  {
+      game.scale.startFullScreen(false);
+  }
+}
