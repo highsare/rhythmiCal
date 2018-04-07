@@ -14,7 +14,12 @@
 
 <script type="text/javascript" src="resources/Rho_src/story/typewriter.js"></script>
 <!-- <script type="text/javascript" src="resources/Rho_src/story/Rho_story.js"></script> -->
-<script type="text/javascript" src="resources/Phaser/Stage.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/monsters.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/notes.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/beatoven.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/popupImages.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/motionAndBeat.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/Stage.js"></script>
 
 </body>
 </html>

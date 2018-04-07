@@ -14,7 +14,9 @@
 <!-- Road Bootstrap CDN and jQuery-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="resources/JavaScriptResource/jquery-3.2.1.min.js"></script><!-- jQuery -->
+
+<!-- jQuery -->
+<script src="resources/JavaScriptResource/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script>
@@ -97,7 +99,7 @@ $(function() {
 }
 /* body class */
 body {
-	background-image: url("resources/image_background.gif");
+	background-image: url("resources/Images/mainPage/image_background.gif");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	padding-right: 0 !important;
@@ -148,14 +150,14 @@ td {
 .id {
 	width: 187px;
 	background-size: contain;
-	background-image: url(resources/honor_id.png);
+	background-image: url(resources/Images/mainPage/honor_id.png);
 	background-repeat: no-repeat;
 	font-weight: bold;
 }
 .reply {
 	width: 630px;
 	background-size: contain;
-	background-image: url(resources/honor_reply.png);
+	background-image: url(resources/Images/mainPage/honor_reply.png);
 	background-repeat: no-repeat;
 }
 </style>
@@ -169,13 +171,13 @@ td {
 
 
 <div class="center">
-	<img src="resources/maplestory.png" style="width: 90%" class="center"><br>
+	<img src="resources/Images/mainPage/maplestory.png" style="width: 90%" class="center"><br>
 </div>
 
 <div class="center">
 	<!-- Game Button -->
-	<input type="image" class="center" src="resources/button_new.png" style="width: 50%;" data-toggle="modal" data-target="#myModal1">
-	<input type="image" class="center" src="resources/button_load.png" style="width: 50%;" data-toggle="modal" data-target="#myModal2">
+	<input type="image" class="center" src="resources/Images/mainPage/button_new.png" style="width: 50%;" data-toggle="modal" data-target="#myModal1">
+	<input type="image" class="center" src="resources/Images/mainPage/button_load.png" style="width: 50%;" data-toggle="modal" data-target="#myModal2">
 	
 	<!-- Signup Modal -->
 	<div class="modal fade" id="myModal1" role="dialog">

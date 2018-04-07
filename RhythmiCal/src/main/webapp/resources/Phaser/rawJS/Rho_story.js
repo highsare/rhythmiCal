@@ -9,18 +9,18 @@
 	function preload() {
 		
 		// 배경화면 로드
-		game.load.image("background", "resources/Rho_src/story/loof_forest.png"); 
+		game.load.image("background", "resources/Images/story/loof_forest.png"); 
 	    // 캐릭터 움직이 시트 로드
-		game.load.spritesheet('player', 'resources/Rho_src/story/spaceman.png', 16, 16);
+		game.load.spritesheet('player', 'resources/Images/story/spaceman.png', 16, 16);
 	    //글자  나올때 소리 로드
 	    //this.load.audio('track', ['resources/pencilsketching.mp3']);
 		
 	    //비트맵형 글자폰트 로드
-	    game.load.bitmapFont('carrier_command', 'resources/Rho_src/story/carrier_command.png', 'resources/Rho_src/story/carrier_command.xml');
+	    game.load.bitmapFont('carrier_command', 'resources/Images/story/carrier_command.png', 'resources/others/carrier_command.xml');
 	    
 	    //npc 이미지 로드
-		npc1 = this.load.spritesheet('npc1', 'resources/Rho_src/story/234.png', 300,380);
-	    npc2 = this.load.spritesheet('npc2', 'resources/Rho_src/story/123.png', 300,380);
+		npc1 = this.load.spritesheet('npc1', 'resources/Images/story/234.png', 300,380);
+	    npc2 = this.load.spritesheet('npc2', 'resources/Images/story/123.png', 300,380);
 	    
 	}
 
