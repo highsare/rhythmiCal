@@ -25,8 +25,8 @@ var userNumber;
 
 
 //attackLine Info
-var lineXLocation = [978, 886, 794, 702, 610, 518, 426, 334, 242, 150];
-var lineYLocation = [100, 292, 484];
+var lineXLocation = [1528.125, 1384.375, 1240.625, 1096.875, 953.125, 809.375, 665.625, 521.875, 378.125, 234.375];
+var lineYLocation = [156.25, 456.25, 756.25];
 
 var monstersA;
 var monstersB;
@@ -34,7 +34,7 @@ var monstersC;
 
 //Beat counter
 var currentBeat = 0;
-
+var beatStart;
 //image => popUpImage
 var popUpImage;
 
@@ -45,12 +45,17 @@ var beatZone = false;
 var beat = 0;
 
 var life = 3; //생명력. DB에서 불러와야 하는 값이며, 현재 임의로 상수를 주었다. // TODO
+var maxLife = 10;
 var lifeArray;
 
+var stageBGM;
+var BPM;
+var BPMfactor = 60;
 
 function preload(){
 	//  콤보 효과음 로드
 	game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
+	game.load.audio('stageBGM','resources/Audios/bgm/55bpm_Mirror_Mirror.mp3');
 	
 	//  숫자(0~9) 스프라이트
 	game.load.spritesheet('number0', 'resources/Images/numbers/number_0.png', 32, 32, 20);
@@ -79,13 +84,18 @@ function preload(){
 	game.load.image('imgX', 'resources/Images/notes/imgX.png');
 	
 	game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
+	game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
 }
 
 function create(){
 	
 	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-	
 	game.input.onDown.add(gofull, this);
+	
+	stageBGM = game.add.audio('stageBGM');
+	/*stageBGM.play();*/
+	BPM = BPMfactor / 55;
+	beatStart = 0;
 	
 	//  배경색
     game.stage.backgroundColor = '#6688ee';
@@ -100,6 +110,7 @@ function create(){
     //  콤보 효과음 설정
     comboSound = game.add.audio('comboSound');
     comboSound.addMarker('comboSound', 0, 1);
+    
     
     // 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 	beatoven = game.add.sprite(100,game.world.centerY, 'beatoben',1);
@@ -122,16 +133,26 @@ function create(){
     monstersB = new Array();
     monstersC = new Array();
     
-	//createMonster (game, attackLine, speed, lineXIndex, appearanceBeat, startYOnAttackLine)
-	monstersA[0] = new Monster(game, 0, 1, 0, 2, lineYLocation[0]);
-	monstersA[1] = new Monster(game, 0, 1, 0, 7, lineYLocation[0]);
-	monstersA[2] = new Monster(game, 0, 1, 0, 4, lineYLocation[0]);
+    for(var i = 0; i < 50; i++){
+    	monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2, lineYLocation[0]);
+    }
+    for(var i = 0; i < 50; i++){
+    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3, lineYLocation[1]);
+    }
+    for(var i = 0; i < 50; i++){
+    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6, lineYLocation[2]);
+    }
+    
+	//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
+	/*monstersA[0] = new Monster(game, 0, 1, 0, 12, lineYLocation[0]);
+	monstersA[1] = new Monster(game, 0, 1, 0, 17, lineYLocation[0]);
+	monstersA[2] = new Monster(game, 0, 1, 0, 14, lineYLocation[0]);
 	
-	monstersB[0] = new Monster(game, 1, 1, 0, 1, lineYLocation[1]);
-	monstersB[1] = new Monster(game, 1, 1, 0, 6, lineYLocation[1]);
+	monstersB[0] = new Monster(game, 1, 1, 0, 11, lineYLocation[1]);
+	monstersB[1] = new Monster(game, 1, 1, 0, 16, lineYLocation[1]);
 	
-	monstersC[0] = new Monster(game, 2, 2, 0, 3, lineYLocation[2]);
-	monstersC[1] = new Monster(game, 2, 2, 0, 5, lineYLocation[2]);
+	monstersC[0] = new Monster(game, 2, 2, 0, 13, lineYLocation[2]);
+	monstersC[1] = new Monster(game, 2, 2, 0, 15, lineYLocation[2]);*/
 	
 	//background
 	game.stage.backgroundColor = '#1873CE';
@@ -139,18 +160,13 @@ function create(){
 	//physics
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
+	/*updateLife();*/
+	iniLife();
+
 	//Timer functions here
-	//game.time.events.loop(Phaser.Timer.SECOND, loopFunction, this);
+	game.time.events.loop(Phaser.Timer.SECOND * BPM, loopFunction, this);
 	
-	updateLife();
-    //1초마다 실행
-    game.time.events.loop(Phaser.Timer.SECOND, jumpchar, this);
-    //Phaser.Timer.SECOND 초 마다 creatNotes함수 실행
-    game.time.events.loop(Phaser.Timer.SECOND, createNotes, this);
-    //loop depend by beat
-	game.time.events.loop(Phaser.Timer.SECOND, start, this);
-	
-	game.time.events.loop(Phaser.Timer.SECOND / 5 , toggleBeatZone, this);
+	game.time.events.loop((Phaser.Timer.SECOND / 5) * BPM , toggleBeatZone, this);
 }
 
 function render(){
@@ -171,7 +187,15 @@ function update(){
 
 //나중에 이곳으로 모은다.
 function loopFunction(){
-	
+	//add 1 currentBeat
+	if (currentBeat == 0) {
+		stageBGM.play();
+	}
+	currentBeat += 1;
+	console.log(currentBeat);
+	start();
+	jumpchar();
+	createNotes();
 }
 
 function gofull() {

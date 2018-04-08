@@ -5,7 +5,7 @@
 
 function jumpchar () {
 	//1번 점프 점프
-    game.add.tween(beatoven).to({ y: 350 }, 400, Phaser.Easing.Quadratic.InOut, true, 0, 0, true);
+    game.add.tween(beatoven).to({ y: 350 }, 300, Phaser.Easing.Quadratic.InOut, true, 0, 0, true);
     
     //1초마다 스프라이트 점프 이미지
     anim = beatoven.animations.add('jump',[0,1],2,false);
@@ -16,7 +16,6 @@ function jumpchar () {
 function pressdownone () {
 	anim = beatoven.animations.add('attack');
 	anim.play('attack',10, false); //속도
-	
 }
 
 /*
@@ -24,8 +23,23 @@ function pressdownone () {
  * addLife => updateLife 
  */
 function updateLife() {
-	for (var f = 0; f < life; f++) {
-		lifeArray[f] = game.add.image(f * 30, 30, 'life');
+	if(life > 0 && life < maxLife){
+		for (var i = 0; i < life; i++) {
+			lifeArray[i].visible = true;
+		}
+		for (var i = life; i < maxLife; i++) {
+			lifeArray[i].visible = false;
+		}
+	}else{
+		//Life = 0
 	}
 	console.log(life);
+}
+
+function iniLife(){
+	lifeArray = new Array();
+	for (var i = 0; i < maxLife; i++){
+		lifeArray[i] = game.add.image(i * 30, 30, 'life');
+	}
+	updateLife();
 }
