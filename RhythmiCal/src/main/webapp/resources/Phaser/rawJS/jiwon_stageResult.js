@@ -6,6 +6,7 @@ var game = new Phaser.Game(1024, 576, Phaser.CANVAS, 'phaser-example', { preload
 function preload() {
    game.load.spritesheet('msgclear', 'resources/jiwon_stageResult/clear.png', 32, 32, 5);
    game.load.spritesheet('msgfail', 'resources/jiwon_stageResult/fail.png', 32, 32, 4);
+   game.load.image('blackScreen', 'resources/jiwon_stageResult/black.png');
 }
 
 
@@ -29,6 +30,10 @@ function create() {
 
 //스테이지 결과 표시하기
 function stageResult(result){
+	
+	
+	//게임화면을 블러 처리한다.
+	fadeoutToBlur();
 	
 	
 	//스테이지 클리어 또는 실패 시 결과 안내 이미지를 위한 변수
@@ -87,4 +92,39 @@ function stageResult(result){
 	
 	//시간 반복을 멈춘다.
 	game.time.events.remove(timeloop);
+	
+	//페이드아웃 한다.
+	setTimeout(fadeout, 10000);
+}
+
+
+//페이드아웃 한다.
+function fadeout(){
+	
+	//검은화면 이미지를 게임에 추가한다.
+	var blackScreen = game.add.sprite(0, 0, 'blackScreen');
+	
+	//크기, 엥커, 투명도를 설정한다. 
+	blackScreen.scale.set(5);
+	blackScreen.anchor.setTo(0.5, 0.5);
+	blackScreen.alpha = 0;
+	
+	//불투명하게 처리한다.
+	game.add.tween(blackScreen).to( {alpha: 1}, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+}
+
+
+//블러처리 한다.
+function fadeoutToBlur(){
+	
+	//검은화면 이미지를 게임에 추가한다.
+	var blackScreen = game.add.sprite(0, 0, 'blackScreen');
+	
+	//크기, 엥커, 투명도를 설정한다.
+	blackScreen.scale.set(5);
+	blackScreen.anchor.setTo(0.5, 0.5);
+	blackScreen.alpha = 0;
+	
+	//반투명하게 처리한다.
+	game.add.tween(blackScreen).to( {alpha: 0.5}, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 }
