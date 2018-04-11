@@ -2,6 +2,7 @@
 <%@ page session="false" %>
 <html>
 <head>
+<!-- test for jinju -->
 <!-- charset -->
 <meta charset="UTF-8">
 
