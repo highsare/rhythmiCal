@@ -3,15 +3,16 @@
  */
 
 //Monster Entity
-function Monster(game, attackLine, speed, lineXIndex, appearanceBeat, startYOnAttackLine){
+function Monster(game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine){
 	
 	this.game = game;
 	this.attackLine = attackLine;
 	this.speed = speed;
 	this.health = 1;
-	this.lineXIndex = lineXIndex;
+	this.status = "STAY"; //STAY , MOVE , STUN
+	this.lineXIndex = 0;
 	this.appearanceBeat = appearanceBeat;
-	this.monsterSprite = game.add.sprite(1075, startYOnAttackLine, 'mummy', 5);
+	this.monsterSprite = game.add.sprite(1650, startYOnAttackLine, monsterName, 5);
 	this.monsterSprite.scale.set(2);
     this.monsterSprite.smoothed = false;
     this.anim = this.monsterSprite.animations.add('walk');
@@ -39,9 +40,6 @@ function start(){
 	commandJump(monstersA,currentBeat);
 	commandJump(monstersB,currentBeat);
 	commandJump(monstersC,currentBeat);
-
-	//add 1 currentBeat
-	currentBeat += 1;
 }
 
 //commandJump monster unit
@@ -50,17 +48,19 @@ function commandJump(unitArray,currentBeat){
 	
 	for(var i = 0; i < unitArray.length; i++ ){
 		var unit = unitArray[i];
-		if(unit.appearanceBeat <= currentBeat){
-			//check unit current x location and kill when last jump
-			arriveDestination(unit);
-			
-			//if monster unit speed = 2 jump to lineXindex = 1
-			if (unit.speed == 2 && unit.lineXIndex == 0) {
-				unit.lineXIndex = 1;
+		if(unit != null){
+			if(unit.appearanceBeat <= currentBeat){
+				//check unit current x location and kill when last jump
+				arriveDestination(unit);
+				
+				//if monster unit speed = 2 jump to lineXindex = 1
+				if (unit.speed == 2 && unit.lineXIndex == 0) {
+					unit.lineXIndex = 1;
+				}
+				
+				//attackLine -> absolute value //lineXIndex -> absolute value
+				singleJump(unit, lineYLocation[unit.attackLine], lineXLocation[unit.lineXIndex]);
 			}
-			
-			//attackLine -> absolute value //lineXIndex -> absolute value
-			singleJump(unit, lineYLocation[unit.attackLine], lineXLocation[unit.lineXIndex]);
 		}
 	}
 }
@@ -79,7 +79,6 @@ function singleJump (unit, maximumHightOnAttackLine, destinationOnlineXLocation)
 	} else if (unit.speed == 2) {
 		unit.lineXIndex += 2;
 	}
-
 }
 
 
@@ -88,16 +87,34 @@ function hitMonster(unit, damage){
 	unit.damage(damage);
 }
 
-//monster arrive destination //kill monster and reduce damage beathoven
+//monster arrive destination //kill monster and reduce damage beatoven
 function arriveDestination(unit){
 	
 	if (unit.speed == 1) {
-		if (unit.lineXIndex > 10) {
-			unit.monsterSprite.kill();
+		if (unit.lineXIndex == 10) {
+			unit.monsterSprite.destroy();
+			unit=null;
+			life--;
+			updateLife();
 		}
 	} else if (unit.speed == 2) {
-		if (unit.lineXIndex > 12) {
-			unit.monsterSprite.kill();
-		}					
+		if (unit.lineXIndex == 11) {
+			unit.monsterSprite.destroy();
+			unit=null;
+			life--;
+			updateLife();
+		}
 	}
 }
+
+
+//가장 단순하게 데미지를 주는 메소드
+function attackLine(unitArray,damage){
+	for(var i = 0; i < unitArray.length; i++){
+		var unit = unitArray[i];
+		if(unit.lineXIndex != 0){
+			hitMonster(unit,damage);
+		}
+	}
+}
+

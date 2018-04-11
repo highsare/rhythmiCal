@@ -7,9 +7,6 @@ BPM의 앞,뒤 일정 시간에 beatZone 변수를 토글시킨다.
 입력 가능 타이밍이 지나도 모션입력이 없을 경우 popupCombo(false)를 호출하여 콤보를 깨뜨린다.
 입력 가능 타이밍 내에 모션입력이 행해진 경우 isComboNow 변수를 다시 false로 세팅한다.
 */
-
-/*var beatZone = false;
-var beat = 0;*/
 function toggleBeatZone(){
 	beat++;
 	if(beat == 5){
@@ -54,13 +51,13 @@ function motionEvent(motion){
 	
 	switch(motion){
 	case "POINT":
-		attackLine(monstersA);
+		attackLine(monstersA,1);
 		break;
 	case "UP":
-		attackLine(monstersB);
+		attackLine(monstersB,1);
 		break;
 	case "DOWN":
-		attackLine(monstersC);
+		attackLine(monstersC,1);
 		break;
 	case "LEFT":
 		break;
@@ -108,31 +105,18 @@ function wrongTiming(){
  * int fps: 초당 호출할 프레임 수
  * boolean loop: 반복여부
  */
-//var image;
 function popupImage(x, y, imageName, fps, loop) {
 	console.log('popupImage');
 
-	image = game.add.sprite(x, y, imageName);
-	image.animations.add('popup');
-	image.animations.play('popup', fps, loop);
+	popUpImage = game.add.sprite(x, y, imageName);
+	popUpImage.animations.add('popup');
+	popUpImage.animations.play('popup', fps, loop);
 }
 
 /*
  * popupCombo(): 콤보 숫자를 나타내는 메서드
- *
- * int clickTime: 클릭 시간(game.time.now)
  */
-/*var counter = 0;
-var isComboNow = false;*/
 function popupCombo(combo) {
-	
-	//첫 공격에 시간 저장
-	/*if (counter == 0) {
-		//previousTime = game.time.now;
-		counter++;
-		console.log('첫 공격_previousTime: ' + previousTime);
-		return;
-	}*/
 	
 	//콤보 성공 시
 	if (combo) { //combo 조건
@@ -148,7 +132,7 @@ function popupCombo(combo) {
 		//콤보가 20의 배수일 경우에는 생명력을 1 증가 (임시로 5를 주었음) // TODO
 		if (counter % 5 == 0) {
 			life++;
-			addLife();
+			updateLife();
 		}
 		
 	    //숫자 애니메이션 실행
