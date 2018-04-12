@@ -15,7 +15,7 @@ function Monster(game, attackLine, speed, lineXIndex, startYOnAttackLine){
 	this.speed = speed;
 	this.health = 3;
 	this.lineXIndex = lineXIndex;
-	this.maxHealth = 3;
+	this.maxHealth = 3;//필요없는듯... 처음에 db에서 받은 fullHP로 for문을 돌려서 생성함으로...
 	this.monsterHight = 50;
 	
 	this.monsterSprite = game.add.sprite(1075, startYOnAttackLine, 'mummy', 5);
@@ -25,7 +25,7 @@ function Monster(game, attackLine, speed, lineXIndex, startYOnAttackLine){
     this.monsterSprite.animations.play('walk', 20, true);
     
     this.monsterHealthbar = game.add.group();
-    for (var i = 0; i < this.maxHealth; i++) {
+    for (var i = 0; i < this.maxHealth; i++) {//maxHealth대신에 health를 쓰면 될 듯
     	
 		this.monsterHealthbar.create(3 * i, 0, 'healthFill');
 		this.monsterHealthbar.scale.set(2);
