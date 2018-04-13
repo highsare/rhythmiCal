@@ -275,6 +275,7 @@ function moveContent(buttonFocus,inputKey) {
          motion1 = game.add.sprite(1000, 200, motion[turn1].getName()); 
          effect1 = game.add.sprite(1000, 300, motion[turn1].getEffect());
          lane1 = game.add.sprite(1000, 300, motion[turn1].getLane()[0]);
+         
          break;
       case 'enter': 
          //이 모션으로 선택
