@@ -90,41 +90,48 @@ function preload(){
 }
 
 function create(){
+	//게임 기초 세팅
 	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 	game.input.onDown.add(gofull, this);
 	
+	//DB에서 받아 온 데이터의 생성
 	stageBGM = game.add.audio('stageBGM');
-	
 	//여기에 BPM 값을 넣는다 
 	BPM = BPMfactor / 55;
 	beatStart = 0;
 	
+	
+	
+	//고정 데이터들의 생성
 	//  배경색
 	game.add.sprite(0,0,'stageBG');
-    game.stage.backgroundColor = '#6688ee';
-
-    //  콤보 효과음 설정
-    comboSound = game.add.audio('comboSound');
-    comboSound.addMarker('comboSound', 0, 1);
-    
-    
-    // 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
+	game.stage.backgroundColor = '#6688ee';
+	//콤보 효과음 설정
+	comboSound = game.add.audio('comboSound');
+	comboSound.addMarker('comboSound', 0, 1);
+	// 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 	beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 	beatoven.anchor.setTo(0.5,1);
 	beatoven.scale.set(4); 
 	beatoven.smoothed = false;
-	
 	//하나씩 나타나는 음표를 그룹으로 주기
 	sprites = game.add.group();
+	//음표 뒤에 배경생성    game.width/2-150, 500 위치에 생성
+	var noteBG = sprites.create(game.width/2-150, 750, 'noteBG');
+	//음표 흐르는 거 배경을 그룹으로 주기
+	noteBgGroup = game.add.group();
+	//그룹에  noteBG이미지 넣기
+	noteBgGroup.add(noteBG);
 	
-    //음표 뒤에 배경생성    game.width/2-150, 500 위치에 생성
-    var noteBG = sprites.create(game.width/2-150, 750, 'noteBG');
+	
+	
+
     
-    //음표 흐르는 거 배경을 그룹으로 주기
-    noteBgGroup = game.add.group();
     
-    //그룹에  noteBG이미지 넣기
-    noteBgGroup.add(noteBG);
+	
+	
+    
+    
     
     monstersA = new Array();
     monstersB = new Array();
