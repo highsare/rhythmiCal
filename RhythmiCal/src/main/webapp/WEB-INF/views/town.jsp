@@ -267,12 +267,14 @@ function moveContent(buttonFocus,inputKey) {
          if (motion[turn1].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion1 = game.add.sprite(1000, 200, motion[turn1].getName()); 
          effect1 = game.add.sprite(1000, 300, motion[turn1].getEffect());
+         lane1 = game.add.sprite(1000, 300, motion[turn1].getLane()[0]);
          break;
       case 'right':
          if (turn1 >= 4) {turn1 = 3;} turn1 = turn1+1;
          if (motion[turn1].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion1 = game.add.sprite(1000, 200, motion[turn1].getName()); 
          effect1 = game.add.sprite(1000, 300, motion[turn1].getEffect());
+         lane1 = game.add.sprite(1000, 300, motion[turn1].getLane()[0]);
          break;
       case 'enter': 
          //이 모션으로 선택
