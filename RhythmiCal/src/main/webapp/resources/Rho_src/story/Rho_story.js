@@ -1,5 +1,4 @@
-
-	var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 	var reg = {};//음악 로드시 저장
 	var player;//주인공
 	var right;//오른쪽발걸음
@@ -8,18 +7,16 @@
 	var npc2;
 	var dialogueBG;
 	function preload() {
-		//대화문 뒷배경
-		game.load.image("textBG","resources/textBox.png");
-		
+				
 		// 배경화면 로드
 		game.load.image("background", "resources/loof_forest.png"); 
 	    // 캐릭터 움직이 시트 로드
-		game.load.spritesheet('player', 'resources/beatoben.png', 32, 32);
+		game.load.spritesheet('player', 'resources/beatoven.png', 32, 32);
 	    //글자  나올때 소리 로드
 	    //this.load.audio('track', ['resources/pencilsketching.mp3']);
 	
 	    //비트맵형 글자폰트 로드
-	    game.load.bitmapFont('carrier_command', 'resources/carrier_command.png', 'resources/carrier_command.xml');
+	    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
 	    
 	    //npc 이미지 로드
 		npc1 = this.load.spritesheet('npc1', 'resources/234.png',300,300);
@@ -33,7 +30,7 @@
 	function create() {
 		
 	   //글자 나올때 소리 추가
-	    reg.track = game.add.audio('track');
+	   // reg.track = game.add.audio('track');
 	  //배경화면 추가
 	   var image = game.add.image(0, 0, "background");image.width = game.width;image.height = game.height;
 	    
@@ -45,7 +42,7 @@
 	    player.scale.setTo(10,10);
 	    
 	    ///오른쪽으로 달려나오는 캐릭터 의 움직임 정의
-	    right = player.animations.add('right', [1,2], 10, true);
+	    right = player.animations.add('right', [1,2,3,4,5,6,2,3], 10, true);
 	   
 	   	//캐릭터 이미지시트에있는 오른쪽 발걸음 재생
 	    right.play(10,true);
@@ -66,7 +63,7 @@
 		
 		//캐릭터 발걸음 정지
 		right.stop();
-	    var txt="ddadsfjlasdjflkasdjflkasd"
+	    var txt="밑에 함수를 실행하는데 다음 배열의 데이터로 실행한다."
 	    
 	    //타이핑메소드로 전달
 		typethetext(txt,10,10);
@@ -83,7 +80,7 @@
 
 	function render() {
 		//캐릭터의 이미지시트에서 몇번째인가 확인한다.
-	    //game.debug.text(player.frame, 32, 32);
+	    game.debug.text(player.frame, 32, 32);
 
 	}
 	
@@ -116,15 +113,15 @@
         var storyText = new Array();
        
         //대화문 어레이에 저장
-        storyText[0]="gogogogogogoogogo gogoogogo";
-   		storyText[1]="WHY?WHY?WHY?WHY? WHY?WHY?WHY?";
-        storyText[2]="IT TIME TO GO MEN";
-        storyText[3]="sure?";
-        storyText[4]="WHAT AR YOU WAITNG FOR";
-        storyText[5]="but........................";
-        storyText[6]="iam YOURS TAKE ME IN";
-        storyText[7]="hmmmmm?";
-        storyText[8]="YOU KNOW IAM VERY POWERFUL KNIFE";
+        storyText[0]="어서와 ";
+   		storyText[1]="누구지? 어디서 무슨 소리가 들렸는걸?";
+        storyText[2]="여기야 친구 나를 잡아";
+        storyText[3]="누구죠?";
+        storyText[4]="난 칼이야 리듬을 느끼는 칼..";
+        storyText[5]="앗";
+        storyText[6]="그래 리듬이 느껴지니";
+        storyText[7]="내 어꺠가 들썩거리고있어...";
+        storyText[8]="그 리듬에 몸을 맡겨봐 친구";
         
         //화자순서 어레이 생성
         var  storyNPCSequence = new Array();
@@ -155,7 +152,7 @@
         
         //this.textArea = this.add.text(0, 0, "", styleDescritpion);
         //텍스트 속성 정의
-       /*  this.textArea = this.add.bitmapText(0, 0, 'carrier_command','',35);
+       /*  this.textArea = this.add.bitmapText(0, 0, 'neo_font','',35);
     	this.textArea.anchor.set(0.5);
     	this.textArea.fixedToCamera = true;
     	this.textArea.cameraOffset.x = game.width/2;
@@ -228,7 +225,7 @@
 	      x: xvalue,
 	      y: yvalue,
 	      time: 10,
-	      fontFamily: "carrier_command",
+	      fontFamily: "neo_font",
 	      fontSize: 45,
 	      maxWidth: 1400,
 	      //타이핑 소리 줌
@@ -239,4 +236,3 @@
 	   typewriter.start();
 	    
 	}
-		
