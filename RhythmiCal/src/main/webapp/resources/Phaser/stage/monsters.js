@@ -15,7 +15,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
 	this.monsterHeight = 50;
 	this.appearanceBeat = appearanceBeat;
 	
-	this.monsterSprite = game.add.sprite(1650, startYOnAttackLine, monsterName, 5);
+	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 5);
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 5);
 	this.monsterSprite.scale.set(2);
 	this.monsterSprite.anchor.setTo(0.5,1);
@@ -31,7 +31,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
 		this.monsterHealthbar.smoothed = false;
     }
     this.monsterHealthbar.x = 2000;
-    this.monsterHealthbar.y = startYOnAttackLine - this.monsterHeight - 25;
+    this.monsterHealthbar.y = lineYLocation[attackLine] - this.monsterHeight - 25;
 
     //physics
 	game.physics.enable(this.monsterSprite, Phaser.Physics.ARCADE);
