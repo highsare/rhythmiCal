@@ -16,7 +16,7 @@ var key;
 var depth;
 // 선택한 모션을 저장하는 배열
 var selectedMotion;
-
+// 제발!
 function preload() {
    // 네모 테두리 로드
    game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
@@ -275,7 +275,6 @@ function moveContent(buttonFocus,inputKey) {
          motion1 = game.add.sprite(1000, 200, motion[turn1].getName()); 
          effect1 = game.add.sprite(1000, 300, motion[turn1].getEffect());
          lane1 = game.add.sprite(1000, 300, motion[turn1].getLane()[0]);
-         
          break;
       case 'enter': 
          //이 모션으로 선택
@@ -400,7 +399,7 @@ function moveContent(buttonFocus,inputKey) {
          lane3 = game.add.sprite(1200, 400, Motion.getLane()[turn6]);
          break;
       case 'right': 
-         if (turn6 >= 2) {turn6 = 2   ; return;} turn6 = turn6+1;
+         if (turn6 >= 2) {turn6 = 2; return;} turn6 = turn6+1;
          lane3 = game.add.sprite(1200, 400, Motion.getLane()[turn6]);
          break;
       case 'enter':
