@@ -149,14 +149,14 @@ function create(){
     monstersC = new Array();
     
     //createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
-    /*for(var i = 0; i < 50; i++){
-    	monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2, lineYLocation[0]);
+    for(var i = 0; i < 50; i++){
+    	monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2);
     }
     for(var i = 0; i < 50; i++){
-    	monstersB[i] = new Monster(game, 1, 3, 'mummy', i*3, lineYLocation[1]);
-    }*/
+    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3);
+    }
     for(var i = 0; i < 50; i++){
-    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6, lineYLocation[2]);
+    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6);
     }
 	
 	//background

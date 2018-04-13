@@ -3,7 +3,7 @@
  */
 
 //Monster Entity
-function Monster(game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine){
+function Monster(game, attackLine, speed, monsterName, appearanceBeat){
 	
 	this.game = game;
 	this.attackLine = attackLine;
@@ -16,6 +16,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, startYOnA
 	this.appearanceBeat = appearanceBeat;
 	
 	this.monsterSprite = game.add.sprite(1650, startYOnAttackLine, monsterName, 5);
+	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 5);
 	this.monsterSprite.scale.set(2);
 	this.monsterSprite.anchor.setTo(0.5,1);
     this.monsterSprite.smoothed = false;
