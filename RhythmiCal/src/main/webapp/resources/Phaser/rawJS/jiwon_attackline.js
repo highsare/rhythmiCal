@@ -133,7 +133,6 @@ function singleJump (unit) {
 
 //몬스터 데미지를 업데이트하는 함수
 function hitMonster(unit, damage){
-	
 	//유닛이 데미지를 받는다.
 	unit.damage();
 }

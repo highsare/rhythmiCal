@@ -9,7 +9,6 @@
 var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create, render: render, update: update});
 
 var text = 0;
-var explosions;
 var bmpText;
 
 //syuzincou => beatoven
@@ -23,10 +22,9 @@ var noteBgGroup;
 //멀티유저번호
 var userNumber;
 
-
 //attackLine Info
-var lineXLocation = [1528.125, 1384.375, 1240.625, 1096.875, 953.125, 809.375, 665.625, 521.875, 378.125, 234.375];
-var lineYLocation = [156.25, 456.25, 756.25];
+var lineYLocation = [300, 490, 680];
+var jumpX = [135,137.5,140];
 
 var monstersA;
 var monstersB;
@@ -44,8 +42,8 @@ var isComboNow = false;
 var beatZone = false;
 var beat = 0;
 
-var life = 3; //생명력. DB에서 불러와야 하는 값이며, 현재 임의로 상수를 주었다. // TODO
-var maxLife = 10;
+var life; //생명력. DB에서 불러와야 하는 값이며, 현재 임의로 상수를 주었다. ver.2 초기화 메소드에서 초기화 진행할것임 // TODO
+var maxLife = 10; //조정 가능
 var lifeArray;
 
 var stageBGM;
@@ -53,11 +51,12 @@ var BPM;
 var BPMfactor = 60;
 
 function preload(){
-	//  콤보 효과음 로드
+	//배경 로드
+	game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
+	//콤보 효과음 로드
 	game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
-	game.load.audio('stageBGM','resources/Audios/bgm/55bpm_Mirror_Mirror.mp3');
-	
-	//  숫자(0~9) 스프라이트
+	game.load.audio('stageBGM','resources/Audios/bgm/55bpm_Mirror_Mirror.mp3');	
+	//숫자(0~9) 스프라이트
 	game.load.spritesheet('number0', 'resources/Images/numbers/number_0.png', 32, 32, 20);
 	game.load.spritesheet('number1', 'resources/Images/numbers/number_1.png', 32, 32, 20);
 	game.load.spritesheet('number2', 'resources/Images/numbers/number_2.png', 32, 32, 20);
@@ -69,10 +68,11 @@ function preload(){
 	game.load.spritesheet('number8', 'resources/Images/numbers/number_8.png', 32, 32, 20);
 	game.load.spritesheet('number9', 'resources/Images/numbers/number_9.png', 32, 32, 20);
 	
-	//  생명력 이미지
+	//생명력 이미지
 	game.load.image('life', 'resources/Images/others/trebleclef.png');
 	
-	game.load.spritesheet('beatoben', 'resources/Images/characters/beatoben.png', 32, 32, 16); // 비토벤 스프라이트시트
+	// 비토벤 스프라이트시트
+	game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
 	
 	//음표그림4개 로드   1:빨강, 2:파랑, 3:초록, 4:노랑
 	for(var i=1; i<=4;i++){
@@ -83,8 +83,21 @@ function preload(){
 	game.load.image('imgO', 'resources/Images/notes/imgO.png');
 	game.load.image('imgX', 'resources/Images/notes/imgX.png');
 	
+	//몬스터 로드
 	game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
 	game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
+	
+	//체력바 관련 로드
+	game.load.spritesheet('healthFill', 'resources/Images/others/healthFill.png', 32, 32, 1);
+	game.load.spritesheet('healthBlank', 'resources/Images/others/healthBlank.png', 32, 32, 1);
+	game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
+	game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
+	game.load.image('blackScreen', 'resources/Images/others/black.png');
+	
+	//클리어 혹은 실패 및 페이드 아웃 이미지
+	game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
+	game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
+	game.load.image('blackScreen', 'resources/Images/others/black.png');
 }
 
 function create(){
@@ -98,6 +111,7 @@ function create(){
 	beatStart = 0;
 	
 	//  배경색
+	game.add.sprite(0,0,'stageBG');
     game.stage.backgroundColor = '#6688ee';
     
     
@@ -113,7 +127,8 @@ function create(){
     
     
     // 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
-	beatoven = game.add.sprite(100,game.world.centerY, 'beatoben',1);
+	beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
+	beatoven.anchor.setTo(0.5,1);
 	beatoven.scale.set(4); 
 	beatoven.smoothed = false;
 	
@@ -133,26 +148,16 @@ function create(){
     monstersB = new Array();
     monstersC = new Array();
     
-    for(var i = 0; i < 50; i++){
+    //createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
+    /*for(var i = 0; i < 50; i++){
     	monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2, lineYLocation[0]);
     }
     for(var i = 0; i < 50; i++){
-    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3, lineYLocation[1]);
-    }
+    	monstersB[i] = new Monster(game, 1, 3, 'mummy', i*3, lineYLocation[1]);
+    }*/
     for(var i = 0; i < 50; i++){
     	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6, lineYLocation[2]);
     }
-    
-	//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
-	/*monstersA[0] = new Monster(game, 0, 1, 0, 12, lineYLocation[0]);
-	monstersA[1] = new Monster(game, 0, 1, 0, 17, lineYLocation[0]);
-	monstersA[2] = new Monster(game, 0, 1, 0, 14, lineYLocation[0]);
-	
-	monstersB[0] = new Monster(game, 1, 1, 0, 11, lineYLocation[1]);
-	monstersB[1] = new Monster(game, 1, 1, 0, 16, lineYLocation[1]);
-	
-	monstersC[0] = new Monster(game, 2, 2, 0, 13, lineYLocation[2]);
-	monstersC[1] = new Monster(game, 2, 2, 0, 15, lineYLocation[2]);*/
 	
 	//background
 	game.stage.backgroundColor = '#1873CE';
@@ -160,8 +165,7 @@ function create(){
 	//physics
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-	/*updateLife();*/
-	iniLife();
+	iniLife(3);
 
 	//Timer functions here
 	game.time.events.loop(Phaser.Timer.SECOND * BPM, loopFunction, this);
@@ -170,10 +174,10 @@ function create(){
 }
 
 function render(){
-    game.debug.text("Time until event: " + game.time.events.duration.toFixed(0), 32, 32);
-    game.debug.text("Next tick: " + game.time.events.next.toFixed(0), 32, 64);
-    game.debug.text("유저 넘버: " + userNumber+"등장!", game.width/2+150, 500);
-    game.debug.text("BeatZone : "+ beatZone, game.width/2, game.height/2+100);
+    //game.debug.text("Time until event: " + game.time.events.duration.toFixed(0), 32, 32);
+    //game.debug.text("Next tick: " + game.time.events.next.toFixed(0), 32, 64);
+    //game.debug.text("유저 넘버: " + userNumber+"등장!", game.width/2+150, 500);
+    game.debug.text("BeatZone : "+ (beatZone? "@@@@@@@@@@@":""), game.width/2-100, game.height/2+300);
 }
 
 function update(){
@@ -183,7 +187,6 @@ function update(){
 		wrongTiming();
 	}
 }
-
 
 //나중에 이곳으로 모은다.
 function loopFunction(){
