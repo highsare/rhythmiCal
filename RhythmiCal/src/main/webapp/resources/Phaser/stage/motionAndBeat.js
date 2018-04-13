@@ -2,10 +2,11 @@
  * 
  */
 
-/*입력이 가능한 타이밍을 설정하는 메소드이다.
-BPM의 앞,뒤 일정 시간에 beatZone 변수를 토글시킨다.
-입력 가능 타이밍이 지나도 모션입력이 없을 경우 popupCombo(false)를 호출하여 콤보를 깨뜨린다.
-입력 가능 타이밍 내에 모션입력이 행해진 경우 isComboNow 변수를 다시 false로 세팅한다.
+/*
+ * 입력이 가능한 타이밍을 설정하는 메소드이다.
+ * BPM의 앞,뒤 일정 시간에 beatZone 변수를 토글시킨다.
+ * 입력 가능 타이밍이 지나도 모션입력이 없을 경우 popupCombo(false)를 호출하여 콤보를 깨뜨린다.
+ * 입력 가능 타이밍 내에 모션입력이 행해진 경우 isComboNow 변수를 다시 false로 세팅한다.
 */
 function toggleBeatZone(){
 	beat++;
@@ -26,7 +27,6 @@ function toggleBeatZone(){
 
 function motionCheck(){
 	//여기서 모션의 값이 있는지 확인한 뒤 적절한 반응을 준다.
-	
 	//모션 확인
 	$.ajax({
 		url:"requestMotion"
@@ -40,14 +40,26 @@ function motionCheck(){
 		},error:function(){
 		}
 	})
-	
 	//적절한 이벤트 함수 호출
+}
+
+//정확하지 못한 타이밍일때의 처리
+function wrongTiming(){
+	$.ajax({
+		url:"requestMotion"
+		,type:"post"
+		,success:function(motion){
+			if(motion != "NOTHING"){
+				popupCombo(false);
+			}
+		}
+	})
 }
 
 function motionEvent(motion){
 	
 	popupCombo(true);
-	timingCheck();
+	timingCheck(true);
 	
 	switch(motion){
 	case "POINT":
@@ -60,14 +72,21 @@ function motionEvent(motion){
 		attackLine(monstersC,1);
 		break;
 	case "LEFT":
+		//stageResult(true);
 		break;
 	case "RIGHT":
+		//stageResult(false);
 		break;
 	}
 }
 
-function timingCheck(){
-	var notePop = game.add.sprite(game.width/2+20,520,'imgX');
+function timingCheck(timing){
+	var notePop;
+	if (timing) {
+		notePop = game.add.sprite(game.width/2+20,520,'imgO');		
+	}else{
+		notePop = game.add.sprite(game.width/2+20,520,'imgX');
+	}
 	notePop.anchor.setTo(0.5,0.5);
 	notePop.scale.setTo(1,1);
 		
@@ -83,22 +102,8 @@ function timingCheck(){
 		, this);
 }
 
-function wrongTiming(){
-	$.ajax({
-		url:"requestMotion"
-		,type:"post"
-		,success:function(motion){
-			if(motion != "NOTHING"){
-				popupCombo(false);
-			}
-		}
-	})
-}
-
-
 /* 
  * popupImage(): 이미지를 팝업하는 메서드
- * 
  * int x: x축의 좌표
  * int y: y축의 좌표
  * String imageName: preload()에서 설정한 이미지명
@@ -117,7 +122,6 @@ function popupImage(x, y, imageName, fps, loop) {
  * popupCombo(): 콤보 숫자를 나타내는 메서드
  */
 function popupCombo(combo) {
-	
 	//콤보 성공 시
 	if (combo) { //combo 조건
 		
@@ -131,8 +135,7 @@ function popupCombo(combo) {
 		
 		//콤보가 20의 배수일 경우에는 생명력을 1 증가 (임시로 5를 주었음) // TODO
 		if (counter % 5 == 0) {
-			life++;
-			updateLife();
+			updateLife(1);
 		}
 		
 	    //숫자 애니메이션 실행
@@ -158,15 +161,12 @@ function popupCombo(combo) {
 			popupImage(512, 400, 'number' + secondNum, 30, false);
 			popupImage(532, 400, 'number' + thridNum, 30, false);
 		}
-    	
 		
 	    //콤보 효과음 실행
 	    comboSound.play('comboSound');
 	}
 	//콤보 실패 시
 	else {
-		console.log('combo failure');
-		counter = 0;
-		text.setText('Combo Failure');
+		timingCheck(false);
 	}
 }

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController {
 	
+	String consoleBox = "";
+	boolean isUsed = false;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	//메인화면
@@ -56,5 +59,45 @@ public class HomeController {
 	@RequestMapping("game")
 	public String toGamePage() {
 		return "game";
+	}
+	
+	@RequestMapping(value = "town", method = RequestMethod.GET)
+	public String townTest() {
+		return "town";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="loginApp",method = RequestMethod.POST)
+	public String loginApp(Member member) {
+		
+		return "logIn";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
+	public String receiveConsole(String request, String order) {
+		consoleBox = order;
+		System.out.println(consoleBox);
+		if(order.equals("esc")) {
+			return "Rhythmi";
+		}
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "requestConsole", method = RequestMethod.GET)
+	public String requestConsole() {
+		if(consoleBox != null) {
+			if (isUsed) {
+				System.out.println("[Console empty]");
+				consoleBox = null;
+				isUsed = false;
+			}else {
+				System.out.println("Console requested"+consoleBox);
+				isUsed = true;
+				return consoleBox;	
+			}
+		}
+		return "NOTHING";
 	}
 }

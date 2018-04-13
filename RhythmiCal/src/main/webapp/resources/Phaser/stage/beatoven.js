@@ -18,11 +18,22 @@ function pressdownone () {
 	anim.play('attack',10, false); //속도
 }
 
+function iniLife(lifeAmount){
+	life = lifeAmount;
+	lifeArray = new Array();
+	for (var i = 0; i < maxLife; i++){
+		lifeArray[i] = game.add.image(i * 30, 30, 'life');
+		lifeArray[i].scale.set(2);
+	}
+	updateLife(0);
+}
+
 /*
  * updateLife(): 생명력을 증가시키는 함수. 생명력을 나타내는 변수 life는 콤보가 (카운터 % 20 == 0)일 때 1 증가하도록 되어있음
  * addLife => updateLife 
  */
-function updateLife() {
+function updateLife(lifeChange) {
+	life += lifeChange;
 	if(life > 0 && life < maxLife){
 		for (var i = 0; i < life; i++) {
 			lifeArray[i].visible = true;
@@ -32,14 +43,8 @@ function updateLife() {
 		}
 	}else{
 		//Life = 0
+		life = 0;
+		stageResult(false);
 	}
 	console.log(life);
-}
-
-function iniLife(){
-	lifeArray = new Array();
-	for (var i = 0; i < maxLife; i++){
-		lifeArray[i] = game.add.image(i * 30, 30, 'life');
-	}
-	updateLife();
 }
