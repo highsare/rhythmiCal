@@ -24,40 +24,49 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 	    
 	    game.load.image("dialogueLeft", "resources/dialogueLeft.png"); 
 	    game.load.image("dialogueRight", "resources/dialogueRight.png"); 
-	    
+	   
 	}
 
 	function create() {
+
+	   //스테이지 1
+	typethetext("STAGE1 ",700,400,90);
+	//2초있다가  스토리 시작
+	game.time.events.add(2000, function () {  //글자 나올때 소리 추가
+		//카메라 페이드 인
+		game.camera.flash(0x000000, 500);   
+		// reg.track = game.add.audio('track');
+		  //배경화면 추가
+		   var image = game.add.image(0, 0, "background");image.width = game.width;image.height = game.height;
+		    
+		    ///스프라이트생성
+		    player = game.add.sprite(game.width/6,750, 'player', 1);
+		    player.smoothed = false;
+		    player.scale.set(4);
+		    player.anchor.setTo(0,1);
+		    player.scale.setTo(10,10);
+		    
+		    ///오른쪽으로 달려나오는 캐릭터 의 움직임 정의
+		    right = player.animations.add('right', [1,2,3,4,5,6,2,3], 10, true);
+		   
+		   	//캐릭터 이미지시트에있는 오른쪽 발걸음 재생
+		    right.play(10,true);
+		   	
+		   	//실제 캐릭터 화면에서 오른쪽으로 이동
+		    var moveToRight =  game.add.tween(player).to({x: game.width/3, y: 750}, 1000, Phaser.Easing.Quadratic.Out, true);
+		    
+		   	//움직임이 끝나면 animaiontStopped함수 실행  
+		   	moveToRight.onComplete.add(animationStopped, this);
+			//움직임 enable 정의
+		   	game.physics.enable(player, Phaser.Physics.ARCADE);
+			
+		   	dialogue();}, self);
+	  
+			
 		
-	   //글자 나올때 소리 추가
-	   // reg.track = game.add.audio('track');
-	  //배경화면 추가
-	   var image = game.add.image(0, 0, "background");image.width = game.width;image.height = game.height;
-	    
-	    ///스프라이트생성
-	    player = game.add.sprite(game.width/6,750, 'player', 1);
-	    player.smoothed = false;
-	    player.scale.set(4);
-	    player.anchor.setTo(0,1);
-	    player.scale.setTo(10,10);
-	    
-	    ///오른쪽으로 달려나오는 캐릭터 의 움직임 정의
-	    right = player.animations.add('right', [1,2,3,4,5,6,2,3], 10, true);
-	   
-	   	//캐릭터 이미지시트에있는 오른쪽 발걸음 재생
-	    right.play(10,true);
-	   	
-	   	//실제 캐릭터 화면에서 오른쪽으로 이동
-	    var moveToRight =  game.add.tween(player).to({x: game.width/3, y: 750}, 1000, Phaser.Easing.Quadratic.Out, true);
-	    
-	   	//움직임이 끝나면 animaiontStopped함수 실행  
-	   	moveToRight.onComplete.add(animationStopped, this);
-		//움직임 enable 정의
-	   	game.physics.enable(player, Phaser.Physics.ARCADE);
-		
-	   	dialogue();
-	   	
 	}
+	
+	
 	
 	function animationStopped(sprite, animation) {
 		
@@ -66,7 +75,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 	    var txt="밑에 함수를 실행하는데 다음 배열의 데이터로 실행한다."
 	    
 	    //타이핑메소드로 전달
-		typethetext(txt,10,10);
+		typethetext(txt,10,10,45);
 				
 	    
 	}
@@ -80,7 +89,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 
 	function render() {
 		//캐릭터의 이미지시트에서 몇번째인가 확인한다.
-	    game.debug.text(player.frame, 32, 32);
+	   // game.debug.text(player.frame, 32, 32);
 
 	}
 	
@@ -199,7 +208,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 
    		//텍스트 화면에 대화문 어레이에서 문자 불러와서 붙여줌
    		//150, 690  위치에 텍스트 발생
-   		typethetext( storyText[storyOrder] , 150,690);
+   		typethetext( storyText[storyOrder] , 150,690,45);
    		
    		//대화문 순서 1씩 증가 시킴
    		storyOrder = Math.abs(storyOrder + 1);
@@ -219,14 +228,14 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 	//배경 이미지 그리는 함수
 	
 	//타이핑효과 함수 (텍스트값,x위치 , y위치)
-	function typethetext(txt,xvalue,yvalue){
+	function typethetext(txt,xvalue,yvalue,size){
 		//글자 타이핑효과 정의
 		typewriter.init(game, {
 	      x: xvalue,
 	      y: yvalue,
 	      time: 10,
 	      fontFamily: "neo_font",
-	      fontSize: 45,
+	      fontSize: size,
 	      maxWidth: 1400,
 	      //타이핑 소리 줌
 	     // sound: reg.track,
