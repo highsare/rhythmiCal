@@ -147,7 +147,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
         storyNPCSequence[8]=1;
         
       //대화할 때 이미지 시트에서 몇번째 이미지를 로드 할건가 저장
-        var storyNPCFrame = new Array();
+     /*   var storyNPCFrame = new Array();
         
         storyNPCFrame[0]=1;//아직 이미지시트가 없으므로 첫번쨰 프레임만 불러오도록
         storyNPCFrame[1]=1;
@@ -157,7 +157,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
         storyNPCFrame[5]=1;
         storyNPCFrame[6]=1;
         storyNPCFrame[7]=1;
-        storyNPCFrame[8]=1;
+        storyNPCFrame[8]=1;*/
         
         //this.textArea = this.add.text(0, 0, "", styleDescritpion);
         //텍스트 속성 정의
@@ -196,12 +196,12 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 		
 		//대화순서에 따라서 이미지시트가 있다면 몇변째 프레임을 쓸것인지 어레이에서 불러와서 넣음
 		if(storyNPCSequence[storyOrder]==1) {
-			npc1.frame=storyNPCFrame[storyOrder];
+		//	npc1.frame=storyNPCFrame[storyOrder];
 			dialogueBG = game.add.sprite(50,600,'dialogueLeft');
 			dialogueBG.width = 1500;
 		}
 		if(storyNPCSequence[storyOrder]==2) {
-			npc2.frame=storyNPCFrame[storyOrder];
+		//	npc2.frame=storyNPCFrame[storyOrder];
 			dialogueBG = game.add.sprite(50,600,'dialogueRight');
 			dialogueBG.width = 1500;
 		}
