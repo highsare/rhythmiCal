@@ -83,9 +83,9 @@ function motionEvent(motion){
 function timingCheck(timing){
 	var notePop;
 	if (timing) {
-		notePop = game.add.sprite(game.width/2+20,520,'imgO');		
+		notePop = game.add.sprite(game.width/2+20,750,'imgO');		
 	}else{
-		notePop = game.add.sprite(game.width/2+20,520,'imgX');
+		notePop = game.add.sprite(game.width/2+20,750,'imgX');
 	}
 	notePop.anchor.setTo(0.5,0.5);
 	notePop.scale.setTo(1,1);
@@ -124,15 +124,9 @@ function popupImage(x, y, imageName, fps, loop) {
 function popupCombo(combo) {
 	//콤보 성공 시
 	if (combo) { //combo 조건
-		
 		isComboNow = true;
-		
 		//카운터를 1 증가
 		counter++;
-		
-		//텍스트 변경
-		text.setText('Combo: ' + counter);
-		
 		//콤보가 20의 배수일 경우에는 생명력을 1 증가 (임시로 5를 주었음) // TODO
 		if (counter % 5 == 0) {
 			updateLife(1);

@@ -8,14 +8,14 @@ function jumpchar () {
     game.add.tween(beatoven).to({ y: 350 }, 300, Phaser.Easing.Quadratic.InOut, true, 0, 0, true);
     
     //1초마다 스프라이트 점프 이미지
-    anim = beatoven.animations.add('jump',[0,1],2,false);
-    anim.play('jump');
+    animBeatoven = beatoven.animBeatovenations.add('jump',[0,1],2,false);
+    animBeatoven.play('jump');
 }
 
 //버튼 1번 눌렀을 때
 function pressdownone () {
-	anim = beatoven.animations.add('attack');
-	anim.play('attack',10, false); //속도
+	animBeatoven = beatoven.animBeatovenations.add('attack');
+	animBeatoven.play('attack',10, false); //속도
 }
 
 function iniLife(lifeAmount){

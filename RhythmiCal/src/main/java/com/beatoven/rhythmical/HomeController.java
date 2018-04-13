@@ -70,7 +70,7 @@ public class HomeController {
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
 	public String loginApp(Member member) {
 		
-		return "logIn";
+		return "";
 	}
 	
 	@ResponseBody

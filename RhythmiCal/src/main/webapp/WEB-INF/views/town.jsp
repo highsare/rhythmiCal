@@ -16,7 +16,7 @@ var key;
 var depth;
 // 선택한 모션을 저장하는 배열
 var selectedMotion;
-
+// 제발!
 function preload() {
    // 네모 테두리 로드
    game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
@@ -101,16 +101,19 @@ function create() {
       // null일 경우 > 초기 값을 띄운다.
          // 첫 번째 모션
          motion1 = game.add.sprite(1000, 200, 'point');
+      	 selectMotion(0, 0, motion[0]);
          effect1 = game.add.sprite(1000, 300, 'fire');
          lane1 = game.add.sprite(1000, 400, 'A');
          
          // 두 번째 모션
          motion2 = game.add.sprite(1100, 200, 'up');
+         selectMotion(0, 1, motion[1]);
          effect2 = game.add.sprite(1100, 300, 'water');
          lane2 = game.add.sprite(1100, 400, 'A');
       
          // 세 번째 모션
          motion3 = game.add.sprite(1200, 200, 'down');
+         selectMotion(0, 2, motion[2]);
          effect3 = game.add.sprite(1200, 300, 'sun');
          lane3 = game.add.sprite(1200, 400, 'A');
    
@@ -237,7 +240,7 @@ function selectMotion(x, y, motionObject) {
 
    //현재의 모션의 선택 상태를 true로 설정하고 selectedMotion[][]에 저장한다.
    motionObject.setSelected(true);
-   selectedMotion[x][y] = motion[turn];
+   selectedMotion[x][y] = motionObject;
 }
  
 /*
@@ -267,12 +270,14 @@ function moveContent(buttonFocus,inputKey) {
          if (motion[turn1].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion1 = game.add.sprite(1000, 200, motion[turn1].getName()); 
          effect1 = game.add.sprite(1000, 300, motion[turn1].getEffect());
+         lane1 = game.add.sprite(1000, 400, motion[turn1].getLane()[0]);
          break;
       case 'right':
          if (turn1 >= 4) {turn1 = 3;} turn1 = turn1+1;
          if (motion[turn1].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion1 = game.add.sprite(1000, 200, motion[turn1].getName()); 
          effect1 = game.add.sprite(1000, 300, motion[turn1].getEffect());
+         lane1 = game.add.sprite(1000, 400, motion[turn1].getLane()[0]);
          break;
       case 'enter': 
          //이 모션으로 선택
@@ -295,12 +300,14 @@ function moveContent(buttonFocus,inputKey) {
          if (motion[turn2].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion2 = game.add.sprite(1100, 200, motion[turn2].getName());
          effect2 = game.add.sprite(1100, 300, motion[turn2].getEffect());
+         lane2 = game.add.sprite(1100, 400, motion[turn2].getLane()[0]);
          break;
       case 'right': 
          if (turn2 >= 4) {turn2 = 3;} turn2 = turn2+1;
          if (motion[turn2].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion2 = game.add.sprite(1100, 200, motion[turn2].getName());
          effect2 = game.add.sprite(1100, 300, motion[turn2].getEffect());
+         lane2 = game.add.sprite(1100, 400, motion[turn2].getLane()[0]);
          break;
       case 'enter':
          //이 모션으로 선택
@@ -324,6 +331,7 @@ function moveContent(buttonFocus,inputKey) {
          if (motion[turn3].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion3 = game.add.sprite(1200, 200, motion[turn3].getName());
          effect3 = game.add.sprite(1200, 300, motion[turn3].getEffect());
+         lane3 = game.add.sprite(1200, 400, motion[turn3].getLane()[0]);
          break;
       case 'right': 
          if (turn3 >= 4) {turn3 = 3;}
@@ -331,11 +339,13 @@ function moveContent(buttonFocus,inputKey) {
          if (motion[turn3].getSelected()) {return;} //이미 selected된 모션은 표시하지 않고 리턴
          motion3 = game.add.sprite(1200, 200, motion[turn3].getName());
          effect3 = game.add.sprite(1200, 300, motion[turn3].getEffect());
+         lane3 = game.add.sprite(1200, 400, motion[turn3].getLane()[0]);
          break;
       case 'enter':
          //이 모션으로 선택
          motionToSelect = findMotion(motion3.key);
          selectMotion(0, 2, motionToSelect);
+         break;
       case 'esc':
          //깊이를 1로 변경
          depth = 1; 
@@ -397,7 +407,7 @@ function moveContent(buttonFocus,inputKey) {
          lane3 = game.add.sprite(1200, 400, Motion.getLane()[turn6]);
          break;
       case 'right': 
-         if (turn6 >= 2) {turn6 = 2   ; return;} turn6 = turn6+1;
+         if (turn6 >= 2) {turn6 = 2; return;} turn6 = turn6+1;
          lane3 = game.add.sprite(1200, 400, Motion.getLane()[turn6]);
          break;
       case 'enter':
