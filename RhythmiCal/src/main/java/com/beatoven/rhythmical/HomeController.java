@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.beatoven.rhythmical.dao.HomeDAO;
-import com.beatoven.rhythmical.vo.HonorPost;
+import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Member;
 
 @Controller
@@ -50,7 +50,6 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
 	
@@ -66,22 +65,20 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		session.setAttribute("loginedMember", loginMember);
-		
 		return loginMember;
 	}
 	
 	//명예의 전당 글 불러오기
-	public ArrayList<HonorPost> readHonorPost() {
-		logger.debug("readHonorPost() 진입");
+	public ArrayList<FamePost> readFamePost() {
+		logger.debug("readFamePost() 진입");
 		
-		ArrayList<HonorPost> honorPostList = null;
+		ArrayList<FamePost> famePostList = null;
 		try {
-			honorPostList = homeDAO.readHonorPost();
+			famePostList = homeDAO.readFamePost();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return honorPostList;
+		return famePostList;
 	}
 	
 	@RequestMapping("game")

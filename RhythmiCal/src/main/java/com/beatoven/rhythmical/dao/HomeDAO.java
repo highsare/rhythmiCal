@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.beatoven.rhythmical.interfaces.HomeInterface;
-import com.beatoven.rhythmical.vo.HonorPost;
+import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Member;
 
 /*메인화면 관련 오브젝트*/
@@ -41,14 +41,14 @@ public class HomeDAO implements HomeInterface {
 	}
 
 	@Override
-	public ArrayList<HonorPost> readHonorPost() {
+	public ArrayList<FamePost> readFamePost() {
 		// TODO : minah
-		ArrayList<HonorPost> honorPostList = null;
+		ArrayList<FamePost> famePostList = null;
 		try {
-			honorPostList = session.getMapper(HomeInterface.class).readHonorPost();
+			famePostList = session.getMapper(HomeInterface.class).readFamePost();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return honorPostList;
+		return famePostList;
 	}
 }

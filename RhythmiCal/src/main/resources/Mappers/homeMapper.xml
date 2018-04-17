@@ -4,4 +4,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="com.beatoven.rhythmical.interfaces.SystemInterface"></mapper>
+  <mapper namespace="com.beatoven.rhythmical.interfaces.SystemInterface">
+  
+  	<insert id="signupMember" parameterType="member">
+  		insert into member
+  		values(#{id}, #{pw})
+  	</insert>
+  
+  	<select id="loginMember" parameterType="member" resultType="member">
+  		select *
+  		from member
+  		where id = #{id} and pw = #{pw}
+  	</select>
+  	
+  	<select id="readFamePost" resultType="famePost">
+  		select *
+  		from halloffame
+  	</select>
+  </mapper>

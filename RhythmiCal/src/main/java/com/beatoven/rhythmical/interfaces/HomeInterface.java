@@ -3,7 +3,7 @@ package com.beatoven.rhythmical.interfaces;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.beatoven.rhythmical.vo.HonorPost;
+import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Member;
 
 /*메인화면 관련 인터페이스*/
@@ -17,5 +17,5 @@ public interface HomeInterface {
 	public Member loginMember(Member member);
 	
 	//명예의 전당 글 읽기
-	public ArrayList<HonorPost> readHonorPost();
+	public ArrayList<FamePost> readFamePost();
 }
