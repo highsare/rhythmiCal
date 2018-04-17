@@ -13,13 +13,23 @@
 <body>
 
 <script type="text/javascript" src="resources/Phaser/rawJS/typewriter.js"></script>
-<!-- <script type="text/javascript" src="resources/Phaser/rawJS/Rho_story.js"></script> -->
+<script type="text/javascript" src="resources/Phaser/rawJS/Rho_story.js"></script>
 <<script type="text/javascript" src="resources/Phaser/stage/monsters.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/notes.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/beatoven.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/motionAndBeat.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/stageResult.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/Stage.js"></script>
+
+<script type="text/javascript">
+	//var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'RhythmiCal', {preload: preload, create: create, render: render, update: update});
+	var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'RhythmiCal', "game");
+	
+	game.state.add("story",Rho_story);
+	game.state.add("stage",Stage);
+	
+	game.state.start("stage");
+</script>
 
 </body>
 </html>

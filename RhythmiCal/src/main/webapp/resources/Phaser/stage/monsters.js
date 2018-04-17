@@ -11,7 +11,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
 	this.health = 1;
 	this.maxHealth = 3;
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE
-	this.lineX = 2000;
+	this.lineX = 600;
 	this.monsterHeight = 50;
 	this.appearanceBeat = appearanceBeat;
 	
@@ -26,7 +26,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
     this.monsterHealthbar = game.add.group();
     for (var i = 0; i < this.maxHealth; i++) {
     	
-		this.monsterHealthbar.create(3 * i, 0, 'healthFill').anchor.setTo(0.5,1);;
+		this.monsterHealthbar.create(3 * i, 0, 'healthFill').anchor.setTo(0.5,1);
 		this.monsterHealthbar.scale.set(2);
 		this.monsterHealthbar.smoothed = false;
     }
@@ -62,8 +62,7 @@ function start(){
 
 //commandJump monster unit
 //this method have method arriveDestination. arriveDestination is check unit current x location and kill unit 
-function commandJump(unitArray,currentBeat){
-	
+function commandJump(unitArray,currentBeat){	
 	for(var i = 0; i < unitArray.length; i++ ){
 		var unit = unitArray[i];
 		if(unit.status != "DIE" && unit.status != "STUN"){
@@ -102,10 +101,8 @@ function commandJump(unitArray,currentBeat){
 		}
 	}
 }
-
 //singleJump
-function singleJump (unit, maximumHeightOnAttackLine, destination) {
-	
+function singleJump (unit, maximumHeightOnAttackLine, destination) {	
 	//move Y
 	game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
 	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 100 - unit.monsterHeight - 25 }, 300, "Sine.easeInOut", true, 0, 0, true);
@@ -115,13 +112,10 @@ function singleJump (unit, maximumHeightOnAttackLine, destination) {
 	
 	unit.lineX = destination;
 }
-
-
 //monster unit damage
 function hitMonster(unit, damage){
 	unit.damage(damage);
 }
-
 //monster arrive destination //kill monster and reduce damage beatoven
 function arriveDestination(unit){
 	if (unit.lineX < 350) {
@@ -132,8 +126,6 @@ function arriveDestination(unit){
 		updateLife(-1);
 	}
 }
-
-
 //가장 단순하게 데미지를 주는 메소드
 function attackLine(unitArray,damage){
 	for(var i = 0; i < unitArray.length; i++){
