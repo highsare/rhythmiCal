@@ -16,7 +16,7 @@ var key;
 var depth;
 // 선택한 모션을 저장하는 배열
 var selectedMotion;
-// 제발!
+
 function preload() {
    // 네모 테두리 로드
    game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
@@ -88,8 +88,6 @@ function create() {
     var Left = new Motion(null, 'left', 'moon', singleLane, false);
     var Right = new Motion(null, 'right', 'star', singleLane, false);
     motion = [Point, Up, Down, Left, Right];
-    
-    
     
    // 스퀘어 생성
    x = 1000; y = 200;

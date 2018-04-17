@@ -1,22 +1,21 @@
 package com.beatoven.rhythmical.interfaces;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
+import com.beatoven.rhythmical.vo.HonorPost;
+import com.beatoven.rhythmical.vo.Member;
 
 /*메인화면 관련 인터페이스*/
 
 @Mapper
 public interface HomeInterface {
-
-	//TODO : minah
 	//회원가입
-	public String signupMember();
+	public int signupMember(Member member);
 	
-	//TODO : minah
 	//로그인
-	public String loginMember();
+	public Member loginMember(Member member);
 	
-	//TODO : minah
 	//명예의 전당 글 읽기
-	public String readHonorPost();
-	
+	public ArrayList<HonorPost> readHonorPost();
 }

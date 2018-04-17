@@ -1,8 +1,11 @@
 package com.beatoven.rhythmical;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,17 +13,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.beatoven.rhythmical.dao.HomeDAO;
+import com.beatoven.rhythmical.vo.HonorPost;
+import com.beatoven.rhythmical.vo.Member;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Inject
+	HomeDAO homeDAO;
 	
 	String consoleBox = "";
 	boolean isUsed = false;
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	//메인화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -30,30 +35,53 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
-		
 		return "home";
 	}
 	
 	//회원가입
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
-	public String signupMember(Member member) {
-		System.out.println(member.toString());
-		//TODO : minah - signupMember
-		return "singupMember";
+	public int signupMember(Member member) {
+		logger.debug("signupMember() 진입 - member: " + member);
+		
+		int result = 0;
+		try {
+			result = homeDAO.signupMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	//로그인(세션에 값 저장)
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
-	public String loginMember() {
-		//TODO : minah - loginMember
-		return null;
+	public Member loginMember(HttpSession session, Member member) {
+		logger.debug("loginMember() 진입 - member: " + member);
+		
+		Member loginMember = null;
+		try {
+			loginMember = homeDAO.loginMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		session.setAttribute("loginedMember", loginMember);
+		
+		return loginMember;
 	}
 	
 	//명예의 전당 글 불러오기
-	public String readHonorPost() {
-		//TODO : minah - readHonorPost
-		return null;
+	public ArrayList<HonorPost> readHonorPost() {
+		logger.debug("readHonorPost() 진입");
+		
+		ArrayList<HonorPost> honorPostList = null;
+		try {
+			honorPostList = homeDAO.readHonorPost();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return honorPostList;
 	}
 	
 	@RequestMapping("game")
@@ -69,8 +97,8 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
 	public String loginApp(Member member) {
-		
-		return "";
+		System.out.println("loginApp 들어옴!");
+		return "logIn";
 	}
 	
 	@ResponseBody
@@ -92,7 +120,7 @@ public class HomeController {
 				System.out.println("[Console empty]");
 				consoleBox = null;
 				isUsed = false;
-			}else {
+			} else {
 				System.out.println("Console requested"+consoleBox);
 				isUsed = true;
 				return consoleBox;	

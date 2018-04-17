@@ -1,29 +1,54 @@
 package com.beatoven.rhythmical.dao;
 
+import java.util.ArrayList;
+import javax.inject.Inject;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.beatoven.rhythmical.interfaces.HomeInterface;
+import com.beatoven.rhythmical.vo.HonorPost;
+import com.beatoven.rhythmical.vo.Member;
 
 /*메인화면 관련 오브젝트*/
 
 @Repository
 public class HomeDAO implements HomeInterface {
-
+	
+	@Inject
+	SqlSession session;
+	
 	@Override
-	public String signupMember() {
+	public int signupMember(Member member) {
 		// TODO : minah
-		return null;
+		int result = 0;
+		try {
+			result = session.getMapper(HomeInterface.class).signupMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public String loginMember() {
+	public Member loginMember(Member member) {
 		// TODO : minah
-		return null;
+		Member loginMember = null;
+		try {
+			loginMember = session.getMapper(HomeInterface.class).loginMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loginMember;
 	}
 
 	@Override
-	public String readHonorPost() {
+	public ArrayList<HonorPost> readHonorPost() {
 		// TODO : minah
-		return null;
+		ArrayList<HonorPost> honorPostList = null;
+		try {
+			honorPostList = session.getMapper(HomeInterface.class).readHonorPost();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return honorPostList;
 	}
-
 }
