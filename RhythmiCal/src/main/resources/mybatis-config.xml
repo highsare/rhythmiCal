@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.beatoven.rhythmical.vo.Member" alias="member" />
+		<typeAlias type="com.beatoven.rhythmical.vo.FamePost" alias="famePost" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="src/main/resources/mappers/homeMapper.xml" />
+		<mapper resource="mappers/introMapper.xml" />
+		<mapper resource="mappers/stageMapper.xml" />
+		<mapper resource="mappers/storyMapper.xml" />
+		<mapper resource="mappers/tutorialMapper.xml" />
+		<mapper resource="mappers/villageMapper.xml" />
+	</mappers>
+</configuration>
