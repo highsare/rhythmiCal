@@ -1,4 +1,4 @@
-package com.beatoven.rhythmical;
+package com.beatoven.rhythmical.controller;
 
 import java.text.DateFormat;
 import java.util.ArrayList;

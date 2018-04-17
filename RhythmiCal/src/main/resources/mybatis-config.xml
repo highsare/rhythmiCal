@@ -7,12 +7,23 @@
 		<typeAlias type="com.beatoven.rhythmical.vo.Member" alias="member" />
 		<typeAlias type="com.beatoven.rhythmical.vo.FamePost" alias="famePost" />
 	</typeAliases>
-	<mappers>
+	
+	<!-- <mappers>
+		<mapper class="com.beatoven.rhythmical.interfaces.HomeInterface"/>
+		<mapper class="com.beatoven.rhythmical.interfaces.IntroInterface"/>
+		<mapper class="com.beatoven.rhythmical.interfaces.StageInterface"/>
+		<mapper class="com.beatoven.rhythmical.interfaces.StoryInterface"/>
+		<mapper class="com.beatoven.rhythmical.interfaces.SystemInterface"/>
+		<mapper class="com.beatoven.rhythmical.interfaces.TutorialInterface"/>
+		<mapper class="com.beatoven.rhythmical.interfaces.VillageInterface"/>
+	</mappers> -->
+	
+	<!-- <mappers>
 		<mapper resource="src/main/resources/mappers/homeMapper.xml" />
 		<mapper resource="mappers/introMapper.xml" />
 		<mapper resource="mappers/stageMapper.xml" />
 		<mapper resource="mappers/storyMapper.xml" />
 		<mapper resource="mappers/tutorialMapper.xml" />
 		<mapper resource="mappers/villageMapper.xml" />
-	</mappers>
+	</mappers> -->
 </configuration>
