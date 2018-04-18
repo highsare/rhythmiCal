@@ -211,10 +211,23 @@ function moveMenu() {
 			    //화면에서 검정화면으로 조정.
 				game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 			    //로컬로 이동해서 로그아웃 등을 해주는 작업 필요.
+			    logoutMember();
 				break;
 		}
 		break;
 	}
+}
+
+/*
+ * logoutMember(): 게임 종료 시 AJAX를 통해 서버의 세션을 무효화하는 메소드
+ */
+function logoutMember() {
+	$.ajax({
+		url: 'logoutMember',
+		type: 'post',
+		success: function() {alert('success');},
+		error: function() {alert('error');}
+	})
 }
 
 /*
@@ -252,6 +265,7 @@ function createStudio() {
 	// AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
 	$.ajax({
 		url: 'readMotionList',
+		dataType: 'json',
 		// 성공하면 가져온 모션 리스트를 표시
 		success: function(json) {
 			var motionList = $.parseJSON(json);

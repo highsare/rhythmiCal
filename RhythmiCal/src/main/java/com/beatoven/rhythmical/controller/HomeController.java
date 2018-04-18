@@ -43,7 +43,6 @@ public class HomeController {
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
 	public int signupMember(Member member) {
 		logger.debug("signupMember() 진입 - member: " + member);
-		
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
@@ -57,7 +56,6 @@ public class HomeController {
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
 	public Member loginMember(HttpSession session, Member member) {
 		logger.debug("loginMember() 진입 - member: " + member);
-		
 		Member loginMember = null;
 		try {
 			loginMember = homeDAO.loginMember(member);
@@ -67,6 +65,16 @@ public class HomeController {
 		session.setAttribute("loginedMember", loginMember);
 		return loginMember;
 	}
+	
+	//로그아웃
+	@ResponseBody
+	@RequestMapping(value = "logoutMember", method = RequestMethod.POST)
+	public String logoutMember(HttpSession session) {
+		logger.debug("logoutMember() 진입");
+		session.invalidate();
+		return "";
+	}
+	
 	
 	//명예의 전당 글 불러오기
 	public ArrayList<FamePost> readFamePost() {
