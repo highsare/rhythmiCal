@@ -4,4 +4,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="com.beatoven.rhythmical.interfaces.IntroInterface"></mapper>
+  <mapper namespace="com.beatoven.rhythmical.interfaces.IntroInterface">
+  
+  <select id="getsaveList" resultType="save">
+  	select * from save;
+  </select>
+  
+  </mapper>

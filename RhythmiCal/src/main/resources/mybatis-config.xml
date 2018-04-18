@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="com.beatoven.rhythmical.vo.Member" alias="member" />
 		<typeAlias type="com.beatoven.rhythmical.vo.FamePost" alias="famePost" />
+		<typeAlias type="com.beatoven.rhythmical.vo.Save" alias="save" />
 	</typeAliases>
 	
 	<!-- <mappers>
