@@ -16,6 +16,7 @@ public class HomeDAO implements HomeInterface {
 	@Inject
 	SqlSession session;
 	
+	// 회원가입
 	@Override
 	public int signupMember(Member member) {
 		// TODO : minah
@@ -27,7 +28,7 @@ public class HomeDAO implements HomeInterface {
 		}
 		return result;
 	}
-
+	// 로그인
 	@Override
 	public Member loginMember(Member member) {
 		// TODO : minah
@@ -40,6 +41,7 @@ public class HomeDAO implements HomeInterface {
 		return loginMember;
 	}
 
+	// 명예의 전당 글 불러오기
 	@Override
 	public ArrayList<FamePost> readFamePost() {
 		// TODO : minah

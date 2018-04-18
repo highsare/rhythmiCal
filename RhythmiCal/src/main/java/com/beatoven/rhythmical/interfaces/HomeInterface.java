@@ -10,12 +10,12 @@ import com.beatoven.rhythmical.vo.Member;
 
 @Mapper
 public interface HomeInterface {
-	//회원가입
+	// 회원가입
 	public int signupMember(Member member);
 	
-	//로그인
+	// 로그인
 	public Member loginMember(Member member);
 	
-	//명예의 전당 글 읽기
+	// 명예의 전당 글 불러오기
 	public ArrayList<FamePost> readFamePost();
 }
