@@ -8,7 +8,7 @@
 		<typeAlias type="com.beatoven.rhythmical.vo.FamePost" alias="famePost" />
 		<typeAlias type="com.beatoven.rhythmical.vo.Save" alias="save" />
 		<typeAlias alias="monster" type="com.beatoven.rhythmical.vo.Monster"/>
-		<typeAlias alias="stage" type="com.beatoven.rhythmical.vo.Stage"/>
+			<typeAlias alias="stage" type="com.beatoven.rhythmical.vo.Stage"/>
 	</typeAliases>
 	
 	<!-- <mappers>
