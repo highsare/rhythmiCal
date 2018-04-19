@@ -18,4 +18,9 @@
 	  		WHERE musicName = #{musicName}
 	  	</select>
 	  	
+	  	<select id="getMonsterTable" resultType="monster">
+	  		SELECT *
+	  		FROM monster
+	  	</select>
+	  	
 	</mapper>

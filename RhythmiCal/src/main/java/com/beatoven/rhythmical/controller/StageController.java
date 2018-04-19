@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.StageDAO;
+import com.beatoven.rhythmical.vo.Monster;
 import com.beatoven.rhythmical.vo.Stage;
 
 /*스테이지에서 호출되는 모든 서버로의 요청은 이곳에서 진행됩니다.*/
@@ -55,12 +56,41 @@ public class StageController {
 	@RequestMapping(value="getStage", method = RequestMethod.POST)
 	public ArrayList<Object> getStage(int stageNum) {
 		
+		//phaser로 보내줄 stage정보를 담을 arraylist
 		ArrayList<Object> stageInfo = new ArrayList<>();
+		//phaser로 보내줄 monsterlist를 담을 arraylist
+		ArrayList<Object> monsterlist = new ArrayList<>();
+		//moster
+		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
+
+		//DB : stage 정보를 받아온다.
 		Stage stage = stageDAO.getStage(stageNum);
+		//DB : music beat정보를 받아온다.
 		int beat = stageDAO.getBeat(stage.getMusicName());
 		
+		
+		String monsterlistStream = stage.getMonsterList();
+		String monsterlistSplit[] = monsterlistStream.split("/");
+		
+		for (String monsterUnit : monsterlistSplit) {
+			
+			int attackline = Integer.parseInt(monsterUnit.substring(0, 0));
+			int monsterNum = Integer.parseInt(monsterUnit.substring(1, 2));
+			String appearanceBeat = monsterUnit.substring(3, 5);
+			
+			for (Monster m : monsterTable) {
+				if (m.getMonsterNum() == monsterNum) {
+					m.setAppearanceBeat(appearanceBeat);
+					m.setAttackline(attackline);
+					monsterlist.add(m);
+				}
+			}
+			
+		}
 		stageInfo.add(stage);
 		stageInfo.add(beat);
+		stageInfo.add(monsterlist);
+		
 		
 		return stageInfo;
 	}
