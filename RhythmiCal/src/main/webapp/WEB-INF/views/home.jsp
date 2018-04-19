@@ -51,8 +51,7 @@ $(function() {
 		    , type: 'POST'
 		    , dataType:'json'
 		    , data: {'id': signupId
-		    			, 'pw': signupPw
-		    			}
+		    			, 'pw': signupPw}
 		    , success: function(data) {
 		        alert(data);
 		    }
@@ -75,8 +74,7 @@ $(function() {
 		    , type: 'POST'
 		    , dataType:'json'
 		    , data: {'id': loginId
-		    			, 'pw': loginPw
-		    			}
+		    			, 'pw': loginPw}
 		    , success: function(data) {
 		        alert(data);
 		    }
