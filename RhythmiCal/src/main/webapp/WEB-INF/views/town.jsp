@@ -25,7 +25,7 @@ var bgd;
 
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
-var x, y; // 스퀘어의 위치(좌표)를 나타내는 변수
+var squareX, squareY; // 스퀘어의 위치(좌표)를 나타내는 변수
 var buttonFocus; // 현재 버튼이 몇 번에 있는가
 var motion; // 모션을 담는 배열
 var turn1, turn2, turn3, turn4, turn5, turn6; // 모션(1~3) 및 레인(4~6)을 교체할 카운터
@@ -161,7 +161,6 @@ function findMotion(motionKey) {
  * moveMenu(): 작업소/용병소/겜시작/겜종료 메뉴를 이동시키는 메소드
  */
 function moveMenu() {
-	 
 	//화살표 이미지
 	tween = game.add.tween(point);
 	
@@ -258,9 +257,10 @@ function createStudio() {
 	var Left = new Motion('left', 'moon', singleLane);
 	var Right = new Motion('right', 'star', singleLane);
 	motion = [Point, Up, Down, Left, Right];
+	
 	// 스퀘어 생성
-	x = 1000; y = 200;
-	square = game.add.sprite(x, y, 'square');
+	squareX = 1000; squareY = 200;
+	square = game.add.sprite(squareX, squareY, 'square');
 	
 	// AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
 	$.ajax({
@@ -314,35 +314,35 @@ function moveButtonFocus() {
    console.log('moveButtonFocus 진입');
    switch (inputKey) {
       case 'up':
-         if (y == 200) {return;} // 맨 상단에 있을 경우 상단이동 금지
+         if (squareY == 200) {return;} // 맨 상단에 있을 경우 상단이동 금지
          else {
             square.kill();
-            y = y-200;
-            square = game.add.sprite(x, y, 'square');
+            squareY = squareY-200;
+            square = game.add.sprite(squareX, squareY, 'square');
             buttonFocus = buttonFocus-3; return;
          } break;
       case 'down':
-         if (y == 400) {return;} // 맨 하단에 있을 경우 하단이동 금지
+         if (squareY == 400) {return;} // 맨 하단에 있을 경우 하단이동 금지
          else {
             square.kill();
-            y = y+200;
-            square = game.add.sprite(x, y, 'square');
+            squareY = squareY+200;
+            square = game.add.sprite(squareX, squareY, 'square');
             buttonFocus = buttonFocus+3; return;
          } break;
       case 'left':
-         if (x == 1000) {return;} // 맨 좌측에 있을 경우 좌측이동 금지
+         if (squareX == 1000) {return;} // 맨 좌측에 있을 경우 좌측이동 금지
          else {
             square.kill();
-            x = x-100;
-            square = game.add.sprite(x, y, 'square');
+            squareX = squareX-100;
+            square = game.add.sprite(squareX, squareY, 'square');
             buttonFocus = buttonFocus-1; return;
          } break;
       case 'right':
-         if (x == 1200) {return;} // 맨 우측에 있을 경우 우측이동 금지
+         if (squareX == 1200) {return;} // 맨 우측에 있을 경우 우측이동 금지
          else {
             square.kill();
-            x = x+100;
-            square = game.add.sprite(x, y, 'square');
+            squareX = squareX+100;
+            square = game.add.sprite(squareX, squareY, 'square');
             buttonFocus = buttonFocus+1; return;
          } break;
       case 'enter': 
