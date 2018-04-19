@@ -1,12 +1,16 @@
 package com.beatoven.rhythmical.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.beatoven.rhythmical.dao.StageDAO;
+import com.beatoven.rhythmical.vo.Stage;
 
 /*스테이지에서 호출되는 모든 서버로의 요청은 이곳에서 진행됩니다.*/
 
@@ -16,6 +20,9 @@ public class StageController {
 	private String motionBox;
 	private boolean isUsed = false;
 
+	@Inject
+	StageDAO stageDAO;
+	
 	//모션 값 받아오기
 	@ResponseBody
 	@RequestMapping(value="sendMotion", method = RequestMethod.POST)
@@ -42,4 +49,21 @@ public class StageController {
 		}
 		return "NOTHING";
 	}
+	
+	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.
+	@ResponseBody
+	@RequestMapping(value="getStage", method = RequestMethod.POST)
+	public ArrayList<Object> getStage(int stageNum) {
+		
+		ArrayList<Object> stageInfo = new ArrayList<>();
+		Stage stage = stageDAO.getStage(stageNum);
+		int beat = stageDAO.getBeat(stage.getMusicName());
+		
+		stageInfo.add(stage);
+		stageInfo.add(beat);
+		
+		return stageInfo;
+	}
+	
+	
 }
