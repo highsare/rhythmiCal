@@ -56,7 +56,7 @@ public class StageController {
 	@RequestMapping(value="getStage", method = RequestMethod.POST)
 	public ArrayList<Object> getStage(int stageNum) {
 		
-		//phaser로 보내줄 stage정보를 담을 arraylist
+/*		//phaser로 보내줄 stage정보를 담을 arraylist
 		ArrayList<Object> stageInfo = new ArrayList<>();
 		//phaser로 보내줄 monsterlist를 담을 arraylist
 		ArrayList<Object> monsterlist = new ArrayList<>();
@@ -86,7 +86,16 @@ public class StageController {
 				}
 			}
 			
-		}
+		}*/
+		
+		//for Test
+		ArrayList<Object> stageInfo = new ArrayList<>();
+		int beat = 30;
+		ArrayList<Monster> monsterlist = new ArrayList<>();
+
+		//Monster monster1 = new Monster(null, "mummy", 1, 3, null, null, 1, 0);
+		
+		Stage stage = new Stage(1, "55bpm_Mirror_Mirror.mp3", null, "stageBG_1.png");
 		stageInfo.add(stage);
 		stageInfo.add(beat);
 		stageInfo.add(monsterlist);

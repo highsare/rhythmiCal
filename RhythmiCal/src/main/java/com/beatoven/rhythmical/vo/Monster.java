@@ -4,7 +4,6 @@ public class Monster {
 
 	private int monsterNum;
 	private String monsterName;
-	private String imgName;
 	private int speed;
 	private int health;
 	private String effectSoundName;
@@ -16,12 +15,11 @@ public class Monster {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Monster(int monsterNum, String monsterName, String imgName, int speed, int health, String effectSoundName,
-			String skill, String appearanceBeat, int attackline) {
+	public Monster(int monsterNum, String monsterName, int speed, int health, String effectSoundName, String skill,
+			String appearanceBeat, int attackline) {
 		super();
 		this.monsterNum = monsterNum;
 		this.monsterName = monsterName;
-		this.imgName = imgName;
 		this.speed = speed;
 		this.health = health;
 		this.effectSoundName = effectSoundName;
@@ -44,14 +42,6 @@ public class Monster {
 
 	public void setMonsterName(String monsterName) {
 		this.monsterName = monsterName;
-	}
-
-	public String getImgName() {
-		return imgName;
-	}
-
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
 	}
 
 	public int getSpeed() {
@@ -104,12 +94,10 @@ public class Monster {
 
 	@Override
 	public String toString() {
-		return "Monster [monsterNum=" + monsterNum + ", monsterName=" + monsterName + ", imgName=" + imgName
-				+ ", speed=" + speed + ", health=" + health + ", effectSoundName=" + effectSoundName + ", skill="
-				+ skill + ", appearanceBeat=" + appearanceBeat + ", attackline=" + attackline + "]";
+		return "Monster [monsterNum=" + monsterNum + ", monsterName=" + monsterName + ", speed=" + speed + ", health="
+				+ health + ", effectSoundName=" + effectSoundName + ", skill=" + skill + ", appearanceBeat="
+				+ appearanceBeat + ", attackline=" + attackline + "]";
 	}
-
-	
 
 	
 }
