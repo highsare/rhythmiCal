@@ -26,10 +26,8 @@ var bgd;
 function preload() {
 	//마을 메뉴 이미지 로드
 	game.load.image('menuwin','resources/images/town/townImg/vmenu.png' )
-	//첫번째 메뉴 이미지 로드(임의)
-	game.load.image('click','resources/images/town/townImg/click.jpg' )
-	//두번째 메뉴 이미지 로드(임의)
-	game.load.image('click2','resources/images/town/townImg/click2.png' )
+	//마을 이미지 로드
+	game.load.image('click','resources/imagestown/townImg//myroom.png' )
 	//스마트폰 들고있는 이미지 로드
 	game.load.image('hand','resources/images/town/townImg/hand.png' )
 	//종료시 fade out될 검정 배경 이미지 로드
@@ -38,6 +36,16 @@ function preload() {
 	game.load.image('back','resources/images/town/townImg/v_back.png' )
 	//선택 흰 테두리
 	game.load.image('select','resources/images/town/townImg/select.png' )
+	//Enter 눌렀을 때 서브메뉴 배경
+	game.load.image('menu_back','resources/images/town/townImg/menu_back.png' )
+	//용병소 이미지
+	game.load.image('pub','resources/images/town/townImg/pub.PNG' )
+	//작업소 이미지 
+	game.load.image('worksplace', 'resources/images/town/townImg/office.png')
+	//내방에서의 종료 버튼 이미지
+	game.load.image('exit','resources/images/town/townImg/exit.png' )
+	//종료 버튼 감싸고 있는 선택 이미지
+	game.load.image('e_select','resources/images/town/townImg/exit_line.png' )
 }
 
 function create() {
@@ -84,10 +92,10 @@ function update() {
 	   	
 	   	// 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
 		switch (y) {
-			case 204: alert('204');
+			case 204: alert('작업소');
 				// null인지 확인하기.
 				isnull();
-				image = game.add.image(600, 80, 'click');
+				office();
 				key1.onDown.add(cancel, this);
 				break;
 			case 316: alert('316');
@@ -97,12 +105,6 @@ function update() {
 				break;
 			case 428: alert('428');
 				isnull();
-				// 난수 발급
-				var rdm = Math.floor(Math.random() * 9999) + 1000;
-				image = game.add.image(600, 80, 'hand');
-				// 난수를 보여줄 텍스트
-				text1 = game.add.text(870, 180, rdm, { font: "40px Arial", fill: "#000000", align: "center" });
-				// 1번(취소 버튼이라고 가정) 을 눌렀을 때
 				key1.onDown.add(cancel, this);
 				// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.
 				break;
@@ -137,4 +139,21 @@ function cancel(){
 	else {
 		return;
 	}
+	
+	if (m_back== null) {
+		m_back = game.add.image(720,80,'menu_back');
+	}
+	
+function office() {
+	
+	image = game.add.image(770, 120, 'pub');
+	
+	// 난수 발급
+	var rdm = Math.floor(Math.random() * 9999) + 1000;
+	image = game.add.image(800, 350, 'hand');
+	
+	// 난수를 보여줄 텍스트
+	text1 = game.add.text(1070, 450, rdm, 
+			{ font: "40px Arial", fill: "#000000", align: "center" });
+}
 }
