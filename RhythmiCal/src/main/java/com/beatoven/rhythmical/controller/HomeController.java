@@ -3,7 +3,11 @@ package com.beatoven.rhythmical.controller;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -26,6 +30,9 @@ public class HomeController {
 	
 	String consoleBox = "";
 	boolean isUsed = false;
+	HashMap<String, Object> multiplay = new HashMap<>();
+	int cnt = 2;
+	
 	
 	//메인화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -63,6 +70,9 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		session.setAttribute("loginedMember", loginMember);
+		
+		multiplay.put("player1", member.getId());
+		
 		return loginMember;
 	}
 	
@@ -71,6 +81,13 @@ public class HomeController {
 	@RequestMapping(value = "logoutMember", method = RequestMethod.POST)
 	public String logoutMember(HttpSession session) {
 		logger.debug("logoutMember() 진입");
+		multiplay = new HashMap<>(); //새로 만들어서 덮어 버림. removeAll이 없음 ㅠㅠㅠ
+		
+		// 진주 해야하는 거 .
+		/* 플레이어가 각각 종료 했을 때 지워주기랑 플레이어 추가된 상황에서 화면에 보여주기랑 
+		 * 안드로이드에서 다 찼을때 다르게 토스트 보여주기*/
+		
+		
 		session.invalidate();
 		return "";
 	}
@@ -101,9 +118,30 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public String loginApp(Member member) {
-		System.out.println("loginApp 들어옴!");
-		return "logIn";
+	public boolean loginApp(Member member,HttpSession session) {
+		int code = Integer.parseInt(member.getCode());
+		Iterator<String> keys = multiplay.keySet().iterator();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			System.out.println(key);
+			if (code == (int)multiplay.get(key)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
+	public boolean sendRdm(int rdm) {
+		
+		if (multiplay.size() >=4) {
+			return false;
+		} else {
+			multiplay.put("player"+cnt,rdm);
+			cnt++;
+			return true;
+		}
 	}
 	
 	@ResponseBody

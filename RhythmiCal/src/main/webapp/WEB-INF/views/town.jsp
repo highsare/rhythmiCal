@@ -195,11 +195,12 @@ function moveMenu() {
 		switch (y) {
 			case 204: alert('작업소');
 				isnull();
-				createStudio();
+				//createStudio();
+				createMercenary();
 				break;
 			case 316: alert('용병소');
 				isnull();
-				createMercenary();
+				//createMercenary();
 				break;
 			case 428: alert('겜시작');
 				isnull();
@@ -499,8 +500,24 @@ function createMercenary() {
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
 	image = game.add.image(800, 350, 'hand');
-		
-		// 난수를 보여줄 텍스트
+
+	$.ajax({
+		url: 'sendRdm',
+		type: 'post',
+		data: {
+			rdm: rdm
+		},
+		success: function(result) {
+			if (result == true){
+				alert('생성된 코드를 모바일에서 입력해주세요.');
+			} else {
+				alert('더이상 추가 불가');
+			}
+		},
+		error: function() {alert('error');}
+	})
+
+	// 난수를 보여줄 텍스트
 	text1 = game.add.text(1070, 450, rdm, 
 			{ font: "40px Arial", fill: "#000000", align: "center" });
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
