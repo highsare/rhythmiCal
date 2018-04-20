@@ -54,7 +54,7 @@ public class StageController {
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.
 	@ResponseBody
 	@RequestMapping(value="getStage", method = RequestMethod.POST)
-	public ArrayList<Object> getStage(int stageNum) {
+	public ArrayList<Object> getStage(String stageNum) {
 		
 /*		//phaser로 보내줄 stage정보를 담을 arraylist
 		ArrayList<Object> stageInfo = new ArrayList<>();
@@ -92,8 +92,18 @@ public class StageController {
 		ArrayList<Object> stageInfo = new ArrayList<>();
 		int beat = 30;
 		ArrayList<Monster> monsterlist = new ArrayList<>();
-
-		//Monster monster1 = new Monster(null, "mummy", 1, 3, null, null, 1, 0);
+		
+		Monster monster1 = new Monster(0, "mummy", 1, 3, null, null, 1, 0);
+		Monster monster2 = new Monster(0, "mummy", 2, 2, null, null, 2, 1);
+		Monster monster3 = new Monster(0, "mummy", 1, 1, null, null, 3, 0);
+		Monster monster4 = new Monster(0, "mummy", 3, 4, null, null, 4, 2);
+		Monster monster5 = new Monster(0, "mummy", 1, 5, null, null, 5, 0);
+		
+		monsterlist.add(monster1);
+		monsterlist.add(monster2);
+		monsterlist.add(monster3);
+		monsterlist.add(monster4);
+		monsterlist.add(monster5);
 		
 		Stage stage = new Stage(1, "55bpm_Mirror_Mirror.mp3", null, "stageBG_1.png");
 		stageInfo.add(stage);

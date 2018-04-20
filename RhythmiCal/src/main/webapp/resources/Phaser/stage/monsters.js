@@ -73,10 +73,7 @@ Monster.prototype.damage = function(damage){
 
 //start
 function start(){
-	
 	commandJump(monstersA,currentBeat);
-	commandJump(monstersB,currentBeat);
-	commandJump(monstersC,currentBeat);
 }
 
 //commandJump monster unit
