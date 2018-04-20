@@ -30,7 +30,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 	function create() {
 
 	   //스테이지 1
-	typethetext("STAGE1 ",700,400,90);
+	typethetext("STAGE1 ",game.world.centerX-150, game.world.centerY- 50,90);
 	//2초있다가  스토리 시작
 	game.time.events.add(2000, function () {  //글자 나올때 소리 추가
 		//카메라 페이드 인
@@ -60,11 +60,13 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 			//움직임 enable 정의
 		   	game.physics.enable(player, Phaser.Physics.ARCADE);
 			
-		   	dialogue();}, self);
+		   	dialogue();
+		   	
+	}, this);
 	  
 			
-		
 	}
+	
 	
 	
 	
@@ -113,8 +115,8 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 		npc2.alpha = 0;
 		npc1.alpha = 0;
 		//이미지가 시트로 있으면 몇번째 시트를 사용할 것인가 초기화
-        npc1.frame=1;
-	    npc2.frame=1;
+        //npc1.frame=1;
+	   // npc2.frame=1;
 	    // 1씩 증가하면서 대화문 돌릴꺼임
         var storyOrder=0;
                 
@@ -126,28 +128,28 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
    		storyText[1]="누구지? 어디서 무슨 소리가 들렸는걸?";
         storyText[2]="여기야 친구 나를 잡아";
         storyText[3]="누구죠?";
-        storyText[4]="난 칼이야 리듬을 느끼는 칼..";
+        storyText[4]="난 칼이야 리듬을 느끼는 칼";
         storyText[5]="앗";
         storyText[6]="그래 리듬이 느껴지니";
-        storyText[7]="내 어꺠가 들썩거리고있어...";
-        storyText[8]="그 리듬에 몸을 맡겨봐 친구";
+        storyText[7]="내 어꺠가 들썩거리고있어요...";
+        storyText[8]="그 리듬에 몸을 맡겨봐 친구  그럼 게임을 시작하지";
         
         //화자순서 어레이 생성
         var  storyNPCSequence = new Array();
         
         //대화할 순서 저장
-        storyNPCSequence[0]=1;
-        storyNPCSequence[1]=2;
-        storyNPCSequence[2]=1;
-        storyNPCSequence[3]=2
-        storyNPCSequence[4]=1
-        storyNPCSequence[5]=2;
-        storyNPCSequence[6]=1;
-        storyNPCSequence[7]=2;
-        storyNPCSequence[8]=1;
+        storyNPCSequence[0]=2;
+        storyNPCSequence[1]=1;
+        storyNPCSequence[2]=2;
+        storyNPCSequence[3]=1;
+        storyNPCSequence[4]=2;
+        storyNPCSequence[5]=1;
+        storyNPCSequence[6]=2;
+        storyNPCSequence[7]=1;
+        storyNPCSequence[8]=2;
         
       //대화할 때 이미지 시트에서 몇번째 이미지를 로드 할건가 저장
-     /*   var storyNPCFrame = new Array();
+    /*     var storyNPCFrame = new Array();
         
         storyNPCFrame[0]=1;//아직 이미지시트가 없으므로 첫번쨰 프레임만 불러오도록
         storyNPCFrame[1]=1;
@@ -157,7 +159,7 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
         storyNPCFrame[5]=1;
         storyNPCFrame[6]=1;
         storyNPCFrame[7]=1;
-        storyNPCFrame[8]=1;*/
+        storyNPCFrame[8]=1; */
         
         //this.textArea = this.add.text(0, 0, "", styleDescritpion);
         //텍스트 속성 정의
@@ -196,52 +198,61 @@ var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload
 		
 		//대화순서에 따라서 이미지시트가 있다면 몇변째 프레임을 쓸것인지 어레이에서 불러와서 넣음
 		if(storyNPCSequence[storyOrder]==1) {
-		//	npc1.frame=storyNPCFrame[storyOrder];
+			//npc1.frame=storyNPCFrame[storyOrder];
 			dialogueBG = game.add.sprite(50,600,'dialogueLeft');
 			dialogueBG.width = 1500;
 		}
 		if(storyNPCSequence[storyOrder]==2) {
-		//	npc2.frame=storyNPCFrame[storyOrder];
+			//npc2.frame=storyNPCFrame[storyOrder];
 			dialogueBG = game.add.sprite(50,600,'dialogueRight');
 			dialogueBG.width = 1500;
 		}
 
    		//텍스트 화면에 대화문 어레이에서 문자 불러와서 붙여줌
-   		//150, 690  위치에 텍스트 발생
-   		typethetext( storyText[storyOrder] , 150,690,45);
-   		
-   		//대화문 순서 1씩 증가 시킴
-   		storyOrder = Math.abs(storyOrder + 1);
-   		
-   		if (storyOrder == storyText.length){
-   			typewriter.destroy();
-   			//function() 다음 스테이지로 가는 버튼 생성
-   			return;
-   		}
-   		
-   }
-   , this);
-        
-	}
-	//애니메이팅 함수
-	
-	//배경 이미지 그리는 함수
-	
-	//타이핑효과 함수 (텍스트값,x위치 , y위치)
-	function typethetext(txt,xvalue,yvalue,size){
-		//글자 타이핑효과 정의
-		typewriter.init(game, {
-	      x: xvalue,
-	      y: yvalue,
-	      time: 10,
-	      fontFamily: "neo_font",
-	      fontSize: size,
-	      maxWidth: 1400,
-	      //타이핑 소리 줌
-	     // sound: reg.track,
-	      text: txt
-	    });
-		//타이핑 시작
-	   typewriter.start();
-	    
-	}
+   		//화자 마다 글자 시작하는 위치 바꿈
+ 	
+		switch (storyOrder%2) {
+				case 0:
+					typethetext(storyText[storyOrder], 1500-(50*storyText[storyOrder].length), 710);//가로길이에서 글자 길이*50사이즈 뺴서 시작점 
+					break;
+				
+				default:
+					typethetext(storyText[storyOrder], 150, 710);
+					break;
+				}
+
+				if (storyOrder == storyText.length) {
+					//typewriter.destroy();
+					//dialogueBG.destroy();
+					//function() 다음 스테이지로 가는 버튼 생성
+					//return;
+				}
+
+				//대화문 순서 1씩 증가 시킴	
+				storyOrder = storyOrder + 1;
+
+			}, this);
+
+		}
+		//애니메이팅 함수
+
+		//배경 이미지 그리는 함수
+
+		//타이핑효과 함수 (텍스트값,x위치 , y위치)
+		function typethetext(txt, xvalue, yvalue, size) {
+			//글자 타이핑효과 정의
+			typewriter.init(game, {
+				x : xvalue,
+				y : yvalue,
+				time : 10,
+				fontFamily : "neo_font",
+				fontSize : size || 50,
+				maxWidth : 1400,
+				//타이핑 소리 줌
+				// sound: reg.track,
+				text : txt
+			});
+			//타이핑 시작
+			typewriter.start();
+
+		}
