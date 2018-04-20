@@ -56,6 +56,7 @@ function wrongTiming(){
 	})
 }
 
+//정확한 타이밍에서의 처리
 function motionEvent(motion){
 	
 	popupCombo(true);

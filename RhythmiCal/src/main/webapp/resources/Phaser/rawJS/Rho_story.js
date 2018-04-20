@@ -1,5 +1,5 @@
 
-	var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+	//var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 	var reg = {};//음악 로드시 저장
 	var player;//주인공
 	var right;//오른쪽발걸음
@@ -7,7 +7,11 @@
 	var npc1;
 	var npc2;
 	var dialogueBG;
-	function preload() {
+	var Rho_story = function(game){
+	}
+	
+	Rho_story.prototype = {
+	preload: function() {
 		//대화문 뒷배경
 		//game.load.image("textBG","resources/textBox.png");
 		
@@ -28,9 +32,8 @@
 	    game.load.image("dialogueLeft", "resources/Images/story/dialogueLeft.png"); 
 	    game.load.image("dialogueRight", "resources/Images/story/dialogueRight.png"); 
 	    
-	}
-
-	function create() {
+	},
+	create: function() {
 		
 		//글자 나올때 소리 추가
 	    reg.track = game.add.audio('track');
@@ -54,43 +57,38 @@
 	    var moveToRight =  game.add.tween(player).to({x: game.width/3, y: 750}, 1000, Phaser.Easing.Quadratic.Out, true);
 	    
 	   	//움직임이 끝나면 animaiontStopped함수 실행  
-	   	moveToRight.onComplete.add(animationStopped, this);
+	   	moveToRight.onComplete.add(this.animationStopped, this);
 		//움직임 enable 정의
 	   	game.physics.enable(player, Phaser.Physics.ARCADE);
 		
-	   	dialogue();
+	   	this.dialogue();
 	   	
-	}
-	
-	function animationStopped(sprite, animation) {
+	},
+	update: function() {
+		//Ajax로 컨트롤러에게 계속 [다음으로 넘어가는지] 묻는다
+		
+		//if 위에가 예스면
+		//밑에 함수를 실행하는데 다음 배열의 데이터로 실행한다.
+
+	},
+	render: function() {
+		//캐릭터의 이미지시트에서 몇번째인가 확인한다.
+	    //game.debug.text(player.frame, 32, 32);
+
+	},
+	animationStopped: function(sprite, animation) {
 		
 		//캐릭터 발걸음 정지
 		right.stop();
 	    var txt="ddadsfjlasdjflkasdjflkasd"
 	    
 	    //타이핑메소드로 전달
-		typethetext(txt,10,10);
-				
-	    
-	}
-	function update() {
-		//Ajax로 컨트롤러에게 계속 [다음으로 넘어가는지] 묻는다
-		
-		//if 위에가 예스면
-		//밑에 함수를 실행하는데 다음 배열의 데이터로 실행한다.
-
-	}
-
-	function render() {
-		//캐릭터의 이미지시트에서 몇번째인가 확인한다.
-	    //game.debug.text(player.frame, 32, 32);
-
-	}
-	
+	    this.typethetext(txt,10,10);   
+	},
 	//배경음 재생 함수
 	
 	//텍스트 오버레이 함수
-	function dialogue(){
+	dialogue: function(){
 		  /////////////NPC대화 함수///////////////
 		//대화할 npc1 생성
 		var npc1 = game.add.sprite(100, 300, 'npc1');
@@ -202,7 +200,7 @@
 	
 	   		//텍스트 화면에 대화문 어레이에서 문자 불러와서 붙여줌
 	   		//150, 690  위치에 텍스트 발생
-	   		typethetext( storyText[storyOrder] , 150,690);
+			this.typethetext( storyText[storyOrder] , 150,690);
 	   		
 	   		//대화문 순서 1씩 증가 시킴
 	   		storyOrder = Math.abs(storyOrder + 1);
@@ -216,13 +214,13 @@
  		}
  		, this);
         
-	}
+	},
 	//애니메이팅 함수
 	
 	//배경 이미지 그리는 함수
 	
 	//타이핑효과 함수 (텍스트값,x위치 , y위치)
-	function typethetext(txt,xvalue,yvalue){
+	typethetext: function(txt,xvalue,yvalue){
 		//글자 타이핑효과 정의
 		typewriter.init(game, {
 	      x: xvalue,
@@ -239,4 +237,4 @@
 	   typewriter.start();
 	    
 	}
-		
+}
