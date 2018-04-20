@@ -6,7 +6,6 @@
  *4.종료 후 적절한 STATE START
  */
 
-//var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create, render: render, update: update});
 //DB에서 가져온 데이터로 초기화시킬 변수들
 var monstersA;
 var monstersB;
@@ -88,30 +87,6 @@ Stage.prototype = {
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
-		//게임 기초 세팅
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		game.input.onDown.add(this.gofull, this);
-		
-		//DB에서 받아 온 데이터의 생성
-		stageBGM = game.add.audio('stageBGM');
-		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / 55;
-		beatStart = 0;
-		monstersA = new Array();
-		monstersB = new Array();
-		monstersC = new Array();
-		//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
-		for(var i = 0; i < 50; i++){
-			monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2);
-		}
-		for(var i = 0; i < 50; i++){
-	    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3);
-	    }
-	    for(var i = 0; i < 50; i++){
-	    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6);
-	    }
-		
-		
 		//고정 데이터들의 생성
 		//physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -135,6 +110,28 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		iniLife(3);
+		//게임 기초 세팅
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(this.gofull, this);
+		
+		//DB에서 받아 온 데이터의 생성
+		stageBGM = game.add.audio('stageBGM');
+		//여기에 BPM 값을 넣는다 
+		BPM = BPMfactor / 55;
+		beatStart = 0;
+		monstersA = new Array();
+		monstersB = new Array();
+		monstersC = new Array();
+		//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
+		for(var i = 0; i < 50; i++){
+			monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2);
+		}
+		for(var i = 0; i < 50; i++){
+	    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3);
+	    }
+	    for(var i = 0; i < 50; i++){
+	    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6);
+	    }
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);

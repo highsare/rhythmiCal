@@ -11,7 +11,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
 	this.health = 1;
 	this.maxHealth = 3;
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE
-	this.lineX = 600;
+	this.lineX = 2000;
 	this.monsterHeight = 50;
 	this.appearanceBeat = appearanceBeat;
 	
@@ -26,12 +26,16 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
     this.monsterHealthbar = game.add.group();
     for (var i = 0; i < this.maxHealth; i++) {
     	
-		this.monsterHealthbar.create(3 * i, 0, 'healthFill').anchor.setTo(0.5,1);
-		this.monsterHealthbar.scale.set(2);
+		this.monsterHealthbar.create(3 * i, 0, 'healthFill');
+		this.monsterHealthbar.scale.set(3);
+		this.monsterHealthbar.children[i].smoothed = false; //차일드로 접근해서 false로 수정
+		this.monsterHealthbar.children[i].anchor.setTo(0.5,1); //그룹에는 앵커가 없음... ㄷㄷㄷ
 		this.monsterHealthbar.smoothed = false;
+		
     }
-    this.monsterHealthbar.x = 2000;
-    this.monsterHealthbar.y = lineYLocation[attackLine] - this.monsterHeight - 25;
+    this.monsterHealthbar.x = 1650;
+    this.monsterHealthbar.y = lineYLocation[attackLine] +80;
+    this.health -= 1; //healthbar index를 위한 처리
 
     //physics
 	game.physics.enable(this.monsterSprite, Phaser.Physics.ARCADE);
@@ -39,16 +43,31 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat){
 
 //Monster Entity prototype damage
 Monster.prototype.damage = function(damage){
+	
+	//이전의 체력값
+	var healthBefore = this.health;
+	
 	this.health -= damage;	
 	
 	//체력이 0보다 크다면 체력바 한칸을 없앤다.
 	if (this.health >= 0) {
-		this.monsterHealthbar.children[this.health].kill();
-	}
-	
-	//체력이 0이되면 몬스터를 없앤다.
-	if (this.health <= 0) {
+		//데미지를 입어 체력이 깎였다.
+		if (healthBefore > this.health) {
+			var healthBlank = game.add.sprite(3 * healthBefore, 0, 'healthBlank');
+			healthBlank.smoothed = false;
+			healthBlank.anchor.setTo(0.2, 0);
+			this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
+		} else {//체력이 증가했다.
+			if (this.monsterHealthbar.children[this.health] != null) {
+				var healthFill = game.add.sprite(3 * this.health, 0, 'healthFill');
+				healthFill.smoothed = false;
+				healthFill.anchor.setTo(0.2, 0);
+				this.monsterHealthbar.replace(this.monsterHealthbar.children[this.health], healthFill);
+			}
+		}
+	} else { //체력이 0미만이되면 몬스터와 체력바를 없앤다.
 		this.monsterSprite.kill();
+		this.monsterHealthbar.kill();
 	}
 }
 
@@ -105,7 +124,7 @@ function commandJump(unitArray,currentBeat){
 function singleJump (unit, maximumHeightOnAttackLine, destination) {	
 	//move Y
 	game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
-	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 100 - unit.monsterHeight - 25 }, 300, "Sine.easeInOut", true, 0, 0, true);
+	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine -20 }, 300, "Sine.easeInOut", true, 0, 0, true);
 	//move X
 	game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Linear', true, 0);
 	game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Linear', true, 0);
