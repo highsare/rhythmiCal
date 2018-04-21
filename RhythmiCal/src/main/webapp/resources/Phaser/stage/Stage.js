@@ -58,7 +58,7 @@ Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
 		/////////////////stageNum을 받아오는 과정이 필요함
-		getStageInfo(stageNum);
+		this.getStageInfo(stageNum);
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
@@ -200,27 +200,25 @@ Stage.prototype = {
 	  {
 	      game.scale.startFullScreen(false);
 	  }
+	},
+	getStageInfo: function(stageNum){
+		$.ajax({
+		
+			url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
+		
+			dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+		
+			cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+		
+			success : function(data) {
+		
+		
+					bgImgName = data.stageInfo[0].bgImgName;
+					monsterlist = data.stageInfo[2].monsterlist;
+					musicName = data.stageInfo[0].musicName;
+					beat = data.stageInfo[1].beat;
+		
+			}
+		});
 	}
-}
-
-function getStageInfo(stageNum){
-	
-	$.ajax({
-	
-		url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
-	
-		dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-	
-		cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-	
-		success : function(data) {
-	
-	
-				bgImgName = data.stageInfo[0].bgImgName;
-				monsterlist = data.stageInfo[2].monsterlist;
-				musicName = data.stageInfo[0].musicName;
-				beat = data.stageInfo[1].beat;
-	
-		}
-	});
 }
