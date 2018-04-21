@@ -5,7 +5,7 @@
 <script type="text/javascript" src="resources/JavaScriptResource/phaser-2.10.2.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>마을</title>
+<title>town.jsp</title>
 </head>
 <body>
 <script>
