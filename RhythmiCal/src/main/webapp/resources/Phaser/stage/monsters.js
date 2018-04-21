@@ -78,7 +78,8 @@ function start(){
 
 //commandJump monster unit
 //this method have method arriveDestination. arriveDestination is check unit current x location and kill unit 
-function commandJump(unitArray,currentBeat){	
+function commandJump(unitArray,currentBeat){
+	//alert("In");
 	for(var i = 0; i < unitArray.length; i++ ){
 		var unit = unitArray[i];
 		if(unit.status != "DIE" && unit.status != "STUN"){

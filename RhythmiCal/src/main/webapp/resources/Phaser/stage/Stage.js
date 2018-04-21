@@ -137,7 +137,9 @@ Stage.prototype = {
 		BPM = BPMfactor / 55;
 		beatStart = 0;
 		monstersA = new Array();
-		for ( var i in monsterlist) {
+		
+		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
+		for (var i = 0; i < monsterlist.length; i++) {
 			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat);
 		}
 	    //Timer functions here
@@ -180,19 +182,18 @@ Stage.prototype = {
 		$.ajax({
 		
 			url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
+			
+			type : "post",
 		
 			dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
 		
 			cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
 		
-			success : function(data) {
-		
-		
-					bgImgName = data.stageInfo[0].bgImgName;
-					monsterlist = data.stageInfo[2].monsterlist;
-					musicName = data.stageInfo[0].musicName;
-					beat = data.stageInfo[1].beat;
-		
+			success : function(stageInfo) {
+					bgImgName = stageInfo[0].bgImgName;
+					monsterlist = stageInfo[2];
+					musicName = stageInfo[0].musicName;
+					beat = stageInfo[1];
 			}
 		});
 	}
