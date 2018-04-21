@@ -140,7 +140,7 @@ Stage.prototype = {
 		
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlist.length; i++) {
-			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat);
+			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat, monsterlist[i].health);
 		}
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -194,6 +194,7 @@ Stage.prototype = {
 					monsterlist = stageInfo[2];
 					musicName = stageInfo[0].musicName;
 					beat = stageInfo[1];
+					
 			}
 		});
 	}

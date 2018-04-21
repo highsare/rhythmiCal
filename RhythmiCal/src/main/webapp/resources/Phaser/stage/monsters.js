@@ -3,13 +3,13 @@
  */
 
 //Monster Entity
-function Monster(game, attackLine, speed, monsterName, appearanceBeat){
+function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth){
 	
 	this.game = game;
 	this.attackLine = attackLine;
 	this.speed = speed;
-	this.health = 1;
-	this.maxHealth = 3;
+	this.health = maxHealth;
+	this.maxHealth = maxHealth;
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE
 	this.lineX = 2000;
 	this.monsterHeight = 50;
