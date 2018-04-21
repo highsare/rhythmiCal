@@ -8,7 +8,7 @@ public class Monster {
 	private int health;
 	private String effectSoundName;
 	private String skill;
-	private String appearanceBeat;
+	private int appearanceBeat;
 	private int attackline;
 	
 	public Monster() {
@@ -16,7 +16,7 @@ public class Monster {
 	}
 
 	public Monster(int monsterNum, String monsterName, int speed, int health, String effectSoundName, String skill,
-			String appearanceBeat, int attackline) {
+			int appearanceBeat, int attackline) {
 		super();
 		this.monsterNum = monsterNum;
 		this.monsterName = monsterName;
@@ -76,11 +76,11 @@ public class Monster {
 		this.skill = skill;
 	}
 
-	public String getAppearanceBeat() {
+	public int getAppearanceBeat() {
 		return appearanceBeat;
 	}
 
-	public void setAppearanceBeat(String appearanceBeat) {
+	public void setAppearanceBeat(int appearanceBeat) {
 		this.appearanceBeat = appearanceBeat;
 	}
 

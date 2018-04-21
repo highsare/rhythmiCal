@@ -22,8 +22,6 @@ function Monster(game, attackLine, speed, lineXIndex, health){
     
     this.monsterHealthbar = game.add.group();
     for (var i = 0; i < this.health; i++) {
-
-    	
 		this.monsterHealthbar.create(3 * i, 0, 'healthFill');
 		this.monsterHealthbar.scale.set(3);
 		this.monsterHealthbar.children[i].smoothed = false; //차일드로 접근해서 false로 수정
@@ -33,9 +31,6 @@ function Monster(game, attackLine, speed, lineXIndex, health){
     this.monsterHealthbar.x = 1075;
     this.monsterHealthbar.y = lineYLocation[attackLine] + 80;
     this.health -= 1; //healthbar index를 위한 처리
-
-    
-    
     //physics
 	game.physics.enable(this.monsterSprite, Phaser.Physics.ARCADE);
 }
@@ -112,12 +107,8 @@ function create() {
 	//임의의 배경색 지정
 	game.stage.backgroundColor = '#1873CE';
 	
-	
 	//게임물리 아케이드로 적용
 	game.physics.startSystem(Phaser.Physics.ARCADE);
-	
-	
-	
 	
 	key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 	key1.onDown.add(add1, this);
@@ -129,28 +120,6 @@ function create() {
 	//비트에 따른 반복적 함수 호출
 	timeloop = game.time.events.loop(Phaser.Timer.SECOND, monsterAttackStart, this);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //몬스터 공격 시작
 function monsterAttackStart(){
@@ -184,11 +153,6 @@ function monsterAttackStart(){
 	currentBeat += 1;
 }
 
-
-
-
-
-
 //하나의 점프 //라인별로 다른 Y값을 받아 점프를 처리해주고 //유닛의 speed에 따라 다음에 뛸 X값을 업데이트 해준다.
 function singleJump (unit) {
 	
@@ -215,48 +179,12 @@ function singleJump (unit) {
 		unit.lineXIndex += 2;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //몬스터 데미지를 업데이트하는 함수
 function hitMonster(unit, damage){
 	
 	//유닛이 데미지를 받는다.
 	unit.damage(damage);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //몬스터가 목적지에 도달했다. //몬스터를 사라지게 하고 비토벤의 생명력을 깎는다.
 function arriveDestination(unit){
 	
@@ -276,17 +204,3 @@ function arriveDestination(unit){
 		}					
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

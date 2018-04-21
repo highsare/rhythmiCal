@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,13 +37,13 @@ var singleLane, doubleLane; // 싱글레인 및 더블레인 배열
 
 function preload() {
 	// 키보드를 받는 변수 생성
-	upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-	downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-	leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-	rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-	enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-	escKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-	
+		leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+		rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+		upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+		downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+		enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+		escKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+		
 	// 깊이를 1로 초기화
 	depth = 0;
 	
@@ -104,35 +105,33 @@ function create() {
 /*
  * readKey(): 키보드 키를 읽어들이는 메소드
  */
-var inputKey;															//앱과 연동 시 var inputKey 지우고, 주석 살리고, update에서 깊이별 분기문 지워야 한다.
+															//앱과 연동 시 var inputKey 지우고, 주석 살리고, update에서 깊이별 분기문 지워야 한다.
 function readKey() {
-	if (upKey.isDown) {key = 'up';}
-	else if (downKey.isDown) {key = 'down';}
-	else if (leftKey.isDown) {key = 'left';}
-	else if (rightKey.isDown) {key = 'right';}
-	else if (enterKey.isDown) {key = 'enter';}
-	else if (escKey.isDown) {key = 'esc';}
-	return key;
-   /* $.ajax({
+    $.ajax({
       url: 'requestConsole', 
-      success: function(key) {
-         if (key != "NOTHING") {
+      success: function(inputKey) {
+    	 console.log(inputKey);
+         if (inputKey != "NOTHING") {
             switch (depth) {
             // 버튼을 움직이는 단계
+            case 0:
+               console.log('depth: 0');
+               moveMenu(inputKey);
+               break;
             case 1:
                console.log('depth: 1');
-               moveButtonFocus(key); // 버튼 상하좌우 이동
+               moveButtonFocus(inputKey); // 버튼 상하좌우 이동
                break;
             // 모션을 움직이는 단계
             case 2:
                console.log('depth: 2'); 
-               moveContent(buttonFocus,key); // 모션 및 레인 좌우 이동
+               moveContent(buttonFocus,inputKey); // 모션 및 레인 좌우 이동
                break;
             }
          }
       }
    });
-   return ""; */
+   return ""; 
 }
 
 /*
@@ -165,9 +164,9 @@ function findMotion(motionKey) {
 }  
  
 /*
- * moveMenu(): 작업소/용병소/겜시작/겜종료 메뉴를 이동시키는 메소드
+ * moveMenu(inputKey): 작업소/용병소/겜시작/겜종료 메뉴를 이동시키는 메소드
  */
-function moveMenu() {
+function moveMenu(inputKey) {
 	//화살표 이미지
 	tween = game.add.tween(point);
 	
@@ -175,14 +174,21 @@ function moveMenu() {
 	switch (inputKey) {
 	case 'up':
 		if (y > 204) {
-	    		y -= 112; alert(y);
-	    		tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
+	    	y -= 112; alert(y);
+	    	tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
 		} break;
 	case 'down':
 		if (y < 540) {
 			y += 112; alert(y);
 			tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
 		} break;
+	case 'esc': 
+  		isEntered = false;
+  		if (point == null) {
+  			point = game.add.image(x,y,'select');	
+  			point.scale.set(1.98);
+  		} 
+		break;
 	case 'enter':
 		isEntered = true;
 		if (point != null) {
@@ -213,6 +219,7 @@ function moveMenu() {
 				break;
 		}
 		break;
+	
 	}
 }
 
@@ -308,7 +315,7 @@ function createStudio() {
 /*
  * moveButtonFocus(): 버튼을 상하좌우 이동시키는 메소드. (depth 1에서 출발)
  */
-function moveButtonFocus() {
+function moveButtonFocus(inputKey) {
    console.log('moveButtonFocus 진입');
    switch (inputKey) {
       case 'up':
@@ -359,9 +366,9 @@ function moveButtonFocus() {
 }
 
 /*
- * moveContent(int buttonFocus): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
+ * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
-function moveContent(buttonFocus) {
+function moveContent(buttonFocus,inputKey) {
    console.log('moveContent() 진입');
    switch(buttonFocus) {
    // 모션 1 변경
@@ -499,8 +506,24 @@ function createMercenary() {
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
 	image = game.add.image(800, 350, 'hand');
-		
-		// 난수를 보여줄 텍스트
+
+	$.ajax({
+		url: 'sendRdm',
+		type: 'post',
+		data: {
+			rdm: rdm
+		},
+		success: function(result) {
+			if (result == true){
+				alert('생성된 코드를 모바일에서 입력해주세요.');
+			} else {
+				alert('더이상 추가 불가');
+			}
+		},
+		error: function() {alert('error');}
+	})
+
+	// 난수를 보여줄 텍스트
 	text1 = game.add.text(1070, 450, rdm, 
 			{ font: "40px Arial", fill: "#000000", align: "center" });
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
@@ -508,26 +531,7 @@ function createMercenary() {
 
 function update() {
    // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.) 
-   inputKey = readKey();
-   
-   // 깊이에 따라 단계별 메소드 실행
-   switch (depth) {
-	  // 메뉴 선택
-	  case 0: 
-		 console.log('depth: 0');
-		 moveMenu(); 
-		 break;
-	  // 작업소 - 버튼 각각을 이동
-	  case 1:
-	     console.log('depth: 1');
-	     moveButtonFocus();
-	     break;
-	  // 작업소 - 버튼 안에서 이동
-	  case 2:
-	     console.log('depth: 2'); 
-	     moveContent(buttonFocus);
-	     break;
-   }
+   readKey();
 }
 
 function myroom() {
@@ -574,8 +578,6 @@ function isnull() {
 	if (square != null) {square.kill();}
 	
 }
-
-
 </script>
 </body>
 </html>
