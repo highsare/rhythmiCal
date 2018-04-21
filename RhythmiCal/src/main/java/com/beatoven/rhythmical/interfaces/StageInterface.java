@@ -1,7 +1,10 @@
 package com.beatoven.rhythmical.interfaces;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import com.beatoven.rhythmical.vo.Monster;
 import com.beatoven.rhythmical.vo.Stage;
 
 
@@ -16,4 +19,6 @@ public interface StageInterface {
 	//music테이블에서 musicName을 통해 beat값을 받아온다.
 	public int getBeat(String musicName);
 	
+	//monster테이블에서 몬스터테이블을 받아온다.
+	public ArrayList<Monster> getMonsterTable();
 }

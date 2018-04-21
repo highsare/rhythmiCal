@@ -6,7 +6,6 @@
  *4.종료 후 적절한 STATE START
  */
 
-//var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create, render: render, update: update});
 //DB에서 가져온 데이터로 초기화시킬 변수들
 var monstersA;
 var monstersB;
@@ -46,11 +45,26 @@ var BPMfactor = 60;
 //멀티유저번호
 var userNumber;
 
+//stageNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
+var bgImgName;
+var monsterlistA; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
+var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
+var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
+var musicName;
+var stageNum;
+var beat;
+var mummy;
+
+//노비토를 담을 전역 변수
+var nobeato;
+
 var Stage = function(game) {};
 
 Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
+		/////////////////stageNum을 받아오는 과정이 필요함
+		this.getStageInfo(stageNum);
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
@@ -71,6 +85,8 @@ Stage.prototype = {
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트
 		game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
+		//노비토 스프라이트시트
+		game.load.spritesheet('nobeato', 'resources/Images/characters/nobeato64x64.png', 64, 64, 8);
 		//음표그림4개 로드   1:빨강, 2:파랑, 3:초록, 4:노랑
 		for(var i=1; i<=4;i++){
 			game.load.image('note'+i, 'resources/Images/notes/note'+i+'.png');
@@ -91,27 +107,11 @@ Stage.prototype = {
 		//게임 기초 세팅
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(this.gofull, this);
-		
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / 55;
 		beatStart = 0;
-		monstersA = new Array();
-		monstersB = new Array();
-		monstersC = new Array();
-		//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
-		for(var i = 0; i < 50; i++){
-			monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2);
-		}
-		for(var i = 0; i < 50; i++){
-	    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3);
-	    }
-	    for(var i = 0; i < 50; i++){
-	    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6);
-	    }
-		
-		
 		//고정 데이터들의 생성
 		//physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -129,12 +129,43 @@ Stage.prototype = {
 		//하나씩 나타나는 음표를 그룹으로 주기
 		sprites = game.add.group();
 		//음표 뒤에 배경생성    game.width/2-150, 500 위치에 생성
-		var noteBG = sprites.create(game.width/2-150, 750, 'noteBG');
+		var noteBG = sprites.create(game.width/2, 730, 'noteBG');
+		noteBG.anchor.setTo(0.5,0.5);
+		noteBG.scale.set(2);
+		noteBG.alpha = 0.5;
 		//음표 흐르는 거 배경을 그룹으로 주기
 		noteBgGroup = game.add.group();
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		iniLife(3);
+		//게임 기초 세팅
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(this.gofull, this);
+		
+		//DB에서 받아 온 데이터의 생성
+		stageBGM = game.add.audio('stageBGM');
+		//여기에 BPM 값을 넣는다 
+		BPM = BPMfactor / 55;
+		beatStart = 0;
+		monstersA = new Array();
+		monstersB = new Array();
+		monstersC = new Array();
+		
+		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
+		for (var i = 0; i < monsterlistA.length; i++) {
+			monstersA[i] = new Monster(game, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+		}
+		for (var i = 0; i < monsterlistB.length; i++) {
+			monstersB[i] = new Monster(game, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+		}
+		for (var i = 0; i < monsterlistC.length; i++) {
+			monstersC[i] = new Monster(game, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+		}
+
+
+		//Nobeato(game)
+		nobeato = new Nobeato(game);
+		
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -161,6 +192,7 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
+		bossesJump(nobeato);
 	},
 	gofull: function() {
 	  if (game.scale.isFullScreen)
@@ -171,5 +203,26 @@ Stage.prototype = {
 	  {
 	      game.scale.startFullScreen(false);
 	  }
+	},
+	getStageInfo: function(stageNum){
+		$.ajax({
+		
+			url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
+			
+			type : "post",
+		
+			dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+		
+			cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+		
+			success : function(stageInfo) {
+					bgImgName = stageInfo[0].bgImgName;
+					musicName = stageInfo[0].musicName;
+					beat = stageInfo[1];
+					monsterlistA = stageInfo[2];
+					monsterlistB = stageInfo[3];
+					monsterlistC = stageInfo[4];
+			}
+		});
 	}
 }

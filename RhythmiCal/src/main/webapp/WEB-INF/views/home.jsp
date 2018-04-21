@@ -169,7 +169,7 @@ td {
 
 
 <div class="center">
-	<img src="resources/Images/mainPage/maplestory.png" style="width: 90%" class="center"><br>
+	<img src="resources/Images/mainPage/mainlogo.png" style="width: 90%" class="center"><br>
 </div>
 
 <div class="center">

@@ -2,25 +2,38 @@ package com.beatoven.rhythmical.vo;
 
 public class Monster {
 
+	private int monsterNum;
 	private String monsterName;
-	private String imgName;
 	private int speed;
 	private int health;
 	private String effectSoundName;
 	private String skill;
+	private int appearanceBeat;
+	private int attackline;
 	
 	public Monster() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Monster(String monsterName, String imgName, int speed, int health, String effectSoundName, String skill) {
+	public Monster(int monsterNum, String monsterName, int speed, int health, String effectSoundName, String skill,
+			int appearanceBeat, int attackline) {
 		super();
+		this.monsterNum = monsterNum;
 		this.monsterName = monsterName;
-		this.imgName = imgName;
 		this.speed = speed;
 		this.health = health;
 		this.effectSoundName = effectSoundName;
 		this.skill = skill;
+		this.appearanceBeat = appearanceBeat;
+		this.attackline = attackline;
+	}
+
+	public int getMonsterNum() {
+		return monsterNum;
+	}
+
+	public void setMonsterNum(int monsterNum) {
+		this.monsterNum = monsterNum;
 	}
 
 	public String getMonsterName() {
@@ -29,14 +42,6 @@ public class Monster {
 
 	public void setMonsterName(String monsterName) {
 		this.monsterName = monsterName;
-	}
-
-	public String getImgName() {
-		return imgName;
-	}
-
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
 	}
 
 	public int getSpeed() {
@@ -71,11 +76,28 @@ public class Monster {
 		this.skill = skill;
 	}
 
+	public int getAppearanceBeat() {
+		return appearanceBeat;
+	}
+
+	public void setAppearanceBeat(int appearanceBeat) {
+		this.appearanceBeat = appearanceBeat;
+	}
+
+	public int getAttackline() {
+		return attackline;
+	}
+
+	public void setAttackline(int attackline) {
+		this.attackline = attackline;
+	}
+
 	@Override
 	public String toString() {
-		return "Monster [monsterName=" + monsterName + ", imgName=" + imgName + ", speed=" + speed + ", health="
-				+ health + ", effectSoundName=" + effectSoundName + ", skill=" + skill + "]";
+		return "Monster [monsterNum=" + monsterNum + ", monsterName=" + monsterName + ", speed=" + speed + ", health="
+				+ health + ", effectSoundName=" + effectSoundName + ", skill=" + skill + ", appearanceBeat="
+				+ appearanceBeat + ", attackline=" + attackline + "]";
 	}
-	
+
 	
 }

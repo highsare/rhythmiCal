@@ -7,9 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.beatoven.rhythmical.interfaces.HomeInterface;
 import com.beatoven.rhythmical.interfaces.SystemInterface;
-import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Save;
 
 /*기타 데이터 엑세스 오브젝트*/
