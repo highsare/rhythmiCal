@@ -121,7 +121,10 @@ Stage.prototype = {
 		//하나씩 나타나는 음표를 그룹으로 주기
 		sprites = game.add.group();
 		//음표 뒤에 배경생성    game.width/2-150, 500 위치에 생성
-		var noteBG = sprites.create(game.width/2-150, 750, 'noteBG');
+		var noteBG = sprites.create(game.width/2, 730, 'noteBG');
+		noteBG.anchor.setTo(0.5,0.5);
+		noteBG.scale.set(2);
+		noteBG.alpha = 0.5;
 		//음표 흐르는 거 배경을 그룹으로 주기
 		noteBgGroup = game.add.group();
 		//그룹에  noteBG이미지 넣기
