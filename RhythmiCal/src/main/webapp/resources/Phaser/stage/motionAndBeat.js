@@ -84,9 +84,11 @@ function motionEvent(motion){
 function timingCheck(timing){
 	var notePop;
 	if (timing) {
-		notePop = game.add.sprite(game.width/2+20,750,'imgO');		
+		notePop = game.add.sprite(game.width/2,750,'imgO');
+		notePop.anchor.setTo(0.5,0.5);
 	}else{
-		notePop = game.add.sprite(game.width/2+20,750,'imgX');
+		notePop = game.add.sprite(game.width/2,750,'imgX');
+		notePop.anchor.setTo(0.5,0.5);
 	}
 	notePop.anchor.setTo(0.5,0.5);
 	notePop.scale.setTo(1,1);

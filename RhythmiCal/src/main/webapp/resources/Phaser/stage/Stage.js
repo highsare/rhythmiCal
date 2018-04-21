@@ -58,7 +58,7 @@ Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
 		/////////////////stageNum을 받아오는 과정이 필요함
-		getStageInfo(stageNum);
+		this.getStageInfo(stageNum);
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
@@ -121,7 +121,10 @@ Stage.prototype = {
 		//하나씩 나타나는 음표를 그룹으로 주기
 		sprites = game.add.group();
 		//음표 뒤에 배경생성    game.width/2-150, 500 위치에 생성
-		var noteBG = sprites.create(game.width/2-150, 750, 'noteBG');
+		var noteBG = sprites.create(game.width/2, 730, 'noteBG');
+		noteBG.anchor.setTo(0.5,0.5);
+		noteBG.scale.set(2);
+		noteBG.alpha = 0.5;
 		//음표 흐르는 거 배경을 그룹으로 주기
 		noteBgGroup = game.add.group();
 		//그룹에  noteBG이미지 넣기
@@ -137,8 +140,10 @@ Stage.prototype = {
 		BPM = BPMfactor / 55;
 		beatStart = 0;
 		monstersA = new Array();
-		for ( var i in monsterlist) {
-			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat);
+		
+		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
+		for (var i = 0; i < monsterlist.length; i++) {
+			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat, monsterlist[i].health);
 		}
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -175,29 +180,25 @@ Stage.prototype = {
 	  {
 	      game.scale.startFullScreen(false);
 	  }
-	}
-}
-
-function getStageInfo(stageNum){
-	
-	$.ajax({
-	
-		type : "POST",
+	},
+	getStageInfo: function(stageNum){
+		$.ajax({
 		
-		url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
-	
-		dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-	
-		cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-	
-		success : function(stageInfo) {
-	
-	
-				bgImgName = stageInfo[0].bgImgName;
-				monsterlist = stageInfo[2];
-				musicName = stageInfo[0].musicName;
-				beat = stageInfo[1];
-				
-		}
-	});
+			url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
+			
+			type : "post",
+		
+			dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+		
+			cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+		
+			success : function(stageInfo) {
+					bgImgName = stageInfo[0].bgImgName;
+					monsterlist = stageInfo[2];
+					musicName = stageInfo[0].musicName;
+					beat = stageInfo[1];
+					
+			}
+		});
+	}
 }

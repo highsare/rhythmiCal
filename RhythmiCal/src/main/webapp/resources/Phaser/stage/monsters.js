@@ -3,13 +3,13 @@
  */
 
 //Monster Entity
-function Monster(game, attackLine, speed, monsterName, appearanceBeat){
+function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth){
 	
 	this.game = game;
 	this.attackLine = attackLine;
 	this.speed = speed;
-	this.health = 1;
-	this.maxHealth = 3;
+	this.health = maxHealth;
+	this.maxHealth = maxHealth;
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE
 	this.lineX = 2000;
 	this.monsterHeight = 50;
@@ -78,7 +78,8 @@ function start(){
 
 //commandJump monster unit
 //this method have method arriveDestination. arriveDestination is check unit current x location and kill unit 
-function commandJump(unitArray,currentBeat){	
+function commandJump(unitArray,currentBeat){
+	//alert("In");
 	for(var i = 0; i < unitArray.length; i++ ){
 		var unit = unitArray[i];
 		if(unit.status != "DIE" && unit.status != "STUN"){
