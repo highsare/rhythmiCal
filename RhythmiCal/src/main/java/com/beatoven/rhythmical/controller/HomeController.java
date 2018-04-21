@@ -107,9 +107,16 @@ public class HomeController {
 		return "game";
 	}
 	
+	// 마을을 만들기 위한 임시 town.jsp
 	@RequestMapping(value = "town", method = RequestMethod.GET)
 	public String townTest() {
 		return "town";
+	}
+	
+	// 튜토리얼을 만들기 위한 임시 tutorial.jsp
+	@RequestMapping(value = "tutorial", method = RequestMethod.GET)
+	public String tutorialTest() {
+		return "tutorial";
 	}
 	
 	@ResponseBody

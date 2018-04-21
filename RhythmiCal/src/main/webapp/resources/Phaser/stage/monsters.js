@@ -12,10 +12,8 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	this.maxHealth = maxHealth;
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE
 	this.lineX = 2000;
-	this.monsterHeight = 50;
 	this.appearanceBeat = appearanceBeat;
 	
-	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 5);
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 5);
 	this.monsterSprite.scale.set(2);
 	this.monsterSprite.anchor.setTo(0.5,1);
@@ -73,7 +71,9 @@ Monster.prototype.damage = function(damage){
 
 //start
 function start(){
-	commandJump(monstersA,currentBeat);
+	commandJump(monstersA, currentBeat);
+	commandJump(monstersB, currentBeat);
+	commandJump(monstersC, currentBeat);
 }
 
 //commandJump monster unit
