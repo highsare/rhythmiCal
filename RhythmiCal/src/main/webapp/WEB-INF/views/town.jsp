@@ -6,7 +6,7 @@
 <script type="text/javascript" src="resources/JavaScriptResource/phaser-2.10.2.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>마을</title>
+<title>town.jsp</title>
 </head>
 <body>
 <script>
@@ -61,6 +61,12 @@ function preload() {
 	game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
 	game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
 	
+	//멀티 플레이어 표시
+	game.load.image('player1','resources/Images/town/townImg/player1.png' ); 
+	game.load.image('player2','resources/Images/town/townImg/player2.png' ); 
+	game.load.image('player3','resources/Images/town/townImg/player3.png' ); 
+	game.load.image('player4','resources/Images/town/townImg/player4.png' ); 
+	
 	// 네모 테두리 로드
 	game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
 	
@@ -92,12 +98,18 @@ function create() {
 	bgd = game.add.image(0, 0, 'back');
 	bgd.alpha = 0.5;
 	bgd.scale.set(1);
+	
 	//메뉴 이미지 지정한 이미지에 출력
 	var back = game.add.image(100, 80, 'menuwin');
 	back.scale.set(2);
 	//첫 메뉴를 가리키고 있는 흰테두리출력
 	point = game.add.image(x, y, 'select');
 	point.scale.set(1.98);
+	
+	var player = game.add.image(150, 750, 'player1');
+	var text = game.add.text(150,700, "player Connection", 
+			{ font: "30px Arial", fill: "#FFFFFF", align: "center" });
+	player.scale.set(0.4);
 	//키보드 사용 설정 해줌
 	cursors = game.input.keyboard.createCursorKeys();
 }
@@ -503,6 +515,8 @@ function moveContent(buttonFocus,inputKey) {
 function createMercenary() {
 	image = game.add.image(770, 120, 'pub');
 		
+	alert('${sessionScope.mList}')
+	
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
 	image = game.add.image(800, 350, 'hand');
@@ -577,6 +591,10 @@ function isnull() {
 	if (lane3 != null) {lane3.kill();}
 	if (square != null) {square.kill();}
 	
+}
+
+function insertplayer() {
+	alert('${sessionScope.mList}')
 }
 </script>
 </body>
