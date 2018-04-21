@@ -92,6 +92,9 @@ public class StageController {
 		ArrayList<Object> stageInfo = new ArrayList<>();
 		int beat = 30;
 		ArrayList<Monster> monsterlist = new ArrayList<>();
+		ArrayList<Monster> monsterlistA = new ArrayList<>();
+		ArrayList<Monster> monsterlistB = new ArrayList<>();
+		ArrayList<Monster> monsterlistC = new ArrayList<>();
 		
 		Monster monster1 = new Monster(0, "mummy", 1, 3, null, null, 1, 0);
 		Monster monster2 = new Monster(0, "mummy", 2, 2, null, null, 2, 1);
@@ -105,11 +108,22 @@ public class StageController {
 		monsterlist.add(monster4);
 		monsterlist.add(monster5);
 		
+		for (int i = 0; i < monsterlist.size(); i++) {
+			if (monsterlist.get(i).getAttackline() == 0) {
+				monsterlistA.add(monsterlist.get(i));
+			} else if (monsterlist.get(i).getAttackline() == 1) {
+				monsterlistB.add(monsterlist.get(i));
+			} else if (monsterlist.get(i).getAttackline() == 2) {
+				monsterlistC.add(monsterlist.get(i));
+			}
+		}
+		
 		Stage stage = new Stage(1, "55bpm_Mirror_Mirror.mp3", null, "stageBG_1.png");
 		stageInfo.add(stage);
 		stageInfo.add(beat);
-		stageInfo.add(monsterlist);
-		
+		stageInfo.add(monsterlistA);
+		stageInfo.add(monsterlistB);
+		stageInfo.add(monsterlistC);
 		
 		return stageInfo;
 	}

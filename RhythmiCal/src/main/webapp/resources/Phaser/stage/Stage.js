@@ -47,11 +47,17 @@ var userNumber;
 
 //stageNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
 var bgImgName;
-var monsterlist; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
+var monsterlistA; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
+var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
+var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var musicName;
 var stageNum;
 var beat;
 var mummy;
+
+//노비토를 담을 전역 변수
+var nobeato;
+
 var Stage = function(game) {};
 
 Stage.prototype = {
@@ -79,6 +85,8 @@ Stage.prototype = {
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트
 		game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
+		//노비토 스프라이트시트
+		game.load.spritesheet('nobeato', 'resources/Images/characters/nobeato64x64.png', 64, 64, 8);
 		//음표그림4개 로드   1:빨강, 2:파랑, 3:초록, 4:노랑
 		for(var i=1; i<=4;i++){
 			game.load.image('note'+i, 'resources/Images/notes/note'+i+'.png');
@@ -140,11 +148,25 @@ Stage.prototype = {
 		BPM = BPMfactor / 55;
 		beatStart = 0;
 		monstersA = new Array();
+		monstersB = new Array();
+		monstersC = new Array();
 		
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
-		for (var i = 0; i < monsterlist.length; i++) {
-			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat, monsterlist[i].health);
+		for (var i = 0; i < monsterlistA.length; i++) {
+			monstersA[i] = new Monster(game, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
 		}
+		for (var i = 0; i < monsterlistB.length; i++) {
+			monstersB[i] = new Monster(game, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+		}
+		for (var i = 0; i < monsterlistC.length; i++) {
+			monstersC[i] = new Monster(game, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+		}
+
+
+		//Nobeato(game)
+		nobeato = new Nobeato(game);
+		
+		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
 	    game.time.events.loop((Phaser.Timer.SECOND / 5) * BPM , toggleBeatZone, this);
@@ -170,6 +192,7 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
+		bossesJump(nobeato);
 	},
 	gofull: function() {
 	  if (game.scale.isFullScreen)
@@ -194,10 +217,11 @@ Stage.prototype = {
 		
 			success : function(stageInfo) {
 					bgImgName = stageInfo[0].bgImgName;
-					monsterlist = stageInfo[2];
 					musicName = stageInfo[0].musicName;
 					beat = stageInfo[1];
-					
+					monsterlistA = stageInfo[2];
+					monsterlistB = stageInfo[3];
+					monsterlistC = stageInfo[4];
 			}
 		});
 	}
