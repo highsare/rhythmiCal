@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +31,7 @@ public class HomeController {
 	
 	String consoleBox = "";
 	boolean isUsed = false;
-	HashMap<String, Object> multiplay = new HashMap<>();
-	int cnt = 2;
-	
+	public static HashMap<String, Object> multiplay = new HashMap<>();
 	
 	//메인화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -71,8 +70,6 @@ public class HomeController {
 		}
 		session.setAttribute("loginedMember", loginMember);
 		
-		multiplay.put("player1", member.getId());
-		
 		return loginMember;
 	}
 	
@@ -81,7 +78,6 @@ public class HomeController {
 	@RequestMapping(value = "logoutMember", method = RequestMethod.POST)
 	public String logoutMember(HttpSession session) {
 		logger.debug("logoutMember() 진입");
-		multiplay = new HashMap<>(); //새로 만들어서 덮어 버림. removeAll이 없음 ㅠㅠㅠ
 		
 		// 진주 해야하는 거 .
 		/* 플레이어가 각각 종료 했을 때 지워주기랑 플레이어 추가된 상황에서 화면에 보여주기랑 
@@ -118,36 +114,19 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public boolean loginApp(Member member,HttpSession session) {
-		int code = Integer.parseInt(member.getCode());
-		Iterator<String> keys = multiplay.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			System.out.println(key);
-			if (code == (int)multiplay.get(key)) {
-				return true;
-			}
-		}
-		return false;
+	public boolean loginApp(Member member, HttpSession session) {
+		System.out.println(member);
+		session.setAttribute("id", member.getId());
+		multiplay.put("player1", member.getId());
+		return true;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
-	public boolean sendRdm(int rdm) {
-		
-		if (multiplay.size() >=4) {
-			return false;
-		} else {
-			multiplay.put("player"+cnt,rdm);
-			cnt++;
-			return true;
-		}
-	}
 	
 	@ResponseBody
 	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
-	public String receiveConsole(String request, String order) {
+	public String receiveConsole(String request, String order, HttpSession session) {
 		consoleBox = order;
+		session.setAttribute("order", consoleBox);
 		System.out.println(consoleBox);
 		if(order.equals("esc")) {
 			return "Rhythmi";

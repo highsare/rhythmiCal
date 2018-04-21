@@ -1,5 +1,9 @@
 package com.beatoven.rhythmical.controller;
 
+import java.util.HashMap;
+
+import java.util.Iterator;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -19,6 +23,9 @@ public class VillageController {
 	
 	@Inject
 	VillageDAO villageDAO;
+	int cnt = 2;
+	
+	public HashMap<String, Object> multi = HomeController.multiplay;
 	
 	// 설정된 모션 값 읽어오기
 	@ResponseBody
@@ -31,4 +38,32 @@ public class VillageController {
 		catch (Exception e) {e.printStackTrace();}
 		return jsonMotionList;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
+	public boolean loginApp(Member member,HttpSession session) {
+		Iterator<String> keys = multi.keySet().iterator();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			System.out.println(key);
+			if (member.getCode() == String.valueOf(multi.get(key))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
+	public boolean sendRdm(int rdm) {
+		
+		if (multi.size() >=4) {
+			return false;
+		} else {
+			multi.put("player"+cnt,rdm);
+			cnt++;
+			return true;
+		}
+	}
+	
 }
