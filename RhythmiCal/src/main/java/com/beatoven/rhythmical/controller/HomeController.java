@@ -30,7 +30,8 @@ public class HomeController {
 	
 	String consoleBox = "";
 	boolean isUsed = false;
-	public static HashMap<String, Object> multiplay = new HashMap<>();
+	//public static HashMap<String, Object> multiplay = new HashMap<>();
+	public static ArrayList<String> multiList = new ArrayList<>(); 
 	
 	//메인화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -116,7 +117,12 @@ public class HomeController {
 	public boolean loginApp(Member member, HttpSession session) {
 		System.out.println(member);
 		session.setAttribute("id", member.getId());
-		multiplay.put("player1", member.getId());
+		//multiplay.put("player1", member.getId());
+		for (String player : multiList) {
+			if (!player.equals("player1")) {
+				multiList.add("player1");
+			}
+		}
 		return true;
 	}
 	
