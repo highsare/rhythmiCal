@@ -51,7 +51,7 @@ var monsterlist; //moster테이블을 조회해 만든 arraylist:monsterlist를 
 var musicName;
 var stageNum;
 var beat;
-
+var mummy;
 var Stage = function(game) {};
 
 Stage.prototype = {
@@ -99,26 +99,11 @@ Stage.prototype = {
 		//게임 기초 세팅
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(this.gofull, this);
-		
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / 55;
 		beatStart = 0;
-		monstersA = new Array();
-		monstersB = new Array();
-		monstersC = new Array();
-		//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
-		//monsterlist[x]를 통해서 접근 생성한다.
-		for(var i = 0; i < 50; i++){
-			monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2);
-		}
-		for(var i = 0; i < 50; i++){
-	    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3);
-	    }
-	    for(var i = 0; i < 50; i++){
-	    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6);
-	    }
 		//고정 데이터들의 생성
 		//physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -152,19 +137,9 @@ Stage.prototype = {
 		BPM = BPMfactor / 55;
 		beatStart = 0;
 		monstersA = new Array();
-		monstersB = new Array();
-		monstersC = new Array();
-		//createMonster (game, attackLine, speed, monsterName, appearanceBeat, startYOnAttackLine)
-		for(var i = 0; i < 50; i++){
-			monstersA[i] = new Monster(game, 0, 1, 'stormlord_dragon', 2+i*2);
+		for ( var i in monsterlist) {
+			monstersA[i] = new Monster(game, monsterlist[i].attackline, monsterlist[i].speed, monsterlist[i].monsterName, monsterlist[i].appearanceBeat);
 		}
-		for(var i = 0; i < 50; i++){
-	    	monstersB[i] = new Monster(game, 1, 1, 'mummy', i*3);
-	    }
-	    for(var i = 0; i < 50; i++){
-	    	monstersC[i] = new Monster(game, 2, 2, 'mummy', 1+i*6);
-	    }
-		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
 	    game.time.events.loop((Phaser.Timer.SECOND / 5) * BPM , toggleBeatZone, this);
