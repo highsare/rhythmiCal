@@ -17,27 +17,35 @@
 
 <script>
 <!-- infinitial scroll -->
-var page = 1;
-$(window).scroll(function() {
-	console.log('scrollTop(): ' + $(window).scrollTop() + '\n'
-			  + 'document height: ' + $(document).height() + '\n'
-			  + 'window height: ' + $(window).height());
-	
-    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-		console.log(++page);
-		$.ajax({
-			url: 'readFamePost'
-			, success: function(data) {
-				alert(data);
-				$("#enters").append('<tr><td class="id">John</td><td class="reply">john@example.com</td></tr>');
-			}
-			, error: function(data) {
-				alert(data);
-			}
-		})
-		//$("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~");
-    }
+var cnt = 0;
+var page = -1;
+$(document).ready(function () {
+	$(document).scroll(function() {
+		console.log('document: ' + $(document).height() + '\n'
+					+ 'scroll: ' + $(window).scrollTop() + '\n'
+					+ 'window: ' + $(window).height());
+		
+		var maxHeight = $(document).height();
+		var currentScroll = $(window).scrollTop() + $(window).height();
+		
+		if (maxHeight <= currentScroll) {
+			page++; // 페이지 증가
+			$.ajax({
+				url: 'readFamePost'
+				, data: {offset: page}
+				, success: function(data) {
+					$.each(data, function() {
+						$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id	
+					});
+				}
+				, error: function() {
+					
+				}
+			})
+	    }
+	})
 });
+
 
 <!-- jQuery -->
 $(function() {

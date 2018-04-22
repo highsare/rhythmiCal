@@ -2,6 +2,8 @@ package com.beatoven.rhythmical.dao;
 
 import java.util.ArrayList;
 import javax.inject.Inject;
+
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.beatoven.rhythmical.interfaces.HomeInterface;
@@ -43,11 +45,11 @@ public class HomeDAO implements HomeInterface {
 
 	// 명예의 전당 글 불러오기
 	@Override
-	public ArrayList<FamePost> readFamePost() {
+	public ArrayList<FamePost> readFamePost(RowBounds rowBounds) {
 		// TODO : minah
 		ArrayList<FamePost> famePostList = null;
 		try {
-			famePostList = session.getMapper(HomeInterface.class).readFamePost();
+			famePostList = session.getMapper(HomeInterface.class).readFamePost(rowBounds);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

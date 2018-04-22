@@ -3,6 +3,8 @@ package com.beatoven.rhythmical.interfaces;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
+
 import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Member;
 
@@ -17,5 +19,5 @@ public interface HomeInterface {
 	public Member loginMember(Member member);
 	
 	// 명예의 전당 글 불러오기
-	public ArrayList<FamePost> readFamePost();
+	public ArrayList<FamePost> readFamePost(RowBounds rowBounds);
 }

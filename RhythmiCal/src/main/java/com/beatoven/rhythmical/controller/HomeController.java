@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Locale;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -87,15 +89,25 @@ public class HomeController {
 	//명예의 전당 글 불러오기
 	@ResponseBody
 	@RequestMapping(value = "readFamePost", method = RequestMethod.GET)
-	public ArrayList<FamePost> readFamePost() {
+	public ArrayList<FamePost> readFamePost(int offset) {
 		logger.debug("readFamePost() 진입");
-		
+		int limit = 1;
+		RowBounds rowBounds = new RowBounds(offset, limit); //0, 1은 a / 1, 1은 b / 2, 1은 c
 		ArrayList<FamePost> famePostList = null;
 		try {
-			famePostList = homeDAO.readFamePost();
+			famePostList = homeDAO.readFamePost(rowBounds);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println(famePostList.toString());
+		
+//		ArrayList<FamePost> famePostList = new ArrayList<>();
+//		famePostList.add(new FamePost("김민아", "안녕?"));
+//		famePostList.add(new FamePost("김지원", "응 안녕?"));
+//		famePostList.add(new FamePost("노정훈", "나도 껴줘"));
+//		famePostList.add(new FamePost("이진주", "넌 저리가"));
+//		famePostList.add(new FamePost("문희재", "다비켜"));
+		
 		return famePostList;
 	}
 	
