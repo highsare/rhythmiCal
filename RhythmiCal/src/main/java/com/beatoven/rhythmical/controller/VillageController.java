@@ -1,5 +1,7 @@
 package com.beatoven.rhythmical.controller;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.Iterator;
@@ -24,8 +26,10 @@ public class VillageController {
 	@Inject
 	VillageDAO villageDAO;
 	int cnt = 2;
+	int rdmnum;
 	
-	public HashMap<String, Object> multi = HomeController.multiplay;
+	//public HashMap<String, Object> multi = HomeController.multiplay;
+	public ArrayList<String> mList = HomeController.multiList;
 	
 	// 설정된 모션 값 읽어오기
 	@ResponseBody
@@ -42,14 +46,25 @@ public class VillageController {
 	@ResponseBody
 	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
 	public boolean loginApp(Member member,HttpSession session) {
-		Iterator<String> keys = multi.keySet().iterator();
+		/*Iterator<String> keys = multi.keySet().iterator();
 		while (keys.hasNext()) {
 			String key = keys.next();
 			System.out.println(key);
 			if (member.getCode() == String.valueOf(multi.get(key))) {
+				session.setAttribute("multi", multi);
 				return true;
 			}
 		}
+		return false;*/
+		
+		if (member.getCode().equals(String.valueOf(rdmnum))) {
+			mList.add("player"+cnt);
+			System.out.println(mList);
+			session.setAttribute("players", mList);
+			cnt++;
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -57,11 +72,12 @@ public class VillageController {
 	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
 	public boolean sendRdm(int rdm) {
 		
-		if (multi.size() >=4) {
+		if (mList.size() >=4) {
 			return false;
 		} else {
-			multi.put("player"+cnt,rdm);
-			cnt++;
+			//multi.put("player"+cnt,rdm);
+			rdmnum = rdm;
+			System.out.println(rdmnum);
 			return true;
 		}
 	}
