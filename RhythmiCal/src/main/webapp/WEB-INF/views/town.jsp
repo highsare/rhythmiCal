@@ -118,7 +118,6 @@ function create() {
 /*
  * readKey(): 키보드 키를 읽어들이는 메소드
  */
-															//앱과 연동 시 var inputKey 지우고, 주석 살리고, update에서 깊이별 분기문 지워야 한다.
 function readKey() {
     $.ajax({
       url: 'requestConsole', 
@@ -513,8 +512,6 @@ function moveContent(buttonFocus,inputKey) {
 /*
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
- 
- var player2 , player3, player4;
 function createMercenary() {
 	image = game.add.image(770, 120, 'pub');
 	
@@ -557,15 +554,15 @@ function update() {
 			if (result != null) {
 				switch (result.length) {
 				case 2:
-					player2 = game.add.image(200, 750, 'player2');
+					var player2 = game.add.image(200, 750, 'player2');
 					player2.scale.set(0.4);
 					break;
 				case 3:
-					player3 = game.add.image(250, 750, 'player3');
+					var player3 = game.add.image(250, 750, 'player3');
 					player3.scale.set(0.4);
 					break;
 				case 4:
-					player4 = game.add.image(300, 750, 'player4');
+					var player4 = game.add.image(300, 750, 'player4');
 					player4.scale.set(0.4);
 					break;
 				default:
@@ -575,7 +572,7 @@ function update() {
 		},
 		error: function() {alert('error');}
 	})
-	
+   
 }
 
 function myroom() {
@@ -620,7 +617,6 @@ function isnull() {
 	if (lane2 != null) {lane2.kill();}
 	if (lane3 != null) {lane3.kill();}
 	if (square != null) {square.kill();}
-	
 }
 
 </script>

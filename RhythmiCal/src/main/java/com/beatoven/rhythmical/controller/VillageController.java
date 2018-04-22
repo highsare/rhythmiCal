@@ -28,7 +28,6 @@ public class VillageController {
 	int cnt = 2;
 	int rdmnum;
 	
-	//public HashMap<String, Object> multi = HomeController.multiplay;
 	public ArrayList<String> mList = HomeController.multiList;
 	
 	// 설정된 모션 값 읽어오기
