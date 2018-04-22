@@ -173,7 +173,7 @@ Stage.prototype = {
 
 
 		//Nobeato(game)
-		//nobeato = new Nobeato(game);
+		nobeato = new Nobeato(game);
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -200,7 +200,8 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
-		//bossesJump(nobeato);
+		bossesJump(nobeato);
+		hitBoss(nobeato, 1);
 	},
 	gofull: function() {
 	  if (game.scale.isFullScreen)
