@@ -282,27 +282,28 @@ function createStudio() {
 	// AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
 	$.ajax({
 		url: 'readMotionList',
-		dataType: 'json',
 		// 성공하면 가져온 모션 리스트를 표시
-		success: function(json) {
-			var motionList = $.parseJSON(json);
+		success: function(jsonText) {
+			alert('readMotionList success');
+			var motionList = JSON.parse(jsonText);
 			// 첫 번째 모션
-			motion1 = game.add.sprite(buttonX, buttonY, motionList[0].name);
-			effect1 = game.add.sprite(buttonX, buttonY+100, motionList[0].effect);
-			lane1 = game.add.sprite(buttonX, button+200, motionList[0].lane);
+			motion1 = game.add.sprite(buttonX, buttonY, motionList.motion[0].name);
+			effect1 = game.add.sprite(buttonX, buttonY+100, motionList.motion[0].effect);
+			lane1 = game.add.sprite(buttonX, buttonY+200, motionList.motion[0].lane);
 			
 			// 두 번째 모션
-			motion2 = game.add.sprite(buttonX+100, buttonY, motionList[1].lane);
-			effect2 = game.add.sprite(buttonX+100, buttonY+100, motionList[1].lane);
-			lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList[1].lane);
+			motion2 = game.add.sprite(buttonX+100, buttonY, motionList.motion[1].name);
+			effect2 = game.add.sprite(buttonX+100, buttonY+100, motionList.motion[1].effect);
+			lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList.motion[1].lane);
 			
 			// 세 번째 모션
-			motion3 = game.add.sprite(buttonX+200, buttonY, motionList[2].lane);
-			effect3 = game.add.sprite(buttonX+200, buttonY+100, motionList[2].lane);
-			lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList[2].lane);
+			motion3 = game.add.sprite(buttonX+200, buttonY, motionList.motion[2].name);
+			effect3 = game.add.sprite(buttonX+200, buttonY+100, motionList.motion[2].effect);
+			lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList.motion[2].lane);
 	   },
 	   // 실패하면 기본값을 표시
 	   error: function() {
+		    alert('readMotionList error');
 			// 첫 번째 모션
 			motion1 = game.add.sprite(buttonX, buttonY, 'point');
 			effect1 = game.add.sprite(buttonX, buttonY+100, 'fire');
@@ -370,10 +371,31 @@ function moveButtonFocus(inputKey) {
   		if (point == null) {
   			point = game.add.image(x,y,'select');	
   			point.scale.set(1.98);
-  		} 
-  		
-  		 depth = 0; 
-  		 break;
+  		}
+  		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
+  		function() {
+  			// 현재 떠 있는 모션/효과/레인 스프라이트의 이름을 읽어 json String으로 만듬
+  			var jsonText = "{'motion': [{'name': '" + motion1.key 
+  								  + "', 'effect': '" + effect1.key 
+  								  + "', 'lane': '" + lane1 
+  								  + "'},{'name': '" + motion2.key 
+  								  + "', 'effect': '" + effect2.key 
+  								  + "', 'lane': '" + lane2.key 
+  								  + "'},{'name': '" + motion3.key 
+  								  + "', 'effect': '" + effect3.key 
+  								  + "', 'lane': '" + lane3.key 
+  								  + "'}]}";
+  			// ajax를 통해 jsonText를 DB(table save)에 저장 (돌아오는 result는 int값으로, 성공 시 1/실패 시 0)
+  			$.ajax({
+  				url: 'saveMotionList'
+  				, type: 'post'
+  				, data: {jsonText: jsonText}
+  				, success: function(result) {alert('success - ' + result);}
+  				, error: function(result){alert('error - ' + result);}
+  			})
+  		}
+  		depth = 0; 
+  		break;
    }
 }
 
@@ -582,7 +604,6 @@ function myroom() {
 	text2 = game.add.text(940, 520, "게임을 종료합니다", 
 			{ font: "40px Arial", fill: "#FFFFFF", align: "center" });
 	
-	
  	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 		
 		var e_select = game.add.sprite(900, 550, 'e_select');
@@ -598,7 +619,6 @@ function myroom() {
 		game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 	} 
 }
-
 
 function isnull() {
 	if (text1 != null) {text1.kill();}
