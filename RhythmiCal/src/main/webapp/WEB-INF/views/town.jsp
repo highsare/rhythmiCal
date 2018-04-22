@@ -118,7 +118,6 @@ function create() {
 /*
  * readKey(): 키보드 키를 읽어들이는 메소드
  */
-															//앱과 연동 시 var inputKey 지우고, 주석 살리고, update에서 깊이별 분기문 지워야 한다.
 function readKey() {
     $.ajax({
       url: 'requestConsole', 
@@ -567,8 +566,6 @@ function createMercenary() {
 		},
 		error: function() {alert('error');}
 	})
-	
-	
 }
 
 function update() {
@@ -618,7 +615,6 @@ function isnull() {
 	if (lane2 != null) {lane2.kill();}
 	if (lane3 != null) {lane3.kill();}
 	if (square != null) {square.kill();}
-	
 }
 
 </script>
