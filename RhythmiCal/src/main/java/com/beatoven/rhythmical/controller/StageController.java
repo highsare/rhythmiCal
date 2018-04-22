@@ -27,8 +27,9 @@ public class StageController {
 	//모션 값 받아오기
 	@ResponseBody
 	@RequestMapping(value="sendMotion", method = RequestMethod.POST)
-	public String receiveMotion(String request,String motion) {
+	public String receiveMotion(String request,String motion, String code) {
 		motionBox = motion;
+		System.out.println(code);
 		System.out.println(motionBox);
 		return "received";
 	}

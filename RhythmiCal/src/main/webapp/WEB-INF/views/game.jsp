@@ -38,7 +38,7 @@
 	game.state.add("stage",Stage);
 	//game.state.add("Ending",Ending);
 	
-	game.state.start("Intro");
+	game.state.start("stage");
 </script>
 
 </body>
