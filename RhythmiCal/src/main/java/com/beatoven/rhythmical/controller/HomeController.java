@@ -47,7 +47,7 @@ public class HomeController {
 	//회원가입
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
-	public int signupMember(Member member) {
+	public String signupMember(Member member) {
 		logger.debug("signupMember() 진입 - member: " + member);
 		int result = 0;
 		try {
@@ -55,12 +55,12 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return "result";
 	}
 	
 	//로그인(세션에 값 저장)
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
-	public Member loginMember(HttpSession session, Member member) {
+	public String loginMember(HttpSession session, Member member) {
 		logger.debug("loginMember() 진입 - member: " + member);
 		Member loginMember = null;
 		try {
@@ -70,7 +70,7 @@ public class HomeController {
 		}
 		session.setAttribute("loginedMember", loginMember);
 		
-		return loginMember;
+		return "loginMember";
 	}
 	
 	//로그아웃

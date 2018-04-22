@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class IntroController {
 
-	@RequestMapping("intro")
-	public String introPage() {
-		return "intro";
-	}
+//	@RequestMapping("intro")
+//	public String introPage() {
+//		return "intro";
+//	}
 	
 }
