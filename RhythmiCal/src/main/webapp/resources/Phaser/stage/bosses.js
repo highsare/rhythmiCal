@@ -79,12 +79,13 @@ Nobeato.prototype.damage = function(damage){
 	}
 }
 
+//공격 당하는 모션을 보여주는 기능
 function attackedMotionBosses(bossSprite){
 	
-	bossSprite.loadTexture('beatoven');
+	bossSprite.loadTexture('nobeatoAttacked');
 	bossSprite.animations.add('attackedMotion');
-	bossSprite.animations.play('attackedMotion', 50, true);
-	bossSprite.scale.set(2);
+	bossSprite.animations.play('attackedMotion', 10, true);
+	bossSprite.scale.set(4);
 	bossSprite.anchor.setTo(0.5,1);
 	bossSprite.smoothed = false;
 	
@@ -95,7 +96,7 @@ function attackedMotionBosses(bossSprite){
 		bossSprite.scale.set(4);
 		bossSprite.anchor.setTo(0.5,1);
 		bossSprite.smoothed = false;
-	}, 50);
+	}, 1000);
 	
 }
 
