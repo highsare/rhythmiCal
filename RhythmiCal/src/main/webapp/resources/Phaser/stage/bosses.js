@@ -79,6 +79,7 @@ Nobeato.prototype.damage = function(damage){
 	}
 }
 
+//공격 당하는 모션을 보여주는 기능
 function attackedMotionBosses(bossSprite){
 	
 	bossSprite.loadTexture('beatoven');

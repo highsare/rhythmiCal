@@ -21,7 +21,9 @@ function createTownPeople(){
 
 }
 
+//마을 사람 객체정의
 function TownPeople(x, y, peopleName){
+	this.peopleName = peopleName;
 	this.townPeopleSprite = game.add.sprite(x, y, peopleName, 1);
 	this.townPeopleSprite.anchor.setTo(0.5, 0.5);
 	this.townPeopleSprite.scale.set(2);
@@ -31,6 +33,7 @@ function TownPeople(x, y, peopleName){
 	this.townPeopleSprite.animations.play('dance', 8, true);
 }
 
+//마을 사람들의 춤추는 속도를 조절하는 기능
 function feverdancingControl(frame){
 	for (var i = 0; i < townpeoples.length; i++){
 		var townPeople = townpeoples[i];
@@ -39,10 +42,28 @@ function feverdancingControl(frame){
 	}
 }
 
+//마을 사람들이 낙담한 이미지로 바꿔주는 기능
 function changeTownPeopleDepressed(){
 	for (var i = 0; i < townpeoples.length; i++) {
 		var townPeople = townpeoples[i];
-		townPeople.townPeopleSprite.animations.add('dance', [0, 6], 8, true);
-		townPeople.townPeopleSprite.animations.play('dance');
+		townPeople.townPeopleSprite.loadTexture('beatoven');
+		townPeople.townPeopleSprite.animations.add('depressed');
+		townPeople.townPeopleSprite.animations.play('depressed', 20, true);
+		townPeople.townPeopleSprite.scale.set(2);
+		townPeople.townPeopleSprite.anchor.setTo(0.5, 0.5);
+		townPeople.townPeopleSprite.smoothed = false;
+	}
+}
+
+//마을 사람들이 춤추는 이미지로 바꿔주는 기능
+function changeTownPeopleFever(){
+	for (var i = 0; i < townpeoples.length; i++) {
+		var townPeople = townpeoples[i];
+		townPeople.townPeopleSprite.loadTexture(townPeople.peopleName);
+		townPeople.townPeopleSprite.animations.add('dance');
+		townPeople.townPeopleSprite.animations.play('dance', 8, true);
+		townPeople.townPeopleSprite.scale.set(2);
+		townPeople.townPeopleSprite.anchor.setTo(0.5, 0.5);
+		townPeople.townPeopleSprite.smoothed = false;
 	}
 }
