@@ -87,11 +87,6 @@ Stage.prototype = {
 		game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
 		//노비토 스프라이트시트
 		game.load.spritesheet('nobeato', 'resources/Images/characters/nobeato64x64.png', 64, 64, 8);
-		//노비토 스프라이트시트
-		game.load.spritesheet('tp1', 'resources/Images/characters/townPeople/intro_2_dancing01_60x60.png', 60, 60, 12);
-		game.load.spritesheet('tp2', 'resources/Images/characters/townPeople/intro_2_dancing02_60x60.png', 60, 60, 9);
-		game.load.spritesheet('tp3', 'resources/Images/characters/townPeople/intro_2_dancing03_60x60.png', 60, 60, 11);
-		game.load.spritesheet('tp4', 'resources/Images/characters/townPeople/intro_2_dancing04_60x60.png', 60, 60, 6);
 		//음표그림4개 로드   1:빨강, 2:파랑, 3:초록, 4:노랑
 		for(var i=1; i<=4;i++){
 			game.load.image('note'+i, 'resources/Images/notes/note'+i+'.png');
@@ -126,10 +121,6 @@ Stage.prototype = {
 		//콤보 효과음 설정
 		comboSound = game.add.audio('comboSound');
 		comboSound.addMarker('comboSound', 0, 1);
-		//마을사람들 생성
-		createTownPeople();
-		//feverdancingControl(20);
-		//changeTownPeopleDepressed();
 		// 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
@@ -146,20 +137,20 @@ Stage.prototype = {
 		noteBgGroup = game.add.group();
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
-		//목숨 추가
 		iniLife(3);
 		//게임 기초 세팅
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(this.gofull, this);
+		
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / 55;
 		beatStart = 0;
-		//몬스터를 담을 배열 생성
 		monstersA = new Array();
 		monstersB = new Array();
 		monstersC = new Array();
+		
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
 			monstersA[i] = new Monster(game, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
@@ -173,7 +164,8 @@ Stage.prototype = {
 
 
 		//Nobeato(game)
-		//nobeato = new Nobeato(game);
+		nobeato = new Nobeato(game);
+		
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -200,7 +192,7 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
-		//bossesJump(nobeato);
+		bossesJump(nobeato);
 	},
 	gofull: function() {
 	  if (game.scale.isFullScreen)

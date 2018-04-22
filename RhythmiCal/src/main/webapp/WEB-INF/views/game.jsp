@@ -18,7 +18,6 @@
 <script type="text/javascript" src="resources/Phaser/stage/notes.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/beatoven.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/bosses.js"></script>
-<script type="text/javascript" src="resources/Phaser/stage/townPeople.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/motionAndBeat.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/stageResult.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/Stage.js"></script>
