@@ -3,11 +3,8 @@ package com.beatoven.rhythmical.controller;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,13 +79,14 @@ public class HomeController {
 		/* 플레이어가 각각 종료 했을 때 지워주기랑 플레이어 추가된 상황에서 화면에 보여주기랑 
 		 * 안드로이드에서 다 찼을때 다르게 토스트 보여주기*/
 		
-		
 		session.invalidate();
 		return "";
 	}
 	
 	
 	//명예의 전당 글 불러오기
+	@ResponseBody
+	@RequestMapping(value = "readFamePost", method = RequestMethod.GET)
 	public ArrayList<FamePost> readFamePost() {
 		logger.debug("readFamePost() 진입");
 		
