@@ -56,17 +56,25 @@ public class VillageController {
 			}
 		}
 		return false;*/
-		
 		if (member.getCode().equals(String.valueOf(rdmnum))) {
 			mList.add("player"+cnt);
-			System.out.println(mList);
-			session.setAttribute("players", mList);
 			cnt++;
 			return true;
 		}
 		
 		return false;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="multiconnection",method = RequestMethod.POST)
+	public ArrayList<String> multiconnection() {
+		
+		return mList;
+	}
+	
+	
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
