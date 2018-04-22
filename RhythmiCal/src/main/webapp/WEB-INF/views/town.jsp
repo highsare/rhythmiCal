@@ -100,14 +100,14 @@ function create() {
 	bgd.scale.set(1);
 	
 	//메뉴 이미지 지정한 이미지에 출력
-	var back = game.add.image(100, 80, 'menuwin');
-	back.scale.set(2);
+	var back = game.add.image(60, 20, 'menuwin');
+	back.scale.set(0.9);
 	//첫 메뉴를 가리키고 있는 흰테두리출력
 	point = game.add.image(x, y, 'select');
 	point.scale.set(1.98);
 	
-	var player = game.add.image(150, 750, 'player1');
-	var text = game.add.text(150,700, "player Connection", 
+	var player = game.add.image(130, 770, 'player1');
+	var text = game.add.text(130,720, "player Connection", 
 			{ font: "30px Arial", fill: "#FFFFFF", align: "center" });
 	player.scale.set(0.4);
 	
@@ -373,7 +373,7 @@ function moveButtonFocus(inputKey) {
   			point.scale.set(1.98);
   		}
   		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
-  		function() {
+  		 function() {
   			// 현재 떠 있는 모션/효과/레인 스프라이트의 이름을 읽어 json String으로 만듬
   			var jsonText = "{'motion': [{'name': '" + motion1.key 
   								  + "', 'effect': '" + effect1.key 
@@ -393,7 +393,7 @@ function moveButtonFocus(inputKey) {
   				, success: function(result) {alert('success - ' + result);}
   				, error: function(result){alert('error - ' + result);}
   			})
-  		}
+  		} 
   		depth = 0; 
   		break;
    }
@@ -576,15 +576,15 @@ function update() {
 			if (result != null) {
 				switch (result.length) {
 				case 2:
-					var player2 = game.add.image(200, 750, 'player2');
+					var player2 = game.add.image(220, 770, 'player2');
 					player2.scale.set(0.4);
 					break;
 				case 3:
-					var player3 = game.add.image(250, 750, 'player3');
+					var player3 = game.add.image(270, 770, 'player3');
 					player3.scale.set(0.4);
 					break;
 				case 4:
-					var player4 = game.add.image(300, 750, 'player4');
+					var player4 = game.add.image(320, 770, 'player4');
 					player4.scale.set(0.4);
 					break;
 				default:
