@@ -18,7 +18,6 @@ function createTownPeople(){
 		var tp = new TownPeople(townPeoplePositionX[i], townPeoplePositionY[i], peopleName);
 		townpeoples.push(tp);
 	}
-
 }
 
 //마을 사람 객체정의
