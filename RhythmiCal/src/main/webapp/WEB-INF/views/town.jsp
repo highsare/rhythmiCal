@@ -513,6 +513,8 @@ function moveContent(buttonFocus,inputKey) {
 /*
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
+ 
+ var player2 , player3, player4;
 function createMercenary() {
 	image = game.add.image(770, 120, 'pub');
 	
@@ -541,23 +543,29 @@ function createMercenary() {
 			{ font: "40px Arial", fill: "#000000", align: "center" });
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
 	
-	$.ajax({
+}
+
+function update() {
+   // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.) 
+   readKey();
+   
+   $.ajax({
 		url: 'multiconnection',
 		type: 'post',
 		success: function(result) {
-			alert(result.length);
+			console.log(result.length);
 			if (result != null) {
 				switch (result.length) {
 				case 2:
-					var player2 = game.add.image(200, 750, 'player2');
+					player2 = game.add.image(200, 750, 'player2');
 					player2.scale.set(0.4);
 					break;
 				case 3:
-					var player3 = game.add.image(250, 750, 'player3');
+					player3 = game.add.image(250, 750, 'player3');
 					player3.scale.set(0.4);
 					break;
 				case 4:
-					var player4 = game.add.image(300, 750, 'player4');
+					player4 = game.add.image(300, 750, 'player4');
 					player4.scale.set(0.4);
 					break;
 				default:
@@ -568,12 +576,6 @@ function createMercenary() {
 		error: function() {alert('error');}
 	})
 	
-	
-}
-
-function update() {
-   // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.) 
-   readKey();
 }
 
 function myroom() {
