@@ -46,44 +46,27 @@ public class VillageController {
 	@ResponseBody
 	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
 	public boolean loginApp(Member member,HttpSession session) {
-		/*Iterator<String> keys = multi.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			System.out.println(key);
-			if (member.getCode() == String.valueOf(multi.get(key))) {
-				session.setAttribute("multi", multi);
-				return true;
-			}
-		}
-		return false;*/
 		if (member.getCode().equals(String.valueOf(rdmnum))) {
-			mList.add("player"+cnt);
-			cnt++;
-			return true;
+				mList.add("player"+cnt);
+				cnt++;
+				return true;
 		}
-		
 		return false;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="multiconnection",method = RequestMethod.POST)
 	public ArrayList<String> multiconnection() {
-		
 		return mList;
 	}
-	
-	
-	
 	
 	
 	@ResponseBody
 	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
 	public boolean sendRdm(int rdm) {
-		
-		if (mList.size() >=4) {
+		if (mList.size() >4) {
 			return false;
 		} else {
-			//multi.put("player"+cnt,rdm);
 			rdmnum = rdm;
 			System.out.println(rdmnum);
 			return true;
