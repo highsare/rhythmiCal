@@ -125,11 +125,18 @@ public class HomeController {
 		System.out.println(member);
 		session.setAttribute("id", member.getId());
 		//multiplay.put("player1", member.getId());
+		
+		boolean flag = true;
 		for (String player : multiList) {
-			if (!player.equals("player1")) {
-				multiList.add("player1");
+			if (player.equals("player1")) {
+				flag = false;
 			}
 		}
+		
+		if (flag) {
+			multiList.add("player1");			
+		}
+		
 		return true;
 	}
 	

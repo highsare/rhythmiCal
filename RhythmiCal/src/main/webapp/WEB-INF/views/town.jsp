@@ -6,7 +6,7 @@
 <script type="text/javascript" src="resources/JavaScriptResource/phaser-2.10.2.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>town.jsp</title>
+<title>마을</title>
 </head>
 <body>
 <script>
@@ -110,6 +110,7 @@ function create() {
 	var text = game.add.text(150,700, "player Connection", 
 			{ font: "30px Arial", fill: "#FFFFFF", align: "center" });
 	player.scale.set(0.4);
+	
 	//키보드 사용 설정 해줌
 	cursors = game.input.keyboard.createCursorKeys();
 }
@@ -514,8 +515,6 @@ function moveContent(buttonFocus,inputKey) {
  */
 function createMercenary() {
 	image = game.add.image(770, 120, 'pub');
-		
-	alert('${sessionScope.mList}')
 	
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
@@ -541,6 +540,35 @@ function createMercenary() {
 	text1 = game.add.text(1070, 450, rdm, 
 			{ font: "40px Arial", fill: "#000000", align: "center" });
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
+	
+	$.ajax({
+		url: 'multiconnection',
+		type: 'post',
+		success: function(result) {
+			alert(result.length);
+			if (result != null) {
+				switch (result.length) {
+				case 2:
+					var player2 = game.add.image(200, 750, 'player2');
+					player2.scale.set(0.4);
+					break;
+				case 3:
+					var player3 = game.add.image(250, 750, 'player3');
+					player3.scale.set(0.4);
+					break;
+				case 4:
+					var player4 = game.add.image(300, 750, 'player4');
+					player4.scale.set(0.4);
+					break;
+				default:
+					break;
+				}
+			}
+		},
+		error: function() {alert('error');}
+	})
+	
+	
 }
 
 function update() {
@@ -593,9 +621,6 @@ function isnull() {
 	
 }
 
-function insertplayer() {
-	alert('${sessionScope.mList}')
-}
 </script>
 </body>
 </html>
