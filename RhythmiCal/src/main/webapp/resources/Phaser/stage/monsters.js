@@ -16,7 +16,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 1);
 	this.monsterSprite.scale.set(2);
-	this.monsterSprite.anchor.setTo(0.5,1);
+	this.monsterSprite.anchor.setTo(0.5, 1);
     this.monsterSprite.smoothed = false;
     this.anim = this.monsterSprite.animations.add('walk');
     this.monsterSprite.animations.play('walk', 20, true);

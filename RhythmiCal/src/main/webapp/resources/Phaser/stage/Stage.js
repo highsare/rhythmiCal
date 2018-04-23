@@ -87,6 +87,7 @@ Stage.prototype = {
 		game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
 		//노비토 스프라이트시트
 		game.load.spritesheet('nobeato', 'resources/Images/characters/nobeato64x64.png', 64, 64, 8);
+		game.load.spritesheet('nobeatoAttacked', 'resources/Images/characters/nobeatoAttacked64x64_4.png', 64, 64, 4);
 		//노비토 스프라이트시트
 		game.load.spritesheet('tp1', 'resources/Images/characters/townPeople/intro_2_dancing01_60x60.png', 60, 60, 12);
 		game.load.spritesheet('tp2', 'resources/Images/characters/townPeople/intro_2_dancing02_60x60.png', 60, 60, 9);
@@ -169,7 +170,7 @@ Stage.prototype = {
 
 
 		//Nobeato(game)
-		//nobeato = new Nobeato(game);
+		nobeato = new Nobeato(game);
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -196,7 +197,8 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
-		//bossesJump(nobeato);
+		bossesJump(nobeato);
+		hitBoss(nobeato, 1);
 	},
 	getStageInfo: function(stageNum){
 		$.ajax({

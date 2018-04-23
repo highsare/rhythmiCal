@@ -4,31 +4,48 @@
 <head>
 <!-- charset -->
 <meta charset="UTF-8">
-
 <!-- viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <!-- title -->
 <title>Rhythmi-Cal</title>
-
 <!-- Road Bootstrap CDN and jQuery-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
 <!-- jQuery -->
 <script src="resources/JavaScriptResource/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script>
 <!-- infinitial scroll -->
-var page = 1;
-$(window).scroll(function() {
-    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-      console.log(++page);
-      /* $("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~"); */
-      $("#enters").append('<tr><td class="id">John</td><td class="reply">john@example.com</td></tr>');
-    }
+var cnt = 0;
+var page = -1;
+$(document).ready(function () {
+	$(document).scroll(function() {
+		console.log('document: ' + $(document).height() + '\n'
+					+ 'scroll: ' + $(window).scrollTop() + '\n'
+					+ 'window: ' + $(window).height());
+		
+		var maxHeight = $(document).height();
+		var currentScroll = $(window).scrollTop() + $(window).height();
+		
+		if (maxHeight <= currentScroll) {
+			page++; // 페이지 증가
+			$.ajax({
+				url: 'readFamePost'
+				, data: {offset: page}
+				, success: function(data) {
+					$.each(data, function() {
+						$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id	
+					});
+				}
+				, error: function() {
+					
+				}
+			})
+	    }
+	})
 });
+
 
 <!-- jQuery -->
 $(function() {
@@ -131,13 +148,6 @@ body {
 	}
 }
 																				
-
-
-
-
-
-
-
 /* 명예의 전당 table */
 td {
 	opacity: 0.9;
