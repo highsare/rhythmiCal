@@ -27,7 +27,7 @@ var bgd;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
 var square,squareX, squareY; // 스퀘어의 위치(좌표)를 나타내는 변수
-var buttonX=1000, buttonY=450; // 모션, 효과, 레인 스프라이트의 위치(좌표)를 나타내는 변수
+var buttonX=810, buttonY=500; // 모션, 효과, 레인 스프라이트의 위치(좌표)를 나타내는 변수
 var buttonFocus; // 현재 버튼이 몇 번에 있는가
 var motion; // 모션을 담는 배열
 var m_back; // 서브메뉴 배경
@@ -60,7 +60,7 @@ function preload() {
 	game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
 	game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
 	game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
-	
+	game.load.image('eachmenu','resources/Images/town/townImg/eachmenuimg.png' );
 	//멀티 플레이어 표시
 	game.load.image('player1','resources/Images/town/townImg/player1.png' ); 
 	game.load.image('player2','resources/Images/town/townImg/player2.png' ); 
@@ -99,12 +99,17 @@ function create() {
 	bgd.alpha = 0.5;
 	bgd.scale.set(1);
 	
+	
 	//메뉴 이미지 지정한 이미지에 출력
 	var back = game.add.image(60, 20, 'menuwin');
 	back.scale.set(0.9);
-	//첫 메뉴를 가리키고 있는 흰테두리출력
+	
+	
+ 	//첫 메뉴를 가리키고 있는 흰테두리출력
 	point = game.add.image(x, y, 'select');
-	point.scale.set(1.98);
+	point.scale.set(0.9);
+	 
+	
 	
 	var player = game.add.image(130, 770, 'player1');
 	var text = game.add.text(130,720, "player Connection", 
@@ -186,19 +191,19 @@ function moveMenu(inputKey) {
 	switch (inputKey) {
 	case 'up':
 		if (y > 204) {
-	    	y -= 112; alert(y);
+	    	y -= 112; 
 	    	tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
 		} break;
 	case 'down':
 		if (y < 540) {
-			y += 112; alert(y);
+			y += 112; 
 			tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
 		} break;
 	case 'esc': 
   		isEntered = false;
   		if (point == null) {
-  			point = game.add.image(x,y,'select');	
-  			point.scale.set(1.98);
+  			point = game.add.image(x, y, 'select');
+  			point.scale.set(0.9);
   		} 
 		break;
 	case 'enter':
@@ -211,20 +216,20 @@ function moveMenu(inputKey) {
 	   	
 	   	// 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
 		switch (y) {
-			case 204: alert('작업소');
+			case 204: console.log('작업소');
 				isnull();
 				createStudio();
 				break;
-			case 316: alert('용병소');
+			case 316: console.log('용병소');
 				isnull();
 				createMercenary();
 				break;
-			case 428: alert('겜시작');
+			case 428: console.log('겜시작');
 				isnull();
 				image = game.add.image(600, 80, 'click2');
 				key1.onDown.add(cancel, this);
 				break;
-			case 540: alert('겜종료');
+			case 540: console.log('겜종료');
 				isnull();
 				myroom();
 			    logoutMember();
@@ -251,7 +256,7 @@ function logoutMember() {
  * createStudio(): 작업소 화면을 만드는 메소드 
  */
 function createStudio() {
-	image = game.add.image(770, 120, 'worksplace');
+	image = game.add.image(810, 120, 'worksplace');
 
 	// 버튼 포커스를 1로 초기화
 	buttonFocus = 1;
@@ -276,7 +281,7 @@ function createStudio() {
 	motion = [Point, Up, Down, Left, Right];
 	
 	// 스퀘어 생성
-	squareX = 1000; squareY = 450;
+	squareX = 810; squareY = 500;
 	square = game.add.sprite(squareX, squareY, 'square');
 	
 	// AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
@@ -369,8 +374,8 @@ function moveButtonFocus(inputKey) {
       case 'esc': 
   		isEntered = false;
   		if (point == null) {
-  			point = game.add.image(x,y,'select');	
-  			point.scale.set(1.98);
+  			point = game.add.image(x, y, 'select');
+  			point.scale.set(0.9);
   		}
   		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
   		saveMotionList();
@@ -542,7 +547,7 @@ function moveContent(buttonFocus,inputKey) {
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
 function createMercenary() {
-	image = game.add.image(770, 120, 'pub');
+	image = game.add.image(810, 120, 'pub');
 	
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
@@ -605,7 +610,7 @@ function update() {
 }
 
 function myroom() {
-	image = game.add.image(770, 120, 'myroom');
+	image = game.add.image(810, 120, 'myroom');
 	exit = game.add.image(900, 550, 'exit');
 	exit.scale.set(0.8);
 	text2 = game.add.text(940, 520, "게임을 종료합니다", 
@@ -630,7 +635,7 @@ function myroom() {
 function isnull() {
 	if (text1 != null) {text1.kill();}
 	if (image != null) {image.kill();}
-	if (m_back== null) {m_back = game.add.image(720,80,'menu_back');}
+	if (m_back== null) {m_back = game.add.image(750,75,'menu_back');}
 	
 	if (motion1 != null) {motion1.kill();}
 	if (motion2 != null) {motion2.kill();}
