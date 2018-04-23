@@ -139,7 +139,6 @@ public class HomeController {
 		return true;
 	}
 	
-	
 	@ResponseBody
 	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
 	public String receiveConsole(String request, String order, HttpSession session) {
@@ -167,5 +166,14 @@ public class HomeController {
 			}
 		}
 		return "NOTHING";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "requestUserInfo", method = RequestMethod.POST)
+	public boolean requestUserInfo(HttpSession session) {
+		//현재 로그인된 사람이 기존유저인지 신규인지 구분한 후 결과값 리턴
+		boolean isNewbie = true;
+		
+		return isNewbie;
 	}
 }

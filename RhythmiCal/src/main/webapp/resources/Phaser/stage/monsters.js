@@ -130,10 +130,18 @@ function commandJump(unitArray,currentBeat){
 					destination = unit.lineX - jumpX[unit.attackLine]*unit.speed;
 				}
 				//attackLine -> absolute value //lineXIndex -> absolute value
-				switch(unit.attackLine){
-				case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-				case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-				case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+				if (currentBeat % 5 == 0) {
+					switch(unit.attackLine){
+					case 0:singleJump(unit, lineYLocation[unit.attackLine+1], destination); break;
+					case 1:singleJump(unit, lineYLocation[unit.attackLine+1], destination); break;
+					case 2:singleJump(unit, lineYLocation[unit.attackLine-2], destination); break;
+					}
+				}else{
+					switch(unit.attackLine){
+					case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+					case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+					case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+					}
 				}
 			}
 		}
@@ -141,7 +149,6 @@ function commandJump(unitArray,currentBeat){
 }
 //singleJump
 function singleJump (unit, maximumHeightOnAttackLine, destination) {
-	hitMonster(unit, 1);
 	//move Y
 	game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
 	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine -20 }, 300, "Sine.easeInOut", true, 0, 0, true);

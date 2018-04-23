@@ -109,9 +109,6 @@ Stage.prototype = {
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
-		//게임 기초 세팅
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		game.input.onDown.add(this.gofull, this);
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
@@ -150,7 +147,6 @@ Stage.prototype = {
 		iniLife(3);
 		//게임 기초 세팅
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		game.input.onDown.add(this.gofull, this);
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
@@ -202,34 +198,19 @@ Stage.prototype = {
 		createNotes();
 		//bossesJump(nobeato);
 	},
-	gofull: function() {
-	  if (game.scale.isFullScreen)
-	  {
-	      game.scale.stopFullScreen();
-	  }
-	  else
-	  {
-	      game.scale.startFullScreen(false);
-	  }
-	},
 	getStageInfo: function(stageNum){
 		$.ajax({
-		
-			url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
-			
-			type : "post",
-		
-			dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-		
-			cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-		
-			success : function(stageInfo) {
-					bgImgName = stageInfo[0].bgImgName;
-					musicName = stageInfo[0].musicName;
-					beat = stageInfo[1];
-					monsterlistA = stageInfo[2];
-					monsterlistB = stageInfo[3];
-					monsterlistC = stageInfo[4];
+			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
+			,type : "post"
+			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+			,success : function(stageInfo) {
+				bgImgName = stageInfo[0].bgImgName;
+				musicName = stageInfo[0].musicName;
+				beat = stageInfo[1];
+				monsterlistA = stageInfo[2];
+				monsterlistB = stageInfo[3];
+				monsterlistC = stageInfo[4];
 			}
 		});
 	}
