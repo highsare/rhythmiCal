@@ -10,9 +10,10 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	this.speed = speed;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE
+	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
+	this.skillPercentage = 5;
 	
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 1);
 	this.monsterSprite.scale.set(2);
@@ -112,36 +113,47 @@ function commandJump(unitArray,currentBeat){
 				if (unit == null) {
 					console.log("be Null");
 				}
-				
-				//if monster unit speed = 2 jump to lineXindex = 1
-				if (unit.speed == 2 && unit.lineXIndex == 0) {
-					unit.lineXIndex = 1;
-				}
-				if (unit.lineX == 2000) {
-					switch(unit.speed){
-					case 1: 
-					case 3:	destination = 1695 - jumpX[unit.attackLine];	
-						break;
-					case 2: destination = 1695 - jumpX[unit.attackLine] * unit.speed; 
-						break;
-						defualt:break;
+				//1~10을 발생시킴
+				var random = game.rnd.integerInRange(1, 10);
+				// 확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분
+				if (unit.skillPercentage <= random) {
+					//유닛 상태에 따라 점프와 캐스팅을 구분
+					if (unit.status != "CASTING") {
+						//if monster unit speed = 2 jump to lineXindex = 1
+						if (unit.speed == 2 && unit.lineXIndex == 0) {
+							unit.lineXIndex = 1;
+						}
+						if (unit.lineX == 2000) {
+							switch(unit.speed){
+							case 1: 
+							case 3:	destination = 1695 - jumpX[unit.attackLine];	
+							break;
+							case 2: destination = 1695 - jumpX[unit.attackLine] * unit.speed; 
+							break;
+							defualt:break;
+							}
+						}else{
+							destination = unit.lineX - jumpX[unit.attackLine] * unit.speed;
+						}
+						//attackLine -> absolute value //lineXIndex -> absolute value
+						if (currentBeat % 5 == 0) {
+							switch(unit.attackLine){
+							case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+							case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+							case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+							}
+						}else{
+							switch(unit.attackLine){
+							case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+							case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+							case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+							}
+						}
+					} else {
+						unit.status = "MOVE";
 					}
-				}else{
-					destination = unit.lineX - jumpX[unit.attackLine]*unit.speed;
-				}
-				//attackLine -> absolute value //lineXIndex -> absolute value
-				if (currentBeat % 5 == 0) {
-					switch(unit.attackLine){
-					case 0:singleJump(unit, lineYLocation[unit.attackLine+1], destination); break;
-					case 1:singleJump(unit, lineYLocation[unit.attackLine+1], destination); break;
-					case 2:singleJump(unit, lineYLocation[unit.attackLine-2], destination); break;
-					}
-				}else{
-					switch(unit.attackLine){
-					case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-					case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-					case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-					}
+				} else {
+					unit.status = "CASTING";
 				}
 			}
 		}
@@ -151,7 +163,7 @@ function commandJump(unitArray,currentBeat){
 function singleJump (unit, maximumHeightOnAttackLine, destination) {
 	//move Y
 	game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
-	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine -20 }, 300, "Sine.easeInOut", true, 0, 0, true);
+	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 20 }, 300, "Sine.easeInOut", true, 0, 0, true);
 	//move X
 	game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Linear', true, 0);
 	game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Linear', true, 0);
