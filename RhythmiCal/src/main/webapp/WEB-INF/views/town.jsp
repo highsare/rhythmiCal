@@ -242,8 +242,8 @@ function logoutMember() {
 	$.ajax({
 		url: 'logoutMember',
 		type: 'post',
-		success: function() {alert('success');},
-		error: function() {alert('error');}
+		success: function() {alert('logoutMember() - ajax success');},
+		error: function() {alert('logoutMember() - ajax error');}
 	})
 }
 
@@ -373,32 +373,39 @@ function moveButtonFocus(inputKey) {
   			point.scale.set(1.98);
   		}
   		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
-  		 function() {
-  			// 현재 떠 있는 모션/효과/레인 스프라이트의 이름을 읽어 json String으로 만듬
-  			var jsonText = "{'motion': [{'name': '" + motion1.key 
-  								  + "', 'effect': '" + effect1.key 
-  								  + "', 'lane': '" + lane1 
-  								  + "'},{'name': '" + motion2.key 
-  								  + "', 'effect': '" + effect2.key 
-  								  + "', 'lane': '" + lane2.key 
-  								  + "'},{'name': '" + motion3.key 
-  								  + "', 'effect': '" + effect3.key 
-  								  + "', 'lane': '" + lane3.key 
-  								  + "'}]}";
-  			// ajax를 통해 jsonText를 DB(table save)에 저장 (돌아오는 result는 int값으로, 성공 시 1/실패 시 0)
-  			$.ajax({
-  				url: 'saveMotionList'
-  				, type: 'post'
-  				, data: {jsonText: jsonText}
-  				, success: function(result) {alert('success - ' + result);}
-  				, error: function(result){alert('error - ' + result);}
-  			})
-  		} 
+  		saveMotionList();
+		// 깊이를 0으로 하여 moveMenu()로 이동
   		depth = 0; 
   		break;
    }
 }
 
+/*
+ * saveMotionList(): 작업소를 나갈 때 현재의 모션 값을 디비에 저장
+ */
+function saveMotionList() {
+	// 현재 떠 있는 모션, 효과, 레인 스프라이트의 이름을 읽어 json String으로 만듬
+	var jsonText = "{'motion': [{'name': '" + motion1.key 
+						  + "', 'effect': '" + effect1.key 
+						  + "', 'lane': '" + lane1 
+						  + "'},{'name': '" + motion2.key 
+						  + "', 'effect': '" + effect2.key 
+						  + "', 'lane': '" + lane2.key 
+						  + "'},{'name': '" + motion3.key 
+						  + "', 'effect': '" + effect3.key 
+						  + "', 'lane': '" + lane3.key 
+						  + "'}]}";
+	
+	// ajax를 통해 jsonText를 DB(table save)에 저장 (돌아오는 result는 int값으로, 성공 시 1/실패 시 0)
+	$.ajax({
+		url: 'saveMotionList'
+		, type: 'post'
+		, data: {jsonText: jsonText}
+		, success: function(result) {alert('saveMotionList success - ' + result);}
+		, error: function(result){alert('saveMotionList error - ' + result);}
+	});	
+}
+ 
 /*
  * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
@@ -554,7 +561,7 @@ function createMercenary() {
 				alert('더이상 추가 불가');
 			}
 		},
-		error: function() {alert('error');}
+		error: function() {alert('createMercenary - sendRdm error');}
 	})
 
 	// 난수를 보여줄 텍스트
@@ -592,7 +599,7 @@ function update() {
 				}
 			}
 		},
-		error: function() {alert('error');}
+		error: function() {alert('update() - multiconnection error');}
 	})
    
 }
