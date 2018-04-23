@@ -87,6 +87,7 @@ Stage.prototype = {
 		game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
 		//노비토 스프라이트시트
 		game.load.spritesheet('nobeato', 'resources/Images/characters/nobeato64x64.png', 64, 64, 8);
+		game.load.spritesheet('nobeatoAttacked', 'resources/Images/characters/nobeatoAttacked64x64_4.png', 64, 64, 4);
 		//노비토 스프라이트시트
 		game.load.spritesheet('tp1', 'resources/Images/characters/townPeople/intro_2_dancing01_60x60.png', 60, 60, 12);
 		game.load.spritesheet('tp2', 'resources/Images/characters/townPeople/intro_2_dancing02_60x60.png', 60, 60, 9);
@@ -109,9 +110,6 @@ Stage.prototype = {
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
-		//게임 기초 세팅
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		game.input.onDown.add(this.gofull, this);
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
@@ -150,7 +148,6 @@ Stage.prototype = {
 		iniLife(3);
 		//게임 기초 세팅
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		game.input.onDown.add(this.gofull, this);
 		//DB에서 받아 온 데이터의 생성
 		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
@@ -173,7 +170,7 @@ Stage.prototype = {
 
 
 		//Nobeato(game)
-		//nobeato = new Nobeato(game);
+		nobeato = new Nobeato(game);
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -200,36 +197,22 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
-		//bossesJump(nobeato);
-	},
-	gofull: function() {
-	  if (game.scale.isFullScreen)
-	  {
-	      game.scale.stopFullScreen();
-	  }
-	  else
-	  {
-	      game.scale.startFullScreen(false);
-	  }
+		bossesJump(nobeato);
+		hitBoss(nobeato, 1);
 	},
 	getStageInfo: function(stageNum){
 		$.ajax({
-		
-			url : "getStage", // a.jsp 의 제이슨오브젝트값을 가져옴
-			
-			type : "post",
-		
-			dataType : "json", // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-		
-			cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-		
-			success : function(stageInfo) {
-					bgImgName = stageInfo[0].bgImgName;
-					musicName = stageInfo[0].musicName;
-					beat = stageInfo[1];
-					monsterlistA = stageInfo[2];
-					monsterlistB = stageInfo[3];
-					monsterlistC = stageInfo[4];
+			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
+			,type : "post"
+			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+			,success : function(stageInfo) {
+				bgImgName = stageInfo[0].bgImgName;
+				musicName = stageInfo[0].musicName;
+				beat = stageInfo[1];
+				monsterlistA = stageInfo[2];
+				monsterlistB = stageInfo[3];
+				monsterlistC = stageInfo[4];
 			}
 		});
 	}

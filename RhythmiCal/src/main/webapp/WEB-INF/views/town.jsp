@@ -27,7 +27,7 @@ var bgd;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
 var square,squareX, squareY; // 스퀘어의 위치(좌표)를 나타내는 변수
-var buttonX=1000, buttonY=450; // 모션, 효과, 레인 스프라이트의 위치(좌표)를 나타내는 변수
+var buttonX=810, buttonY=500; // 모션, 효과, 레인 스프라이트의 위치(좌표)를 나타내는 변수
 var buttonFocus; // 현재 버튼이 몇 번에 있는가
 var motion; // 모션을 담는 배열
 var m_back; // 서브메뉴 배경
@@ -60,7 +60,7 @@ function preload() {
 	game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
 	game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
 	game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
-	
+	game.load.image('eachmenu','resources/Images/town/townImg/eachmenuimg.png' );
 	//멀티 플레이어 표시
 	game.load.image('player1','resources/Images/town/townImg/player1.png' ); 
 	game.load.image('player2','resources/Images/town/townImg/player2.png' ); 
@@ -99,15 +99,20 @@ function create() {
 	bgd.alpha = 0.5;
 	bgd.scale.set(1);
 	
-	//메뉴 이미지 지정한 이미지에 출력
-	var back = game.add.image(100, 80, 'menuwin');
-	back.scale.set(2);
-	//첫 메뉴를 가리키고 있는 흰테두리출력
-	point = game.add.image(x, y, 'select');
-	point.scale.set(1.98);
 	
-	var player = game.add.image(150, 750, 'player1');
-	var text = game.add.text(150,700, "player Connection", 
+	//메뉴 이미지 지정한 이미지에 출력
+	var back = game.add.image(60, 20, 'menuwin');
+	back.scale.set(0.9);
+	
+	
+ 	//첫 메뉴를 가리키고 있는 흰테두리출력
+	point = game.add.image(x, y, 'select');
+	point.scale.set(0.9);
+	 
+	
+	
+	var player = game.add.image(130, 770, 'player1');
+	var text = game.add.text(130,720, "player Connection", 
 			{ font: "30px Arial", fill: "#FFFFFF", align: "center" });
 	player.scale.set(0.4);
 	
@@ -186,19 +191,19 @@ function moveMenu(inputKey) {
 	switch (inputKey) {
 	case 'up':
 		if (y > 204) {
-	    	y -= 112; alert(y);
+	    	y -= 112; 
 	    	tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
 		} break;
 	case 'down':
 		if (y < 540) {
-			y += 112; alert(y);
+			y += 112; 
 			tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
 		} break;
 	case 'esc': 
   		isEntered = false;
   		if (point == null) {
-  			point = game.add.image(x,y,'select');	
-  			point.scale.set(1.98);
+  			point = game.add.image(x, y, 'select');
+  			point.scale.set(0.9);
   		} 
 		break;
 	case 'enter':
@@ -211,20 +216,20 @@ function moveMenu(inputKey) {
 	   	
 	   	// 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
 		switch (y) {
-			case 204: alert('작업소');
+			case 204: console.log('작업소');
 				isnull();
 				createStudio();
 				break;
-			case 316: alert('용병소');
+			case 316: console.log('용병소');
 				isnull();
 				createMercenary();
 				break;
-			case 428: alert('겜시작');
+			case 428: console.log('겜시작');
 				isnull();
 				image = game.add.image(600, 80, 'click2');
 				key1.onDown.add(cancel, this);
 				break;
-			case 540: alert('겜종료');
+			case 540: console.log('겜종료');
 				isnull();
 				myroom();
 			    logoutMember();
@@ -242,8 +247,8 @@ function logoutMember() {
 	$.ajax({
 		url: 'logoutMember',
 		type: 'post',
-		success: function() {alert('success');},
-		error: function() {alert('error');}
+		success: function() {alert('logoutMember() - ajax success');},
+		error: function() {alert('logoutMember() - ajax error');}
 	})
 }
 
@@ -251,7 +256,7 @@ function logoutMember() {
  * createStudio(): 작업소 화면을 만드는 메소드 
  */
 function createStudio() {
-	image = game.add.image(770, 120, 'worksplace');
+	image = game.add.image(810, 120, 'worksplace');
 
 	// 버튼 포커스를 1로 초기화
 	buttonFocus = 1;
@@ -276,33 +281,34 @@ function createStudio() {
 	motion = [Point, Up, Down, Left, Right];
 	
 	// 스퀘어 생성
-	squareX = 1000; squareY = 450;
+	squareX = 810; squareY = 500;
 	square = game.add.sprite(squareX, squareY, 'square');
 	
 	// AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
 	$.ajax({
 		url: 'readMotionList',
-		dataType: 'json',
 		// 성공하면 가져온 모션 리스트를 표시
-		success: function(json) {
-			var motionList = $.parseJSON(json);
+		success: function(jsonText) {
+			alert('readMotionList success');
+			var motionList = JSON.parse(jsonText);
 			// 첫 번째 모션
-			motion1 = game.add.sprite(buttonX, buttonY, motionList[0].name);
-			effect1 = game.add.sprite(buttonX, buttonY+100, motionList[0].effect);
-			lane1 = game.add.sprite(buttonX, button+200, motionList[0].lane);
+			motion1 = game.add.sprite(buttonX, buttonY, motionList.motion[0].name);
+			effect1 = game.add.sprite(buttonX, buttonY+100, motionList.motion[0].effect);
+			lane1 = game.add.sprite(buttonX, buttonY+200, motionList.motion[0].lane);
 			
 			// 두 번째 모션
-			motion2 = game.add.sprite(buttonX+100, buttonY, motionList[1].lane);
-			effect2 = game.add.sprite(buttonX+100, buttonY+100, motionList[1].lane);
-			lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList[1].lane);
+			motion2 = game.add.sprite(buttonX+100, buttonY, motionList.motion[1].name);
+			effect2 = game.add.sprite(buttonX+100, buttonY+100, motionList.motion[1].effect);
+			lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList.motion[1].lane);
 			
 			// 세 번째 모션
-			motion3 = game.add.sprite(buttonX+200, buttonY, motionList[2].lane);
-			effect3 = game.add.sprite(buttonX+200, buttonY+100, motionList[2].lane);
-			lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList[2].lane);
+			motion3 = game.add.sprite(buttonX+200, buttonY, motionList.motion[2].name);
+			effect3 = game.add.sprite(buttonX+200, buttonY+100, motionList.motion[2].effect);
+			lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList.motion[2].lane);
 	   },
 	   // 실패하면 기본값을 표시
 	   error: function() {
+		    alert('readMotionList error');
 			// 첫 번째 모션
 			motion1 = game.add.sprite(buttonX, buttonY, 'point');
 			effect1 = game.add.sprite(buttonX, buttonY+100, 'fire');
@@ -368,15 +374,43 @@ function moveButtonFocus(inputKey) {
       case 'esc': 
   		isEntered = false;
   		if (point == null) {
-  			point = game.add.image(x,y,'select');	
-  			point.scale.set(1.98);
-  		} 
-  		
-  		 depth = 0; 
-  		 break;
+  			point = game.add.image(x, y, 'select');
+  			point.scale.set(0.9);
+  		}
+  		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
+  		saveMotionList();
+		// 깊이를 0으로 하여 moveMenu()로 이동
+  		depth = 0; 
+  		break;
    }
 }
 
+/*
+ * saveMotionList(): 작업소를 나갈 때 현재의 모션 값을 디비에 저장
+ */
+function saveMotionList() {
+	// 현재 떠 있는 모션, 효과, 레인 스프라이트의 이름을 읽어 json String으로 만듬
+	var jsonText = "{'motion': [{'name': '" + motion1.key 
+						  + "', 'effect': '" + effect1.key 
+						  + "', 'lane': '" + lane1 
+						  + "'},{'name': '" + motion2.key 
+						  + "', 'effect': '" + effect2.key 
+						  + "', 'lane': '" + lane2.key 
+						  + "'},{'name': '" + motion3.key 
+						  + "', 'effect': '" + effect3.key 
+						  + "', 'lane': '" + lane3.key 
+						  + "'}]}";
+	
+	// ajax를 통해 jsonText를 DB(table save)에 저장 (돌아오는 result는 int값으로, 성공 시 1/실패 시 0)
+	$.ajax({
+		url: 'saveMotionList'
+		, type: 'post'
+		, data: {jsonText: jsonText}
+		, success: function(result) {alert('saveMotionList success - ' + result);}
+		, error: function(result){alert('saveMotionList error - ' + result);}
+	});	
+}
+ 
 /*
  * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
@@ -513,7 +547,7 @@ function moveContent(buttonFocus,inputKey) {
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
 function createMercenary() {
-	image = game.add.image(770, 120, 'pub');
+	image = game.add.image(810, 120, 'pub');
 	
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
@@ -532,7 +566,7 @@ function createMercenary() {
 				alert('더이상 추가 불가');
 			}
 		},
-		error: function() {alert('error');}
+		error: function() {alert('createMercenary - sendRdm error');}
 	})
 
 	// 난수를 보여줄 텍스트
@@ -540,23 +574,29 @@ function createMercenary() {
 			{ font: "40px Arial", fill: "#000000", align: "center" });
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
 	
-	$.ajax({
+}
+
+function update() {
+   // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.) 
+   readKey();
+   
+   $.ajax({
 		url: 'multiconnection',
 		type: 'post',
 		success: function(result) {
-			alert(result.length);
+			console.log(result.length);
 			if (result != null) {
 				switch (result.length) {
 				case 2:
-					var player2 = game.add.image(200, 750, 'player2');
+					var player2 = game.add.image(220, 770, 'player2');
 					player2.scale.set(0.4);
 					break;
 				case 3:
-					var player3 = game.add.image(250, 750, 'player3');
+					var player3 = game.add.image(270, 770, 'player3');
 					player3.scale.set(0.4);
 					break;
 				case 4:
-					var player4 = game.add.image(300, 750, 'player4');
+					var player4 = game.add.image(320, 770, 'player4');
 					player4.scale.set(0.4);
 					break;
 				default:
@@ -564,22 +604,17 @@ function createMercenary() {
 				}
 			}
 		},
-		error: function() {alert('error');}
+		error: function() {alert('update() - multiconnection error');}
 	})
-}
-
-function update() {
-   // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.) 
-   readKey();
+   
 }
 
 function myroom() {
-	image = game.add.image(770, 120, 'myroom');
+	image = game.add.image(810, 120, 'myroom');
 	exit = game.add.image(900, 550, 'exit');
 	exit.scale.set(0.8);
 	text2 = game.add.text(940, 520, "게임을 종료합니다", 
 			{ font: "40px Arial", fill: "#FFFFFF", align: "center" });
-	
 	
  	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 		
@@ -597,11 +632,10 @@ function myroom() {
 	} 
 }
 
-
 function isnull() {
 	if (text1 != null) {text1.kill();}
 	if (image != null) {image.kill();}
-	if (m_back== null) {m_back = game.add.image(720,80,'menu_back');}
+	if (m_back== null) {m_back = game.add.image(750,75,'menu_back');}
 	
 	if (motion1 != null) {motion1.kill();}
 	if (motion2 != null) {motion2.kill();}

@@ -28,19 +28,39 @@ public class VillageController {
 	int cnt = 2;
 	int rdmnum;
 	
-	//public HashMap<String, Object> multi = HomeController.multiplay;
 	public ArrayList<String> mList = HomeController.multiList;
 	
 	// 설정된 모션 값 읽어오기
 	@ResponseBody
-	@RequestMapping(value = "readMotionList", method = RequestMethod.POST)
+	@RequestMapping(value = "readMotionList", method = RequestMethod.GET)
 	public String readMotionList(HttpSession session) {
 		logger.debug("readMotionList() 진입");
+//		Member loginMember = (Member) session.getAttribute("loginMember");
+//		String jsonMotionList = "";
+//		try {jsonMotionList = villageDAO.readMotionList(loginMember);}
+//		catch (Exception e) {e.printStackTrace();}
+		String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
+
+//		return jsonMotionList;
+		return json.replaceAll("'", "\"");
+	}
+	
+	// 설정된 모션 값 저장하기
+	@ResponseBody
+	@RequestMapping(value = "saveMotionList", method = RequestMethod.POST)
+	public int saveMotionList(HttpSession session, String jsonText) {
+		logger.debug("saveMotionList() 진입");
+		// 세션으로부터 로그인된 멤버 객체 받기
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		String jsonMotionList = "";
-		try {jsonMotionList = villageDAO.readMotionList(loginMember);}
+		// 해쉬맵 생성, 로그인된 멤버 객체 및 설정한 모션 리스트를 추가 
+		HashMap<String, String> map = new HashMap<>();
+		map.put("id", loginMember.getId());
+		map.put("jsonText", jsonText);
+		// DAO를 통해 DB로 연결
+		int result = 0;
+		try {result = villageDAO.saveMotionList(map);}
 		catch (Exception e) {e.printStackTrace();}
-		return jsonMotionList;
+		return result;
 	}
 	
 	@ResponseBody

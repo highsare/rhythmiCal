@@ -16,7 +16,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 1);
 	this.monsterSprite.scale.set(2);
-	this.monsterSprite.anchor.setTo(0.5,1);
+	this.monsterSprite.anchor.setTo(0.5, 1);
     this.monsterSprite.smoothed = false;
     this.anim = this.monsterSprite.animations.add('walk');
     this.monsterSprite.animations.play('walk', 20, true);
@@ -51,15 +51,16 @@ Monster.prototype.damage = function(damage){
 	if (this.health >= 0) {
 		//데미지를 입어 체력이 깎였다.
 		if (healthBefore > this.health) {
+			attackedMotion(this.monsterSprite);
 			var healthBlank = game.add.sprite(3 * healthBefore, 0, 'healthBlank');
 			healthBlank.smoothed = false;
-			healthBlank.anchor.setTo(0.2, 0);
+			healthBlank.anchor.setTo(0.5, 1);
 			this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
 		} else {//체력이 증가했다.
 			if (this.monsterHealthbar.children[this.health] != null) {
 				var healthFill = game.add.sprite(3 * this.health, 0, 'healthFill');
 				healthFill.smoothed = false;
-				healthFill.anchor.setTo(0.2, 0);
+				healthFill.anchor.setTo(0.5, 1);
 				this.monsterHealthbar.replace(this.monsterHealthbar.children[this.health], healthFill);
 			}
 		}
@@ -67,6 +68,26 @@ Monster.prototype.damage = function(damage){
 		this.monsterSprite.kill();
 		this.monsterHealthbar.kill();
 	}
+}
+
+function attackedMotion(monsterSprite){
+	
+	monsterSprite.loadTexture('beatoven');
+	monsterSprite.animations.add('attackedMotion');
+	monsterSprite.animations.play('attackedMotion', 50, true);
+	monsterSprite.scale.set(2);
+	monsterSprite.anchor.setTo(0.5,1);
+    monsterSprite.smoothed = false;
+	
+	setTimeout(function(){
+		monsterSprite.loadTexture('mummy');
+		monsterSprite.animations.add('walk');
+		monsterSprite.animations.play('walk', 20, true);
+		monsterSprite.scale.set(2);
+		monsterSprite.anchor.setTo(0.5,1);
+	    monsterSprite.smoothed = false;
+	}, 50);
+	
 }
 
 //start
@@ -109,17 +130,25 @@ function commandJump(unitArray,currentBeat){
 					destination = unit.lineX - jumpX[unit.attackLine]*unit.speed;
 				}
 				//attackLine -> absolute value //lineXIndex -> absolute value
-				switch(unit.attackLine){
-				case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-				case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-				case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+				if (currentBeat % 5 == 0) {
+					switch(unit.attackLine){
+					case 0:singleJump(unit, lineYLocation[unit.attackLine+1], destination); break;
+					case 1:singleJump(unit, lineYLocation[unit.attackLine+1], destination); break;
+					case 2:singleJump(unit, lineYLocation[unit.attackLine-2], destination); break;
+					}
+				}else{
+					switch(unit.attackLine){
+					case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+					case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+					case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+					}
 				}
 			}
 		}
 	}
 }
 //singleJump
-function singleJump (unit, maximumHeightOnAttackLine, destination) {	
+function singleJump (unit, maximumHeightOnAttackLine, destination) {
 	//move Y
 	game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
 	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine -20 }, 300, "Sine.easeInOut", true, 0, 0, true);

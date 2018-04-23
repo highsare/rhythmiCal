@@ -60,15 +60,16 @@ Nobeato.prototype.damage = function(damage){
 	if (this.health >= 0) {
 		//데미지를 입어 체력이 깎였다.
 		if (healthBefore > this.health) {
+			attackedMotionBosses(this.nobeatoSprite);
 			var healthBlank = game.add.sprite(3 * healthBefore, 0, 'healthBlank');
 			healthBlank.smoothed = false;
-			healthBlank.anchor.setTo(0.2, 0);
+			healthBlank.anchor.setTo(0.5, 0.5);
 			this.nobeatoHealthbar.replace(this.nobeatoHealthbar.children[healthBefore], healthBlank);
 		} else {//체력이 증가했다.
 			if (this.nobeatoHealthbar.children[this.health] != null) {
 				var healthFill = game.add.sprite(3 * this.health, 0, 'healthFill');
 				healthFill.smoothed = false;
-				healthFill.anchor.setTo(0.2, 0);
+				healthFill.anchor.setTo(0.5, 0.5);
 				this.nobeatoHealthbar.replace(this.nobeatoHealthbar.children[this.health], healthFill);
 			}
 		}
@@ -76,6 +77,27 @@ Nobeato.prototype.damage = function(damage){
 		this.nobeatoSprite.kill();
 		this.nobeatoHealthbar.kill();
 	}
+}
+
+//공격 당하는 모션을 보여주는 기능
+function attackedMotionBosses(bossSprite){
+	
+	bossSprite.loadTexture('nobeatoAttacked');
+	bossSprite.animations.add('attackedMotion');
+	bossSprite.animations.play('attackedMotion', 10, true);
+	bossSprite.scale.set(4);
+	bossSprite.anchor.setTo(0.5,1);
+	bossSprite.smoothed = false;
+	
+	setTimeout(function(){
+		bossSprite.loadTexture('nobeato');
+		bossSprite.animations.add('fly');
+		bossSprite.animations.play('fly', 10, true);
+		bossSprite.scale.set(4);
+		bossSprite.anchor.setTo(0.5,1);
+		bossSprite.smoothed = false;
+	}, 1000);
+	
 }
 
 //몬스터 객체 유닛 데미지
