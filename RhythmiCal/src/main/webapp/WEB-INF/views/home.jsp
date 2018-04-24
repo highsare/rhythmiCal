@@ -46,7 +46,6 @@ $(document).ready(function () {
 	})
 });
 
-
 <!-- jQuery -->
 $(function() {
 	<!-- signupMember -->
@@ -242,6 +241,5 @@ td {
   </table>
   <div id="enters"></div>
 </div>
-
 </body>
 </html>

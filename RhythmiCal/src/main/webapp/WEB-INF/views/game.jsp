@@ -20,6 +20,7 @@
 <script type="text/javascript" src="resources/Phaser/Village.js"></script>
 
 <script type="text/javascript" src="resources/Phaser/stage/monsters.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/monsterSkill.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/notes.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/beatoven.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/bosses.js"></script>

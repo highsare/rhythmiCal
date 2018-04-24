@@ -97,11 +97,12 @@ public class StageController {
 		ArrayList<Monster> monsterlistB = new ArrayList<>();
 		ArrayList<Monster> monsterlistC = new ArrayList<>();
 		
-		Monster monster1 = new Monster(0, "mummy", 1, 3, null, null, 1, 0);
-		Monster monster2 = new Monster(0, "mummy", 2, 2, null, null, 2, 1);
-		Monster monster3 = new Monster(0, "mummy", 1, 1, null, null, 3, 0);
-		Monster monster4 = new Monster(0, "mummy", 3, 4, null, null, 4, 2);
-		Monster monster5 = new Monster(0, "mummy", 1, 5, null, null, 5, 0);
+		//monsterNum, monsterName, speed, health, effectSoundName, skill, appearanceBeat, attackline
+		Monster monster1 = new Monster(0, "mummy", 1, 5, null, null, 1, 0);
+		Monster monster2 = new Monster(0, "mummy", 1, 5, null, null, 1, 0);
+		Monster monster3 = new Monster(0, "mummy", 1, 3, null, null, 2, 1);
+		Monster monster4 = new Monster(0, "mummy", 1, 5, null, null, 2, 2);
+		Monster monster5 = new Monster(0, "mummy", 1, 5, null, null, 3, 2);
 		
 		monsterlist.add(monster1);
 		monsterlist.add(monster2);

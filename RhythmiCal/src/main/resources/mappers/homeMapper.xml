@@ -24,4 +24,10 @@
 		select *
 		from halloffame
 	</select>
+	
+	<select id="isNewbie" parameterType="member" resultType="int">
+		select isNewbie
+		from member
+		where id = #{id}
+	</select>
 </mapper>
