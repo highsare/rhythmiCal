@@ -23,7 +23,8 @@ var isEntered = false;
 var tween;
 var key1;
 var bgd;
-
+var neon,board;
+var e_select,sprite;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
 var square,squareX, squareY; // 스퀘어의 위치(좌표)를 나타내는 변수
@@ -56,11 +57,16 @@ function preload() {
 	game.load.image('back','resources/Images/town/townImg/v_back.png' ); //마을 배경 이미지
 	game.load.image('select','resources/Images/town/townImg/select.png' );//선택 흰 테두리
 	game.load.image('menu_back','resources/Images/town/townImg/menu_back.png' );//Enter 눌렀을 때 서브메뉴 배경
-	game.load.image('pub','resources/Images/town/townImg/pub.PNG' ); //용병소 이미지
+	game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
 	game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
 	game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
 	game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
 	game.load.image('eachmenu','resources/Images/town/townImg/eachmenuimg.png' );
+	game.load.image('board','resources/Images/town/townImg/board.png' );
+	game.load.image('neon','resources/Images/town/townImg/neonboard.png' );
+	
+	game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
+	
 	//멀티 플레이어 표시
 	game.load.image('player1','resources/Images/town/townImg/player1.png' ); 
 	game.load.image('player2','resources/Images/town/townImg/player2.png' ); 
@@ -99,7 +105,6 @@ function create() {
 	bgd.alpha = 0.5;
 	bgd.scale.set(1);
 	
-	
 	//메뉴 이미지 지정한 이미지에 출력
 	var back = game.add.image(60, 20, 'menuwin');
 	back.scale.set(0.9);
@@ -112,8 +117,7 @@ function create() {
 	
 	
 	var player = game.add.image(130, 770, 'player1');
-	var text = game.add.text(130,720, "player Connection", 
-			{ font: "30px Arial", fill: "#FFFFFF", align: "center" });
+	var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
 	player.scale.set(0.4);
 	
 	//키보드 사용 설정 해줌
@@ -551,7 +555,8 @@ function createMercenary() {
 	
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
-	image = game.add.image(800, 350, 'hand');
+	board = game.add.image(810, 480, 'board');
+	board.scale.set(1.8);
 
 	$.ajax({
 		url: 'sendRdm',
@@ -559,19 +564,26 @@ function createMercenary() {
 		data: {
 			rdm: rdm
 		},
+		dataType: 'json',
 		success: function(result) {
-			if (result == true){
-				alert('생성된 코드를 모바일에서 입력해주세요.');
+			console.dir(result);
+			/* if (result == "true"){
+				consle.log('성공');
 			} else {
-				alert('더이상 추가 불가');
-			}
+				text1 = game.add.bitmapText(1060, 600,'neo_font' ,'더이상 추가 불가', 60);
+			} */
 		},
 		error: function() {alert('createMercenary - sendRdm error');}
 	})
 
 	// 난수를 보여줄 텍스트
-	text1 = game.add.text(1070, 450, rdm, 
-			{ font: "40px Arial", fill: "#000000", align: "center" });
+	text1 = game.add.bitmapText(1060, 600,'neo_font' ,rdm, 60);
+	
+	
+	neon = game.add.image(795, 400, 'neon');
+	neon.scale.set(2);
+	text1 = game.add.bitmapText(810, 420,'neo_font' ,'주인장: 한겜허쉴?', 40);
+	
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
 	
 }
@@ -579,34 +591,36 @@ function createMercenary() {
 function update() {
    // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.) 
    readKey();
-   
-   $.ajax({
-		url: 'multiconnection',
-		type: 'post',
-		success: function(result) {
-			console.log(result.length);
-			if (result != null) {
-				switch (result.length) {
-				case 2:
-					var player2 = game.add.image(220, 770, 'player2');
-					player2.scale.set(0.4);
-					break;
-				case 3:
-					var player3 = game.add.image(270, 770, 'player3');
-					player3.scale.set(0.4);
-					break;
-				case 4:
-					var player4 = game.add.image(320, 770, 'player4');
-					player4.scale.set(0.4);
-					break;
-				default:
-					break;
+   multiconnection();
+}
+
+function multiconnection() {
+	 $.ajax({
+			url: 'multiconnection',
+			type: 'post',
+			success: function(result) {
+				console.log(result.length);
+				if (result != null) {
+					switch (result.length) {
+					case 2:
+						var player2 = game.add.image(220, 770, 'player2');
+						player2.scale.set(0.4);
+						break;
+					case 3:
+						var player3 = game.add.image(270, 770, 'player3');
+						player3.scale.set(0.4);
+						break;
+					case 4:
+						var player4 = game.add.image(320, 770, 'player4');
+						player4.scale.set(0.4);
+						break;
+					default:
+						break;
+					}
 				}
-			}
-		},
-		error: function() {alert('update() - multiconnection error');}
-	})
-   
+			},
+			error: function() {alert('update() - multiconnection error');}
+		})
 }
 
 function myroom() {
@@ -618,10 +632,10 @@ function myroom() {
 	
  	if (game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 		
-		var e_select = game.add.sprite(900, 550, 'e_select');
+		e_select = game.add.sprite(900, 550, 'e_select');
 		e_select.scale.set(0.8);
 		// 게임 종료. 검정 화면 준비.
-		var sprite = game.add.sprite(0, 0, 'finish');
+		sprite = game.add.sprite(0, 0, 'finish');
 		// 원래 사이즈 보다 확대 하고 alph로 투명도 조절.
 		sprite.scale.set(5);
 	    sprite.anchor.setTo(0.5, 0.5);
@@ -636,6 +650,11 @@ function isnull() {
 	if (text1 != null) {text1.kill();}
 	if (image != null) {image.kill();}
 	if (m_back== null) {m_back = game.add.image(750,75,'menu_back');}
+	
+	if (neon != null) {neon.kill();}
+	if (board != null) {board.kill();}
+	
+	if (e_select!= null) {e_select.kill();}
 	
 	if (motion1 != null) {motion1.kill();}
 	if (motion2 != null) {motion2.kill();}

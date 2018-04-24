@@ -50,16 +50,18 @@ public class VillageController {
 	@RequestMapping(value = "saveMotionList", method = RequestMethod.POST)
 	public int saveMotionList(HttpSession session, String jsonText) {
 		logger.debug("saveMotionList() 진입");
+		System.out.println(jsonText);
+		
 		// 세션으로부터 로그인된 멤버 객체 받기
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		// 해쉬맵 생성, 로그인된 멤버 객체 및 설정한 모션 리스트를 추가 
 		HashMap<String, String> map = new HashMap<>();
-		map.put("id", loginMember.getId());
+//		map.put("id", loginMember.getId());
 		map.put("jsonText", jsonText);
 		// DAO를 통해 DB로 연결
 		int result = 0;
-		try {result = villageDAO.saveMotionList(map);}
-		catch (Exception e) {e.printStackTrace();}
+//		try {result = villageDAO.saveMotionList(map);}
+//		catch (Exception e) {e.printStackTrace();}
 		return result;
 	}
 	
@@ -84,7 +86,7 @@ public class VillageController {
 	@ResponseBody
 	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
 	public boolean sendRdm(int rdm) {
-		if (mList.size() >4) {
+		if (mList.size() >= 4) {
 			return false;
 		} else {
 			rdmnum = rdm;
