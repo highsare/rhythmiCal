@@ -45,7 +45,7 @@ public class HomeController {
 	//회원가입
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
-	public String signupMember(Member member) {
+	public int signupMember(Member member) {
 		logger.debug("signupMember() 진입 - member: " + member);
 		int result = 0;
 		try {
@@ -53,10 +53,11 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "result";
+		return result;
 	}
 	
 	//로그인(세션에 값 저장)
+	@ResponseBody
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
 	public String loginMember(HttpSession session, Member member) {
 		logger.debug("loginMember() 진입 - member: " + member);
@@ -85,7 +86,6 @@ public class HomeController {
 		return "";
 	}
 	
-	
 	//명예의 전당 글 불러오기
 	@ResponseBody
 	@RequestMapping(value = "readFamePost", method = RequestMethod.GET)
@@ -99,15 +99,6 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(famePostList.toString());
-		
-//		ArrayList<FamePost> famePostList = new ArrayList<>();
-//		famePostList.add(new FamePost("김민아", "안녕?"));
-//		famePostList.add(new FamePost("김지원", "응 안녕?"));
-//		famePostList.add(new FamePost("노정훈", "나도 껴줘"));
-//		famePostList.add(new FamePost("이진주", "넌 저리가"));
-//		famePostList.add(new FamePost("문희재", "다비켜"));
-		
 		return famePostList;
 	}
 	
@@ -178,12 +169,30 @@ public class HomeController {
 		return "NOTHING";
 	}
 	
+	// 현재 로그인한 멤버가 신규 멤버인지 기존 멤버인지 구분한 후 결과값 리턴 (DB: 신규이면 0, 기존이면 1)
 	@ResponseBody
 	@RequestMapping(value = "requestUserInfo", method = RequestMethod.POST)
 	public boolean requestUserInfo(HttpSession session) {
-		//현재 로그인된 사람이 기존유저인지 신규인지 구분한 후 결과값 리턴
-		boolean isNewbie = true;
+		logger.debug("requestUserInfo() 진입");
 		
+		// 세션에서 로그인한 멤버객체 확인
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		// DB 검색: MEMBER 테이블에서 해당 멤버의 isNewbie 컬럼이 0인지 1인지 확인
+		int dbValue = 0;
+		try {dbValue = homeDAO.isNewbie(loginMember);}
+		catch (Exception e) {e.printStackTrace();}
+		
+		// 0이면 신규이므로 isNewbie=true, 1이면 기존이므로 isNewbie=false
+		boolean isNewbie = true;
+		switch (dbValue) {
+			case 0: isNewbie = true;
+				break;
+			case 1: isNewbie = false;
+				break;
+		}
+		
+		// preload.js로 기존/신규 여부를 반환
 		return isNewbie;
 	}
 }

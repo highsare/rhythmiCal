@@ -21,7 +21,6 @@ public class HomeDAO implements HomeInterface {
 	// 회원가입
 	@Override
 	public int signupMember(Member member) {
-		// TODO : minah
 		int result = 0;
 		try {
 			result = session.getMapper(HomeInterface.class).signupMember(member);
@@ -33,7 +32,6 @@ public class HomeDAO implements HomeInterface {
 	// 로그인
 	@Override
 	public Member loginMember(Member member) {
-		// TODO : minah
 		Member loginMember = null;
 		try {
 			loginMember = session.getMapper(HomeInterface.class).loginMember(member);
@@ -46,7 +44,6 @@ public class HomeDAO implements HomeInterface {
 	// 명예의 전당 글 불러오기
 	@Override
 	public ArrayList<FamePost> readFamePost(RowBounds rowBounds) {
-		// TODO : minah
 		ArrayList<FamePost> famePostList = null;
 		try {
 			famePostList = session.getMapper(HomeInterface.class).readFamePost(rowBounds);
@@ -54,5 +51,17 @@ public class HomeDAO implements HomeInterface {
 			e.printStackTrace();
 		}
 		return famePostList;
+	}
+	
+	// 멤버가 기존 멤버인지 신규 멤버인지 확인
+	@Override
+	public int isNewbie(Member member) {
+		int dbValue = 0;
+		try {
+			dbValue = session.getMapper(HomeInterface.class).isNewbie(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dbValue;
 	}
 }
