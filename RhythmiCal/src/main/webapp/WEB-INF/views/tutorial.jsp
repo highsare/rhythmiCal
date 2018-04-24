@@ -100,7 +100,7 @@ function preload() {
 	// load background image
 	game.load.image("background", "resources/Images/story/loof_forest.png");
 	// load bitmapFont
-    game.load.bitmapFont('neo_font', 'resources/Rho_src/story/neo_font/neo_font.png', 'resources/Rho_src/story/neo_font/neo_font.fnt');
+    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
     // load rhythmi spritesheet
 	game.load.spritesheet('rhythmi', 'resources/Images/tutorial/rhythmiWithEyes.png', 50, 50, 16);
 	// load dialog image
