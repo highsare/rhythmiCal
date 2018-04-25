@@ -1,16 +1,13 @@
+var reg = {};//음악 로드시 저장
+var player;//주인공
+var right;//오른쪽발걸음
+var typewriter = new Typewriter(); // 글자 타이핑 효과
+var npc1;
+var npc2;
+var dialogueBG;
+var Story = function(game){};
 
-	//var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
-	var reg = {};//음악 로드시 저장
-	var player;//주인공
-	var right;//오른쪽발걸음
-	var typewriter = new Typewriter(); // 글자 타이핑 효과
-	var npc1;
-	var npc2;
-	var dialogueBG;
-	var Rho_story = function(game){
-	}
-	
-	Rho_story.prototype = {
+Story.prototype = {
 	preload: function() {
 		//대화문 뒷배경
 		//game.load.image("textBG","resources/textBox.png");
