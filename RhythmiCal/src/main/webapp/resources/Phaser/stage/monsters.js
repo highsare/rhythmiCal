@@ -13,7 +13,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
-	this.skillPercentage = 5;
+	this.skillPercentage = 0;
 	
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 1);
 	this.monsterSprite.scale.set(2);
@@ -68,6 +68,8 @@ Monster.prototype.damage = function(damage){
 	} else { //체력이 0미만이되면 몬스터와 체력바를 없앤다.
 		this.monsterSprite.kill();
 		this.monsterHealthbar.kill();
+		this.status = "DIE";
+		explosion(this.attackLine, this.lineX, monstersA, monstersB, monstersC);
 	}
 }
 
@@ -167,7 +169,8 @@ function singleJump (unit, maximumHeightOnAttackLine, destination) {
 	//move X
 	game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Linear', true, 0);
 	game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Linear', true, 0);
-	
+
+	hitMonster(unit, 1);
 	unit.lineX = destination;
 }
 //monster unit damage
