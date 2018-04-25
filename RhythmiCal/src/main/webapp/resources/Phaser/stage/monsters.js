@@ -10,7 +10,7 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	this.speed = speed;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING
+	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING, IMUNE
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
 	this.skillPercentage = 0;
@@ -46,7 +46,9 @@ Monster.prototype.damage = function(damage){
 	//이전의 체력값
 	var healthBefore = this.health;
 	
-	this.health -= damage;	
+	if (this.status != "IMUNE") {
+		this.health -= damage;	
+	}
 	
 	//체력이 0보다 크다면 체력바 한칸을 없앤다.
 	if (this.health >= 0) {
@@ -57,6 +59,10 @@ Monster.prototype.damage = function(damage){
 			healthBlank.smoothed = false;
 			healthBlank.anchor.setTo(0.5, 1);
 			this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
+		} else if (healthBefore == this.health) {
+			if (this.status == "IMUNE") {
+				this.status = "MOVE";
+			}
 		} else {//체력이 증가했다.
 			if (this.monsterHealthbar.children[this.health] != null) {
 				var healthFill = game.add.sprite(3 * this.health, 0, 'healthFill');
@@ -69,7 +75,6 @@ Monster.prototype.damage = function(damage){
 		this.monsterSprite.kill();
 		this.monsterHealthbar.kill();
 		this.status = "DIE";
-		explosion(this.attackLine, this.lineX, monstersA, monstersB, monstersC);
 	}
 }
 
@@ -95,6 +100,7 @@ function attackedMotion(monsterSprite){
 
 //start
 function start(){
+	changeMonsterStatusAvoidDamage(monstersA[1], 3);
 	commandJump(monstersA, currentBeat);
 	commandJump(monstersB, currentBeat);
 	commandJump(monstersC, currentBeat);
