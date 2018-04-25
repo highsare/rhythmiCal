@@ -69,3 +69,12 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 		hitMonster(monsterInRange[l], 1);
 	}
 }
+
+function changeMonsterStatus(unit, executionBeat, status){
+	for (var i = 1; i < 20; i++) {
+		if (executionBeat * i == currentBeat) {
+			unit.status = status;
+		}
+	}
+}
+

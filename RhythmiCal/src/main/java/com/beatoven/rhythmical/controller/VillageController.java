@@ -1,11 +1,7 @@
 package com.beatoven.rhythmical.controller;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import java.util.Iterator;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -57,6 +53,10 @@ public class VillageController {
 		
 		// 해쉬맵 생성, 로그인된 멤버 객체 및 설정한 모션 리스트를 추가 
 		HashMap<String, String> map = new HashMap<>();
+		
+//		마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
+//		map.put("id", loginMember.getId());
+//		map.put("jsonText", jsonText);
 //		map.put("id", loginMember.getId());
 		map.put("jsonText", jsonText);
 		
