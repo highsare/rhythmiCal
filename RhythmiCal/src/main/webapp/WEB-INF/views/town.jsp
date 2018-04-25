@@ -249,12 +249,9 @@ function logoutMember() {
  * createStudio(): 작업소 화면을 만드는 메소드 
  */
 function createStudio() {
-<<<<<<< HEAD
 	// 작업소 화면 표시
 	image = game.add.image(770, 120, 'worksplace');
-=======
 	image = game.add.image(810, 120, 'worksplace');
->>>>>>> 50c561c0e3daa619827c7e7545f41594b106a4cc
 
 	// 버튼 포커스를 1로 초기화
 	buttonFocus = 1;
@@ -654,7 +651,6 @@ function update() {
 		},
 		error: function() {alert('update() - multiconnection error');}
 	})
-   
 }
 
 function myroom() {
