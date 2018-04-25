@@ -46,15 +46,22 @@ public class VillageController {
 	@RequestMapping(value = "saveMotionList", method = RequestMethod.POST)
 	public int saveMotionList(HttpSession session, String jsonText) {
 		logger.debug("saveMotionList() 진입");
+		System.out.println(jsonText);
+		
 		// 세션으로부터 로그인된 멤버 객체 받기
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		
 		// 해쉬맵 생성, 로그인된 멤버 객체 및 설정한 모션 리스트를 추가 
 		HashMap<String, String> map = new HashMap<>();
+<<<<<<< HEAD
 		
 //		마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
 //		map.put("id", loginMember.getId());
 //		map.put("jsonText", jsonText);
+=======
+//		map.put("id", loginMember.getId());
+		map.put("jsonText", jsonText);
+>>>>>>> f5388db21b3fe195e57c269e5cbd9d81d9a5a6bd
 		
 		// DAO를 통해 DB로 연결
 		int result = 0;
@@ -84,7 +91,7 @@ public class VillageController {
 	@ResponseBody
 	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
 	public boolean sendRdm(int rdm) {
-		if (mList.size() >4) {
+		if (mList.size() >= 4) {
 			return false;
 		} else {
 			rdmnum = rdm;

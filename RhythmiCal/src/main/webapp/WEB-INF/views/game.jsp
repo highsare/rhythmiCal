@@ -13,13 +13,14 @@
 <body>
 
 <script type="text/javascript" src="resources/Phaser/rawJS/typewriter.js"></script>
-<script type="text/javascript" src="resources/Phaser/rawJS/Rho_story.js"></script>
 
 <script type="text/javascript" src="resources/Phaser/Preload.js"></script>
 <script type="text/javascript" src="resources/Phaser/Intro.js"></script>
 <script type="text/javascript" src="resources/Phaser/Village.js"></script>
+<script type="text/javascript" src="resources/Phaser/Story.js"></script>
 
 <script type="text/javascript" src="resources/Phaser/stage/monsters.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/monsterSkill.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/notes.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/beatoven.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/bosses.js"></script>
@@ -28,6 +29,8 @@
 <script type="text/javascript" src="resources/Phaser/stage/stageResult.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/Stage.js"></script>
 
+<script type="text/javascript" src="resources/Phaser/Ending.js"></script>
+
 <script type="text/javascript">
 	var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'RhythmiCal', "game");
 	
@@ -35,11 +38,15 @@
 	game.state.add("Intro",Intro);
 	//game.state.add("Tutorial",Tutorial);
 	game.state.add("Village",Village);
-	game.state.add("Story",Rho_story);
+	game.state.add("Story",Story);
 	game.state.add("Stage",Stage);
-	//game.state.add("Ending",Ending);
+	game.state.add("Ending",Ending);
 	
+<<<<<<< HEAD
 	game.state.start("Story");
+=======
+	game.state.start("Ending");
+>>>>>>> f5388db21b3fe195e57c269e5cbd9d81d9a5a6bd
 </script>
 
 </body>
