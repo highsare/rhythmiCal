@@ -306,7 +306,13 @@ Intro.prototype = {
 		    
 			});
 			
+			game.time.events.add(10000, function() {
+				//스토리1번으로 보냄
+				//game.state.start("");	
+			});
+			
 		});//네번째 장면 끝
+		
 	}
 }
 function typethetext(txt, xvalue, yvalue, size, speed) {
