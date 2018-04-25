@@ -21,7 +21,7 @@ function Nobeato(game){
 	this.game = game;
 	this.health = 50;
 	this.maxHealth = 50;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE
+	this.status = "STAY"; //STAY , MOVE , STUN, DIE, IMUNE
 	
 	this.nobeatoSprite = game.add.sprite(1420, game.world.centerY, 'nobeato', 5);
 	this.nobeatoSprite.scale.set(4);
