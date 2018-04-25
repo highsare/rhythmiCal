@@ -69,3 +69,12 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 		hitMonster(monsterInRange[l], 1);
 	}
 }
+
+function changeMonsterStatusAvoidDamage(unit, avoidBeat){
+	for (var i = 1; i < 20; i++) {
+		if (avoidBeat * i == currentBeat) {
+			unit.status = "IMUNE";
+		}
+	}
+}
+
