@@ -70,10 +70,10 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	}
 }
 
-function changeMonsterStatusAvoidDamage(unit, avoidBeat){
+function changeMonsterStatus(unit, executionBeat, status){
 	for (var i = 1; i < 20; i++) {
-		if (avoidBeat * i == currentBeat) {
-			unit.status = "IMUNE";
+		if (executionBeat * i == currentBeat) {
+			unit.status = status;
 		}
 	}
 }

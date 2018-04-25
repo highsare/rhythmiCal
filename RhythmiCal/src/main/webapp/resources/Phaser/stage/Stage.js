@@ -159,13 +159,13 @@ Stage.prototype = {
 		monstersC = new Array();
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
-			monstersA[i] = new Monster(game, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+			monstersA[i] = new Monster(game, monsterlistA[i].monsterNum, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
 		}
 		for (var i = 0; i < monsterlistB.length; i++) {
-			monstersB[i] = new Monster(game, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+			monstersB[i] = new Monster(game, monsterlistB[i].monsterNum, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
 		}
 		for (var i = 0; i < monsterlistC.length; i++) {
-			monstersC[i] = new Monster(game, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
 		}
 
 
