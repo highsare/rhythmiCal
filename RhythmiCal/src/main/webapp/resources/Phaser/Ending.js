@@ -36,7 +36,7 @@ Ending.prototype = {
 	//왼쪽 에니메이션
 	
 	//1장면
-	propose00 = game.add.sprite(100, 100, 'propose00');
+	propose00 = game.add.sprite(100, 300, 'propose00');
 	//propose00.scale.setTo(1, 1);
 	propose00.alpha=0;
 	var singing = propose00.animations.add('singing');
@@ -47,24 +47,24 @@ Ending.prototype = {
 	game.time.events.add(10000, function () {  
 		//카메라 페이드 인
 	propose00.destroy();
-	propose01 = game.add.sprite(100,100,'propose01');
+	propose01 = game.add.sprite(100,300,'propose01');
 	var blink = propose01.animations.add('blink');
 	propose01.play('blink',1,true);
 	
 	//3장면
 	game.time.events.add(7000, function () {   
 		propose01.destroy();
-		propose02 = game.add.image(100,100,'propose02'); 
+		propose02 = game.add.image(100,300,'propose02'); 
 	
 	//4장면
 	game.time.events.add(4000, function () {   
 		propose02.destroy();
-		propose03 = game.add.image(100,100,'propose03'); 
+		propose03 = game.add.image(100,300,'propose03'); 
 		
 		//5장면
 		game.time.events.add(5000, function () {   
 			propose03.destroy();
-			propose04 = game.add.sprite(100,100,'propose04');
+			propose04 = game.add.sprite(100,300,'propose04');
 			var wedding = propose04.animations.add('wedding');
 			propose04.play('wedding',1,true);
 				game.add.tween(propose04).to( { alpha : 0 }, 3000, Phaser.Easing.Linear.None, true,7000);
