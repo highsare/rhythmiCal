@@ -41,11 +41,21 @@ var maxLife = 10;
 var lifeArray;
 var BPMfactor = 60;
 
+//모션효과에 관련된 변수들
+var pointDamage = 3;
+var point_isA,point_isB,point_isC;
+var up_isA,up_isB,up_isC;
+var down_isA,down_isB,down_isC;
+var left_isA,left_isB,left_isC;
+var right_isA,right_isB,right_isC;
+
+//모션 세팅에 따른 변수 설정
+
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
 
-//stageNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
+//contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
 var bgImgName;
 var monsterlistA; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
@@ -53,7 +63,6 @@ var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를
 var musicName;
 var stageNum;
 var beat;
-var mummy;
 
 //노비토를 담을 전역 변수
 var nobeato;

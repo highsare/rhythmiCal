@@ -37,9 +37,10 @@ Preload.prototype = {
 	},
 	startNext:function(){
 		if(isNewbie){
-			game.state.start("Intro");
+			//game.state.start("Intro");
+			requestState();
 		}else{
-			game.state.start("Village");
+			//game.state.start("Village");
 		}
 	},
 	gofull: function() {

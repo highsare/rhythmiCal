@@ -1,4 +1,4 @@
-<<<<<<< HEAD:RhythmiCal/src/main/resources/Rhythmical_DB_20180426_35_54.txt
+
 ﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
 
 -- SOUNDEFFECT Table Create SQL
@@ -850,6 +850,3 @@ ALTER TABLE STORY
     ADD CONSTRAINT FK_STORY_SOUNDEFFECTNUM_SOUNDE FOREIGN KEY (SOUNDEFFECTNUM)
         REFERENCES SOUNDEFFECT (SOUNDEFFECTNUM)
 /
-
-
->>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae:RhythmiCal/src/main/resources/Rhythmical_DB.txt

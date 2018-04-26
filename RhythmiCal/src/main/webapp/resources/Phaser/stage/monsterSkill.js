@@ -82,17 +82,20 @@ function ruinNoteBar(){
 }
 
 //몬스터와 높이를 받아서 넉백시킨다.
-function knockback(unit, maximumHeightOnAttackLine){
-	if (unit.monsterNum != 1) {
-		var destination = unit.lineX + jumpX[unit.attackLine]*3;
-		//점프 높이
-		//game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
-		//game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 20 }, 300, "Sine.easeInOut", true, 0, 0, true);
-		//이동 거리
-		game.add.tween(unit.monsterSprite).to({ x: destination }, 600, Phaser.Easing.Exponential.EaseOut, true, 0);
-		game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, Phaser.Easing.Exponential.EaseOut, true, 0);
-		
-		unit.lineX = destination;
+function knockback(unitArray, maximumHeightOnAttackLine){
+	for (var i = 0; i < unitArray.length; i++) {
+		var unit = unitArray[i];
+		if (unit.monsterNum != 1) {
+			var destination = unit.lineX + jumpX[unit.attackLine]*3;
+			//점프 높이
+			//game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
+			//game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 20 }, 300, "Sine.easeInOut", true, 0, 0, true);
+			//이동 거리
+			game.add.tween(unit.monsterSprite).to({ x: destination }, 600, Phaser.Easing.Exponential.EaseOut, true, 0);
+			game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, Phaser.Easing.Exponential.EaseOut, true, 0);
+			
+			unit.lineX = destination;
+		}
 	}
 }
 

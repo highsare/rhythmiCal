@@ -62,26 +62,57 @@ function motionEvent(motion){
 	popupCombo(true);
 	timingCheck(true);
 	
+	//모션에 따른 효과 설정
 	switch(motion){
 	case "POINT":
-		attackLine(monstersA,1);
+		if (point_isA) {
+			attackLine(monstersA,pointDamage);			
+		}else if (point_isB) {
+			attackLine(monstersB,pointDamage);			
+		}else if (point_isC) {
+			attackLine(monstersC,pointDamage);			
+		}
 		break;
 	case "UP":
-		//라인 설정 필요함
-		//stun();
+		if (up_isA) {
+			stun();	
+		}else if (up_isB) {
+			stun();
+		}else if(up_isC) {
+			stun();			
+		}
 		break;
 	case "DOWN":
 		//넉백
-		for (var i = 0; i < monstersA.length; i++) {
-			var unit = monstersA[i];
-			knockback(unit,lineYLocation[unit.attackLine]);
+		if (down_isA) {
+			knockback(monstersA,lineYLocation[unit.attackLine]);			
+		}else if (down_isB) {
+			knockback(monstersB,lineYLocation[unit.attackLine]);
+		}else if (down_isC) {
+			knockback(monstersC,lineYLocation[unit.attackLine]);			
 		}
 		break;
 	case "LEFT":
-		//stageResult(true);
+		if (left_isA) {
+			
+		}
+		if (left_isB) {
+			
+		}
+		if (left_isC) {
+			
+		}
 		break;
 	case "RIGHT":
-		//stageResult(false);
+		if (right_isA) {
+			
+		}
+		if (right_isB) {
+			
+		}
+		if (right_isC) {
+			
+		}
 		break;
 	}
 }

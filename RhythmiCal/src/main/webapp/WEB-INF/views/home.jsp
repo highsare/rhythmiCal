@@ -75,7 +75,7 @@ $(function() {
 		    , success: function(data) {
 		        alert(data);
 		    }
-		    , fail: function(data) {
+		    , error: function(data) {
 		    		alert(data);
 		    }
 		});
@@ -96,10 +96,11 @@ $(function() {
 		    , data: {'id': loginId
 		    			, 'pw': loginPw}
 		    , success: function(data) {
+		    	//성공 여부에 따라 game으로 간다.
 		        alert(data);
 		    }
-		    , fail: function(data) {
-		    		alert(data);
+		    , error: function(data) {
+	    		alert(data);
 		    }
 		});
 	});

@@ -13,28 +13,17 @@ public class StateController {
 	@RequestMapping(value="requestState")
 	public String stateControll() {
 		State state = null;
+		//DAO를 활용해 Save 테이블의 StateNum++
 		
-		//DAO를 활용해 Save 테이블의 StateNum++ 
-		
-		//Save 테이블의 StateNum을 활용해서  데이터를 받아옴
-		if (state != null) {
-			if (state.getState().contains("Intro")) {
-				
-			}else if(state.getState().contains("Tutorial")) {
-				
-			}else if(state.getState().contains("Story")) {
-				//contentNum
-			}else if(state.getState().contains("Stage")) {
-				//contentNum
-			}else if(state.getState().contains("Village")) {
-				
-			}else if(state.getState().contains("Ending")) {
-				
-			}else if(state.getState().contains("HallOfFame")) {
-				
-			}
-		}
-		
+		//Save 테이블의 StateNum과 같은 스테이트의 정보 반환
 		return state.getState();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="requestContentNum")
+	public int requestContentNum() {
+		int contentNum = 0;
+		//DAO를 활용해 현재 Save테이블과 State 테이블을 조인하여 컨텐츠 넘버 반환
+		return contentNum;
 	}
 }

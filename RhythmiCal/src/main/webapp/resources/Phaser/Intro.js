@@ -308,7 +308,8 @@ Intro.prototype = {
 			
 			game.time.events.add(10000, function() {
 				//스토리1번으로 보냄
-				//game.state.start("");	
+				//game.state.start("");
+				requestState();
 			});
 			
 		});//네번째 장면 끝

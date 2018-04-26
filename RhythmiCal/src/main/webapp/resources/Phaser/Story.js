@@ -144,7 +144,7 @@ Story.prototype = {
 	//게임으로 이동 
 	 gotostage: function(){
 		//모든 게임 elements 날리기.
-		game.world.removeAll()
+		game.world.removeAll();
 		this.music.stop();
 		
 		game.state.start('Ending');
