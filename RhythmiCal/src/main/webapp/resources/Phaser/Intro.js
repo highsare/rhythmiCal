@@ -358,7 +358,7 @@ function addQuake() {
     .to(properties, duration, ease, autoStart, delay, 4, yoyo);
   
   // we're using this line for the example to run indefinitely
- // quake.onComplete.addOnce(addQuake);
+  // quake.onComplete.addOnce(addQuake);
   
   // let the earthquake begins
   quake.start();

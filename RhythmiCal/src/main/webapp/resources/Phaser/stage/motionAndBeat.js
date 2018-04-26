@@ -70,7 +70,11 @@ function motionEvent(motion){
 		attackLine(monstersB,1);
 		break;
 	case "DOWN":
-		attackLine(monstersC,1);
+		//넉백
+		for (var i = 0; i < monstersA.length; i++) {
+			var unit = monstersA[i];
+			knockback(unit,lineYLocation[unit.attackLine]);
+		}
 		break;
 	case "LEFT":
 		//stageResult(true);

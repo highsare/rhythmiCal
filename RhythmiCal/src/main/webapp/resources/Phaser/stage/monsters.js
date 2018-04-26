@@ -11,7 +11,7 @@ function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBea
 	this.speed = speed;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING, IMUNE, RUSH
+	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING, IMMUNE, RUSH, KNOCKBACK
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
 	this.skillPercentage = 0;
@@ -47,7 +47,7 @@ Monster.prototype.damage = function(damage){
 	//이전의 체력값
 	var healthBefore = this.health;
 	
-	if (this.status != "IMUNE") {
+	if (this.status != "IMMUNE") {
 		this.health -= damage;	
 	}
 	
@@ -61,7 +61,7 @@ Monster.prototype.damage = function(damage){
 			healthBlank.anchor.setTo(0.5, 1);
 			this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
 		} else if (healthBefore == this.health) {
-			if (this.status == "IMUNE") {
+			if (this.status == "IMMUNE") {
 				this.status = "MOVE";
 			}
 		} else {//체력이 증가했다.
