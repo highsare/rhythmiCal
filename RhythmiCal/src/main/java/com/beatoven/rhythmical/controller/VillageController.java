@@ -59,13 +59,8 @@ public class VillageController {
 		// 해쉬맵 생성, 로그인된 멤버 객체 및 설정한 모션 리스트를 추가 
 		HashMap<String, String> map = new HashMap<>();
 		
-<<<<<<< HEAD
 		// 마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
-=======
 //		마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
-//		map.put("id", loginMember.getId());
-//		map.put("jsonText", jsonText);
->>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 //		map.put("id", loginMember.getId());
 		map.put("id", "kimminah1");
 		map.put("jsonText", jsonText);

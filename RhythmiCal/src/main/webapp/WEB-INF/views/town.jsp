@@ -415,7 +415,6 @@ function moveButtonFocus(inputKey) {
   			point = game.add.image(x, y, 'select');
   			point.scale.set(0.9);
   		}
-<<<<<<< HEAD
   		
   		// 레인 설정에 중복값이 있을 경우 에러를 알림
   		if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
@@ -425,15 +424,8 @@ function moveButtonFocus(inputKey) {
   		// 없을 경우 작업소를 나갈 때 현재의 모션 값을 디비에 저장
   		else {
   			saveMotionList();
-  			// 깊이를 0으로 하여 moveMenu()로 이동
-  	  		depth = 0; 
+  	  		depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
   		}
-=======
-  		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
-  		saveMotionList();
-		// 깊이를 0으로 하여 moveMenu()로 이동
-  		depth = 0; 
->>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
   		break;
    }
 }

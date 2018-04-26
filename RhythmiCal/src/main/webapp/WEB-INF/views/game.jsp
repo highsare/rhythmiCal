@@ -42,10 +42,6 @@
 	game.state.add("Story",Story);
 	game.state.add("Stage",Stage);
 	game.state.add("Ending",Ending);
-<<<<<<< HEAD
-	
-	game.state.start("Stage");
-=======
 	
 	//game.state.start("Preload");
 	//game.state.start("Intro");
@@ -54,7 +50,6 @@
 	//game.state.start("Story");
 	game.state.start("Stage");
 	//game.state.start("Ending");
->>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 </script>
 
 </body>

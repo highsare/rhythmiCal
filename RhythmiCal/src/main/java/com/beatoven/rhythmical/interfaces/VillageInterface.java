@@ -1,8 +1,8 @@
 package com.beatoven.rhythmical.interfaces;
 
 import java.util.HashMap;
-
 import org.apache.ibatis.annotations.Mapper;
+import com.beatoven.rhythmical.vo.Member;
 
 /*마을 관련 인터페이스*/
 
