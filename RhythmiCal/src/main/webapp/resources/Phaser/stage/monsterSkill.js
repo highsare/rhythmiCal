@@ -92,7 +92,7 @@ function knockback(unit, maximumHeightOnAttackLine){
 		game.add.tween(unit.monsterSprite).to({ x: destination }, 600, Phaser.Easing.Exponential.EaseOut, true, 0);
 		game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, Phaser.Easing.Exponential.EaseOut, true, 0);
 		
-		unit.lineX = destination;		
+		unit.lineX = destination;
 	}
 }
 
