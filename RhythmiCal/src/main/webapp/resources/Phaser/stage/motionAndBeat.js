@@ -172,6 +172,7 @@ function popupCombo(combo) {
 	}
 }
 
+//해당 열에 스턴을 먹인다.
 function stern(array){
 	for (var i = 0; i < array.length; i++) {
 		array[i].status = "STUN";

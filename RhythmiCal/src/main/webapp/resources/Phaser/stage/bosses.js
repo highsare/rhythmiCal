@@ -2,10 +2,6 @@
  * 
  */
 
-/**
- * 
- */
-
 function bossesJump(bossEntity) {
 	//1번 점프 점프
     game.add.tween(bossEntity).to({ y: 350 }, 300, Phaser.Easing.Quadratic.InOut, true, 0, 0, true);

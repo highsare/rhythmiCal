@@ -1,6 +1,8 @@
 /**
  * 
  */
+
+//폭발 데미지를 받을 배열을 생성한다.
 function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	var monsterLocationY = lineYLocation[monsterAttackLine];
 	var monsterInRange = new Array();
@@ -64,7 +66,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 			}
 		}
 	}
-	
+	//범위에 있는 몬스터에게 데미지를 먹인다.
 	for (var l = 0; l < monsterInRange.length; l++) {
 		hitMonster(monsterInRange[l], 1);
 	}
@@ -93,6 +95,7 @@ function knockback(unit, maximumHeightOnAttackLine){
 	}
 }
 
+//excutionBeat의 배수가 되면 몬스터의 상태를 바꾼다.
 function changeMonsterStatus(unit, executionBeat, status){
 	for (var i = 1; i < 20; i++) {
 		if (executionBeat * i == currentBeat) {
