@@ -2,7 +2,7 @@
  * 
  */
 
-//Monster Entity
+//몬스터 객체
 function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBeat, maxHealth){
 	
 	this.game = game;
@@ -42,7 +42,7 @@ function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBea
 	game.physics.enable(this.monsterSprite, Phaser.Physics.ARCADE);
 }
 
-//Monster Entity prototype damage
+//몬스터 객체의 데미지를 받는 함수
 Monster.prototype.damage = function(damage){
 	
 	//이전의 체력값

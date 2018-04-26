@@ -49,14 +49,22 @@ function preload() {
 	depth = 0;
 	
 	// 진주 이미지	
-	game.load.image('menuwin','resources/Images/town/townImg/vmenu.png' ); //마을 메뉴 이미지 로드
+	// 마을 이미지
+	game.load.image('menu_super_back', 'resources/Images/town/townImg/menu_0_background.png' );
+	game.load.image('beverlyills', 'resources/Images/town/townImg/menu_0_beverlyills.png' );
+	game.load.image('studio', 'resources/Images/town/townImg/menu_1_studio.png' );
+	game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
+	game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
+	game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
+	game.load.image('border', 'resources/Images/town/townImg/border.png'); //임시
+	
 	game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
 	game.load.image('click2','resources/Images/town/townImg/click2.png' ); //두번째 메뉴 이미지 로드(임의)
 	game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
 	game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
 	game.load.image('back','resources/Images/town/townImg/v_back.png' ); //마을 배경 이미지
 	game.load.image('select','resources/Images/town/townImg/select.png' );//선택 흰 테두리
-	game.load.image('menu_back','resources/Images/town/townImg/menu_back.png' );//Enter 눌렀을 때 서브메뉴 배경
+	game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
 	game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
 	game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
 	game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
@@ -70,10 +78,10 @@ function preload() {
 	game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
 	
 	//멀티 플레이어 표시
-	game.load.image('player1','resources/Images/town/townImg/player1.png' ); 
-	game.load.image('player2','resources/Images/town/townImg/player2.png' ); 
-	game.load.image('player3','resources/Images/town/townImg/player3.png' ); 
-	game.load.image('player4','resources/Images/town/townImg/player4.png' ); 
+	game.load.image('player1','resources/Images/town/townImg/player1.png');
+	game.load.image('player2','resources/Images/town/townImg/player2.png');
+	game.load.image('player3','resources/Images/town/townImg/player3.png');
+	game.load.image('player4','resources/Images/town/townImg/player4.png');
 	
 	// 네모 테두리 로드
 	game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
@@ -107,20 +115,30 @@ function create() {
 	bgd.alpha = 0.5;
 	bgd.scale.set(1);
 	
-	//메뉴 이미지 지정한 이미지에 출력
-	var back = game.add.image(60, 20, 'menuwin');
-	back.scale.set(0.9);
+	//메뉴 이미지 지정한 좌표에 출력
+	var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
+	var beveryills = game.add.image(135, 20, 'beverlyills'); beveryills.scale.set(0.9);
+	var studio = game.add.image(133, 223, 'studio'); studio.scale.set(0.9);
+	var mercenary = game.add.image(137, 335, 'mercenary'); mercenary.scale.set(0.9);
+	var home = game.add.image(133, 440, 'home'); home.scale.set(0.9);
+	var nextstage = game.add.image(133, 552, 'nextstage'); nextstage.scale.set(0.9);
+	var worksplace = game.add.image(810, 120, 'worksplace'); worksplace.scale.set(0.9); //임시
+	var border = game.add.image(805, 120, 'border'); border.scale.set(0.9); //임시
 	
-	
- 	//첫 메뉴를 가리키고 있는 흰테두리출력
+	//첫 메뉴를 가리키고 있는 빨간색 테두리 출력
 	point = game.add.image(x, y, 'select');
 	point.scale.set(0.9);
+<<<<<<< HEAD
+	
+	var player = game.add.image(130, 770, 'player1');
+=======
 	 
 	p_back = game.add.image(80, 710, 'player_back');
 	p_back.scale.set(0.85);
 	p_back.alpha = 0.8;
 	
 	var player = game.add.image(130, 765, 'player1');
+>>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 	var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
 	player.scale.set(0.4);
 	
@@ -266,6 +284,17 @@ function logoutMember() {
  * createStudio(): 작업소 화면을 만드는 메소드 
  */
 function createStudio() {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+	// 작업소 화면 표시
+<<<<<<< HEAD
+=======
+	image = game.add.image(770, 120, 'worksplace');
+>>>>>>> 62b4590b0e2d2124dfbb2bfe56cfdc668f9a84de
+>>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
+>>>>>>> 95719fcc9240fd5aab76a9bbd280cf7402faf2f4
 	image = game.add.image(810, 120, 'worksplace');
 
 	// 버튼 포커스를 1로 초기화
@@ -300,6 +329,8 @@ function createStudio() {
 		// 성공하면 가져온 모션 리스트를 표시
 		success: function(jsonText) {
 			alert('readMotionList success');
+			alert(jsonText);
+			
 			var motionList = JSON.parse(jsonText);
 			// 첫 번째 모션
 			motion1 = game.add.sprite(buttonX, buttonY, motionList.motion[0].name);
@@ -387,10 +418,17 @@ function moveButtonFocus(inputKey) {
   			point = game.add.image(x, y, 'select');
   			point.scale.set(0.9);
   		}
-  		// 작업소를 나갈 때 현재의 모션 값을 디비에 저장
-  		saveMotionList();
-		// 깊이를 0으로 하여 moveMenu()로 이동
-  		depth = 0; 
+  		
+  		// 레인 설정에 중복값이 있을 경우 에러를 알림
+  		if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
+  			// TODO : 텍스트 하나 써서 띄울 것.
+  			text1 = game.add.bitmapText(810, 420,'neo_font' ,'레인을 중복되게 선택할 수 없습니다!', 40);
+  		}
+  		// 없을 경우 작업소를 나갈 때 현재의 모션 값을 디비에 저장
+  		else {
+  			saveMotionList();
+  	  		depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
+  		}
   		break;
    }
 }
@@ -400,6 +438,11 @@ function moveButtonFocus(inputKey) {
  */
 function saveMotionList() {
 	// 현재 떠 있는 모션, 효과, 레인 스프라이트의 이름을 읽어 json String으로 만듬
+<<<<<<< HEAD
+	var jsonText = "{'motion': [{'name': '" + motion1.key + "', 'effect': '" + effect1.key + "', 'lane': '" + lane1.key + "'},"
+				 + "{'name': '" + motion2.key + "', 'effect': '" + effect2.key + "', 'lane': '" + lane2.key + "'},"
+				 + "{'name': '" + motion3.key + "', 'effect': '" + effect3.key + "', 'lane': '" + lane3.key + "'}]}";
+=======
 	var jsonText = "{'motion': [{'name': '" + motion1.key 
 						  + "', 'effect': '" + effect1.key 
 						  + "', 'lane': '" + lane1 
@@ -410,14 +453,15 @@ function saveMotionList() {
 						  + "', 'effect': '" + effect3.key 
 						  + "', 'lane': '" + lane3.key 
 						  + "'}]}";
+>>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 	
 	// ajax를 통해 jsonText를 DB(table save)에 저장 (돌아오는 result는 int값으로, 성공 시 1/실패 시 0)
 	$.ajax({
 		url: 'saveMotionList'
 		, type: 'post'
 		, data: {jsonText: jsonText}
-		, success: function(result) {alert('saveMotionList success - ' + result);}
-		, error: function(result){alert('saveMotionList error - ' + result);}
+		, success: function(result) {alert('saveMotionList success (' + result + ')');}
+		, error: function(result){alert('saveMotionList error (' + result + ')');}
 	});	
 }
  
@@ -455,6 +499,32 @@ function moveContent(buttonFocus,inputKey) {
    // 모션 2 변경
    case 2: 
       switch (inputKey) {
+<<<<<<< HEAD
+	      case 'left':
+			if (turn2 == 0) {return;} turn2 = turn2-1;
+			if (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {return;}
+			else {
+			 motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
+			    effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
+			    lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
+			} break;	
+	    	  
+	    	  	/* temp = turn2;
+	    	  	minusAgain:
+	    	  	turn2--;
+	    	  	if (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
+		    	  	if(turn2 != 0) {
+		    	  		continue minusAgain;
+		    	  	} else {
+		    	  		turn2 = temp;
+		    	  		return;
+		    	  	}
+      		} else {
+				motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
+				effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
+				lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
+      		} break; */
+=======
 	      case 'left': 
 	         if (turn2 == 0) {return;} turn2 = turn2-1;
 	         if (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {return;}
@@ -463,6 +533,7 @@ function moveContent(buttonFocus,inputKey) {
 	             effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
 	             lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
 	         } break;
+>>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 	      case 'right': 
 	         if (turn2 >= 4) {turn2 = 3;} turn2 = turn2+1;
 	         if (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {return;}
@@ -601,6 +672,29 @@ function update() {
 }
 
 function multiconnection() {
+<<<<<<< HEAD
+	$.ajax({
+		url: 'multiconnection',
+		type: 'post',
+		success: function(result) {
+			console.log(result.length);
+			if (result != null) {
+				switch (result.length) {
+				case 2:
+					var player2 = game.add.image(220, 770, 'player2');
+					player2.scale.set(0.4);
+					break;
+				case 3:
+					var player3 = game.add.image(270, 770, 'player3');
+					player3.scale.set(0.4);
+					break;
+				case 4:
+					var player4 = game.add.image(320, 770, 'player4');
+					player4.scale.set(0.4);
+					break;
+				default:
+					break;
+=======
 	 $.ajax({
 			url: 'multiconnection',
 			type: 'post',
@@ -623,8 +717,14 @@ function multiconnection() {
 					default:
 						break;
 					}
+>>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 				}
+<<<<<<< HEAD
 			},
+=======
+			}
+		},
+>>>>>>> 95719fcc9240fd5aab76a9bbd280cf7402faf2f4
 		error: function() {alert('update() - multiconnection error');}
 	})
 }
@@ -662,7 +762,12 @@ function goHome(inputKey) {
 function isnull() {
 	if (text1 != null) {text1.kill();}
 	if (image != null) {image.kill();}
+<<<<<<< HEAD
+	if (m_back== null) {m_back = game.add.image(750,75,'menu_sub_back');}
+	
+=======
 	if (m_back== null) {m_back = game.add.image(750,75,'menu_back');}
+>>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 	if (neon != null) {neon.kill();}
 	if (board != null) {board.kill();}
 	if (messange != null) {messange.kill();}

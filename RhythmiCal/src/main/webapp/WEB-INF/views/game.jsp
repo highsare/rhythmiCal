@@ -14,7 +14,7 @@
 
 <script type="text/javascript" src="resources/Phaser/rawJS/typewriter.js"></script>
 
-<script type="text/javascript" src="resources/Phaser/Preload.js"></script>
+<script type="text/javascript" src="resources/Phaser/preload.js"></script>
 <script type="text/javascript" src="resources/Phaser/Intro.js"></script>
 <script type="text/javascript" src="resources/Phaser/Tutorial.js"></script>
 <script type="text/javascript" src="resources/Phaser/Village.js"></script>
