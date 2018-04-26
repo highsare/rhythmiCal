@@ -127,6 +127,8 @@ function commandJump(unitArray, currentBeat){
 					if (unit.status != "CASTING") {
 						//몬스터의 위치가 첫 출발 때의 목적지를 설정한다.
 						if (unit.lineX == 2000) {
+							//몬스터의 상태를 move로 바꾼다.
+							unit.status = "MOVE";
 							//속도에 따라 처리
 							switch(unit.speed){
 							case 1: 
