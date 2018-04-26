@@ -228,6 +228,9 @@ function attackLine(unitArray, damage){
 	for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
 		if(unit.lineXIndex != 0){
+			if (unit.monsterNum == 3) {//몬스터 번호가 3인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
+				break;
+			}
 			hitMonster(unit,damage);
 		}
 	}
