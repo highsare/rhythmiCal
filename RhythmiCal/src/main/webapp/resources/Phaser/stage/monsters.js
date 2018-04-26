@@ -11,7 +11,8 @@ function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBea
 	this.speed = speed;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING, IMMUNE, RUSH, KNOCKBACK
+	this.status = "STAY"; //STAY, MOVE, STUN, DIE, CASTING, IMUNE, RUSH
+	this.counter = 0;
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
 	this.skillPercentage = 0;
@@ -167,7 +168,15 @@ function commandJump(unitArray, currentBeat){
 					unit.status = "CASTING";
 				}
 			}
-		}// DIE가 아니면서 STUN이 아니다 조건문 끝
+		} else { // DIE거나 STUN이다.
+			if (unit.status == "STUN") {
+				unit.counter++;
+				if (unit.counter == 3) {
+					unit.status = "MOVE";
+					unit.counter = 0;
+				}
+			}
+		}
 	}//for문 끝
 }//function 끝
 

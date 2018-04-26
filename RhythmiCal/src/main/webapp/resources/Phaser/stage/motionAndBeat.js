@@ -171,3 +171,9 @@ function popupCombo(combo) {
 		timingCheck(false);
 	}
 }
+
+function stern(array){
+	for (var i = 0; i < array.length; i++) {
+		array[i].status = "STUN";
+	}
+}
