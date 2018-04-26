@@ -16,6 +16,7 @@
 
 <script type="text/javascript" src="resources/Phaser/Preload.js"></script>
 <script type="text/javascript" src="resources/Phaser/Intro.js"></script>
+<script type="text/javascript" src="resources/Phaser/Tutorial.js"></script>
 <script type="text/javascript" src="resources/Phaser/Village.js"></script>
 <script type="text/javascript" src="resources/Phaser/Story.js"></script>
 
@@ -36,13 +37,19 @@
 	
 	game.state.add("Preload",Preload);
 	game.state.add("Intro",Intro);
-	//game.state.add("Tutorial",Tutorial);
+	game.state.add("Tutorial",Tutorial);
 	game.state.add("Village",Village);
 	game.state.add("Story",Story);
 	game.state.add("Stage",Stage);
 	game.state.add("Ending",Ending);
 	
+	//game.state.start("Preload");
+	//game.state.start("Intro");
+	//game.state.start("Tutorial");
+	//game.state.start("Village");
+	//game.state.start("Story");
 	game.state.start("Stage");
+	//game.state.start("Ending");
 </script>
 
 </body>

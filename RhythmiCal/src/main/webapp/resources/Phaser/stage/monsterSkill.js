@@ -1,6 +1,8 @@
 /**
  * 
  */
+
+//폭발 데미지를 받을 배열을 생성한다.
 function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	var monsterLocationY = lineYLocation[monsterAttackLine];
 	var monsterInRange = new Array();
@@ -64,12 +66,36 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 			}
 		}
 	}
-	
+	//범위에 있는 몬스터에게 데미지를 먹인다.
 	for (var l = 0; l < monsterInRange.length; l++) {
 		hitMonster(monsterInRange[l], 1);
 	}
 }
 
+var cloudArray = [0,1];
+var cloudIndex = 0;
+/*노트를 가리는 구름 등을 차례로 소환하는 스킬*/
+function ruinNoteBar(){
+	cloudIndex++;
+	//노트바의 위치에 차례차례 생성
+	game.add.sprite(game.world.centerX - 200 + cloudIndex*30, 750 ,'imgO');
+}
+
+function knockback(unit, maximumHeightOnAttackLine){
+	if (unit.monsterNum != 1) {
+		var destination = unit.lineX + jumpX[unit.attackLine]*3;
+		//점프 높이
+		game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
+		game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 20 }, 300, "Sine.easeInOut", true, 0, 0, true);
+		//이동 거리
+		game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Expornential.EaseOut', true, 0);
+		game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Expornential.EaseOut', true, 0);
+		
+		unit.lineX = destination;		
+	}
+}
+
+//excutionBeat의 배수가 되면 몬스터의 상태를 바꾼다.
 function changeMonsterStatus(unit, executionBeat, status){
 	for (var i = 1; i < 20; i++) {
 		if (executionBeat * i == currentBeat) {

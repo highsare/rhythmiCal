@@ -70,7 +70,11 @@ function motionEvent(motion){
 		attackLine(monstersB,1);
 		break;
 	case "DOWN":
-		attackLine(monstersC,1);
+		//넉백
+		for (var i = 0; i < monstersA.length; i++) {
+			var unit = monstersA[i];
+			knockback(unit,lineYLocation[unit.attackLine]);
+		}
 		break;
 	case "LEFT":
 		//stageResult(true);
@@ -165,5 +169,12 @@ function popupCombo(combo) {
 	//콤보 실패 시
 	else {
 		timingCheck(false);
+	}
+}
+
+//해당 열에 스턴을 먹인다.
+function stern(array){
+	for (var i = 0; i < array.length; i++) {
+		array[i].status = "STUN";
 	}
 }

@@ -11,7 +11,8 @@ function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBea
 	this.speed = speed;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING, IMUNE, RUSH
+	this.status = "STAY"; //STAY, MOVE, STUN, DIE, CASTING, IMUNE, RUSH
+	this.counter = 0; //스킬이 적용되는 시간을 저장하는 속성 지금은 stun만 사용하고 있다.
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
 	this.skillPercentage = 0;
@@ -47,7 +48,7 @@ Monster.prototype.damage = function(damage){
 	//이전의 체력값
 	var healthBefore = this.health;
 	
-	if (this.status != "IMUNE") {
+	if (this.status != "IMMUNE") {
 		this.health -= damage;	
 	}
 	
@@ -60,8 +61,8 @@ Monster.prototype.damage = function(damage){
 			healthBlank.smoothed = false;
 			healthBlank.anchor.setTo(0.5, 1);
 			this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
-		} else if (healthBefore == this.health) {
-			if (this.status == "IMUNE") {
+		} else if (healthBefore == this.health) {//체력이 그대로라면
+			if (this.status == "IMMUNE") {//그런데 상태가 무적이라면 무빙상태로 만든다.
 				this.status = "MOVE";
 			}
 		} else {//체력이 증가했다.
@@ -167,7 +168,15 @@ function commandJump(unitArray, currentBeat){
 					unit.status = "CASTING";
 				}
 			}
-		}// DIE가 아니면서 STUN이 아니다 조건문 끝
+		} else { // DIE거나 STUN이다.
+			if (unit.status == "STUN") {
+				unit.counter++;
+				if (unit.counter == 3) {
+					unit.status = "MOVE";
+					unit.counter = 0;
+				}
+			}
+		}
 	}//for문 끝
 }//function 끝
 
@@ -219,6 +228,9 @@ function attackLine(unitArray, damage){
 	for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
 		if(unit.lineXIndex != 0){
+			if (unit.monsterNum == 3) {//몬스터 번호가 3인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
+				break;
+			}
 			hitMonster(unit,damage);
 		}
 	}
