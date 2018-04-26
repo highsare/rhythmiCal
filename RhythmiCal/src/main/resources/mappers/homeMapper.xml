@@ -8,7 +8,7 @@
 
 	<!-- 회원가입 -->
 	<insert id="signupMember" parameterType="member">
-		insert into member
+		insert into member(id, password)
 		values(#{id}, #{pw})
 	</insert>
 	
@@ -16,7 +16,7 @@
 	<select id="loginMember" parameterType="member" resultType="member">
 		select *
 		from member
-		where id = #{id} and pw = #{pw}
+		where id = #{id} and password = #{pw}
 	</select>
 	
 	<!-- 명예의 전당 글 불러오기 -->

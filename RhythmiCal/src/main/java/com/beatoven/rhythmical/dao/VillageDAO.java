@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.beatoven.rhythmical.interfaces.VillageInterface;
+import com.beatoven.rhythmical.vo.Member;
 
 /*마을 데이터 엑세스 오브젝트*/
 
@@ -16,12 +17,12 @@ public class VillageDAO implements VillageInterface{
 	SqlSession session;
 	
 	// 설정된 모션 값 읽어오기
-//	public String readMotionList(Member loginMember) {
-//		String jsonData = "";
-//		try {jsonData = session.getMapper(VillageInterface.class).readMotionList(loginMember);}
-//		catch (Exception e) {e.printStackTrace();}
-//		return jsonData;
-//	}
+	public String readMotionList(Member loginMember) {
+		String jsonData = "";
+		try {jsonData = session.getMapper(VillageInterface.class).readMotionList(loginMember);}
+		catch (Exception e) {e.printStackTrace();}
+		return jsonData;
+	}
 	
 	// 설정된 모션 값 저장하기
 	public int saveMotionList(HashMap<String, String> map) {

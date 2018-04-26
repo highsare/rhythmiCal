@@ -67,7 +67,8 @@ function motionEvent(motion){
 		attackLine(monstersA,1);
 		break;
 	case "UP":
-		attackLine(monstersB,1);
+		//라인 설정 필요함
+		//stun();
 		break;
 	case "DOWN":
 		//넉백
@@ -169,12 +170,5 @@ function popupCombo(combo) {
 	//콤보 실패 시
 	else {
 		timingCheck(false);
-	}
-}
-
-//해당 열에 스턴을 먹인다.
-function stern(array){
-	for (var i = 0; i < array.length; i++) {
-		array[i].status = "STUN";
 	}
 }
