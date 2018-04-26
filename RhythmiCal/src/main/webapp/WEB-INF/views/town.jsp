@@ -286,12 +286,15 @@ function logoutMember() {
 function createStudio() {
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
 	// 작업소 화면 표시
 <<<<<<< HEAD
 =======
 	image = game.add.image(770, 120, 'worksplace');
 >>>>>>> 62b4590b0e2d2124dfbb2bfe56cfdc668f9a84de
 >>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
+>>>>>>> 95719fcc9240fd5aab76a9bbd280cf7402faf2f4
 	image = game.add.image(810, 120, 'worksplace');
 
 	// 버튼 포커스를 1로 초기화
@@ -716,8 +719,12 @@ function multiconnection() {
 					}
 >>>>>>> d5f49342fe805828195a6a0669b25bc811fcb3ae
 				}
+<<<<<<< HEAD
+			},
+=======
 			}
 		},
+>>>>>>> 95719fcc9240fd5aab76a9bbd280cf7402faf2f4
 		error: function() {alert('update() - multiconnection error');}
 	})
 }

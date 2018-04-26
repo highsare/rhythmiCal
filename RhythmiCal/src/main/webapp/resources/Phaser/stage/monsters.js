@@ -205,7 +205,8 @@ function singleJump (unit, maximumHeightOnAttackLine, destination) {
 	game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Linear', true, 0);
 	game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Linear', true, 0);
 
-	hitMonster(unit, 1); //테스트를 위해서 임으로 주는 데미지
+	//테스트를 위해서 임으로 주는 데미지
+	//hitMonster(unit, 1);
 	//다음 목적지를 설정한다.
 	unit.lineX = destination;
 }
@@ -235,4 +236,3 @@ function attackLine(unitArray, damage){
 		}
 	}
 }
-

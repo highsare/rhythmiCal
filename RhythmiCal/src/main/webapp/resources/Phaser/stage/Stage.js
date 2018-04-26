@@ -190,17 +190,20 @@ Stage.prototype = {
 		//add 1 currentBeat
 		if (currentBeat == 0) {
 			stageBGM.play();
-		}else if(currentBeat == 3){
+		}
+		if (currentBeat == 4) {
 			for (var i = 0; i < monstersA.length; i++) {
 				var unit = monstersA[i];
 				knockback(unit,lineYLocation[unit.attackLine]);
 			}
-		}else if(currentBeat == 4){
+		}
+		if (currentBeat == 4) {
 			for (var i = 0; i < monstersB.length; i++) {
 				var unit = monstersB[i];
 				knockback(unit,lineYLocation[unit.attackLine]);
 			}
-		}else if(currentBeat == 5){
+		}
+		if (currentBeat == 4) {
 			for (var i = 0; i < monstersC.length; i++) {
 				var unit = monstersC[i];
 				knockback(unit,lineYLocation[unit.attackLine]);
