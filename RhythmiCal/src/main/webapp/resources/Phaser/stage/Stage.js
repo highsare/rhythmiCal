@@ -159,16 +159,15 @@ Stage.prototype = {
 		monstersC = new Array();
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
-			monstersA[i] = new Monster(game, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+			monstersA[i] = new Monster(game, monsterlistA[i].monsterNum, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
 		}
 		for (var i = 0; i < monsterlistB.length; i++) {
-			monstersB[i] = new Monster(game, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+			monstersB[i] = new Monster(game, monsterlistB[i].monsterNum, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
 		}
 		for (var i = 0; i < monsterlistC.length; i++) {
-			monstersC[i] = new Monster(game, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
 		}
-
-
+		
 		//Nobeato(game)
 		//nobeato = new Nobeato(game);
 		
@@ -191,6 +190,21 @@ Stage.prototype = {
 		//add 1 currentBeat
 		if (currentBeat == 0) {
 			stageBGM.play();
+		}else if(currentBeat == 3){
+			for (var i = 0; i < monstersA.length; i++) {
+				var unit = monstersA[i];
+				knockback(unit,lineYLocation[unit.attackLine]);
+			}
+		}else if(currentBeat == 4){
+			for (var i = 0; i < monstersB.length; i++) {
+				var unit = monstersB[i];
+				knockback(unit,lineYLocation[unit.attackLine]);
+			}
+		}else if(currentBeat == 5){
+			for (var i = 0; i < monstersC.length; i++) {
+				var unit = monstersC[i];
+				knockback(unit,lineYLocation[unit.attackLine]);
+			}
 		}
 		currentBeat += 1;
 		console.log(currentBeat);
@@ -199,6 +213,7 @@ Stage.prototype = {
 		createNotes();
 		//bossesJump(nobeato);
 		//hitBoss(nobeato, 1);
+	
 	},
 	getStageInfo: function(stageNum){
 		$.ajax({
