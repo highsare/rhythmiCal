@@ -176,9 +176,9 @@ td {
 <!-- Modal 모양을 게임과 어울리게 레트로로 해야 함. -->
 <!-- 시작화면에 BGM 깔아야 함. 게임과 잘 어울리는 핵심 BGM이어야 함. -->
 
-
+<!-- Main Logo -->
 <div class="center">
-	<img src="resources/Images/mainPage/mainlogo.png" style="width: 90%" class="center"><br>
+	<img src="resources/Images/mainPage/rhythmical.png" style="width: 100%" class="center"><br>
 </div>
 
 <div class="center">

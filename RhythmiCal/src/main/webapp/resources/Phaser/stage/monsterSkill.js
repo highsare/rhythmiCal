@@ -6,7 +6,7 @@
 function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	var monsterLocationY = lineYLocation[monsterAttackLine];
 	var monsterInRange = new Array();
-
+	//A라인의 범위에 있는 몬스터
 	for (var i = 0; i < arrayA.length; i++) {
 		if (arrayA[i].status != "DIE") {
 			if (arrayA[i].lineX < monsterLocationX + 150 || arrayA[i].lineX > monsterLocationX - 150) {
@@ -26,7 +26,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 			}
 		}
 	}
-	
+	//B라인의 범위에 있는 몬스터
 	for (var j = 0; j < arrayB.length; j++) {
 		if (arrayB[j].status != "DIE") {
 			if (arrayB[j].lineX < monsterLocationX + 150 || arrayB[j].lineX > monsterLocationX - 150) {
@@ -46,7 +46,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 			}
 		}
 	}
-	
+	//C라인의 범위에 있는 몬스터
 	for (var k = 0; k < arrayC.length; k++) {
 		if (arrayC[k].status != "DIE") {
 			if (arrayC[k].lineX < monsterLocationX + 150 || arrayC[k].lineX > monsterLocationX - 150) {
@@ -81,6 +81,7 @@ function ruinNoteBar(){
 	game.add.sprite(game.world.centerX - 200 + cloudIndex*30, 750 ,'imgO');
 }
 
+//몬스터와 높이를 받아서 넉백시킨다.
 function knockback(unit, maximumHeightOnAttackLine){
 	if (unit.monsterNum != 1) {
 		var destination = unit.lineX + jumpX[unit.attackLine]*3;
