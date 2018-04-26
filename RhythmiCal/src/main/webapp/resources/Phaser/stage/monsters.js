@@ -127,6 +127,8 @@ function commandJump(unitArray, currentBeat){
 					if (unit.status != "CASTING") {
 						//몬스터의 위치가 첫 출발 때의 목적지를 설정한다.
 						if (unit.lineX == 2000) {
+							//몬스터의 상태를 move로 바꾼다.
+							unit.status = "MOVE";
 							//속도에 따라 처리
 							switch(unit.speed){
 							case 1: 
@@ -204,9 +206,6 @@ function singleJump (unit, maximumHeightOnAttackLine, destination) {
 	//이동 거리
 	game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Linear', true, 0);
 	game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Linear', true, 0);
-
-	//테스트를 위해서 임으로 주는 데미지
-	//hitMonster(unit, 1);
 	//다음 목적지를 설정한다.
 	unit.lineX = destination;
 }
@@ -229,10 +228,12 @@ function attackLine(unitArray, damage){
 	for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
 		if(unit.lineXIndex != 0){
-			if (unit.monsterNum == 3) {//몬스터 번호가 3인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
+			if (unit.monsterNum == 3 && unit.status != "DIE") {//몬스터 번호가 3인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
+				hitMonster(unit, damage);
 				break;
 			}
 			hitMonster(unit,damage);
 		}
 	}
 }
+

@@ -9,6 +9,7 @@ function bossesJump(bossEntity) {
     //1초마다 스프라이트 점프 이미지
     animBeatoven = beatoven.animations.add('jump',[0,1],2,false);
     animBeatoven.play('jump');
+    
 }
 
 //노비토 객체
@@ -18,6 +19,7 @@ function Nobeato(game){
 	this.health = 50;
 	this.maxHealth = 50;
 	this.status = "STAY"; //STAY , MOVE , STUN, DIE, IMUNE
+	this.skillPercentage = 5;
 	
 	this.nobeatoSprite = game.add.sprite(1420, game.world.centerY, 'nobeato', 5);
 	this.nobeatoSprite.scale.set(4);
@@ -96,7 +98,8 @@ function attackedMotionBosses(bossSprite){
 	
 }
 
-//몬스터 객체 유닛 데미지
+//보스몹 객체 유닛 데미지
 function hitBoss(bossEntity, damage){
 	bossEntity.damage(damage);
 }
+

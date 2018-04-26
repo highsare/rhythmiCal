@@ -188,27 +188,6 @@ Stage.prototype = {
 	//나중에 이곳으로 모은다.
 	loopFunction: function(){
 		//add 1 currentBeat
-		if (currentBeat == 0) {
-			stageBGM.play();
-		}
-		if (currentBeat == 4) {
-			for (var i = 0; i < monstersA.length; i++) {
-				var unit = monstersA[i];
-				knockback(unit,lineYLocation[unit.attackLine]);
-			}
-		}
-		if (currentBeat == 4) {
-			for (var i = 0; i < monstersB.length; i++) {
-				var unit = monstersB[i];
-				knockback(unit,lineYLocation[unit.attackLine]);
-			}
-		}
-		if (currentBeat == 4) {
-			for (var i = 0; i < monstersC.length; i++) {
-				var unit = monstersC[i];
-				knockback(unit,lineYLocation[unit.attackLine]);
-			}
-		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
