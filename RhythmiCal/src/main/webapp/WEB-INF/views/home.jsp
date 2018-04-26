@@ -56,6 +56,10 @@ $(function() {
 		var signupPwc = $('#signupPwc').val();
 		
 		<!-- 유효성 검사 해야 함 -->
+		if (signupPw != signupPwc) {
+			alert('비밀번호가 일치하지 않습니다.');
+			return;
+		}
 		
 		<!-- test code -->
 		alert('signupId: ' + signupId + '\n'
