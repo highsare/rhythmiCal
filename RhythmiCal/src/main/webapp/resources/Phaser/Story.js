@@ -147,6 +147,69 @@ Story.prototype = {
 		//게임 시작
 		game.camera.onFadeComplete.add(this.gotostage,this);
 	},
+<<<<<<< HEAD
+=======
+	
+	//게임으로 이동 
+	 gotostage: function(){
+		//모든 게임 elements 날리기.
+		game.world.removeAll();
+		this.music.stop();
+		
+		game.state.start('Ending');
+		//game.state.start('stage'+i);  //예를 들어 stage1 
+		
+	},
+	//텍스트 오버레이 함수
+	 dialogueImport: function(){
+		
+		  /////////////NPC대화 함수///////////////
+		//대화할 npc1 생성
+		npc1 = game.add.sprite(100, 300, 'npc1');
+	    game.physics.arcade.enableBody(npc1);
+	    npc1.anchor.setTo(0, 0);
+	    //대화할 npc2 생성       
+	    npc2 = game.add.sprite(game.width-100, 300, 'npc2');
+	    game.physics.arcade.enableBody(npc2);
+	    npc2.anchor.setTo(1, 0);
+	    
+		npc1.alpha = 0;
+		npc2.alpha = 0;
+		//이미지가 시트로 있으면 몇번째 시트를 사용할 것인가 초기화
+	    // 1씩 증가하면서 대화문 돌릴꺼임
+        
+                
+        //대화문 어레이 생성
+        storyText = new Array();
+       
+        //대화문 어레이에 저장
+        storyText[0]="어서와 ";
+   		storyText[1]="누구지? 어디서 무슨 소리가 들렸는걸?";
+        storyText[2]="여기야 친구 나를 잡아";
+        storyText[3]="누구죠?";
+        storyText[4]="난 칼이야 리듬을 느끼는 칼";
+        storyText[5]="앗";
+        storyText[6]="그래 리듬이 느껴지니";
+        storyText[7]="내 어꺠가 들썩거리고있어요...";
+        storyText[8]="그 리듬에 몸을 맡겨봐 친구  그럼 게임을 시작하지";
+        
+        //화자순서 어레이 생성
+        storyNPCSequence = new Array();
+        
+        //대화할 순서 저장
+        storyNPCSequence[0]=2;
+        storyNPCSequence[1]=1;
+        storyNPCSequence[2]=2;
+        storyNPCSequence[3]=1;
+        storyNPCSequence[4]=2;
+        storyNPCSequence[5]=1;
+        storyNPCSequence[6]=2;
+        storyNPCSequence[7]=1;
+        storyNPCSequence[8]=2;
+  
+
+		},//dialogue저장문 끝
+>>>>>>> a9dc7ce071205d53b8feb602d661d78ac8a28f2c
 		
 		dialogueExport: function(storyOrder){
 			alert(storyOrder);
