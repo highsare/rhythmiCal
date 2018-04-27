@@ -67,16 +67,9 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (loginMember != null) {
-			//로그인 성공
-			session.setAttribute("loginedMember", loginMember);
-			System.out.println("done");
-			return "login";
-		}else {
-			//로그인 실패
-			System.out.println("fail");
-			return "fail";
-		}
+		session.setAttribute("loginedMember", loginMember);
+		
+		return "loginMember";
 	}
 	
 	//로그아웃

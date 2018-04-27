@@ -1,7 +1,11 @@
 /**
  * 
  */
-//비트에 맞춰서 보스가 뛴다.
+
+/**
+ * 
+ */
+
 function bossesJump(bossEntity) {
 	//1번 점프 점프
     game.add.tween(bossEntity).to({ y: 350 }, 300, Phaser.Easing.Quadratic.InOut, true, 0, 0, true);
@@ -9,7 +13,6 @@ function bossesJump(bossEntity) {
     //1초마다 스프라이트 점프 이미지
     animBeatoven = beatoven.animations.add('jump',[0,1],2,false);
     animBeatoven.play('jump');
-    
 }
 
 //노비토 객체
@@ -18,8 +21,7 @@ function Nobeato(game){
 	this.game = game;
 	this.health = 50;
 	this.maxHealth = 50;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE, IMUNE
-	this.skillPercentage = 5;
+	this.status = "STAY"; //STAY , MOVE , STUN, DIE
 	
 	this.nobeatoSprite = game.add.sprite(1420, game.world.centerY, 'nobeato', 5);
 	this.nobeatoSprite.scale.set(4);
@@ -46,7 +48,7 @@ function Nobeato(game){
 	game.physics.enable(this.nobeatoSprite, Phaser.Physics.ARCADE);
 }
 
-//노비토 객체의 데미지를 받는 함수
+//Monster Entity prototype damage
 Nobeato.prototype.damage = function(damage){
 	
 	//이전의 체력값
@@ -98,8 +100,7 @@ function attackedMotionBosses(bossSprite){
 	
 }
 
-//보스몹 객체 유닛 데미지
+//몬스터 객체 유닛 데미지
 function hitBoss(bossEntity, damage){
 	bossEntity.damage(damage);
 }
-

@@ -31,18 +31,14 @@ public class VillageController {
 	@RequestMapping(value = "readMotionList", method = RequestMethod.GET)
 	public String readMotionList(HttpSession session) {
 		logger.debug("readMotionList() 진입");
-		// TODO : 현재 아직 로그인 안한 상태로 디버깅하기 때문에 loginMember의 id를 kimminah1로 만들고 테스트함. 나중에 주석 정리할 것.
-		
 //		Member loginMember = (Member) session.getAttribute("loginMember");
-		String jsonMotionList = "";
-		Member loginMember = new Member("kimminah1", "1205"); // 임시
-		try {jsonMotionList = villageDAO.readMotionList(loginMember);}
-		catch (Exception e) {e.printStackTrace();}
-//		String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
-		
-		logger.debug(jsonMotionList);
+//		String jsonMotionList = "";
+//		try {jsonMotionList = villageDAO.readMotionList(loginMember);}
+//		catch (Exception e) {e.printStackTrace();}
+		String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
+
 //		return jsonMotionList;
-		return jsonMotionList.replaceAll("'", "\"");
+		return json.replaceAll("'", "\"");
 	}
 	
 	// 설정된 모션 값 저장하기
@@ -50,25 +46,27 @@ public class VillageController {
 	@RequestMapping(value = "saveMotionList", method = RequestMethod.POST)
 	public int saveMotionList(HttpSession session, String jsonText) {
 		logger.debug("saveMotionList() 진입");
-		// TODO : 여기도 readMotionList와 마찬가지로 kimminah1로 설정한 loginMember 지우고, 로그인 디비 구현하면 제대로 세션에서 꺼내오도록 할 것.
 		System.out.println(jsonText);
 		
 		// 세션으로부터 로그인된 멤버 객체 받기
-//		Member loginMember = (Member) session.getAttribute("loginMember");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 		
 		// 해쉬맵 생성, 로그인된 멤버 객체 및 설정한 모션 리스트를 추가 
 		HashMap<String, String> map = new HashMap<>();
+<<<<<<< HEAD
 		
-		// 마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
 //		마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
 //		map.put("id", loginMember.getId());
-		map.put("id", "kimminah1");
+//		map.put("jsonText", jsonText);
+=======
+//		map.put("id", loginMember.getId());
 		map.put("jsonText", jsonText);
+>>>>>>> f5388db21b3fe195e57c269e5cbd9d81d9a5a6bd
 		
 		// DAO를 통해 DB로 연결
 		int result = 0;
-		try {result = villageDAO.saveMotionList(map);}
-		catch (Exception e) {e.printStackTrace();}
+//		try {result = villageDAO.saveMotionList(map);}
+//		catch (Exception e) {e.printStackTrace();}
 		return result;
 	}
 	

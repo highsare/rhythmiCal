@@ -41,22 +41,12 @@ var maxLife = 10;
 var lifeArray;
 var BPMfactor = 60;
 
-//모션효과에 관련된 변수들
-var pointDamage = 3;
-var point_isA,point_isB,point_isC;
-var up_isA,up_isB,up_isC;
-var down_isA,down_isB,down_isC;
-var left_isA,left_isB,left_isC;
-var right_isA,right_isB,right_isC;
-
-//모션 세팅에 따른 변수 설정
-
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
 var contentNum;
 
-//contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
+//stageNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
 var bgImgName;
 var monsterlistA; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
@@ -64,6 +54,7 @@ var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를
 var musicName;
 var stageNum;
 var beat;
+var mummy;
 
 //노비토를 담을 전역 변수
 var nobeato;
@@ -169,15 +160,16 @@ Stage.prototype = {
 		monstersC = new Array();
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
-			monstersA[i] = new Monster(game, monsterlistA[i].monsterNum, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+			monstersA[i] = new Monster(game, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
 		}
 		for (var i = 0; i < monsterlistB.length; i++) {
-			monstersB[i] = new Monster(game, monsterlistB[i].monsterNum, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+			monstersB[i] = new Monster(game, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
 		}
 		for (var i = 0; i < monsterlistC.length; i++) {
-			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+			monstersC[i] = new Monster(game, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
 		}
-		
+
+
 		//Nobeato(game)
 		//nobeato = new Nobeato(game);
 		
@@ -198,6 +190,9 @@ Stage.prototype = {
 	//나중에 이곳으로 모은다.
 	loopFunction: function(){
 		//add 1 currentBeat
+		if (currentBeat == 0) {
+			stageBGM.play();
+		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -205,7 +200,6 @@ Stage.prototype = {
 		createNotes();
 		//bossesJump(nobeato);
 		//hitBoss(nobeato, 1);
-	
 	},
 	getStageInfo: function(stageNum){
 		$.ajax({

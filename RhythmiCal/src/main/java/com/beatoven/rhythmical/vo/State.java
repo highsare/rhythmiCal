@@ -11,16 +11,22 @@ public class State {
 		this.state = state;
 		this.contentNum = contentNum;
 	}
+
 	public String getState() {
 		return state;
 	}
+
 	public void setState(String state) {
 		this.state = state;
 	}
+
 	public int getContentNum() {
 		return contentNum;
 	}
+
 	public void setContentNum(int contentNum) {
 		this.contentNum = contentNum;
-	}	
+	};
+	
+	
 }
