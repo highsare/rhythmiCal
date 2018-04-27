@@ -178,8 +178,8 @@ Stage.prototype = {
 			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
 		}
 		
-		//Nobeato(game)
-		//nobeato = new Nobeato(game);
+		//Boss(game, health, bossSpriteName, bossSpriteSplitNum)
+		nobeato = new Boss(game, 40, 'nobeato', 5);
 		
 	    //Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -203,8 +203,8 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
-		//bossesJump(nobeato);
-		//hitBoss(nobeato, 1);
+		bossJump(nobeato);
+		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
 	
 	},
 	getStageInfo: function(stageNum){

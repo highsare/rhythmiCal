@@ -98,17 +98,27 @@ public class StageController {
 		ArrayList<Monster> monsterlistC = new ArrayList<>();
 		
 		//monsterNum, monsterName, speed, health, effectSoundName, skill, appearanceBeat, attackline
-		Monster monster1 = new Monster(0, "mummy", 1, 5, null, null, 1, 0);
-		Monster monster2 = new Monster(0, "mummy", 1, 5, null, null, 2, 0);
-		Monster monster3 = new Monster(3, "mummy", 1, 5, null, null, 3, 0);
-		Monster monster4 = new Monster(0, "mummy", 1, 5, null, null, 4, 0);
-		Monster monster5 = new Monster(0, "mummy", 1, 5, null, null, 5, 0);
+		Monster monster0 = new Monster(0, "mummy", 1, 1, null, null, 1, 1);//노말 고블린 ^^0
+		Monster monster1 = new Monster(1, "mummy", 1, 2, null, null, 3, 1);//체력이2인 노말 ^^1
+		Monster monster2 = new Monster(2, "mummy", 2, 1, null, null, 3, 1);//속도2 ^^2
+		Monster monster3 = new Monster(3, "mummy", 3, 1, null, null, 4, 1);//속도3 ^^3
+		Monster monster4 = new Monster(4, "mummy", 1, 3, null, null, 5, 1);//탱커 ^^4
+		Monster monster5 = new Monster(5, "mummy", 1, 3, null, null, 6, 1);//폭탄맨 ^^5
+		Monster monster6 = new Monster(6, "mummy", 1, 3, null, null, 5, 1);//황소 ^^6
+		Monster monster7 = new Monster(7, "mummy", 1, 2, null, null, 4, 1);//다이노 처음부터 끝까지 ^^7
+		Monster monster8 = new Monster(8, "mummy", 1, 3, null, null, 3, 1);//노트박스 가리는 애 ^^8
+		Monster monster9 = new Monster(9, "mummy", 1, 1, null, null, 1, 1);//어그로 방패 ^^9
 		
+		monsterlist.add(monster0);
 		monsterlist.add(monster1);
 		monsterlist.add(monster2);
 		monsterlist.add(monster3);
 		monsterlist.add(monster4);
 		monsterlist.add(monster5);
+		monsterlist.add(monster6);
+		monsterlist.add(monster7);
+		monsterlist.add(monster8);
+		monsterlist.add(monster9);
 		
 		for (int i = 0; i < monsterlist.size(); i++) {
 			if (monsterlist.get(i).getAttackline() == 0) {
