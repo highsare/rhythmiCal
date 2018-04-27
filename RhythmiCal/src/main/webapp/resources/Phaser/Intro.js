@@ -32,6 +32,7 @@ var Intro = function(game) {};
 
 Intro.prototype = {
 	preload:function() {
+		alert(contentNum+" Intro");
 		//배경음악
 		game.load.audio('intro_music',"resources/introsrc/intromusic.mp3");
 
@@ -309,12 +310,14 @@ Intro.prototype = {
 			game.time.events.add(10000, function() {
 				//스토리1번으로 보냄
 				//game.state.start("");
-				requestState();
+				requestState();                                                                                                                                                                                                                                                                                                                                                                         
 			});
 			
 		});//네번째 장면 끝
 		
 	}
+}
+function preloadAfterAjax(contentNum){
 }
 function typethetext(txt, xvalue, yvalue, size, speed) {
 	//타이핑효과 함수 (텍스트값,x위치 , y위치)

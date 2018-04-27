@@ -8,13 +8,20 @@ import com.beatoven.rhythmical.vo.State;
 
 @Controller
 public class StateController {
+	boolean flag = true;
 
 	@ResponseBody
 	@RequestMapping(value="requestState")
 	public String stateControll() {
-		State state = null;
+		State state = new State();
 		//DAO를 활용해 Save 테이블의 StateNum++
 		
+		if (flag) {
+			state.setState("Intro");
+			flag = false;
+		}else {
+			state.setState("Story");
+		}
 		//Save 테이블의 StateNum과 같은 스테이트의 정보 반환
 		return state.getState();
 	}
