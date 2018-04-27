@@ -24,6 +24,7 @@ var tween;
 var key1;
 var bgd;
 var neon,board;
+var border;
 var e_select,sprite;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
@@ -69,7 +70,6 @@ function preload() {
 	game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
 	game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
 	game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
-	game.load.image('eachmenu','resources/Images/town/townImg/eachmenuimg.png' );
 	game.load.image('board','resources/Images/town/townImg/board.png' );
 	game.load.image('neon','resources/Images/town/townImg/neonboard.png' );
 	game.load.image('front','resources/Images/town/townImg/front.png' );
@@ -120,10 +120,10 @@ function create() {
 	var beveryills = game.add.image(135, 20, 'beverlyills'); beveryills.scale.set(0.9);
 	var studio = game.add.image(133, 223, 'studio'); studio.scale.set(0.9);
 	var mercenary = game.add.image(137, 335, 'mercenary'); mercenary.scale.set(0.9);
-	var home = game.add.image(133, 440, 'home'); home.scale.set(0.9);
-	var nextstage = game.add.image(133, 552, 'nextstage'); nextstage.scale.set(0.9);
-	var worksplace = game.add.image(810, 120, 'worksplace'); worksplace.scale.set(0.9); //임시
-	var border = game.add.image(805, 120, 'border'); border.scale.set(0.9); //임시
+	var home = game.add.image(133, 552, 'home'); home.scale.set(0.9);
+	var nextstage = game.add.image(133, 440, 'nextstage'); nextstage.scale.set(0.9);
+	//var worksplace = game.add.image(810, 120, 'worksplace'); worksplace.scale.set(0.9); //임시
+	//border = game.add.image(805, 120, 'border'); border.scale.set(0.9); //임시
 	
 	//첫 메뉴를 가리키고 있는 빨간색 테두리 출력
 	point = game.add.image(x, y, 'select');
@@ -136,9 +136,7 @@ function create() {
 	var player = game.add.image(130, 765, 'player1');
 	var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
 	player.scale.set(0.4);
-	
-	//키보드 사용 설정 해줌
-	cursors = game.input.keyboard.createCursorKeys();
+
 }
 
 /*
@@ -230,6 +228,7 @@ function moveMenu(inputKey) {
   			point = game.add.image(x, y, 'select');
   			point.scale.set(0.9);
   		} 
+  		isnull();
 		break;
 	case 'enter':
 		isEntered = true;
@@ -242,19 +241,17 @@ function moveMenu(inputKey) {
 	   	// 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
 		switch (y) {
 			case 204: console.log('작업소');
-				isnull();
 				createStudio();
 				break;
 			case 316: console.log('용병소');
-				isnull();
 				createMercenary();
 				break;
 			case 428: console.log('겜시작');
-				isnull();
+				m_back = game.add.image(750,75,'menu_sub_back');
+				m_back.alpha = 0.8;
 				image = game.add.image(810, 120, 'front');
 				break;
 			case 540: console.log('겜종료');
-				isnull();
 				myroom(inputKey);
 				break;
 		}
@@ -280,7 +277,11 @@ function logoutMember() {
  */
 function createStudio() {
 	// 작업소 화면 표시
+	m_back = game.add.image(750,75,'menu_sub_back');
+	m_back.alpha = 0.8;
 	image = game.add.image(810, 120, 'worksplace');
+	border = game.add.image(805, 120, 'border');
+	
 
 	// 버튼 포커스를 1로 초기화
 	buttonFocus = 1;
@@ -399,19 +400,20 @@ function moveButtonFocus(inputKey) {
     	  	 break;
       case 'esc': 
   		isEntered = false;
-  		if (point == null) {
-  			point = game.add.image(x, y, 'select');
-  			point.scale.set(0.9);
-  		}
-  		
   		// 레인 설정에 중복값이 있을 경우 에러를 알림
   		if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
   			// TODO : 텍스트 하나 써서 띄울 것.
   			text1 = game.add.bitmapText(810, 420,'neo_font' ,'레인을 중복되게 선택할 수 없습니다!', 40);
+  			depth = 1;
   		}
   		// 없을 경우 작업소를 나갈 때 현재의 모션 값을 디비에 저장
   		else {
   			saveMotionList();
+  			if (point == null) {
+  	  			point = game.add.image(x, y, 'select');
+  	  			isnull();
+  	  			point.scale.set(0.9);
+  	  		}
   	  		depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
   		}
   		break;
@@ -589,12 +591,15 @@ function moveContent(buttonFocus,inputKey) {
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
 function createMercenary() {
+	m_back = game.add.image(750,75,'menu_sub_back');
+	m_back.alpha = 0.8;
 	image = game.add.image(810, 120, 'pub');
+	border = game.add.image(805, 120, 'border');
 	
 	// 난수 발급
 	var rdm = Math.floor(Math.random() * 9999) + 1000;
-	board = game.add.image(810, 480, 'board');
-	board.scale.set(1.8);
+	board = game.add.image(810, 520, 'board');
+	
 
 	$.ajax({
 		url: 'sendRdm',
@@ -615,12 +620,12 @@ function createMercenary() {
 	})
 
 	// 난수를 보여줄 텍스트
-	text1 = game.add.bitmapText(1060, 600,'neo_font' ,rdm, 60);
+	text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
 	
 	
-	neon = game.add.image(795, 400, 'neon');
+	neon = game.add.image(795, 440, 'neon');
 	neon.scale.set(2);
-	messange = game.add.bitmapText(810, 420,'neo_font' ,'주인장: 한겜허쉴?', 40);
+	messange = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
 	
 	// 스마트 폰에서 입력한 값과 값을 비교해서 맞으면 연결 시켜주는 작업 필요.	
 	
@@ -663,9 +668,12 @@ function multiconnection() {
 
 function myroom() {
 	//alert('myroom 진입');
+	m_back = game.add.image(750,75,'menu_sub_back');
+	m_back.alpha = 0.8;
 	image = game.add.image(810, 120, 'myroom');
+	border = game.add.image(805, 120, 'border');
 	exit = game.add.image(900, 550, 'exit');
-	exit.scale.set(0.8);
+	e_select = game.add.sprite(900, 550, 'e_select');
 	text2 = game.add.text(940, 520, "게임을 종료합니다", 
 			{ font: "40px Arial", fill: "#FFFFFF", align: "center" });
 	// 깊이를 3으로 변경 > update에서 depth에 따른 case문을 통해 goHome(inputKey)를 호출 
@@ -675,8 +683,6 @@ function myroom() {
 function goHome(inputKey) {
 	if (inputKey == 'esc') {depth = 0;}
 	else if (inputKey == 'enter') {
-		e_select = game.add.sprite(900, 550, 'e_select');
-		e_select.scale.set(0.8);
 		// 게임 종료. 검정 화면 준비.
 		sprite = game.add.sprite(0, 0, 'finish');
 		// 원래 사이즈 보다 확대 하고 alph로 투명도 조절.
@@ -691,10 +697,12 @@ function goHome(inputKey) {
 	}
 }
 
+
 function isnull() {
 	if (text1 != null) {text1.kill();}
 	if (image != null) {image.kill();}
-	if (m_back== null) {m_back = game.add.image(750,75,'menu_sub_back');}
+	if (border != null) {border.kill();}
+	if (m_back != null) {m_back.kill();}
 	if (neon != null) {neon.kill();}
 	if (board != null) {board.kill();}
 	if (messange != null) {messange.kill();}
@@ -711,6 +719,7 @@ function isnull() {
 	if (lane2 != null) {lane2.kill();}
 	if (lane3 != null) {lane3.kill();}
 	if (square != null) {square.kill();}
+	
 }
 
 </script>
