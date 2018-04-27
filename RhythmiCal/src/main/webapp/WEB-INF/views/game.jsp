@@ -42,11 +42,10 @@
 	game.state.add("Stage",Stage);
 	game.state.add("Ending",Ending);
 	
-<<<<<<< HEAD
+
 	game.state.start("Story");
-=======
-	game.state.start("Ending");
->>>>>>> f5388db21b3fe195e57c269e5cbd9d81d9a5a6bd
+
+	//game.state.start("Ending");
 </script>
 
 </body>
