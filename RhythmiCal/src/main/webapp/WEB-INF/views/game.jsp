@@ -13,6 +13,7 @@
 <body>
 
 <script type="text/javascript" src="resources/Phaser/rawJS/typewriter.js"></script>
+<script type="text/javascript" src="resources/Phaser/State.js"></script>
 
 <script type="text/javascript" src="resources/Phaser/Preload.js"></script>
 <script type="text/javascript" src="resources/Phaser/Intro.js"></script>

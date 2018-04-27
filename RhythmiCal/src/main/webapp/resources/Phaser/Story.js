@@ -147,8 +147,6 @@ Story.prototype = {
 		//게임 시작
 		game.camera.onFadeComplete.add(this.gotostage,this);
 	},
-<<<<<<< HEAD
-=======
 	
 	//게임으로 이동 
 	 gotostage: function(){
@@ -209,7 +207,6 @@ Story.prototype = {
   
 
 		},//dialogue저장문 끝
->>>>>>> a9dc7ce071205d53b8feb602d661d78ac8a28f2c
 		
 		dialogueExport: function(storyOrder){
 			alert(storyOrder);
