@@ -99,10 +99,10 @@ public class StageController {
 		
 		//monsterNum, monsterName, speed, health, effectSoundName, skill, appearanceBeat, attackline
 		Monster monster1 = new Monster(0, "mummy", 1, 5, null, null, 1, 0);
-		Monster monster2 = new Monster(0, "mummy", 1, 5, null, null, 1, 0);
-		Monster monster3 = new Monster(0, "mummy", 1, 5, null, null, 2, 1);
-		Monster monster4 = new Monster(0, "mummy", 1, 5, null, null, 2, 2);
-		Monster monster5 = new Monster(0, "mummy", 1, 5, null, null, 3, 2);
+		Monster monster2 = new Monster(0, "mummy", 1, 5, null, null, 2, 0);
+		Monster monster3 = new Monster(3, "mummy", 1, 5, null, null, 3, 0);
+		Monster monster4 = new Monster(0, "mummy", 1, 5, null, null, 4, 0);
+		Monster monster5 = new Monster(0, "mummy", 1, 5, null, null, 5, 0);
 		
 		monsterlist.add(monster1);
 		monsterlist.add(monster2);

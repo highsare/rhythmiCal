@@ -2,15 +2,17 @@
  * 
  */
 
-//Monster Entity
-function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth){
+//몬스터 객체
+function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBeat, maxHealth){
 	
 	this.game = game;
+	this.monsterNum = monsterNum;
 	this.attackLine = attackLine;
 	this.speed = speed;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
-	this.status = "STAY"; //STAY , MOVE , STUN, DIE, CASTING, IMUNE
+	this.status = "STAY"; //STAY, MOVE, STUN, DIE, CASTING, IMUNE, RUSH
+	this.counter = 0; //스킬이 적용되는 시간을 저장하는 속성 지금은 stun만 사용하고 있다.
 	this.lineX = 2000;
 	this.appearanceBeat = appearanceBeat;
 	this.skillPercentage = 0;
@@ -40,13 +42,13 @@ function Monster(game, attackLine, speed, monsterName, appearanceBeat, maxHealth
 	game.physics.enable(this.monsterSprite, Phaser.Physics.ARCADE);
 }
 
-//Monster Entity prototype damage
+//몬스터 객체의 데미지를 받는 함수
 Monster.prototype.damage = function(damage){
 	
 	//이전의 체력값
 	var healthBefore = this.health;
 	
-	if (this.status != "IMUNE") {
+	if (this.status != "IMMUNE") {
 		this.health -= damage;	
 	}
 	
@@ -59,8 +61,8 @@ Monster.prototype.damage = function(damage){
 			healthBlank.smoothed = false;
 			healthBlank.anchor.setTo(0.5, 1);
 			this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
-		} else if (healthBefore == this.health) {
-			if (this.status == "IMUNE") {
+		} else if (healthBefore == this.health) {//체력이 그대로라면
+			if (this.status == "IMMUNE") {//그런데 상태가 무적이라면 무빙상태로 만든다.
 				this.status = "MOVE";
 			}
 		} else {//체력이 증가했다.
@@ -78,60 +80,56 @@ Monster.prototype.damage = function(damage){
 	}
 }
 
+
+//몬스터가 데미지를 받을시 모션을 실행하는 함수
 function attackedMotion(monsterSprite){
+	monsterSprite.loadTexture('beatoven'); //맞는 모션이 들어간 스프라이트
+	monsterSprite.animations.add('attackedMotion'); //애니메이션 추가
+	monsterSprite.animations.play('attackedMotion', 50, true); //애니메인션 실행
+	monsterSprite.scale.set(2); //크기 설정
+	monsterSprite.anchor.setTo(0.5,1); //앵커 설정
+    monsterSprite.smoothed = false; //안티엘리어싱 제거
 	
-	monsterSprite.loadTexture('beatoven');
-	monsterSprite.animations.add('attackedMotion');
-	monsterSprite.animations.play('attackedMotion', 50, true);
-	monsterSprite.scale.set(2);
-	monsterSprite.anchor.setTo(0.5,1);
-    monsterSprite.smoothed = false;
-	
-	setTimeout(function(){
-		monsterSprite.loadTexture('mummy');
-		monsterSprite.animations.add('walk');
-		monsterSprite.animations.play('walk', 20, true);
-		monsterSprite.scale.set(2);
-		monsterSprite.anchor.setTo(0.5,1);
-	    monsterSprite.smoothed = false;
-	}, 50);
-	
+	setTimeout(function(){//맞는 모션을 실행한 후에 다시 돌려주는 함수
+		monsterSprite.loadTexture('mummy'); //다시 돌아갈 스프라이트
+		monsterSprite.animations.add('walk'); //다시 애니메이션 추가
+		monsterSprite.animations.play('walk', 20, true); //다시 애니메이션 실행
+		monsterSprite.scale.set(2); //다시 크기 설정
+		monsterSprite.anchor.setTo(0.5,1); //다시 앵커 설정
+	    monsterSprite.smoothed = false; //다시 안티엘리어싱 제거
+	}, 50); //스프라이트 되돌릴 시간 설정
 }
 
-//start
+//몬스터가 밀려오기 시작한다.
 function start(){
-	changeMonsterStatusAvoidDamage(monstersA[1], 3);
-	commandJump(monstersA, currentBeat);
-	commandJump(monstersB, currentBeat);
-	commandJump(monstersC, currentBeat);
+	commandJump(monstersA, currentBeat); //A라인 몬스터들
+	commandJump(monstersB, currentBeat); //B라인 몬스터들
+	commandJump(monstersC, currentBeat); //C라인 몬스터들
 }
 
-//commandJump monster unit
-//this method have method arriveDestination. arriveDestination is check unit current x location and kill unit 
-function commandJump(unitArray,currentBeat){
-	//alert("In");
+//몬스터들에게 점프를 명령한다.
+function commandJump(unitArray, currentBeat){
 	for(var i = 0; i < unitArray.length; i++ ){
+		//배열의 몬스터를 하나씩 선택
 		var unit = unitArray[i];
+		//몬스터의 상태가 DIE나 STUN이 아닌 경우
 		if(unit.status != "DIE" && unit.status != "STUN"){
+			//몬스터의 출현비트가 현재 비트보다 같거나 작은 경우에만 점프를 명령한다.
 			if(unit.appearanceBeat <= currentBeat){
-				var destination;
-				
-				//check unit current x location and kill when last jump
+				var destination; //목적지를 담을 변수
+				//몬스터가 마지막 점프인지 아닌지를 확인해서 처리한다.
 				arriveDestination(unit);
-				if (unit == null) {
-					console.log("be Null");
-				}
 				//1~10을 발생시킴
 				var random = game.rnd.integerInRange(1, 10);
-				// 확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분
+				// 확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //그냥 점프 부분
 				if (unit.skillPercentage <= random) {
 					//유닛 상태에 따라 점프와 캐스팅을 구분
 					if (unit.status != "CASTING") {
-						//if monster unit speed = 2 jump to lineXindex = 1
-						if (unit.speed == 2 && unit.lineXIndex == 0) {
-							unit.lineXIndex = 1;
-						}
+						//몬스터의 위치가 첫 출발 때의 목적지를 설정한다.
 						if (unit.lineX == 2000) {
+							//몬스터의 상태를 move로 바꾼다.
+							unit.status = "MOVE";
+							//속도에 따라 처리
 							switch(unit.speed){
 							case 1: 
 							case 3:	destination = 1695 - jumpX[unit.attackLine];	
@@ -140,50 +138,82 @@ function commandJump(unitArray,currentBeat){
 							break;
 							defualt:break;
 							}
-						}else{
+						}else{ //첫 점프가 아닐 경우 속도를 곱해서 이동시킨다.
 							destination = unit.lineX - jumpX[unit.attackLine] * unit.speed;
 						}
-						//attackLine -> absolute value //lineXIndex -> absolute value
-						if (currentBeat % 5 == 0) {
-							switch(unit.attackLine){
-							case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-							case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-							case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
+						//몬스터 종류가 1황소, 2런닝맨 이라면
+						if (unit.monsterNum == 1 || unit.monsterNum == 2) {
+							var travelTime = 600;
+							if (unit.monsterNum == 1) {
+								if (unit.appearanceBeat == currentBeat) {
+									rush(unit, destination, travelTime);
+								} else if (unit.appearanceBeat < currentBeat && unit.status != "RUSH") {
+									destination = unit.lineX - jumpX[unit.attackLine] * 9;
+									unit.status = "RUSH";
+									travelTime = 2000;
+									rush(unit, destination, travelTime);
+								}
+							} else if (unit.monsterNum == 2 && unit.status != "RUSH") {
+								destination = unit.lineX - jumpX[unit.attackLine] * 12 - 31; //-31은 2000에서 바로 출발하기 때문에 보정함
+								unit.status = "RUSH";
+								travelTime = 2000;
+								rush(unit, destination, travelTime);
 							}
-						}else{
-							switch(unit.attackLine){
-							case 0:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-							case 1:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-							case 2:singleJump(unit, lineYLocation[unit.attackLine], destination); break;
-							}
+						} else {//몬스터 종류가 1, 2가 아니라면
+							//설정된 높이와 목적지로 몬스터를 점프시킨다.
+							singleJump(unit, lineYLocation[unit.attackLine], destination)
 						}
-					} else {
+					} else { //몬스터의 상태가 "CASTING"이라면
 						unit.status = "MOVE";
 					}
-				} else {
+				} else { //확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //스킬 시전을 위한 멈춤
 					unit.status = "CASTING";
 				}
 			}
+		} else { // DIE거나 STUN이다.
+			if (unit.status == "STUN") {
+				unit.counter++;
+				if (unit.counter == 3) {
+					unit.status = "MOVE";
+					unit.counter = 0;
+				}
+			}
 		}
+	}//for문 끝
+}//function 끝
+
+//점프하지 않고 달리는 메소드
+function rush(unit, destination, travelTime){
+	//이동 거리
+	game.add.tween(unit.monsterSprite).to({ x: destination }, travelTime, 'Linear', true, 0);
+	game.add.tween(unit.monsterHealthbar).to({ x: destination }, travelTime, 'Linear', true, 0);
+
+	//다음 목적지를 설정한다. // 죽음이 정해졌을 경우 이동을 다 보여줘야 함으로 지연해 몬스터의 X값을 업데이트한다.
+	if (destination > 350) {
+		unit.lineX = destination;
+	} else {
+		setTimeout(function() {
+			unit.lineX = destination;
+		}, travelTime);
 	}
 }
-//singleJump
+
+//한 칸 점프하기
 function singleJump (unit, maximumHeightOnAttackLine, destination) {
-	//move Y
+	//점프 높이
 	game.add.tween(unit.monsterSprite).to({ y: maximumHeightOnAttackLine - 100 }, 300, "Sine.easeInOut", true, 0, 0, true);
 	game.add.tween(unit.monsterHealthbar).to({ y: maximumHeightOnAttackLine - 20 }, 300, "Sine.easeInOut", true, 0, 0, true);
-	//move X
+	//이동 거리
 	game.add.tween(unit.monsterSprite).to({ x: destination }, 600, 'Linear', true, 0);
 	game.add.tween(unit.monsterHealthbar).to({ x: destination }, 600, 'Linear', true, 0);
-
-	hitMonster(unit, 1);
+	//다음 목적지를 설정한다.
 	unit.lineX = destination;
 }
-//monster unit damage
+//몬스터에게 데미지를 먹이는 함수
 function hitMonster(unit, damage){
 	unit.damage(damage);
 }
-//monster arrive destination //kill monster and reduce damage beatoven
+//몬스터가 끝에 도달했을 때 처리를 하는 함수 //몬스터를 죽이고 비토벤의 체력을 줄인다.
 function arriveDestination(unit){
 	if (unit.lineX < 350) {
 		unit.monsterSprite.destroy();
@@ -194,10 +224,14 @@ function arriveDestination(unit){
 	}
 }
 //가장 단순하게 데미지를 주는 메소드
-function attackLine(unitArray,damage){
+function attackLine(unitArray, damage){
 	for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
 		if(unit.lineXIndex != 0){
+			if (unit.monsterNum == 3 && unit.status != "DIE") {//몬스터 번호가 3인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
+				hitMonster(unit, damage);
+				break;
+			}
 			hitMonster(unit,damage);
 		}
 	}

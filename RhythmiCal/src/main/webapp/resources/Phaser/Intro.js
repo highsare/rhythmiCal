@@ -306,12 +306,15 @@ Intro.prototype = {
 				 typethetext("게임시작", game.world.centerX - 150,game.world.centerY - 50, 90,100);});
 		    
 			});
+			
 			game.time.events.add(10000, function() {
 				//스토리1번으로 보냄
 				//game.state.start("");
 				requestState();                                                                                                                                                                                                                                                                                                                                                                         
 			});
+			
 		});//네번째 장면 끝
+		
 	}
 }
 function preloadAfterAjax(contentNum){
@@ -359,7 +362,7 @@ function addQuake() {
     .to(properties, duration, ease, autoStart, delay, 4, yoyo);
   
   // we're using this line for the example to run indefinitely
- // quake.onComplete.addOnce(addQuake);
+  // quake.onComplete.addOnce(addQuake);
   
   // let the earthquake begins
   quake.start();
