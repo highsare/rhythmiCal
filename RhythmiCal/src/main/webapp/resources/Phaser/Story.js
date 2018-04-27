@@ -14,7 +14,7 @@ var storynum = 1;
 	var storyOrder;
 	var npc;
 	//npc 나타날 곳
-	var left=70, right=1030, npcY=170;
+	var left=70, right=1030, npcY=160;
 	var switchingleftright;
 	//대화문 어레이 생성
 	var storyText;
@@ -35,6 +35,8 @@ var storynum = 1;
 	var Story = function(game){};
 Story.prototype = {
 	preload: function() {
+		//비트맵형 글자폰트 로드
+		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
 		this.loadStoryContents();
 		
 		
@@ -81,18 +83,18 @@ Story.prototype = {
 		
 		
 		
-	    //비트맵형 글자폰트 로드
-	    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
+	    
 	    
 	    //텍스트 박스
-	    game.load.image("textbox", "resources/Images/story/textbox.png"); 
+	    game.load.image("textbox", "resources/Images/tutorial/dialog.png");
+	    //game.load.image("textbox", "resources/Images/story/textbox.png"); 
 	    
 	},
 	create: function() {
 		
 		
 		cursors = game.input.keyboard.createCursorKeys();
-		typethetext("STORY1 ",game.world.centerX-150, game.world.centerY- 50,90);
+		this.typethetext("STORY1 ",game.world.centerX-150, game.world.centerY- 50,90);
 		
 		//2초있다가  스토리 시작
 		game.time.events.add(2000, function () {  //글자 나올때 소리 추가
@@ -194,9 +196,9 @@ Story.prototype = {
 	 		
 			//배경이미지
 			bgImgName = arr[storyOrder].bgImgName;
-		    backimage = game.add.sprite(0, 0, bgImgName,2);
+		    backimage = game.add.sprite(0, 0, bgImgName,10);
 		    hikari = backimage.animations.add('hikari');
-		    hikari.play(2,true);
+		    hikari.play(10,true);
 		    console.log("배경이미지 = " + bgImgName);
 		    
 		    //대화할 npc 생성
@@ -223,7 +225,7 @@ Story.prototype = {
 			dialogueBG = game.add.sprite(50,650,'textbox');
 			dialogueBG.width = 1500;
 
-			typethetext(arr[storyOrder].characterName + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
+			this.typethetext(arr[storyOrder].characterName + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
 			
 			//배경 장소 정보 좌상단에 띄우기
 	 		//if(storyOrder == 0){
@@ -241,12 +243,12 @@ Story.prototype = {
 		typethetext: function (txt, xvalue, yvalue, size) {
 			//글자 타이핑효과 정의
 			typewriter.init(game, {
+				time:10,
 				x : xvalue,
 				y : yvalue,
-				time :  50 ,
 				fontFamily : "neo_font",
-				fontSize : size || 35,
-				maxWidth : 1600,
+				fontSize : size,
+				maxWidth : 1400,
 				//타이핑 소리 줌
 				// sound: reg.track,
 				text : txt
