@@ -144,6 +144,8 @@ Story.prototype = {
 		game.camera.fade('#000000',1000);
 		//게임 시작
 		game.camera.onFadeComplete.add(this.gotostage,this);
+		
+		game.timer.events.loop(Phaser.Timer.SECOND * 2, game.state.start("Preload"),this);
 	},
 		
 	dialogueExport: function(storyOrder){
