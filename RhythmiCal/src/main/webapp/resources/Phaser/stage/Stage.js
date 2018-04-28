@@ -88,7 +88,7 @@ Stage.prototype = {
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
 		//숫자(0~9) 스프라이트
 		for (var i = 0; i < 10; i++) {
-			game.load.spritesheet('number'+i, 'resources/Images/numbers/number_'+i+'.png', 32, 32, 20);
+			game.load.spritesheet('number'+ i, 'resources/Images/numbers/number_' + i + '.png', 32, 32, 20);
 		}
 		//생명력 이미지
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
