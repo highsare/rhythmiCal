@@ -46,7 +46,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
 	public int signupMember(Member member) {
-		logger.debug("signupMember() 진입 - member: " + member);
+		System.out.println("signupMember() 진입 - member: " + member);
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
@@ -60,7 +60,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
 	public String loginMember(HttpSession session, Member member) {
-		logger.debug("loginMember() 진입 - member: " + member);
+		System.out.println("loginMember() 진입 - member: " + member);
 		Member loginMember = null;
 		try {
 			loginMember = homeDAO.loginMember(member);
@@ -83,7 +83,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "logoutMember", method = RequestMethod.POST)
 	public String logoutMember(HttpSession session) {
-		logger.debug("logoutMember() 진입");
+		System.out.println("logoutMember() 진입");
 		
 		// 진주 해야하는 거 .
 		/* 플레이어가 각각 종료 했을 때 지워주기랑 플레이어 추가된 상황에서 화면에 보여주기랑 
@@ -97,7 +97,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "readFamePost", method = RequestMethod.GET)
 	public ArrayList<FamePost> readFamePost(int offset) {
-		logger.debug("readFamePost() 진입");
+		System.out.println("readFamePost() 진입");
 		int limit = 1;
 		RowBounds rowBounds = new RowBounds(offset, limit); //0, 1은 a / 1, 1은 b / 2, 1은 c
 		ArrayList<FamePost> famePostList = null;
@@ -109,6 +109,31 @@ public class HomeController {
 		return famePostList;
 	}
 	
+	// 명예의 전당 글 남기기 페이지로 이동
+	@RequestMapping(value = "hallOfFame", method = RequestMethod.GET)
+	public String hallOfFame() {
+		return "hallOfFame";
+	}
+	
+	// 명예의 전당 글 남기기
+	@ResponseBody
+	@RequestMapping(value = "writeFamePost", method = RequestMethod.POST)
+	public int writeFamePost(HttpSession session, String text) {
+		System.out.println("writeFamePost() - text: " + text);
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		FamePost famePost = new FamePost(loginMember.getId(), text);
+		
+		int result = 0;
+		try {
+			result = homeDAO.writeFamePost(famePost);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 게임을 만들기 위한 임시 game.jsp
 	@RequestMapping("game")
 	public String toGamePage() {
 		return "game";
@@ -180,7 +205,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "requestUserInfo", method = RequestMethod.POST)
 	public boolean requestUserInfo(HttpSession session) {
-		logger.debug("requestUserInfo() 진입");
+		System.out.println("requestUserInfo() 진입");
 		
 		// 세션에서 로그인한 멤버객체 확인
 		Member loginMember = (Member) session.getAttribute("loginMember");

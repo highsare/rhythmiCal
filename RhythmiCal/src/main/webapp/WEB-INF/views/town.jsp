@@ -40,13 +40,7 @@ var temp;
 
 function preload() {
 	game.world.removeAll();
-	// 키보드를 받는 변수 생성
-		leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-		rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-		downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-		enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-		escKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+	
 	// 깊이를 1로 초기화
 	depth = 0;
 	
@@ -243,7 +237,6 @@ function moveMenu(inputKey) {
 		   	point = null;			
 		}
 	   	
-	   	
 	   	// 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
 		switch (y) {
 			case 204: console.log('작업소');
@@ -264,7 +257,6 @@ function moveMenu(inputKey) {
 				break;
 		}
 		break;
-	
 	}
 }
 
@@ -421,19 +413,20 @@ function moveButtonFocus(inputKey) {
     	  	 break;
       case 'esc': 
   		isEntered = false;
-  		if (point == null) {
-  			point = game.add.image(x, y, 'select');
-  			point.scale.set(0.9);
-  		}
   		
   		// 레인 설정에 중복값이 있을 경우 에러를 알림
   		if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
   			// TODO : 텍스트 하나 써서 띄울 것.
   			text1 = game.add.bitmapText(810, 420,'neo_font' ,'레인을 중복되게 선택할 수 없습니다!', 40);
+  			depth = 1;
   		}
   		// 없을 경우 작업소를 나갈 때 현재의 모션 값을 디비에 저장
   		else {
   			saveMotionList();
+  			if (point == null) {
+  	  			point = game.add.image(x, y, 'select');
+  	  			point.scale.set(0.9);
+  	  		}
   	  		depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
   		}
   		break;

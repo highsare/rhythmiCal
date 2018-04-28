@@ -33,9 +33,9 @@ $(document).ready(function () {
 			$.ajax({
 				url: 'readFamePost'
 				, data: {offset: page}
-				, success: function(data) {
-					$.each(data, function() {
-						$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id	
+				, success: function(famePostList) {
+					$.each(famePostList, function() {
+						$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.clearDate + this.text + '</td></tr>'); //this.id = value.id	
 					});
 				}
 				, error: function() {
