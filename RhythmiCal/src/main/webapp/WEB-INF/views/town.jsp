@@ -463,8 +463,8 @@ function saveMotionList() {
  * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
 function moveContent(buttonFocus,inputKey) {
-   console.log('moveContent() 진입');
-   switch(buttonFocus) {
+   	console.log('moveContent() 진입');
+	switch(buttonFocus) {
          // 모션 1 변경
       case 1: 
          switch (inputKey) {
@@ -667,6 +667,7 @@ function moveContent(buttonFocus,inputKey) {
                break;
             case 'esc': depth = 1; break;
             default: break;
+         }
       // 레인 3 변경
       case 6: 
          var Motion = findMotion(motion3.key);
@@ -689,8 +690,7 @@ function moveContent(buttonFocus,inputKey) {
             case 'esc': depth = 1; break;
             default: break;
          } break;
-      }
-   }
+	}
 }
 
 /*
