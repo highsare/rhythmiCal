@@ -74,13 +74,20 @@ public class VillageController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
-	public boolean loginApp(Member member,HttpSession session) {
-		if (member.getCode().equals(String.valueOf(rdmnum))) {
+	public String loginApp(Member member) {
+		String result = "";
+		if (mList.size() <= 3) {
+			if (member.getCode().equals(String.valueOf(rdmnum))) {
 				mList.add("player"+cnt);
-				cnt++;
-				return true;
+				if (cnt <=4) {
+					cnt++;
+				}
+				result = "player" + (cnt-1);
+				System.out.println(mList);
+				System.out.println(result);
+			}
 		}
-		return false;
+		return result;
 	}
 	
 	@ResponseBody
@@ -89,6 +96,11 @@ public class VillageController {
 		return mList;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="playerCount",method = RequestMethod.POST)
+	public ArrayList<String> playerCount() {
+		return mList;
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "sendRdm", method = RequestMethod.POST)
