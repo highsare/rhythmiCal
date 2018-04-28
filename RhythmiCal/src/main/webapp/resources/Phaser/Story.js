@@ -63,7 +63,7 @@ Story.prototype = {
 		game.load.spritesheet("Dok3의 집", "resources/Images/story/bgimg/Dok3의 집.png",1600,900);
 		
 		//npc 이미지 로드
-		game.load.image('???', 'resources/Images/story/npc/누군가.png',300,300);
+		game.load.image('???', 'resources/Images/story/npc/누군가.png');
 		game.load.image('Dok3', 'resources/Images/story/npc/Dok3.png');
 		game.load.image('그녀', 'resources/Images/story/npc/그녀.png');
 		game.load.image('나보', 'resources/Images/story/npc/나보.png');
@@ -153,55 +153,55 @@ Story.prototype = {
 		game.camera.onFadeComplete.add(this.gotostage,this);
 	},
 		
-		dialogueExport: function(storyOrder){
-			alert(storyOrder);
-	        
-	 		//대화문이 있으면 삭제
-	 		if(typeof typewriter !== "undefined"){
-	 			typewriter.destroy();
-	 		}
-	   		//만약 dialogueBG가 있다면 삭제
-	 		if(typeof dialogueBG !== "undefined"){
-	 			dialogueBG.destroy();
-	 		}//만약 backimage가 있다면 삭제
-	 		if(typeof backimage !== "undefined"){
-	 			backimage.destroy();
-	 		}
-	 		
-	 		
-	 		//배경음악
-	 		if(storyOrder == 0){
-	 			bgMusicName = arr[storyOrder].bgImgName;
-		 		this.music = game.add.sound(bgMusicName);
-				this.music.play();
-				//음악 반복
-				this.music.loopFull();
-				console.log("배경 음악 재생 = " + bgMusicName);
-	 		}
-	 		//배경음악 바뀜
-	 		else if(bgMusicName != arr[storyOrder].bgImgName){
-	 			this.music.stop();
-	 			bgMusicName = arr[storyOrder].bgImgName;
-		 		this.music = game.add.sound(bgMusicName);
-				this.music.play();
-				this.music.loopFull();
-				console.log("배경 음악 재생 = " + bgMusicName);
-	 		}
-	 		//음악 효과
-	 		if(arr[storyOrder].bgMusicName != "null"){
-	 			this.music = game.add.sound(arr[storyOrder].bgMusicName).play();
-	 			
-	 			console.log("음악 효과 재생 =" + arr[storyOrder].bgMusicName);
-	 		}
-	 		
-			//배경이미지
-			bgImgName = arr[storyOrder].bgImgName;
-		    backimage = game.add.sprite(0, 0, bgImgName,10);
-		    hikari = backimage.animations.add('hikari');
-		    hikari.play(10,true);
-		    console.log("배경이미지 = " + bgImgName);
-		    
-		    //대화할 npc 생성
+	dialogueExport: function(storyOrder){
+		alert(storyOrder);
+        
+ 		//대화문이 있으면 삭제
+ 		if(typeof typewriter !== "undefined"){
+ 			typewriter.destroy();
+ 		}
+   		//만약 dialogueBG가 있다면 삭제
+ 		if(typeof dialogueBG !== "undefined"){
+ 			dialogueBG.destroy();
+ 		}//만약 backimage가 있다면 삭제
+ 		if(typeof backimage !== "undefined"){
+ 			backimage.destroy();
+ 		}
+ 		
+ 		
+ 		//배경음악
+ 		if(storyOrder == 0){
+ 			bgMusicName = arr[storyOrder].bgImgName;
+	 		this.music = game.add.sound(bgMusicName);
+			this.music.play();
+			//음악 반복
+			this.music.loopFull();
+			console.log("배경 음악 재생 = " + bgMusicName);
+ 		}
+ 		//배경음악 바뀜
+ 		else if(bgMusicName != arr[storyOrder].bgImgName){
+ 			this.music.stop();
+ 			bgMusicName = arr[storyOrder].bgImgName;
+	 		this.music = game.add.sound(bgMusicName);
+			this.music.play();
+			this.music.loopFull();
+			console.log("배경 음악 재생 = " + bgMusicName);
+ 		}
+ 		//음악 효과
+ 		if(arr[storyOrder].bgMusicName != "null"){
+ 			this.music = game.add.sound(arr[storyOrder].bgMusicName).play();
+ 			
+ 			console.log("음악 효과 재생 =" + arr[storyOrder].bgMusicName);
+ 		}
+ 		
+		//배경이미지
+		bgImgName = arr[storyOrder].bgImgName;
+	    backimage = game.add.sprite(0, 0, bgImgName,10);
+	    hikari = backimage.animations.add('hikari');
+	    hikari.play(10,true);
+	    console.log("배경이미지 = " + bgImgName);
+	    
+	    //대화할 npc 생성
 		 if(storyOrder == 0){
 			 characterName = arr[storyOrder].characterName;
 			 switchingleftright = left
@@ -211,85 +211,85 @@ Story.prototype = {
 			 	npc = game.add.sprite(switchingleftright, npcY, characterName);
 			    console.log("npc 등장 = " + characterName);
 		 }else if(characterName != arr[storyOrder].characterName){
-			 
-			 if(switchingleftright == left){ 
-				 switchingleftright = right;
-			 }else if(switchingleftright == right){
-				 switchingleftright = left;
-			 }
-			    characterName = arr[storyOrder].characterName;
-			    npc = game.add.sprite(switchingleftright, npcY, characterName);
-			    console.log("npc 등장 = " + characterName);
-		    }
-		    //텍스트박스
-			dialogueBG = game.add.sprite(50,650,'textbox');
-			dialogueBG.width = 1500;
+		 
+		 if(switchingleftright == left){ 
+			 switchingleftright = right;
+		 }else if(switchingleftright == right){
+			 switchingleftright = left;
+		 }
+		    characterName = arr[storyOrder].characterName;
+		    npc = game.add.sprite(switchingleftright, npcY, characterName);
+		    console.log("npc 등장 = " + characterName);
+	    }
+	    //텍스트박스
+		dialogueBG = game.add.sprite(50,650,'textbox');
+		dialogueBG.width = 1500;
 
-			this.typethetext(arr[storyOrder].characterName + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
-			
-			//배경 장소 정보 좌상단에 띄우기
-	 		//if(storyOrder == 0){
-	 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
-	 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
-	 		/*}else if( bgImgName != arr[storyOrder].bgImgName ){
-	 			bgInfo.destroy(); 
-	 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
-	 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
-	 		}*/
-	 		
-		},
-	
-		//타이핑효과 함수 (텍스트값,x위치 , y위치)
-		typethetext: function (txt, xvalue, yvalue, size) {
-			//글자 타이핑효과 정의
-			typewriter.init(game, {
-				time:10,
-				x : xvalue,
-				y : yvalue,
-				fontFamily : "neo_font",
-				fontSize : size,
-				maxWidth : 1400,
-				//타이핑 소리 줌
-				// sound: reg.track,
-				text : txt
-			});
-			//타이핑 시작
-			typewriter.start();
-
-		},
-		//DB에서 대화문 불러오기
-		loadStoryContents: function(){ 
-			$.ajax({
-				url : 'loadStoryContents', 
-				type : 'post',
-				dataType : 'json',
-				data: {storynum : storynum},
-				/*cache : false,
-				async : false,*/
-				success:function(arrtest){
-					storyText = new Array();
-					arr = new Array();
-					arr = arrtest;
-					console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
-					
-				},error: function(){
-					alert("대화문 임포트 에러");
-				}
-
-			});
-			
+		this.typethetext(arr[storyOrder].characterName + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
 		
-		},
+		//배경 장소 정보 좌상단에 띄우기
+ 		//if(storyOrder == 0){
+ 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
+ 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
+ 		/*}else if( bgImgName != arr[storyOrder].bgImgName ){
+ 			bgInfo.destroy(); 
+ 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
+ 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
+ 		}*/
+ 		
+	},
 
-		//게임으로 이동 
-		 gotostage: function(){
-			//모든 게임 elements 날리기.
-			game.world.removeAll()
-			this.music.stop();
-			
-			//game.state.start('Ending');
-			//game.state.start('stage'+i);  //예를 들어 stage1 
-			
-		}
+	//타이핑효과 함수 (텍스트값,x위치 , y위치)
+	typethetext: function (txt, xvalue, yvalue, size) {
+		//글자 타이핑효과 정의
+		typewriter.init(game, {
+			time:10,
+			x : xvalue,
+			y : yvalue,
+			fontFamily : "neo_font",
+			fontSize : size,
+			maxWidth : 1400,
+			//타이핑 소리 줌
+			// sound: reg.track,
+			text : txt
+		});
+		//타이핑 시작
+		typewriter.start();
+
+	},
+	//DB에서 대화문 불러오기
+	loadStoryContents: function(){ 
+		$.ajax({
+			url : 'loadStoryContents'
+			,type : 'post'
+			,dataType : 'json'
+			,data: {storynum : storynum}
+			/*cache : false,
+			async : false,*/
+			,success:function(arrtest){
+				storyText = new Array();
+				arr = new Array();
+				arr = arrtest;
+				console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
+				
+			},error: function(){
+				alert("대화문 임포트 에러");
+			}
+
+		});
+		
+	
+	},
+
+	//게임으로 이동 
+	 gotostage: function(){
+		//모든 게임 elements 날리기.
+		game.world.removeAll()
+		this.music.stop();
+		
+		//game.state.start('Ending');
+		//game.state.start('stage'+i);  //예를 들어 stage1 
+		
+	}
 		
 }
