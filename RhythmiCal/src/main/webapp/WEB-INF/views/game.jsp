@@ -27,7 +27,7 @@
 <script type="text/javascript" src="resources/Phaser/stage/monsterSkill.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/notes.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/beatoven.js"></script>
-<script type="text/javascript" src="resources/Phaser/stage/bosses.js"></script>
+<script type="text/javascript" src="resources/Phaser/stage/boss.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/townPeople.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/motionAndBeat.js"></script>
 <script type="text/javascript" src="resources/Phaser/stage/stageResult.js"></script>
@@ -46,12 +46,13 @@
 	game.state.add("Stage",Stage);
 	game.state.add("Ending",Ending);
 	
-	game.state.start("Preload");
+	//game.state.start("STAGE");
 	//game.state.start("Intro");
 	//game.state.start("Tutorial");
 	//game.state.start("Village");
 	//game.state.start("Story");
-	//game.state.start("Stage");
+	game.state.start("Stage");
+
 	//game.state.start("Ending");
 </script>
 

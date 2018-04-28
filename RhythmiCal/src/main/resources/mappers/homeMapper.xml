@@ -25,6 +25,13 @@
 		from halloffame
 	</select>
 	
+	<!-- 명예의 전당 글 작성하기 -->
+	<insert id="writeFamePost" parameterType="famePost">
+		insert into halloffame (id, text)
+		values(#{id}, #{text})
+	</insert>
+	
+	<!-- 멤버가 기존 멤버인지 신규 멤버인지 확인 -->
 	<select id="isNewbie" parameterType="member" resultType="int">
 		select isNewbie
 		from member

@@ -76,7 +76,13 @@ Monster.prototype.damage = function(damage){
 	} else { //체력이 0미만이되면 몬스터와 체력바를 없앤다.
 		this.monsterSprite.kill();
 		this.monsterHealthbar.kill();
-		this.status = "DIE";
+		if (this.monsterNum == 5 && this.status != "DIE") { //죽은 놈이 폭탄맨이라면 범위를 계산해 데미지를 입힌다.
+			//explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC)
+			this.status = "DIE";
+			explosion(this.attackLine, this.lineX, monstersA, monstersB, monstersC);
+		} else {
+			this.status = "DIE";
+		}
 	}
 }
 
@@ -127,8 +133,10 @@ function commandJump(unitArray, currentBeat){
 					if (unit.status != "CASTING") {
 						//몬스터의 위치가 첫 출발 때의 목적지를 설정한다.
 						if (unit.lineX == 2000) {
-							//몬스터의 상태를 move로 바꾼다.
-							unit.status = "MOVE";
+							//몬스터의 상태를 rush가 아니라면 move로 바꾼다.
+							if (unit.status != "RUSH") {
+								unit.status = "MOVE";
+							}
 							//속도에 따라 처리
 							switch(unit.speed){
 							case 1: 
@@ -141,29 +149,30 @@ function commandJump(unitArray, currentBeat){
 						}else{ //첫 점프가 아닐 경우 속도를 곱해서 이동시킨다.
 							destination = unit.lineX - jumpX[unit.attackLine] * unit.speed;
 						}
-						//몬스터 종류가 1황소, 2런닝맨 이라면
-						if (unit.monsterNum == 1 || unit.monsterNum == 2) {
+						//몬스터 종류가 6황소, 7다이노 이라면
+						if (unit.monsterNum == 6 || unit.monsterNum == 7) {
 							var travelTime = 600;
-							if (unit.monsterNum == 1) {
-								if (unit.appearanceBeat == currentBeat) {
+							if (unit.monsterNum == 6) {
+								if (unit.appearanceBeat == currentBeat || unit.appearanceBeat + 1 == currentBeat) {
 									rush(unit, destination, travelTime);
-								} else if (unit.appearanceBeat < currentBeat && unit.status != "RUSH") {
+								} else if (unit.status != "RUSH") {
 									destination = unit.lineX - jumpX[unit.attackLine] * 9;
 									unit.status = "RUSH";
 									travelTime = 2000;
 									rush(unit, destination, travelTime);
 								}
-							} else if (unit.monsterNum == 2 && unit.status != "RUSH") {
+							} else if (unit.monsterNum == 7 && unit.status != "RUSH") {
 								destination = unit.lineX - jumpX[unit.attackLine] * 12 - 31; //-31은 2000에서 바로 출발하기 때문에 보정함
 								unit.status = "RUSH";
 								travelTime = 2000;
 								rush(unit, destination, travelTime);
 							}
-						} else {//몬스터 종류가 1, 2가 아니라면
+						} else {//몬스터 종류가 황소나 다이노가 아니라면
 							//설정된 높이와 목적지로 몬스터를 점프시킨다.
-							singleJump(unit, lineYLocation[unit.attackLine], destination)
+							singleJump(unit, lineYLocation[unit.attackLine], destination);
 						}
 					} else { //몬스터의 상태가 "CASTING"이라면
+						ruinNoteBar();
 						unit.status = "MOVE";
 					}
 				} else { //확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //스킬 시전을 위한 멈춤
@@ -227,8 +236,8 @@ function arriveDestination(unit){
 function attackLine(unitArray, damage){
 	for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
-		if(unit.lineXIndex != 0){
-			if (unit.monsterNum == 3 && unit.status != "DIE") {//몬스터 번호가 3인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
+		if(unit.status != "DIE"){
+			if (unit.monsterNum == 9) {//몬스터 번호가 9인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
 				hitMonster(unit, damage);
 				break;
 			}
