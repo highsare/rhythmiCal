@@ -73,7 +73,9 @@ $(function() {
 		    , data: {'id': signupId
 		    			, 'pw': signupPw}
 		    , success: function(data) {
-		        alert(data);
+		        if (data == 0) {
+					alert("회원가입 실패! \n[이미 존재하는 아이디]");
+				}
 		    }
 		    , error: function(data) {
 		    		alert(data);
