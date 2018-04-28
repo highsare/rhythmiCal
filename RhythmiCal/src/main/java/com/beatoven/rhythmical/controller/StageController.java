@@ -56,7 +56,6 @@ public class StageController {
 	@ResponseBody
 	@RequestMapping(value="getStage", method = RequestMethod.POST)
 	public ArrayList<Object> getStage(int stageNum) {
-		
 		//phaser로 보내줄 stage정보를 담을 arraylist
 		ArrayList<Object> stageInfo = new ArrayList<>();
 		//phaser로 보내줄 각 라인별로 나눈 array
@@ -65,37 +64,34 @@ public class StageController {
 		ArrayList<Monster> monsterlistC = new ArrayList<>();
 		//monster종류를 받아와서 리스트를 작성한다.
 		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
-
+		
 		//DB : stage 정보를 받아온다.
 		Stage stage = stageDAO.getStage(stageNum);
 		//DB : music beat정보를 받아온다.
-		int beat = stageDAO.getBPM(stage.getMusicName());
-		
+		int beat = stageDAO.getBPM(stage.getBgmName());
 		//String Stream으로 된 몬스터리스트를 받는다.
 		String monsterlistStream = stage.getMonsterList();
 		//구분기호 /로 나눠서 String 배열에 저장한다.
 		String monsterlistSplit[] = monsterlistStream.split("/");
-		
 		//1개씩 불러오면서 나눈다.
 		for (String monsterUnit : monsterlistSplit) {
-			
-			int attackline = Integer.parseInt(monsterUnit.substring(0, 0));
+			int attackline = Integer.parseInt(monsterUnit.substring(0, 1));
 			int monsterNum = Integer.parseInt(monsterUnit.substring(1, 2));
-			String appearanceBeat = monsterUnit.substring(3, 5);
-			
+			String appearanceBeat = monsterUnit.substring(2, 5);
 			//몬스터종류를 조회해서 몬스터를 셋팅한다.
 			for (Monster m : monsterTable) {
 				if (m.getMonsterNum() == monsterNum) {
 					Monster tempMonster = new Monster(
-							m.getMonsterNum(), 
-							m.getMonsterName(), 
-							m.getSpeed(), 
-							m.getHealth(), 
-							m.getEffectSoundName(), 
-							m.getSkill(), 
-							m.getSkillPercentage(), 
-							Integer.parseInt(appearanceBeat), 
-							attackline);
+							m.getMonsterNum()
+							, m.getMonsterName()
+							, m.getSpeed()
+							, m.getHealth()
+							, m.getSkill()
+							, m.getSkillPercentage()
+							, m.getSoundEffectNum()
+							, m.getDeadSoundNum()
+							, Integer.parseInt(appearanceBeat)
+							, attackline);
 					if (tempMonster.getAttackline() == 0) {
 						monsterlistA.add(tempMonster);
 					} else if (tempMonster.getAttackline() == 1) {
@@ -106,7 +102,7 @@ public class StageController {
 				}
 			}//for end monsterTable을 조회하는 for문
 		}//for end 분할돼 들어간 배열을 돌리는
-		
+	
 		stageInfo.add(stage);	//index 0
 		stageInfo.add(beat);	//index 1
 		stageInfo.add(monsterlistA);	//index 2

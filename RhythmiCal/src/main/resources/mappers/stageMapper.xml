@@ -6,16 +6,16 @@
   
 	<mapper namespace="com.beatoven.rhythmical.interfaces.StageInterface">
 	
-	  	<select id="getStage" resultType="stage">
+	  	<select id="getStage" resultType="stage" parameterType="int">
 	  		SELECT *
 	  		FROM STAGE
 	  		WHERE stageNum = #{stageNum}
 	  	</select>
 	  	
-	  	<select id="getBPM">
-	  		SELECT *
-	  		FROM GBM
-	  		WHERE BGMName = #{BGMName}
+	  	<select id="getBPM" parameterType="string" resultType="int">
+	  		SELECT bpm
+	  		FROM BGM
+	  		WHERE BGMName = #{bgmName}
 	  	</select>
 	  	
 	  	<select id="getMonsterTable" resultType="monster">

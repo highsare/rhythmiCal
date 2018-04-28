@@ -6,9 +6,10 @@ public class Monster {
 	private String monsterName;
 	private int speed;
 	private int health;
-	private String effectSoundName;
 	private String skill;
 	private int skillPercentage;
+	private String soundEffectNum;
+	private String deadSoundNum;
 	private int appearanceBeat;
 	private int attackline;
 	
@@ -16,16 +17,17 @@ public class Monster {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Monster(int monsterNum, String monsterName, int speed, int health, String effectSoundName, String skill,
-			int skillPercentage, int appearanceBeat, int attackline) {
+	public Monster(int monsterNum, String monsterName, int speed, int health, String skill, int skillPercentage,
+			String soundEffectNum, String deadSoundNum, int appearanceBeat, int attackline) {
 		super();
 		this.monsterNum = monsterNum;
 		this.monsterName = monsterName;
 		this.speed = speed;
 		this.health = health;
-		this.effectSoundName = effectSoundName;
 		this.skill = skill;
 		this.skillPercentage = skillPercentage;
+		this.soundEffectNum = soundEffectNum;
+		this.deadSoundNum = deadSoundNum;
 		this.appearanceBeat = appearanceBeat;
 		this.attackline = attackline;
 	}
@@ -62,14 +64,6 @@ public class Monster {
 		this.health = health;
 	}
 
-	public String getEffectSoundName() {
-		return effectSoundName;
-	}
-
-	public void setEffectSoundName(String effectSoundName) {
-		this.effectSoundName = effectSoundName;
-	}
-
 	public String getSkill() {
 		return skill;
 	}
@@ -84,6 +78,22 @@ public class Monster {
 
 	public void setSkillPercentage(int skillPercentage) {
 		this.skillPercentage = skillPercentage;
+	}
+
+	public String getSoundEffectNum() {
+		return soundEffectNum;
+	}
+
+	public void setSoundEffectNum(String soundEffectNum) {
+		this.soundEffectNum = soundEffectNum;
+	}
+
+	public String getDeadSoundNum() {
+		return deadSoundNum;
+	}
+
+	public void setDeadSoundNum(String deadSoundNum) {
+		this.deadSoundNum = deadSoundNum;
 	}
 
 	public int getAppearanceBeat() {
@@ -105,8 +115,10 @@ public class Monster {
 	@Override
 	public String toString() {
 		return "Monster [monsterNum=" + monsterNum + ", monsterName=" + monsterName + ", speed=" + speed + ", health="
-				+ health + ", effectSoundName=" + effectSoundName + ", skill=" + skill + ", skillPercentage="
-				+ skillPercentage + ", appearanceBeat=" + appearanceBeat + ", attackline=" + attackline + "]";
+				+ health + ", skill=" + skill + ", skillPercentage=" + skillPercentage + ", soundEffectNum="
+				+ soundEffectNum + ", deadSoundNum=" + deadSoundNum + ", appearanceBeat=" + appearanceBeat
+				+ ", attackline=" + attackline + "]";
 	}
+
 	
 }

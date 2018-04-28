@@ -15,13 +15,13 @@ public class StateController {
 	public String stateControll() {
 		State state = new State();
 		//DAO를 활용해 Save 테이블의 StateNum++
-		
-		if (flag) {
+		state.setState("Stage");//test
+		/*if (flag) {
 			state.setState("Stage");
 			flag = false;
 		}else {
 			state.setState("Story");
-		}
+		}*/
 		//Save 테이블의 StateNum과 같은 스테이트의 정보 반환
 		return state.getState();
 	}

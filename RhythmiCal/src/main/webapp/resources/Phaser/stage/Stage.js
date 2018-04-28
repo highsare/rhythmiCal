@@ -61,7 +61,7 @@ var bgImgName;
 var monsterlistA; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
-var musicName;
+var bgmName;
 var stageNum;
 
 //노비토를 담을 전역 변수
@@ -77,7 +77,8 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/' + musicName);	
+		alert(bgmName);
+		game.load.audio('stageBGM','resources/Audios/bgm/' + bgmName);	
 		//몬스터 로드
 		game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
 		game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
@@ -120,7 +121,6 @@ Stage.prototype = {
 	},
 	create: function(){
 		//DB에서 받아 온 데이터의 생성
-		stageBGM = game.add.audio('stageBGM');
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / 55;
 		beatStart = 0;
@@ -197,6 +197,9 @@ Stage.prototype = {
 	//나중에 이곳으로 모은다.
 	loopFunction: function(){
 		//add 1 currentBeat
+		if (currentBeat == 0) {
+			stageBGM.play();
+		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
