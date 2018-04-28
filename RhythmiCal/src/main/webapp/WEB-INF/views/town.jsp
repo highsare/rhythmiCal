@@ -758,15 +758,15 @@ function multiconnection() {
          if (result != null) {
             switch (result.length) {
             case 2:
-               var player2 = game.add.image(280, 765, 'player2');
+               var player2 = game.add.image(330, 765, 'player2');
                player2.scale.set(0.4);
                break;
             case 3:
-               var player3 = game.add.image(430, 765, 'player3');
+               var player3 = game.add.image(480, 765, 'player3');
                player3.scale.set(0.4);
                break;
             case 4:
-               var player4 = game.add.image(580, 765, 'player4');
+               var player4 = game.add.image(630, 765, 'player4');
                player4.scale.set(0.4);
                break;
             default:
