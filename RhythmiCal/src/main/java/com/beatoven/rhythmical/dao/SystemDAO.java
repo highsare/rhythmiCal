@@ -30,7 +30,57 @@ public class SystemDAO implements SystemInterface{
 		return saveList;
 		
 	}
-	
-	
 
+	@Override
+	public String getStateName(String id) {
+		String stateName = "";
+		try {
+			stateName = session.getMapper(SystemInterface.class).getStateName(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return stateName;
+	}
+
+	@Override
+	public int addStateNum(String id) {
+		try {
+			session.getMapper(SystemInterface.class).addStateNum(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int saveNow(Save save) {
+		try {
+			session.getMapper(SystemInterface.class).saveNow(save);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
+
+	@Override
+	public int getContentNum(String id) {
+		int contentNum = 0;
+		try {
+			contentNum = session.getMapper(SystemInterface.class).getContentNum(id);
+		}
+		catch(Exception e){}
+		return contentNum;
+	}
+
+	@Override
+	public int makeSave(Save save) {
+		try {
+			session.getMapper(SystemInterface.class).makeSave(save);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		};
+		return 0;
+	}
 }

@@ -6,6 +6,8 @@
 */
 
 var typewriter = new Typewriter(); // 글자 타이핑 효과
+var introMusic;
+
 //1장면
 var mountain;
 var village;
@@ -32,11 +34,57 @@ var Intro = function(game) {};
 
 Intro.prototype = {
 	preload:function() {
-		alert(contentNum+" Intro");		
+		alert(contentNum+" Intro");
+		//배경음악
+		game.load.audio('intro_music',"resources/introsrc/intromusic.mp3");
+
+		// intro_src_로드
+		//1번째장면
+		game.load.image("intro_1_mountain",
+				"resources/introsrc/intro_1_mountain.png", 1600, 900);
+		game.load.image("intro_1_village",
+				"resources/introsrc/intro_1_village.png", 1600, 900);
+		game.load.image("intro_1_tree",
+				"resources/introsrc/intro_1_tree.png", 1600, 900);
+		game.load.spritesheet("intro_1_flyingbird",
+				"resources/introsrc/intro_1_flyingbird_32x32.png", 32, 32,
+				2);
+		//두번째장면
+		game.load.spritesheet("intro_2_back",
+				"resources/introsrc/intro_2_back.png", 1600, 900,2);
+		game.load.image("intro_2_mawang",
+				"resources/introsrc/intro_2_mawang.png", 1600, 900);
+		game.load.spritesheet("intro_2_dancing01",
+				"resources/introsrc/intro_2_dancing01_60x60.png", 60, 60,12);
+		game.load.spritesheet("intro_2_dancing02",
+				"resources/introsrc/intro_2_dancing02_60x60.png", 60, 60,9);
+		game.load.spritesheet("intro_2_dancing03",
+				"resources/introsrc/intro_2_dancing03_60x60.png", 60, 60,11);
+		game.load.spritesheet("intro_2_dancing04",
+				"resources/introsrc/intro_2_dancing04_60x60.png", 60, 60,6);
+
+		//세번째장면
+		game.load.spritesheet("intro_3_back","resources/introsrc/intro_3_back.png",1600,900,2);
+		game.load.spritesheet("intro_3_mawang",
+				"resources/introsrc/intro_3_mawang.png", 1600, 900,8);
+		game.load.image("intro_3_village","resources/introsrc/intro_3_village.png",1600,900);
+		
+		//네번쨰장면
+		game.load.image("intro_4_village","resources/introsrc/intro_4_village.png",1600,900);
+		game.load.spritesheet("intro_4_beatoven","resources/introsrc/intro_4_beatoven.png",1600,900);
+		game.load.image("intro_4_mawang","resources/introsrc/intro_4_mawang.png",1600,900);
+		
+		//비트맵형 글자폰트 로드
+		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png',
+				'resources/neo_font/neo_font.fnt');
+
 	},
 	create:function() {
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
 
-		game.add.audio('intro_music').play();
+		introMusic = game.add.audio('intro_music');
+		introMusic.play();
 
 		typethetext("인트로", game.world.centerX - 150,
 				game.world.centerY - 50, 90);
@@ -264,17 +312,15 @@ Intro.prototype = {
 		    
 			});
 			
-			game.time.events.add(10000, function() {
+			game.time.events.add(12000, function() {
 				//스토리1번으로 보냄
-				//game.state.start("");
-				requestState();                                                                                                                                                                                                                                                                                                                                                                         
+				introMusic.stop();
+				game.state.start("Preload");
 			});
 			
 		});//네번째 장면 끝
 		
 	}
-}
-function preloadAfterAjax(contentNum){
 }
 function typethetext(txt, xvalue, yvalue, size, speed) {
 	//타이핑효과 함수 (텍스트값,x위치 , y위치)
