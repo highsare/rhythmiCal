@@ -731,14 +731,14 @@ function createMercenary() {
 var cnt = 0;
 function update() {
    // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.)
-   cnt++
+   /* cnt++
    if (cnt % 6 == 0) {
 	   readKey();
 	}
    if (cnt % 12 == 12) {
 	   cnt = 0;
 	   multiconnection();		
-	}
+	} */
 }
 
 function multiconnection() {
