@@ -463,7 +463,7 @@ function saveMotionList() {
  * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
 function moveContent(buttonFocus,inputKey) {
-   	console.log('moveContent() 진입');
+  console.log('moveContent() 진입');
 	switch(buttonFocus) {
          // 모션 1 변경
       case 1: 
@@ -852,28 +852,25 @@ function gamestart(inputKey) {
 }
 
 function isnull() {
-   if (text1 != null) {text1.kill(); text1 = null;}
-   if (image != null) {image.kill(); image = null;}
-   if (m_back != null) {m_back.kill(); m_back = null;}
-   if (border != null) {border.kill(); border = null;}
-   if (textboard!= null) {textboard.kill(); textboard = null;}
-   if (neon != null) {neon.kill(); neon = null;}
-   if (board != null) {board.kill(); board = null;}
-   if (messange != null) {messange.kill(); messange = null;}
-   if (exit != null) {exit.kill(); exit = null;}
-   if (start != null) {start.kill(); start = null;}
-   if (text2!= null) {text2.kill(); text2 = null;}
-   if (e_select!= null) {e_select.kill(); e_select = null;}
-   if (motion1 != null) {motion1.kill();motion1  = null;}
-   if (motion2 != null) {motion2.kill(); motion2 = null;}
-   if (motion3 != null) {motion3.kill(); motion3  = null;}
-   if (effect1 != null) {effect1.kill();effect1 = null;}
-   if (effect2 != null) {effect2.kill();effect2 = null;}
-   if (effect3 != null) {effect3.kill();effeect3 = null;}
-   if (lane1 != null) {lane1.kill();lane1 = null;}
-   if (lane2 != null) {lane2.kill();lane2 = null;}
-   if (lane3 != null) {lane3.kill();lane3 = null;}
-   if (square != null) {square.kill();square = null;}
+	if (text1 != null) {text1.kill(); text1 = null;}
+	if (image != null) {image.kill(); image = null;}
+	if (m_back== null) {m_back = game.add.image(750,75,'menu_sub_back');}
+	if (neon != null) {neon.kill(); neon = null;}
+	if (board != null) {board.kill(); board = null;}
+	if (messange != null) {messange.kill(); messange = null;}
+	if (exit != null) {exit.kill(); exit = null;}
+	if (text2!= null) {text2.kill(); text2 = null;}
+	if (e_select!= null) {e_select.kill(); e_select = null;}
+	if (motion1 != null) {motion1.kill(); motion1  = null;}
+	if (motion2 != null) {motion2.kill(); motion2 = null;}
+	if (motion3 != null) {motion3.kill(); motion3  = null;}
+	if (effect1 != null) {effect1.kill(); effect1 = null;}
+	if (effect2 != null) {effect2.kill(); effect2 = null;}
+	if (effect3 != null) {effect3.kill(); effeect3 = null;}
+	if (lane1 != null) {lane1.kill(); lane1 = null;}
+	if (lane2 != null) {lane2.kill(); lane2 = null;}
+	if (lane3 != null) {lane3.kill(); lane3 = null;}
+	if (square != null) {square.kill(); square = null;}
 }
 
 

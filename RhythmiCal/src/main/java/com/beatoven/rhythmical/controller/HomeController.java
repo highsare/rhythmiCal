@@ -45,7 +45,7 @@ public class HomeController {
 	//회원가입
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
-	public int signupMember(Member member) {
+	public String signupMember(Member member) {
 		System.out.println("signupMember() 진입 - member: " + member);
 		int result = 0;
 		try {
@@ -53,7 +53,13 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		if (result == 1) {
+			System.out.println("signup success");
+			return "어서와!";
+		} else {
+			System.out.println("signup fail");
+			return "다시 한 번 확인해줘!";
+		}
 	}
 	
 	//로그인(세션에 값 저장)
@@ -69,13 +75,13 @@ public class HomeController {
 		}
 		if (loginMember != null) {
 			//로그인 성공
-			session.setAttribute("loginedMember", loginMember);
-			System.out.println("done");
-			return "login";
-		}else {
+			session.setAttribute("loginMember", loginMember);
+			System.out.println("login success");
+			return "어서와!";
+		} else {
 			//로그인 실패
-			System.out.println("fail");
-			return "fail";
+			System.out.println("login fail");
+			return "다시 한 번 확인해줘!";
 		}
 	}
 	
