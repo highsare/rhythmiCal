@@ -8,6 +8,7 @@ public class Monster {
 	private int health;
 	private String effectSoundName;
 	private String skill;
+	private int skillPercentage;
 	private int appearanceBeat;
 	private int attackline;
 	
@@ -16,7 +17,7 @@ public class Monster {
 	}
 
 	public Monster(int monsterNum, String monsterName, int speed, int health, String effectSoundName, String skill,
-			int appearanceBeat, int attackline) {
+			int skillPercentage, int appearanceBeat, int attackline) {
 		super();
 		this.monsterNum = monsterNum;
 		this.monsterName = monsterName;
@@ -24,6 +25,7 @@ public class Monster {
 		this.health = health;
 		this.effectSoundName = effectSoundName;
 		this.skill = skill;
+		this.skillPercentage = skillPercentage;
 		this.appearanceBeat = appearanceBeat;
 		this.attackline = attackline;
 	}
@@ -76,6 +78,14 @@ public class Monster {
 		this.skill = skill;
 	}
 
+	public int getSkillPercentage() {
+		return skillPercentage;
+	}
+
+	public void setSkillPercentage(int skillPercentage) {
+		this.skillPercentage = skillPercentage;
+	}
+
 	public int getAppearanceBeat() {
 		return appearanceBeat;
 	}
@@ -95,9 +105,8 @@ public class Monster {
 	@Override
 	public String toString() {
 		return "Monster [monsterNum=" + monsterNum + ", monsterName=" + monsterName + ", speed=" + speed + ", health="
-				+ health + ", effectSoundName=" + effectSoundName + ", skill=" + skill + ", appearanceBeat="
-				+ appearanceBeat + ", attackline=" + attackline + "]";
+				+ health + ", effectSoundName=" + effectSoundName + ", skill=" + skill + ", skillPercentage="
+				+ skillPercentage + ", appearanceBeat=" + appearanceBeat + ", attackline=" + attackline + "]";
 	}
-
 	
 }

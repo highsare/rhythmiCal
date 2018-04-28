@@ -16,8 +16,8 @@ public interface StageInterface {
 	//stage테이블에서 stageNum을 통해 해당 스테이지의 모든 값을 받아온다.
 	public Stage getStage(int stageNum);
 	
-	//music테이블에서 musicName을 통해 beat값을 받아온다.
-	public int getBeat(String musicName);
+	//BGM테이블에서 BGMName을 통해 beat값을 받아온다.
+	public int getBPM(String BGMName);
 	
 	//monster테이블에서 몬스터테이블을 받아온다.
 	public ArrayList<Monster> getMonsterTable();

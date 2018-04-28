@@ -8,19 +8,19 @@
 	
 	  	<select id="getStage" resultType="stage">
 	  		SELECT *
-	  		FROM stage
+	  		FROM STAGE
 	  		WHERE stageNum = #{stageNum}
 	  	</select>
 	  	
-	  	<select id="getBeat">
+	  	<select id="getBPM">
 	  		SELECT *
-	  		FROM music
-	  		WHERE musicName = #{musicName}
+	  		FROM GBM
+	  		WHERE BGMName = #{BGMName}
 	  	</select>
 	  	
 	  	<select id="getMonsterTable" resultType="monster">
 	  		SELECT *
-	  		FROM monster
+	  		FROM MONSTER
 	  	</select>
 	  	
 	</mapper>

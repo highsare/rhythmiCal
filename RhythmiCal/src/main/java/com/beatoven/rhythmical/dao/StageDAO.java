@@ -32,11 +32,11 @@ public class StageDAO implements StageInterface{
 	}
 
 	@Override
-	public int getBeat(String musicName) {
+	public int getBPM(String BGMName) {
 		// TODO jiwon
 		int result = 0;
 		try {
-			result = session.getMapper(StageInterface.class).getBeat(musicName);
+			result = session.getMapper(StageInterface.class).getBPM(BGMName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
