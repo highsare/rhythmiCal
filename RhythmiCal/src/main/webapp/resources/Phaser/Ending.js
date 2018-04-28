@@ -15,8 +15,20 @@ var Ending = function(game) {};
 Ending.prototype = {
 
 	preload:function() {	
+		//배경음악
+		game.load.audio('ending_music',"resources/endingsrc/endingmusic.mp3");
+		//비트맵형 글자폰트 로드
+		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png','resources/neo_font/neo_font.fnt');
+		
+		game.load.spritesheet("propose00",	"resources/endingsrc/propose00.png", 500, 283,2);
+		game.load.spritesheet("propose01",	"resources/endingsrc/propose01.png", 500, 283,2);
+		game.load.image("propose02","resources/endingsrc/propose02.png",500,283);
+		game.load.image("propose03","resources/endingsrc/propose03.png",500,283);
+		game.load.spritesheet("propose04",	"resources/endingsrc/propose04.png", 500, 283,2);
 	},
 	create:function() {
+	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+	game.input.onDown.add(gofull, this);
 	game.add.audio('ending_music').play();
 	
 	//오른쪽 스크롤

@@ -120,8 +120,9 @@ Stage.prototype = {
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
-		//DB에서 받아 온 데이터의 생성
-		stageBGM = game.add.audio('stageBGM');
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
+		
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / 55;
 		beatStart = 0;
@@ -198,6 +199,9 @@ Stage.prototype = {
 	//나중에 이곳으로 모은다.
 	loopFunction: function(){
 		//add 1 currentBeat
+		if (currentBeat == 0) {
+			stageBGM.play();
+		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -222,5 +226,14 @@ Stage.prototype = {
 				monsterlistC = stageInfo[4];
 			}
 		});
+	}
+}
+
+function gofull() {
+	if (game.scale.isFullScreen) {
+		game.scale.stopFullScreen();
+	}
+	else {
+		game.scale.startFullScreen(false);
 	}
 }

@@ -93,6 +93,8 @@ Village.prototype = {
 		game.load.spritesheet('star', 'resources/Images/town/produceRoom/star.png', 90, 90);
 	},
 	create: function() {
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
 		//마을 배경
 		bgd = game.add.image(0, 0, 'back');
 		bgd.alpha = 0.5;
