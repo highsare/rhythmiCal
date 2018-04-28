@@ -105,6 +105,7 @@ function preload() {
    
    // 네모 테두리 로드
    game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
+	
 }
 
 function create() {
@@ -143,7 +144,9 @@ function readKey() {
     $.ajax({
       url: 'requestConsole'
       ,success: function(inputKey) {
+
         console.log(inputKey);
+
          if (inputKey != "NOTHING") {
             switch (depth) {
             // 버튼을 움직이는 단계
@@ -271,7 +274,6 @@ function logoutMember() {
       ,error: function() {alert('logoutMember() - ajax error');}
    });
 }
-
 /*
  * createStudio(): 작업소 화면을 만드는 메소드 
  */
@@ -379,6 +381,7 @@ function moveSquare(direction) {
    }
    game.add.tween(square).to({ y: squareY }, 300, Phaser.Easing.Exponential.Out, true, 0);
    game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);      
+	
 }
 
 /*

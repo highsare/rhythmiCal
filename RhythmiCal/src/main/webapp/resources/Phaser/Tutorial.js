@@ -34,7 +34,7 @@ Tutorial.prototype = {
 	/*
 	 * createTutorialText(): 튜토리얼 객체를 생성하는 메서드. 여기서 리드미 및 말풍선의 위치, 텍스트의 내용을 정의하면 된다.
 	 */
-		createTutorialText: function() {
+	createTutorialText: function() {
 		// index 0: 시작
 		tutorialTextArray.push(new TutorialText(300, 300, 40, 650, 
 			'비토벤! 준비는 됐나? 크크크'
@@ -89,18 +89,8 @@ Tutorial.prototype = {
 	 * preload()
 	 */
 	preload: function() {
-		// debug
-		game.load.image('arrow', 'assets/sprites/arrow.png');
-		// load background image
-		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
-		// load bitmapFont
-	    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
-	    // load rhythmi spritesheet
-		game.load.spritesheet('rhythmi', 'resources/Images/tutorial/rhythmiWithEyes.png', 50, 50, 16);
-		// load dialog image
-	    game.load.image("dialog", "resources/Images/tutorial/dialog.png");
+		alert("Tutorial");
 	},
-	
 	/*
 	 * create()
 	 */
