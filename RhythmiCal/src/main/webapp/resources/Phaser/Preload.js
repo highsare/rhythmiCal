@@ -12,6 +12,8 @@ Preload.prototype = {
 	preload : function(){
 		alert("Preload");
 		this.requestUserInfo();
+		this.getStageInfo();
+
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -36,5 +38,22 @@ Preload.prototype = {
 	  {
 	      game.scale.startFullScreen(false);
 	  }
+	},
+	getStageInfo: function(stageNum){
+		$.ajax({
+			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
+			,type : "post"
+			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+			,success : function(stageInfo) {
+				bgImgName = stageInfo[0].bgImgName;
+				musicName = stageInfo[0].musicName;
+				beat = stageInfo[1];
+				monsterlistA = stageInfo[2];
+				monsterlistB = stageInfo[3];
+				monsterlistC = stageInfo[4];
+			}
+		});
 	}
+	
 }

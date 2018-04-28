@@ -35,7 +35,7 @@ var popUpImage;
 var counter = 0;
 var isComboNow = false;
 var beatZone = false;
-var beat = 0;
+var beat; //DB에서 음악의 비트값을 받아온다.
 //최대체력
 var maxLife = 10; 
 var lifeArray;
@@ -63,7 +63,6 @@ var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를
 var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var musicName;
 var stageNum;
-var beat;
 
 //노비토를 담을 전역 변수
 var nobeato;
@@ -74,11 +73,11 @@ Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
 		/////////////////stageNum을 받아오는 과정이 필요함
-		this.getStageInfo(stageNum);
+		//this.getStageInfo(stageNum);
 		//배경 로드
-		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
+		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/55bpm_Mirror_Mirror.mp3');	
+		game.load.audio('stageBGM','resources/Audios/bgm/' + musicName);	
 		//몬스터 로드
 		game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
 		game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
@@ -207,7 +206,7 @@ Stage.prototype = {
 		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
 	
 	},
-	getStageInfo: function(stageNum){
+	/*getStageInfo: function(stageNum){
 		$.ajax({
 			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
 			,type : "post"
@@ -222,5 +221,5 @@ Stage.prototype = {
 				monsterlistC = stageInfo[4];
 			}
 		});
-	}
+	}*/
 }

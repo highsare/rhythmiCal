@@ -17,7 +17,7 @@ public class StateController {
 		//DAO를 활용해 Save 테이블의 StateNum++
 		
 		if (flag) {
-			state.setState("Intro");
+			state.setState("Stage");
 			flag = false;
 		}else {
 			state.setState("Story");

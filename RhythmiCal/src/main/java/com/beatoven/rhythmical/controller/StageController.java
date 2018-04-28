@@ -100,10 +100,10 @@ public class StageController {
 		//monsterNum, monsterName, speed, health, effectSoundName, skill, appearanceBeat, attackline
 		Monster monster0 = new Monster(0, "mummy", 1, 1, null, null, 1, 1);//노말 고블린 ^^0
 		Monster monster1 = new Monster(1, "mummy", 1, 2, null, null, 3, 1);//체력이2인 노말 ^^1
-		Monster monster2 = new Monster(2, "mummy", 2, 1, null, null, 3, 1);//속도2 ^^2
+		Monster monster2 = new Monster(2, "stormlord_dragon", 2, 1, null, null, 3, 1);//속도2 ^^2
 		Monster monster3 = new Monster(3, "mummy", 3, 1, null, null, 4, 1);//속도3 ^^3
 		Monster monster4 = new Monster(4, "mummy", 1, 3, null, null, 5, 1);//탱커 ^^4
-		Monster monster5 = new Monster(5, "mummy", 1, 3, null, null, 6, 1);//폭탄맨 ^^5
+		Monster monster5 = new Monster(5, "stormlord_dragon", 1, 3, null, null, 6, 1);//폭탄맨 ^^5
 		Monster monster6 = new Monster(6, "mummy", 1, 3, null, null, 5, 1);//황소 ^^6
 		Monster monster7 = new Monster(7, "mummy", 1, 2, null, null, 4, 1);//다이노 처음부터 끝까지 ^^7
 		Monster monster8 = new Monster(8, "mummy", 1, 3, null, null, 3, 1);//노트박스 가리는 애 ^^8
