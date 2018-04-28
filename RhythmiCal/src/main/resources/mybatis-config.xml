@@ -9,6 +9,7 @@
 		<typeAlias type="com.beatoven.rhythmical.vo.Save" alias="save" />
 		<typeAlias alias="monster" type="com.beatoven.rhythmical.vo.Monster"/>
 			<typeAlias alias="stage" type="com.beatoven.rhythmical.vo.Stage"/>
+			<typeAlias alias="story" type="com.beatoven.rhythmical.vo.Story"/>
 	</typeAliases>
 	
 	<!-- <mappers>
