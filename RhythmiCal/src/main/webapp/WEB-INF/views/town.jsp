@@ -19,6 +19,7 @@ var image;
 var x = 103;
 var y = 204;
 var inout = 0;
+var player1,player2,player3,player4;
 var isEntered = false;
 var tween;
 var key1;
@@ -71,6 +72,7 @@ function preload() {
    game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
+   game.load.image('warning', 'resources/Images/town/townImg/warning.png');
    
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
@@ -131,10 +133,12 @@ function create() {
    p_back.scale.set(0.85);
    p_back.alpha = 0.8;
    
-   var player = game.add.image(130, 765, 'player1');
-   var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
-   player.scale.set(0.4);
+   player1 = game.add.image(130, 765, 'player1');
+   player1.scale.set(0.4);
    
+   var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
+   
+   playerCount();
 }
 
 /*
@@ -740,7 +744,7 @@ function update() {
    if (cnt % 6 == 0) {
       readKey();
    }
-   if (cnt % 12 == 12) {
+   if (cnt % 12 == 0) {
       cnt = 0;
       multiconnection();      
    }
@@ -751,26 +755,19 @@ function multiconnection() {
       url: 'multiconnection'
       ,type: 'post'
       ,success: function(result) {
-         console.log(result.length);
          if (result != null) {
             switch (result.length) {
             case 2:
-               var player2 = game.add.image(220, 770, 'player2');
+               var player2 = game.add.image(330, 765, 'player2');
                player2.scale.set(0.4);
                break;
             case 3:
-               var player3 = game.add.image(310, 770, 'player3');
-               var player2 = game.add.image(220, 770, 'player2');
+               var player3 = game.add.image(480, 765, 'player3');
                player3.scale.set(0.4);
-               player2.scale.set(0.4);
                break;
             case 4:
-               var player4 = game.add.image(400, 770, 'player4');
-               var player3 = game.add.image(310, 770, 'player3');
-               var player2 = game.add.image(220, 770, 'player2');
+               var player4 = game.add.image(630, 765, 'player4');
                player4.scale.set(0.4);
-               player3.scale.set(0.4);
-               player2.scale.set(0.4);
                break;
             default:
                break;
@@ -788,9 +785,9 @@ function myroom() {
    image = game.add.image(810, 120, 'myroom');
    border = game.add.image(805, 120, 'border');
    
-   exit = game.add.image(920, 580, 'exit');
+   exit = game.add.image(940, 580, 'exit');
    exit.scale.set(0.8);
-   e_select = game.add.sprite(920, 580, 'e_select');
+   e_select = game.add.sprite(940, 580, 'e_select');
    e_select.scale.set(0.8);
    textboard = game.add.image(810,450,'textboard');
    textboard.scale.set(2);
@@ -830,9 +827,9 @@ function frontoftown() {
     textboard = game.add.image(810,450,'textboard');
     textboard.scale.set(2);
     text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
-    start = game.add.image(925, 580,'start');
+    start = game.add.image(935, 580,'start');
     start.scale.set(0.89);
-    e_select = game.add.sprite(930, 580, 'e_select');
+    e_select = game.add.sprite(940, 580, 'e_select');
     e_select.scale.set(0.8);
     depth = 4;
 }
@@ -849,6 +846,39 @@ function gamestart(inputKey) {
 		 startpush.scale.set(0.89);
 		 alert('Next Stroy Or Game Start');
 	   }
+}
+function playerCount() {
+	$.ajax({
+	      url: 'playerCount'
+	      ,type: 'post'
+	      ,success: function(result) {
+	         console.log(result.length);
+	         
+			if (result != null) {
+				switch (result.length) {
+				case 2:
+					player2 = game.add.image(330, 765, 'player2');
+					player2.scale.set(0.4);	
+					break;
+				case 3:
+					player3 = game.add.image(480, 765, 'player3');
+					player2 = game.add.image(330, 765, 'player2');
+					player3.scale.set(0.4);	player2.scale.set(0.4);
+					break;
+				case 4:
+					player4 = game.add.image(630, 765, 'player4');
+					player3 = game.add.image(480, 765, 'player3');
+					player2 = game.add.image(330, 765, 'player2');
+					player4.scale.set(0.4);	player3.scale.set(0.4);	
+					player2.scale.set(0.4);	
+					break;
+				default:
+					break;
+				}
+	         }
+	      }
+	      ,error: function() {alert('update() - playerCount error');}
+	   });
 }
 
 function isnull() {
