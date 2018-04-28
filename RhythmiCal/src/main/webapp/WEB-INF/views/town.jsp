@@ -57,8 +57,8 @@ function preload() {
 	game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
 	game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
 	game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
-	game.load.image('border', 'resources/Images/town/townImg/border.png'); //임시
-	
+	game.load.image('border', 'resources/Images/town/townImg/border.png'); 
+	game.load.image('exit_push','resources/Images/town/townImg/exit_push.png')
 	game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
 	game.load.image('click2','resources/Images/town/townImg/click2.png' ); //두번째 메뉴 이미지 로드(임의)
 	game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
@@ -684,6 +684,7 @@ function goHome(inputKey) {
 	if (inputKey == 'esc') {depth = 0;}
 	else if (inputKey == 'enter') {
 		// 게임 종료. 검정 화면 준비.
+		game.add.sprite(900, 550, 'exit_push');
 		sprite = game.add.sprite(0, 0, 'finish');
 		// 원래 사이즈 보다 확대 하고 alph로 투명도 조절.
 		sprite.scale.set(5);
