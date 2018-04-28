@@ -8,7 +8,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	var monsterInRange = new Array();
 	//A라인의 범위에 있는 몬스터
 	for (var i = 0; i < arrayA.length; i++) {
-		if (arrayA[i].status != "DIE") {
+		if (arrayA[i].status != "DIE" && arrayA[i].status != "STAY") {
 			if (arrayA[i].lineX < monsterLocationX + 150 || arrayA[i].lineX > monsterLocationX - 150) {
 				if (monsterAttackLine == 0) {
 					if (monsterLocationY + 95 * 3 > lineYLocation[arrayA[i].attackLine] || monsterLocationY - 95 < lineYLocation[arrayA[i].attackLine]) {
@@ -27,48 +27,48 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 		}
 	}
 	//B라인의 범위에 있는 몬스터
-	for (var j = 0; j < arrayB.length; j++) {
-		if (arrayB[j].status != "DIE") {
-			if (arrayB[j].lineX < monsterLocationX + 150 || arrayB[j].lineX > monsterLocationX - 150) {
+	for (var i = 0; i < arrayB.length; i++) {
+		if (arrayB[i].status != "DIE" && arrayB[i].status != "STAY") {
+			if (arrayB[i].lineX < monsterLocationX + 150 || arrayB[i].lineX > monsterLocationX - 150) {
 				if (monsterAttackLine == 0) {
-					if (monsterLocationY + 95 * 3 > lineYLocation[arrayB[j].attackLine] || monsterLocationY - 95 < lineYLocation[arrayB[j].attackLine]) {
-						monsterInRange.push(arrayB[j]);
+					if (monsterLocationY + 95 * 3 > lineYLocation[arrayB[i].attackLine] || monsterLocationY - 95 < lineYLocation[arrayB[i].attackLine]) {
+						monsterInRange.push(arrayB[i]);
 					}
 				} else if (monsterAttackLine == 1) {
-					if (monsterLocationY + 95 * 3 > lineYLocation[arrayB[j].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayB[j].attackLine]) {
-						monsterInRange.push(arrayB[j]);
+					if (monsterLocationY + 95 * 3 > lineYLocation[arrayB[i].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayB[i].attackLine]) {
+						monsterInRange.push(arrayB[i]);
 					}
 				} else if (monsterAttackLine == 2) {
-					if (monsterLocationY + 95 > lineYLocation[arrayB[j].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayB[j].attackLine]) {
-						monsterInRange.push(arrayB[j]);
+					if (monsterLocationY + 95 > lineYLocation[arrayB[i].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayB[i].attackLine]) {
+						monsterInRange.push(arrayB[i]);
 					}
 				}
 			}
 		}
 	}
 	//C라인의 범위에 있는 몬스터
-	for (var k = 0; k < arrayC.length; k++) {
-		if (arrayC[k].status != "DIE") {
-			if (arrayC[k].lineX < monsterLocationX + 150 || arrayC[k].lineX > monsterLocationX - 150) {
+	for (var i = 0; i < arrayC.length; i++) {
+		if (arrayC[i].status != "DIE" && arrayC[i].status != "STAY") {
+			if (arrayC[i].lineX < monsterLocationX + 150 || arrayC[i].lineX > monsterLocationX - 150) {
 				if (monsterAttackLine == 0) {
-					if (monsterLocationY + 95 * 3 > lineYLocation[arrayC[k].attackLine] || monsterLocationY - 95 < lineYLocation[arrayC[k].attackLine]) {
-						monsterInRange.push(arrayC[k]);
+					if (monsterLocationY + 95 * 3 > lineYLocation[arrayC[i].attackLine] || monsterLocationY - 95 < lineYLocation[arrayC[i].attackLine]) {
+						monsterInRange.push(arrayC[i]);
 					}
 				} else if (monsterAttackLine == 1) {
-					if (monsterLocationY + 95 * 3 > lineYLocation[arrayC[k].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayC[k].attackLine]) {
-						monsterInRange.push(arrayC[k]);
+					if (monsterLocationY + 95 * 3 > lineYLocation[arrayC[i].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayC[i].attackLine]) {
+						monsterInRange.push(arrayC[i]);
 					}
 				} else if (monsterAttackLine == 2) {
-					if (monsterLocationY + 95 > lineYLocation[arrayC[k].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayC[k].attackLine]) {
-						monsterInRange.push(arrayC[k]);
+					if (monsterLocationY + 95 > lineYLocation[arrayC[i].attackLine] || monsterLocationY - 95 * 3 < lineYLocation[arrayC[i].attackLine]) {
+						monsterInRange.push(arrayC[i]);
 					}
 				}
 			}
 		}
 	}
 	//범위에 있는 몬스터에게 데미지를 먹인다.
-	for (var l = 0; l < monsterInRange.length; l++) {
-		hitMonster(monsterInRange[l], 1);
+	for (var i = 0; i < monsterInRange.length; i++) {
+		hitMonster(monsterInRange[i], 1);
 	}
 }
 
