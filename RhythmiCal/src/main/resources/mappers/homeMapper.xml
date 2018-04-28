@@ -9,14 +9,14 @@
 	<!-- 회원가입 -->
 	<insert id="signupMember" parameterType="member">
 		insert into member(id, password)
-		values(#{id}, #{pw})
+		values(#{id}, #{password})
 	</insert>
 	
 	<!-- 로그인 -->
 	<select id="loginMember" parameterType="member" resultType="member">
 		select *
 		from member
-		where id = #{id} and password = #{pw}
+		where id = #{id} and password = #{password}
 	</select>
 	
 	<!-- 명예의 전당 글 불러오기 -->

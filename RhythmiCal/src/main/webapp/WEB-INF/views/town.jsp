@@ -660,6 +660,7 @@ function moveContent(buttonFocus,inputKey) {
 	         break;
 	      case 'esc': depth = 1; break;
 	      default: break;
+      } break;
    // 레인 3 변경
    case 6: 
       var Motion = findMotion(motion3.key);
@@ -808,16 +809,16 @@ function isnull() {
 	if (exit != null) {exit.kill(); exit = null;}
 	if (text2!= null) {text2.kill(); text2 = null;}
 	if (e_select!= null) {e_select.kill(); e_select = null;}
-	if (motion1 != null) {motion1.kill();motion1  = null;}
+	if (motion1 != null) {motion1.kill(); motion1  = null;}
 	if (motion2 != null) {motion2.kill(); motion2 = null;}
 	if (motion3 != null) {motion3.kill(); motion3  = null;}
-	if (effect1 != null) {effect1.kill();effect1 = null;}
-	if (effect2 != null) {effect2.kill();effect2 = null;}
-	if (effect3 != null) {effect3.kill();effeect3 = null;}
-	if (lane1 != null) {lane1.kill();lane1 = null;}
-	if (lane2 != null) {lane2.kill();lane2 = null;}
-	if (lane3 != null) {lane3.kill();lane3 = null;}
-	if (square != null) {square.kill();square = null;}
+	if (effect1 != null) {effect1.kill(); effect1 = null;}
+	if (effect2 != null) {effect2.kill(); effect2 = null;}
+	if (effect3 != null) {effect3.kill(); effeect3 = null;}
+	if (lane1 != null) {lane1.kill(); lane1 = null;}
+	if (lane2 != null) {lane2.kill(); lane2 = null;}
+	if (lane3 != null) {lane3.kill(); lane3 = null;}
+	if (square != null) {square.kill(); square = null;}
 }
 </script>
 </body>
