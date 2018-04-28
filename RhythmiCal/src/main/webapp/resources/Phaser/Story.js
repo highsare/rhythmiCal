@@ -80,13 +80,18 @@ Story.prototype = {
 		game.load.image('적군a', 'resources/Images/story/npc/적군a.png');
 		game.load.image('적군b', 'resources/Images/story/npc/적군b.png');
 
+		
+		
+		
+	    
+	    
 	    //텍스트 박스
 	    game.load.image("textbox", "resources/Images/tutorial/dialog.png");
-
+	    //game.load.image("textbox", "resources/Images/story/textbox.png"); 
+	    
 	},
 	create: function() {
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		game.input.onDown.add(gofull, this);
+		
 		
 		cursors = game.input.keyboard.createCursorKeys();
 		this.typethetext("STORY1 ",game.world.centerX-150, game.world.centerY- 50,90);
@@ -102,13 +107,10 @@ Story.prototype = {
 		   	storyOrder = 0;
 		   	
 	   		this.dialogueExport(storyOrder);
-		   	
-		   	
-	}, this);
-	  
-	   	
+		}, this);
 	},
 	update: function() {
+	
 		//앱에서 o누르면????   키보트 아래 누르면 다음 대화 
 		if(cursors.down.isDown || game.input.activePointer.leftButton.isDown == true) {
 			//어레이가 다 담겼다면 그때 적용되게끔  	
@@ -130,19 +132,20 @@ Story.prototype = {
 	render: function() {
 		//현재 대화 몇번째인가 체크 하려고 만듬.
 		if(typeof storyOrder !== 'undefined'){
-			game.debug.text("현재 storyOrder 확인 = "+ storyOrder, 32, 132);
-		}
-		if(typeof arr !=='undefined'){
-			game.debug.text(storynum +"스토리 대화 갯 수 = " + arr.length, 32, 162);
+	    game.debug.text("현재 storyOrder 확인 = "+ storyOrder, 32, 132);
+		}if(typeof arr !=='undefined'){
+	    game.debug.text(storynum +"스토리 대화 갯 수 = " + arr.length, 32, 162);
 	    }
 	},
+	
 	//페이드 아웃하기
-	outfromstory: function(){
+	 outfromstory: function(){
 		//2초뒤 페이드 아웃
 		game.camera.fade('#000000',1000);
 		//게임 시작
 		game.camera.onFadeComplete.add(this.gotostage,this);
 	},
+		
 	dialogueExport: function(storyOrder){
 		alert(storyOrder);
         
@@ -279,61 +282,5 @@ Story.prototype = {
 		
 		//game.state.start('Ending');
 		//game.state.start('stage'+i);  //예를 들어 stage1 
-		
-	}
-		
-		//배경 장소 정보 좌상단에 띄우기
- 		//if(storyOrder == 0){
- 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
- 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
- 		/*}else if( bgImgName != arr[storyOrder].bgImgName ){
- 			bgInfo.destroy(); 
- 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
- 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
- 		}*/
-	},
-	//타이핑효과 함수 (텍스트값,x위치 , y위치)
-	typethetext: function (txt, xvalue, yvalue, size) {
-		//글자 타이핑효과 정의
-		typewriter.init(game, {
-			time:10,
-			x : xvalue,
-			y : yvalue,
-			fontFamily : "neo_font",
-			fontSize : size,
-			maxWidth : 1400,
-			//타이핑 소리 줌
-			// sound: reg.track,
-			text : txt
-		});
-		//타이핑 시작
-		typewriter.start();
-	},
-	//DB에서 대화문 불러오기
-	loadStoryContents: function(){ 
-		$.ajax({
-			url : 'loadStoryContents'
-			,type : 'post'
-			,dataType : 'json'
-			,data: {storynum : storynum}
-			/*cache : false,
-			async : false,*/
-			,success:function(arrtest){
-				storyText = new Array();
-				arr = new Array();
-				arr = arrtest;
-				console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
-			}
-			,error: function(){
-				alert("대화문 임포트 에러");
-			}
-		});
-	},
-	//게임으로 이동 
-	gotostage: function(){
-		//모든 게임 elements 날리기.
-		game.world.removeAll()
-		this.music.stop();
-		game.state.start("Preload");
 	}
 }
