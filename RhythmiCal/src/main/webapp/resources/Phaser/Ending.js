@@ -14,7 +14,18 @@ var Ending = function(game) {};
 
 Ending.prototype = {
 
-	preload:function() {	
+	preload:function() {
+		//배경음악
+	game.load.audio('ending_music',"resources/endingsrc/endingmusic.mp3");
+	//비트맵형 글자폰트 로드
+	game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png','resources/neo_font/neo_font.fnt');
+	
+	game.load.spritesheet("propose00",	"resources/endingsrc/propose00.png", 500, 283,2);
+	game.load.spritesheet("propose01",	"resources/endingsrc/propose01.png", 500, 283,2);
+	game.load.image("propose02","resources/endingsrc/propose02.png",500,283);
+	game.load.image("propose03","resources/endingsrc/propose03.png",500,283);
+	game.load.spritesheet("propose04",	"resources/endingsrc/propose04.png", 500, 283,2);
+		
 	},
 	create:function() {
 	game.add.audio('ending_music').play();
@@ -91,6 +102,8 @@ Ending.prototype = {
 		txt += "몬스터1: 꼬맹이\n\n";
 		txt += "몬스터2: 초록괴물\n\n";
 		txt += "몬스터3: 팬더괴물";
+		txt += "\n\n";
+		txt += "음악: 유튜브 음악라이브러리";
 		
 		//엔터 갯수 해서 올라가는 글 높이 구할라고..
 		var countn = 1;

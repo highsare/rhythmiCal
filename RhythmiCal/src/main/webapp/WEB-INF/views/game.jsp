@@ -50,8 +50,8 @@
 	//game.state.start("Intro");
 	//game.state.start("Tutorial");
 	//game.state.start("Village");
-	//game.state.start("Story");
-	game.state.start("Stage");
+	game.state.start("Story");
+	//game.state.start("Stage");
 
 	//game.state.start("Ending");
 </script>
