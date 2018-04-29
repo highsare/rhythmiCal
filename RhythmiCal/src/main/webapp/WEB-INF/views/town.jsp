@@ -12,7 +12,7 @@
 <script>
 var game = new Phaser.Game(1600, 900, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
 
-var text1,text2,messange,exit,p_back;
+var text1,text2,messange,exit,p_back,m_back;
 var cursors;
 var point;
 var image;
@@ -72,7 +72,6 @@ function preload() {
    game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
-   game.load.image('warning', 'resources/Images/town/townImg/warning.png');
    
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
@@ -884,7 +883,10 @@ function playerCount() {
 function isnull() {
 	if (text1 != null) {text1.kill(); text1 = null;}
 	if (image != null) {image.kill(); image = null;}
-	if (m_back== null) {m_back = game.add.image(750,75,'menu_sub_back');}
+	if (m_back != null) {m_back.kill(); m_back = null;}
+	if (border != null) {border.kill(); border = null;}
+	if (textboard != null) {textboard.kill(); textboard = null;}
+	if (start != null) {start.kill(); start = null;}
 	if (neon != null) {neon.kill(); neon = null;}
 	if (board != null) {board.kill(); board = null;}
 	if (messange != null) {messange.kill(); messange = null;}
