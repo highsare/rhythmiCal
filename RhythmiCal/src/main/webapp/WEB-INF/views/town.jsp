@@ -74,6 +74,9 @@ function preload() {
    game.load.image('mm','resources/Images/town/townImg/mm.png');
    
    game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
+   game.load.audio('btnSound','resources/Images/town/button_click.mp3');
+   game.load.audio('door','resources/Images/town/door.wav');
+   game.load.audio('door_close','resources/Images/town/door_close.mp3');
    
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
@@ -120,7 +123,7 @@ function create() {
    //마을BGM
    var townbgm = game.add.audio('townBGM');
    townbgm.loopFull();
-   townbgm.play();
+   townbgm.play("",0,0.1);
    
    //메뉴 이미지 지정한 좌표에 출력
    var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
@@ -234,20 +237,42 @@ function moveMenu(inputKey) {
       if (y > 204) {
           y -= 112; 
           tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
+          
+          var btnSound = game.add.audio('btnSound');
+          btnSound.play();
+          
       } break;
    case 'down':
       if (y < 540) {
          y += 112; 
          tween.to({y: y}, 300, Phaser.Easing.Exponential.Out, true, 0);
+         
+         var btnSound = game.add.audio('btnSound');
+         btnSound.play();
+         
       } break;
    case 'esc':
 	   isnull();
        if (point == null) {
           point = game.add.image(x, y, 'select');
           point.scale.set(0.9);
+          
+          var btnSound = game.add.audio('btnSound');
+          btnSound.play();
+          
+          var door_close = game.add.audio('door_close');
+          door_close.play();
+          
        } break;
    case 'enter':
       isEntered = true;
+      
+      var btnSound = game.add.audio('btnSound');
+      btnSound.play();
+      
+      var doorSound = game.add.audio('door');
+      doorSound.play();
+      
       if (point != null) {
          point.kill();
          point = null;         
@@ -433,6 +458,11 @@ function moveButtonFocus(inputKey) {
         if (point == null) {
            point = game.add.image(x, y, 'select');
            point.scale.set(0.9);
+           var btnSound = game.add.audio('btnSound');
+           btnSound.play();
+           
+           var door_close = game.add.audio('door_close');
+           door_close.play();
         }
         
         // 레인 설정에 중복값이 있을 경우 에러를 알림
@@ -807,6 +837,10 @@ function goHome(inputKey) {
    if (inputKey == 'esc') {
 	   depth = 0; isnull(); 
 	   point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+	   var btnSound = game.add.audio('btnSound');
+       btnSound.play();
+       var door_close = game.add.audio('door_close');
+       door_close.play();
 	}
    else if (inputKey == 'enter') {
 	  exit.kill(); exit = null;
@@ -845,6 +879,10 @@ function gamestart(inputKey) {
 	if (inputKey == 'esc') {
 		depth = 0; isnull(); 
 		point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+		var btnSound = game.add.audio('btnSound');
+        btnSound.play();
+        var door_close = game.add.audio('door_close');
+        door_close.play();
 	}
 	   else if (inputKey == 'enter') {
 		 start.kill(); start = null;
