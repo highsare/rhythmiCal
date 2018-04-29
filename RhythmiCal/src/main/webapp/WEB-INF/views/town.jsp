@@ -97,14 +97,11 @@ function preload() {
    game.load.spritesheet('BC', 'resources/Images/town/produceRoom/BC.png', 100, 100);
    game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
    
-   // 모션 및 효과 이미지
-   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 60, 120);
-   
    // 모션 설명 배경이미지
    game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
    
    // 네모 테두리 로드
-   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
+   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
 }
 
 function create() {
@@ -417,7 +414,11 @@ function moveButtonFocus(inputKey) {
             break;
       case 'esc': 
         isEntered = false;
-        
+        isnull();
+        if (point == null) {
+           point = game.add.image(x, y, 'select');
+           point.scale.set(0.9);
+        }
         
         // 레인 설정에 중복값이 있을 경우 에러를 알림
         if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
@@ -428,10 +429,6 @@ function moveButtonFocus(inputKey) {
         else {
            saveMotionList();
            isnull();
-           if (point == null) {
-               point = game.add.image(x, y, 'select');
-               point.scale.set(0.9);
-            }
            depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
         }
         break;
