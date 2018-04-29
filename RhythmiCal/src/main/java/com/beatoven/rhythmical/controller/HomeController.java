@@ -54,12 +54,10 @@ public class HomeController {
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
-			
-			//신규 세이브 데이터 생성
-			//Save(String id, int life, String motionlist, int stateNum)
-			Save save = new Save(member.getId(), 5, "000", 1);
+			//신규 세이브 데이터 생성: Save(String id, int life, String motionlist, int stateNum)
+			Save save = new Save(member.getId(), 5, "000", 1); 
 			int i = sysDAO.makeSave(save);
-			System.out.println(i);
+			System.out.println("save result: " + i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,7 +84,7 @@ public class HomeController {
 		if (loginMember != null) {
 			//로그인 성공
 			session.setAttribute("loginMember", loginMember);
-			System.out.println("login success");
+			System.out.println("login success - loginMember: " + loginMember.toString());
 			return "어서와!";
 		} else {
 			//로그인 실패
