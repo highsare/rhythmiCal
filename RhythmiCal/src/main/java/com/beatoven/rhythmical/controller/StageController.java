@@ -141,6 +141,7 @@ public class StageController {
 		stageInfo.add(monsterlistA);
 		stageInfo.add(monsterlistB);
 		stageInfo.add(monsterlistC);
+		stageInfo.add(HomeController.multiList.size());
 		
 		return stageInfo;
 	}

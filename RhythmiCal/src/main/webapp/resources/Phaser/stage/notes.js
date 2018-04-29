@@ -6,7 +6,7 @@
 function createNotes() {
 	if(currentBeat >= beatStart){
 		//1~4번중 랜덤으로 번호 생성해서 userNumber에 할당
-		userNumber = game.rnd.integerInRange(1,4);
+		userNumber = game.rnd.integerInRange(1,multiNum);
 		genNote = 'note' + userNumber; //ex: note3
 		//랜덤유저 음표 생성(생성하는 위치)
 		var note = game.add.sprite(game.width/2 + 310, 730, genNote);

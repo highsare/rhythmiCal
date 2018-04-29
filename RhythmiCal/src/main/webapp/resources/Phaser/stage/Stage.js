@@ -36,6 +36,7 @@ var comboCnt = 0;
 var isComboNow = false;
 var beatZone = false;
 var beat = 0;
+var numOfBeat;
 //최대체력
 var maxLife = 10; 
 var lifeArray;
@@ -55,7 +56,8 @@ var right_isA,right_isB,right_isC;
 //멀티유저번호
 var userNumber;
 var tempNote;
-var genNote
+var genNote;
+var multiNum;
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
@@ -223,6 +225,7 @@ Stage.prototype = {
 				monsterlistA = stageInfo[2];
 				monsterlistB = stageInfo[3];
 				monsterlistC = stageInfo[4];
+				multiNum = stageInfo[5];
 			}
 		});
 	}
