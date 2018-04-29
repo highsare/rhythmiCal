@@ -11,7 +11,8 @@
 <body>
 <script>
 var game = new Phaser.Game(1600, 900, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
-var text1,text2,messange,exit,p_back;
+
+var text1,text2,messange,exit,p_back,m_back;
 var cursors;
 var point;
 var image;
@@ -46,7 +47,7 @@ var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
 				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
 				, '[좌로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'
 				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'];
-				
+  
 function preload() {
    game.world.removeAll();
    // 깊이를 1로 초기화
@@ -60,13 +61,12 @@ function preload() {
    game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
    game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
    game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
-   game.load.image('border', 'resources/Images/town/townImg/border.png'); //임시
+   game.load.image('border', 'resources/Images/town/townImg/border.png'); 
    game.load.image('textboard','resources/Images/town/townImg/textboard.png')
    game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
    game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
    game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
-   game.load.image('back','resources/Images/town/townImg/v_back.png' ); //마을 배경 이미지
-   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 흰 테두리
+   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 빨간 테두리
    game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
    game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
    game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
@@ -79,7 +79,8 @@ function preload() {
    game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
-   
+   game.load.image('mm','resources/Images/town/townImg/mm.png');
+   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
    //멀티 플레이어 표시
@@ -88,13 +89,8 @@ function preload() {
    game.load.image('player3','resources/Images/town/townImg/player3.png');
    game.load.image('player4','resources/Images/town/townImg/player4.png');
    
-   // 네모 테두리 로드
-   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
    
-   // 모션 및 효과 묶음 스프라이트 로드 (!!!)
-   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 60, 120);
-   
-	// 레인 스프라이트 로드
+   // 레인 스프라이트 로드
    game.load.spritesheet('A', 'resources/Images/town/produceRoom/A.png', 100, 100);
    game.load.spritesheet('B', 'resources/Images/town/produceRoom/B.png', 100, 100);
    game.load.spritesheet('C', 'resources/Images/town/produceRoom/C.png', 100, 100);
@@ -104,12 +100,21 @@ function preload() {
    
    // 모션 설명 배경이미지
    game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
+   
+   // 네모 테두리 로드
+   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
 }
+
 function create() {
    //마을 배경
-   bgd = game.add.image(0, 0, 'back');
+   bgd = game.add.image(0, 0, 'mm');
    bgd.alpha = 0.5;
    bgd.scale.set(1);
+   
+   //마을BGM
+   var townbgm = game.add.audio('townBGM');
+   townbgm.loopFull();
+   townbgm.play();
    
    //메뉴 이미지 지정한 좌표에 출력
    var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
@@ -134,6 +139,7 @@ function create() {
    
    playerCount();
 }
+
 /*
  * readKey(): 키보드 키를 읽어들이는 메소드
  */
@@ -141,7 +147,9 @@ function readKey() {
     $.ajax({
       url: 'requestConsole'
       ,success: function(inputKey) {
+
         console.log(inputKey);
+
          if (inputKey != "NOTHING") {
             switch (depth) {
             // 버튼을 움직이는 단계
@@ -156,7 +164,7 @@ function readKey() {
             // 모션을 움직이는 단계
             case 2:
                console.log('depth: 2'); 
-               moveContent(buttonFocus, inputKey); // 모션 및 레인 좌우 이동
+               moveContent(buttonFocus,inputKey); // 모션 및 레인 좌우 이동
                break;
             case 3:
                console.log('depth: 3');
@@ -175,6 +183,7 @@ function readKey() {
 }
  
  
+
 /*
  * Motion(int index, String name, String effect, String lane, boolean selected): Motion 객체 생성자
  */
@@ -187,7 +196,22 @@ function Motion(name, effect, lane) {
     this.getName = function() {return this.name;}
     this.getEffect = function() {return this.effect;}
     this.getLane = function() {return this.lane;}
+    // toString
+    this.toString = function() {'name: ' + this.name + '\n' + 'effect: ' + this.effect + '\n' + 'lane: ' + this.lane + '\n';}
 }
+
+/*
+ * findMotion(String motionKey): 현재 스프라이트의 객체명 motionKey를 받아, 현재 스프라이트에 맞는 모션 객체를 반환
+ */
+function findMotion(motionKey) {
+   switch (motionKey) {
+   case 'point': return motion[0]; break;
+   case 'up': return motion[1]; break;
+   case 'down': return motion[2]; break;
+   case 'left': return motion[3]; break;
+   case 'right': return motion[4]; break;
+   }
+}  
  
 /*
  * moveMenu(inputKey): 작업소/용병소/겜시작/겜종료 메뉴를 이동시키는 메소드
@@ -196,6 +220,7 @@ function moveMenu(inputKey) {
    console.log('moveMenu(inputKey) 진입');
    //화살표 이미지
    tween = game.add.tween(point);
+
    //키보드 별 분기처리
    switch (inputKey) {
    case 'up':
@@ -240,6 +265,7 @@ function moveMenu(inputKey) {
       break;
    }
 }
+
 /*
  * logoutMember(): 게임 종료 시 AJAX를 통해 서버의 세션을 무효화하는 메소드
  */
@@ -260,11 +286,14 @@ function createStudio() {
    m_back.alpha = 0.8;
    image = game.add.image(810, 120, 'worksplace');
    border = game.add.image(805, 120, 'border');
+
    // 버튼 포커스를 1로 초기화
    buttonFocus = 1;
+  
    // 싱글레인 및 더블레인 배열 초기화
    singleLane = ['A', 'B', 'C'];
    doubleLane = ['AB', 'BC', 'CA'];
+  
    // 중상하좌우 모션 객체 생성 후 모션 배열에 저장
    var Point = new Motion('point', 'fire', singleLane);
    var Up = new Motion('up', 'water', singleLane);
@@ -280,7 +309,7 @@ function createStudio() {
   	
   	// 모션 설명창 추가
   	descBackground = game.add.image(1140, 508, 'descBackground'); descBackground.smoothed = false; descBackground.scale.set(3.6);
-   
+  
    // AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
    $.ajax({
       url: 'readMotionList'
@@ -350,6 +379,7 @@ function moveSquare(direction) {
    game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);
    square.bringToTop();
 }
+
 /*
  * moveButtonFocus(): 버튼을 상하좌우 이동시키는 메소드. (depth 1에서 출발)
  */
@@ -385,6 +415,11 @@ function moveButtonFocus(inputKey) {
             break;
       case 'esc': 
         isEntered = false;
+        isnull();
+        if (point == null) {
+           point = game.add.image(x, y, 'select');
+           point.scale.set(0.9);
+        }
         
         // 레인 설정에 중복값이 있을 경우 에러를 알림
         if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
@@ -395,15 +430,12 @@ function moveButtonFocus(inputKey) {
         else {
            saveMotionList();
            isnull();
-           if (point == null) {
-               point = game.add.image(x, y, 'select');
-               point.scale.set(0.9);
-           }
            depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
         }
         break;
    }
 }
+
 /*
  * saveMotionList(): 작업소를 나갈 때 현재의 모션 값을 디비에 저장
  */
@@ -642,6 +674,7 @@ function moveContent(buttonFocus, inputKey) {
          } break;
 	}
 }
+
 /*
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
@@ -653,6 +686,7 @@ function createMercenary(inputKey) {
    // 난수 발급
    var rdm = Math.floor(Math.random() * 9999) + 1000;
    board = game.add.image(810, 520, 'board');
+
    $.ajax({
       url: 'sendRdm'
       ,type: 'post'
@@ -670,6 +704,7 @@ function createMercenary(inputKey) {
       }
       ,error: function() {alert('createMercenary - sendRdm error');}
    });
+
    // 난수를 보여줄 텍스트
    text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
    
@@ -678,6 +713,7 @@ function createMercenary(inputKey) {
    messange = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
    
 }
+
 var cnt = 0;
 function update() {
    // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.)
@@ -690,6 +726,7 @@ function update() {
       multiconnection();      
    }
 }
+
 function multiconnection() {
     $.ajax({
       url: 'multiconnection'
@@ -717,6 +754,7 @@ function multiconnection() {
       ,error: function() {alert('update() - multiconnection error');}
    });
 }
+
 function myroom() {
    console.log('myroom 진입');
    m_back = game.add.image(750,75,'menu_sub_back');
@@ -734,6 +772,7 @@ function myroom() {
    // 깊이를 3으로 변경 > update에서 depth에 따른 case문을 통해 goHome(inputKey)를 호출 
    /* depth = 3; */
 }
+
 function goHome(inputKey) {
    if (inputKey == 'esc') {
 	   depth = 0; isnull(); 
@@ -771,6 +810,7 @@ function frontoftown() {
     e_select.scale.set(0.8);
     depth = 4;
 }
+
 function gamestart(inputKey) {
 	if (inputKey == 'esc') {
 		depth = 0; isnull(); 
@@ -818,9 +858,6 @@ function playerCount() {
 	   });
 }
 
-/*
- * isnull(): 개체를 destroy()하는 함수
- */
 function isnull() {
 	if (text1 != null) {text1.destroy();}
 	if (image != null) {image.destroy();}
@@ -844,6 +881,8 @@ function isnull() {
 	if (descBackground != null) {descBackground.destroy();}
 	if (descText != null) {descText.destroy();}
 }
+
+
 </script>
 </body>
 </html>
