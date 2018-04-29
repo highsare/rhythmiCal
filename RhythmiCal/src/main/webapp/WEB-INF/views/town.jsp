@@ -11,7 +11,6 @@
 <body>
 <script>
 var game = new Phaser.Game(1600, 900, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
-
 var text1,text2,messange,exit,p_back,m_back;
 var cursors;
 var point;
@@ -26,6 +25,7 @@ var key1;
 var bgd;
 var textboard, start;
 var neon,board;
+var rdm;
 var e_select,sprite;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
@@ -742,36 +742,34 @@ function createMercenary(inputKey) {
 	m_back.alpha = 0.8;
 	image = game.add.image(810, 120, 'pub');
 	border = game.add.image(805, 120, 'border');
-   // 난수 발급
-   var rdm = Math.floor(Math.random() * 9999) + 1000;
-   board = game.add.image(810, 520, 'board');
-
-   $.ajax({
-      url: 'sendRdm'
-      ,type: 'post'
-      ,data: {
-         rdm: rdm
-      }
-      ,dataType: 'json'
-      ,success: function(result) {
-         console.dir(result);
-         /* if (result == "true"){
-            consle.log('성공');
-         } else {
-            text1 = game.add.bitmapText(1060, 600,'neo_font' ,'더이상 추가 불가', 60);
-         } */
-      }
-      ,error: function() {alert('createMercenary - sendRdm error');}
-   });
+	
+	board = game.add.image(810, 520, 'board');
+	sendRdm();
+	
+	neon = game.add.image(795, 440, 'neon');
+	neon.scale.set(2);
+	messange = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
+}
+ 
+function sendRdm() {
+ // 난수 발급
+	rdm = Math.floor(Math.random() * 9999) + 1000;
+	 
+	$.ajax({
+	     url: 'sendRdm'
+	     ,type: 'post'
+	     ,data: {
+	        rdm: rdm
+	     }
+	     ,dataType: 'json'
+	     ,success: function(result) {
+	        console.dir(result);
+	     }
+	     ,error: function() {alert('createMercenary - sendRdm error');}
+	  });
 
    // 난수를 보여줄 텍스트
-   text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
-   
-   
-   neon = game.add.image(795, 440, 'neon');
-   neon.scale.set(2);
-   messange = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
-   
+	text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
 }
 
 var cnt = 0;
@@ -783,7 +781,7 @@ function update() {
    }
    if (cnt % 12 == 0) {
       cnt = 0;
-      multiconnection();      
+      multiconnection(); 
    }
 }
 
@@ -795,16 +793,34 @@ function multiconnection() {
          if (result != null) {
             switch (result.length) {
             case 2:
-               var player2 = game.add.image(330, 765, 'player2');
-               player2.scale.set(0.4);
+            	if (player2 == null) {
+            		player2 = game.add.image(330, 765, 'player2');
+                    player2.scale.set(0.4);
+                    if (text1 != null) {
+						text1.kill(); text1 = null;
+					}
+                    sendRdm();
+				}
                break;
             case 3:
-               var player3 = game.add.image(480, 765, 'player3');
-               player3.scale.set(0.4);
+            	if (player3 == null) {
+            		player3 = game.add.image(480, 765, 'player3');
+                    player3.scale.set(0.4);
+                    if (text1 != null) {
+						text1.kill(); text1 = null;
+					}
+                    sendRdm();
+				}
                break;
             case 4:
-               var player4 = game.add.image(630, 765, 'player4');
-               player4.scale.set(0.4);
+            	if (player4 == null) {
+            		player4 = game.add.image(630, 765, 'player4');
+                    player4.scale.set(0.4);
+                    if (text1 != null) {
+						text1.kill(); text1 = null;
+					}
+                    sendRdm();
+				}
                break;
             default:
                break;
@@ -843,21 +859,20 @@ function goHome(inputKey) {
        door_close.play();
 	}
    else if (inputKey == 'enter') {
-	  exit.kill(); exit = null;
-	  e_select.kill(); e_select = null;
-	  exit = game.add.image(920,580,'exit_push');
-	  exit.scale.set(0.8);	
-      // 게임 종료. 검정 화면 준비.   
-      sprite = game.add.sprite(0, 0, 'finish');
-      // 원래 사이즈 보다 확대 하고 alph로 투명도 조절.moveButtonFocus
-      sprite.scale.set(5);
-       sprite.anchor.setTo(0.5, 0.5);
-       sprite.alpha = 0;
-      
-       //화면에서 검정화면으로 조정.
-      game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
-   
-      logoutMember();
+	   exit.kill(); exit = null;
+	   e_select.kill(); e_select = null;
+	   exit = game.add.image(920,580,'exit_push');
+	   exit.scale.set(0.8);	
+	   // 게임 종료. 검정 화면 준비.   
+	   sprite = game.add.sprite(0, 0, 'finish');
+	   // 원래 사이즈 보다 확대 하고 alph로 투명도 조절.moveButtonFocus
+	   sprite.scale.set(5);
+	   sprite.anchor.setTo(0.5, 0.5);
+	   sprite.alpha = 0;
+	   //화면에서 검정화면으로 조정.
+	   game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+	   
+	   logoutMember();
    }
 }
 function frontoftown() {
@@ -883,13 +898,14 @@ function gamestart(inputKey) {
         btnSound.play();
         var door_close = game.add.audio('door_close');
         door_close.play();
+        
 	}
 	   else if (inputKey == 'enter') {
-		 start.kill(); start = null;
-		 e_select.kill(); e_select = null;
-		 var startpush = game.add.image(970, 595,'start_push'); 
-		 startpush.scale.set(0.89);
-		 alert('Next Stroy Or Game Start');
+		start.kill(); start = null;
+		e_select.kill(); e_select = null;
+		var startpush = game.add.image(970, 595,'start_push'); 
+		startpush.scale.set(0.89);
+		alert('Next Stroy Or Game Start');
 	   }
 }
 function playerCount() {

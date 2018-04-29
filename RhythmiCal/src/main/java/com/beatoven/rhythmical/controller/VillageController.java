@@ -23,6 +23,7 @@ public class VillageController {
 	VillageDAO villageDAO;
 	int cnt = 2;
 	int rdmnum;
+	boolean isCorrect = false;
 	
 	public ArrayList<String> mList = HomeController.multiList;
 	
