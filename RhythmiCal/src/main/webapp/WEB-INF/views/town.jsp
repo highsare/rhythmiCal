@@ -11,7 +11,6 @@
 <body>
 <script>
 var game = new Phaser.Game(1600, 900, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
-
 var text1,text2,messange,exit,p_back,m_back;
 var cursors;
 var point;
