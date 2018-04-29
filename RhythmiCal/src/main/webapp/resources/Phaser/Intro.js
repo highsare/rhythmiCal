@@ -36,43 +36,43 @@ Intro.prototype = {
 	preload:function() {
 		alert(contentNum+" Intro");
 		//배경음악
-		game.load.audio('intro_music',"resources/introsrc/intromusic.mp3");
+		game.load.audio('intro_music',"resources/Audios/bgm/others/intromusic.mp3");
 
 		// intro_src_로드
 		//1번째장면
 		game.load.image("intro_1_mountain",
-				"resources/introsrc/intro_1_mountain.png", 1600, 900);
+				"resources/Images/intro/intro_1_mountain.png", 1600, 900);
 		game.load.image("intro_1_village",
-				"resources/introsrc/intro_1_village.png", 1600, 900);
+				"resources/Images/intro/intro_1_village.png", 1600, 900);
 		game.load.image("intro_1_tree",
-				"resources/introsrc/intro_1_tree.png", 1600, 900);
+				"resources/Images/intro/intro_1_tree.png", 1600, 900);
 		game.load.spritesheet("intro_1_flyingbird",
-				"resources/introsrc/intro_1_flyingbird_32x32.png", 32, 32,
+				"resources/Images/intro/intro_1_flyingbird_32x32.png", 32, 32,
 				2);
 		//두번째장면
 		game.load.spritesheet("intro_2_back",
-				"resources/introsrc/intro_2_back.png", 1600, 900,2);
+				"resources/Images/intro/intro_2_back.png", 1600, 900,2);
 		game.load.image("intro_2_mawang",
-				"resources/introsrc/intro_2_mawang.png", 1600, 900);
+				"resources/Images/intro/intro_2_mawang.png", 1600, 900);
 		game.load.spritesheet("intro_2_dancing01",
-				"resources/introsrc/intro_2_dancing01_60x60.png", 60, 60,12);
+				"resources/Images/intro/intro_2_dancing01_60x60.png", 60, 60,12);
 		game.load.spritesheet("intro_2_dancing02",
-				"resources/introsrc/intro_2_dancing02_60x60.png", 60, 60,9);
+				"resources/Images/intro/intro_2_dancing02_60x60.png", 60, 60,9);
 		game.load.spritesheet("intro_2_dancing03",
-				"resources/introsrc/intro_2_dancing03_60x60.png", 60, 60,11);
+				"resources/Images/intro/intro_2_dancing03_60x60.png", 60, 60,11);
 		game.load.spritesheet("intro_2_dancing04",
-				"resources/introsrc/intro_2_dancing04_60x60.png", 60, 60,6);
+				"resources/Images/intro/intro_2_dancing04_60x60.png", 60, 60,6);
 
 		//세번째장면
-		game.load.spritesheet("intro_3_back","resources/introsrc/intro_3_back.png",1600,900,2);
+		game.load.spritesheet("intro_3_back","resources/Images/intro/intro_3_back.png",1600,900,2);
 		game.load.spritesheet("intro_3_mawang",
-				"resources/introsrc/intro_3_mawang.png", 1600, 900,8);
-		game.load.image("intro_3_village","resources/introsrc/intro_3_village.png",1600,900);
+				"resources/Images/intro/intro_3_mawang.png", 1600, 900,8);
+		game.load.image("intro_3_village","resources/Images/intro/intro_3_village.png",1600,900);
 		
 		//네번쨰장면
-		game.load.image("intro_4_village","resources/introsrc/intro_4_village.png",1600,900);
-		game.load.spritesheet("intro_4_beatoven","resources/introsrc/intro_4_beatoven.png",1600,900);
-		game.load.image("intro_4_mawang","resources/introsrc/intro_4_mawang.png",1600,900);
+		game.load.image("intro_4_village","resources/Images/intro/intro_4_village.png",1600,900);
+		game.load.spritesheet("intro_4_beatoven","resources/Images/intro/intro_4_beatoven.png",1600,900);
+		game.load.image("intro_4_mawang","resources/Images/intro/intro_4_mawang.png",1600,900);
 		
 		//비트맵형 글자폰트 로드
 		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png',
