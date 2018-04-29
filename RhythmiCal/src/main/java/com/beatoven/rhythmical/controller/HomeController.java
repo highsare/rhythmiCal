@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.beatoven.rhythmical.dao.HomeDAO;
+import com.beatoven.rhythmical.dao.SystemDAO;
 import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Member;
+import com.beatoven.rhythmical.vo.Save;
 
 @Controller
 public class HomeController {
@@ -25,6 +27,8 @@ public class HomeController {
 	
 	@Inject
 	HomeDAO homeDAO;
+	@Inject
+	SystemDAO sysDAO;
 	
 	String consoleBox = "";
 	boolean isUsed = false;
@@ -50,6 +54,12 @@ public class HomeController {
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
+			
+			//신규 세이브 데이터 생성
+			//Save(String id, int life, String motionlist, int stateNum)
+			Save save = new Save(member.getId(), 5, "000", 1);
+			int i = sysDAO.makeSave(save);
+			System.out.println(i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -179,7 +189,7 @@ public class HomeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
+	@RequestMapping(value = "sendConsole")
 	public String receiveConsole(String request, String order, HttpSession session) {
 		consoleBox = order;
 		session.setAttribute("order", consoleBox);

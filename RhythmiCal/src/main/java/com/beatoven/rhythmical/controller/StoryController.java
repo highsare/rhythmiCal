@@ -20,6 +20,7 @@ public class StoryController {
 
 	@Inject
 	StoryDAO storyDao;
+	
 	//대사 보내기 테스트
 	@ResponseBody
 	@RequestMapping(value = "loadStoryContents", method = RequestMethod.POST)

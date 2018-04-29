@@ -78,7 +78,7 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/55bpm_Mirror_Mirror.mp3');	
+		game.load.audio('stageBGM','resources/Audios/bgm/stage/55bpm_Mirror_Mirror.mp3');	
 		//몬스터 로드
 		game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
 		game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
@@ -87,10 +87,6 @@ Stage.prototype = {
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
-		//숫자(0~9) 스프라이트
-		for (var i = 0; i < 10; i++) {
-			game.load.spritesheet('number'+i, 'resources/Images/numbers/number_'+i+'.png', 32, 32, 20);
-		}
 		//생명력 이미지
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트
@@ -114,14 +110,19 @@ Stage.prototype = {
 		//체력바 관련 로드
 		game.load.spritesheet('healthFill', 'resources/Images/others/healthFill.png', 32, 32, 1);
 		game.load.spritesheet('healthBlank', 'resources/Images/others/healthBlank.png', 32, 32, 1);
+		//숫자(0~9) 스프라이트
+		for (var i = 0; i < 10; i++) {
+			game.load.spritesheet('number'+i, 'resources/Images/numbers/number_'+i+'.png', 32, 32, 20);
+		}
 		//클리어 및 실패 , 페이드아웃 이미지
 		game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
 		game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
-		//DB에서 받아 온 데이터의 생성
-		stageBGM = game.add.audio('stageBGM');
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
+		
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / 55;
 		beatStart = 0;
@@ -198,6 +199,9 @@ Stage.prototype = {
 	//나중에 이곳으로 모은다.
 	loopFunction: function(){
 		//add 1 currentBeat
+		if (currentBeat == 0) {
+			stageBGM.play();
+		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -222,5 +226,14 @@ Stage.prototype = {
 				monsterlistC = stageInfo[4];
 			}
 		});
+	}
+}
+
+function gofull() {
+	if (game.scale.isFullScreen) {
+		game.scale.stopFullScreen();
+	}
+	else {
+		game.scale.startFullScreen(false);
 	}
 }

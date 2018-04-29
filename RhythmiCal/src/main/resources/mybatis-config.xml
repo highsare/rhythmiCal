@@ -8,26 +8,7 @@
 		<typeAlias type="com.beatoven.rhythmical.vo.FamePost" alias="famePost" />
 		<typeAlias type="com.beatoven.rhythmical.vo.Save" alias="save" />
 		<typeAlias alias="monster" type="com.beatoven.rhythmical.vo.Monster"/>
-			<typeAlias alias="stage" type="com.beatoven.rhythmical.vo.Stage"/>
-			<typeAlias alias="story" type="com.beatoven.rhythmical.vo.Story"/>
+		<typeAlias alias="stage" type="com.beatoven.rhythmical.vo.Stage"/>
+		<typeAlias alias="story" type="com.beatoven.rhythmical.vo.Story"/>
 	</typeAliases>
-	
-	<!-- <mappers>
-		<mapper class="com.beatoven.rhythmical.interfaces.HomeInterface"/>
-		<mapper class="com.beatoven.rhythmical.interfaces.IntroInterface"/>
-		<mapper class="com.beatoven.rhythmical.interfaces.StageInterface"/>
-		<mapper class="com.beatoven.rhythmical.interfaces.StoryInterface"/>
-		<mapper class="com.beatoven.rhythmical.interfaces.SystemInterface"/>
-		<mapper class="com.beatoven.rhythmical.interfaces.TutorialInterface"/>
-		<mapper class="com.beatoven.rhythmical.interfaces.VillageInterface"/>
-	</mappers> -->
-	
-	<!-- <mappers>
-		<mapper resource="src/main/resources/mappers/homeMapper.xml" />
-		<mapper resource="mappers/introMapper.xml" />
-		<mapper resource="mappers/stageMapper.xml" />
-		<mapper resource="mappers/storyMapper.xml" />
-		<mapper resource="mappers/tutorialMapper.xml" />
-		<mapper resource="mappers/villageMapper.xml" />
-	</mappers> -->
 </configuration>
