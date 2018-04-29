@@ -50,6 +50,15 @@ public class HomeController {
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
+<<<<<<< HEAD
+=======
+			
+			//신규 세이브 데이터 생성
+			//Save(String id, int life, String motionlist, int stateNum)
+			Save save = new Save(member.getId(), 5, "000", 1);
+			int i = sysDAO.makeSave(save);
+			System.out.println(i);
+>>>>>>> parent of 881ca23... Merge pull request #16 from highsare/minahKim
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -12,7 +12,11 @@ public class Save {
 	
 	
 	// constructor
+<<<<<<< HEAD
 	public Save(String id, int life, String motionlist, String state, int stagenum, int storynum) {
+=======
+	public Save(String id, int life, String motionlist, int stateNum) {
+>>>>>>> parent of 881ca23... Merge pull request #16 from highsare/minahKim
 		super();
 		this.id = id;
 		this.life = life;

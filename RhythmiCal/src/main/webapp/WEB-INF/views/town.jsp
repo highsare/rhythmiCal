@@ -71,7 +71,8 @@ function preload() {
    game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
-   
+   game.load.image('mm','resources/Images/town/townImg/mm.png');
+   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
    //멀티 플레이어 표시
@@ -451,7 +452,8 @@ function saveMotionList() {
 }
  
 /*
- * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
+ * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발)
+ 철저한 들여쓰기를 생활화합시다..!
  */
 function moveContent(buttonFocus,inputKey) {
   console.log('moveContent() 진입');
@@ -679,9 +681,9 @@ function moveContent(buttonFocus,inputKey) {
                //이 레인으로 선택했다는 효과 주기
                break;
             case 'esc': depth = 1; break;
-            default: break;
-         } break;
-	}
+			default: break;
+		} break;
+	}	
 }
 
 /*
@@ -846,6 +848,10 @@ function isnull() {
 	if (text1 != null) {text1.kill(); text1 = null;}
 	if (image != null) {image.kill(); image = null;}
 	if (m_back== null) {m_back = game.add.image(750,75,'menu_sub_back');}
+	if (m_back != null) {m_back.kill(); m_back = null;}
+	if (border != null) {border.kill(); border = null;}
+	if (textboard != null) {textboard.kill(); textboard = null;}
+	if (start != null) {start.kill(); start = null;}
 	if (neon != null) {neon.kill(); neon = null;}
 	if (board != null) {board.kill(); board = null;}
 	if (messange != null) {messange.kill(); messange = null;}
