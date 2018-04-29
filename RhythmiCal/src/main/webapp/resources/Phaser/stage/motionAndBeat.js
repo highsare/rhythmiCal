@@ -149,12 +149,13 @@ function timingCheck(timing){
  * int fps: 초당 호출할 프레임 수
  * boolean loop: 반복여부
  */
-function popupImage(x, y, imageName, fps, loop) {
+function popupImage(x, y, imageName, fps, loop,scale) {
 	console.log('popupImage');
 
 	popUpImage = game.add.sprite(x, y, imageName);
 	popUpImage.animations.add('popup');
 	popUpImage.animations.play('popup', fps, loop);
+	popUpImage.scale.set(scale);
 }
 
 /*
@@ -181,18 +182,18 @@ function popupCombo(combo) {
 		var popup;
 		//한 자리일때
 		if (isNaN(firstNum) == false && isNaN(secondNum) == true && isNaN(thirdNum) == true) {
-			popupImage(512, 400, 'number' + firstNum, 30, false);
+			popupImage(game.world.centerX, 400, 'number' + firstNum, 30, false,3);
 		}
 		//두 자리일때
 		else if (isNaN(firstNum) == false && isNaN(secondNum) == false && isNaN(thirdNum) == true) {
-			popupImage(502, 400, 'number' + firstNum, 30, false);
-			popupImage(522, 400, 'number' + secondNum, 30, false);
+			popupImage(game.world.centerX - 30, 400, 'number' + firstNum, 30, false,3);
+			popupImage(game.world.centerX + 30, 400, 'number' + secondNum, 30, false,3);
 		}
 		//세 자리일때
 		else if (isNaN(firstNum) == false && isNaN(secondNum) == false && isNaN(thirdNum) == false) {
-			popupImage(492, 400, 'number' + firstNum, 30, false);
-			popupImage(512, 400, 'number' + secondNum, 30, false);
-			popupImage(532, 400, 'number' + thridNum, 30, false);
+			popupImage(game.world.centerX - 60, 400, 'number' + firstNum, 30, false,3);
+			popupImage(game.world.centerX, 400, 'number' + secondNum, 30, false,3);
+			popupImage(game.world.centerX + 60, 400, 'number' + thridNum, 30, false,3);
 		}
 		
 	    //콤보 효과음 실행

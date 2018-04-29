@@ -148,9 +148,7 @@ function readKey() {
     $.ajax({
       url: 'requestConsole'
       ,success: function(inputKey) {
-
         console.log(inputKey);
-
          if (inputKey != "NOTHING") {
             switch (depth) {
             // 버튼을 움직이는 단계
