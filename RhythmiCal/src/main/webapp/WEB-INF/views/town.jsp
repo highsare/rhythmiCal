@@ -463,237 +463,238 @@ function saveMotionList() {
 }
  
 /*
- * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
+ * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발)
+ 철저한 들여쓰기를 생활화합시다..!
  */
 function moveContent(buttonFocus,inputKey) {
-  console.log('moveContent() 진입');
-	switch(buttonFocus) {
-         // 모션 1 변경
-      case 1: 
-         switch (inputKey) {
-            case 'left':
-               if(turn1 == 0) return;
-               temp = turn1;
-            turn1--;
-               minusAgain1:
-               while (motion[turn1].getName() == motion2.key || motion[turn1].getName() == motion3.key) {
-                  if(turn1 != 0) {
-                     turn1--;
+	 console.log('moveContent() 진입');
+	 switch(buttonFocus) {
+	 //모션 1 변경
+	 case 1:
+		 switch (inputKey) {
+		 case 'left':
+			 if(turn1 == 0) return;
+			 temp = turn1;
+			 turn1--;
+			 minusAgain1:
+			 while (motion[turn1].getName() == motion2.key || motion[turn1].getName() == motion3.key) {
+				 if(turn1 != 0) {
+					 turn1--;
                      continue minusAgain1;
-                  } else {
-                     turn1 = temp;
-                     return;
-                  }
-               }
-            motion1.destroy();
-            effect1.destroy();
-            lane1.destroy();
-               motion1 = game.add.sprite(buttonX, buttonY, motion[turn1].getName());
-            effect1 = game.add.sprite(buttonX, buttonY+100, motion[turn1].getEffect());
-            lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
-            square.bringToTop();
-               break;
-            case 'right':
-               if(turn1 == 4) return;
-               temp = turn1;
-            turn1++;
-               plusAgain1:
-               while (motion[turn1].getName() == motion2.key || motion[turn1].getName() == motion3.key) {
-                  if(turn1 != 4) {
-                     turn1++;
+                 }else {
+                	 turn1 = temp;
+                	 return;
+               	 }
+			 }
+			 motion1.destroy();
+			 effect1.destroy();
+			 lane1.destroy();
+			 motion1 = game.add.sprite(buttonX, buttonY, motion[turn1].getName());
+			 effect1 = game.add.sprite(buttonX, buttonY+100, motion[turn1].getEffect());
+			 lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
+			 square.bringToTop();
+			 	break;
+		 case 'right':
+			 if(turn1 == 4) return;
+			 temp = turn1;
+			 turn1++;
+			 plusAgain1:
+			 while (motion[turn1].getName() == motion2.key || motion[turn1].getName() == motion3.key) {
+				 if(turn1 != 4) {
+					 turn1++;
                      continue plusAgain1;
-                  } else {
-                     turn1 = temp;
+                 } else {
+                	 turn1 = temp;
                      return;
-                  }
-               }
-            motion1.destroy();
-            effect1.destroy();
-            lane1.destroy();
-               motion1 = game.add.sprite(buttonX, buttonY, motion[turn1].getName());
-            effect1 = game.add.sprite(buttonX, buttonY+100, motion[turn1].getEffect());
-            lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
-            square.bringToTop();
-               break;
-            case 'enter': 
-               //이 모션으로 선택했다는 효과 주기
-               break;
-            case 'esc': depth = 1; break;
-            default: break;
-         } break;
-      // 모션 2 변경
-      case 2: 
-         switch (inputKey) {
-            case 'left':
-            if(turn2 == 0) return;
-               temp = turn2;
-            turn2--;
-               minusAgain2:
-               while (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
-                  if(turn2 != 0) {
-                     turn2--;
-                     continue minusAgain2;
-                  } else {
-                     turn2 = temp;
-                     return;
-                  }
-               }
-            motion2.destroy();
+                 }
+             }
+			 motion1.destroy();
+			 effect1.destroy();
+			 lane1.destroy();
+			 motion1 = game.add.sprite(buttonX, buttonY, motion[turn1].getName());
+			 effect1 = game.add.sprite(buttonX, buttonY+100, motion[turn1].getEffect());
+			 lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
+			 square.bringToTop();
+			 	break;
+	 	case 'enter':
+	 		//이 모션으로 선택했다는 효과 주기
+	 		break;
+ 		case 'esc': depth = 1; break;
+ 			default: break;
+		}break;
+	//모션 2 변경
+	case 2:
+		switch (inputKey) {
+		case 'left':
+			if(turn2 == 0) return;
+			temp = turn2;
+			turn2--;
+			minusAgain2:
+			while (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
+				if(turn2 != 0) {
+					turn2--;
+					continue minusAgain2;
+				} else {
+					turn2 = temp;
+					return;
+				}
+			}
+			motion2.destroy();
+			effect2.destroy();
+			lane2.destroy();
+			motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
+			effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
+			lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
+			square.bringToTop();
+				break;
+		case 'right':
+			if(turn2 == 4) return;
+			temp = turn2;
+			turn2++;
+			plusAgain2:
+			while (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
+				if(turn2 != 4) {
+					turn2++;
+					continue plusAgain2;
+				} else {
+					turn2 = temp;
+					return;
+				}
+			}
+			motion2.destroy();
             effect2.destroy();
             lane2.destroy();
-               motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
+            motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
             effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
             lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
             square.bringToTop();
-               break;
-            case 'right': 
-             if(turn2 == 4) return;
-              temp = turn2;
-            turn2++;
-               plusAgain2:
-               while (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
-                  if(turn2 != 4) {
-                     turn2++;
-                     continue plusAgain2;
-                  } else {
-                     turn2 = temp;
-                     return;
-                  }
-               }
-            motion2.destroy();
-            effect2.destroy();
-            lane2.destroy();
-               motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
-            effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
-            lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
-            square.bringToTop();
-               break;
-            case 'enter':
-               //이 모션으로 선택
-               break;
-            case 'esc': depth = 1; break;
+            	break;
+       	case 'enter':
+       		//이 모션으로 선택
+       		break;
+     	case 'esc': depth = 1; break;
             default: break;
-         } break;
-      // 모션 3 변경
-      case 3: 
-         switch (inputKey) {
-            case 'left':
-               if(turn3 == 0) return;
-                  temp = turn3;
-               turn3--;
-                  minusAgain3:
-                  while (motion[turn3].getName() == motion1.key || motion[turn3].getName() == motion2.key) {
-                     if(turn3 != 0) {
-                        turn3--;
-                        continue minusAgain3;
-                     } else {
-                        turn3 = temp;
-                        return;
-                     }
-                  }
-               motion3.destroy();
-               effect3.destroy();
-               lane3.destroy();
-                  motion3 = game.add.sprite(buttonX+200, buttonY, motion[turn3].getName());
-               effect3 = game.add.sprite(buttonX+200, buttonY+100, motion[turn3].getEffect());
-               lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
-               square.bringToTop();
-                  break;
-            case 'right':
-               if(turn3 == 4) return;
-                  temp = turn3;
-               turn3++;
-                  plusAgain3:
-                  while (motion[turn3].getName() == motion1.key || motion[turn3].getName() == motion2.key) {
-                     if(turn3 != 4) {
-                        turn3++;
-                        continue plusAgain3;
-                     } else {
-                        turn3 = temp;
-                        return;
-                     }
-                  }
-               motion3.destroy();
-               effect3.destroy();
-               lane3.destroy();
-                  motion3 = game.add.sprite(buttonX+200, buttonY, motion[turn3].getName());
-               effect3 = game.add.sprite(buttonX+200, buttonY+100, motion[turn3].getEffect());
-               lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
-               square.bringToTop();
-                  break;
-            case 'enter':
-               //이 모션으로 선택했다는 효과 주기
-               break;
-            case 'esc': depth = 1; break;
+		} break;
+	//모션 3 변경
+	case 3:
+		switch (inputKey) {
+		case 'left':
+			if(turn3 == 0) return;
+			temp = turn3;
+			turn3--;
+			minusAgain3:
+			while (motion[turn3].getName() == motion1.key || motion[turn3].getName() == motion2.key) {
+				if(turn3 != 0) {
+					turn3--;
+					continue minusAgain3;
+				} else {
+					turn3 = temp;
+					return;
+				}
+			}
+			motion3.destroy();
+			effect3.destroy();
+			lane3.destroy();
+			motion3 = game.add.sprite(buttonX+200, buttonY, motion[turn3].getName());
+			effect3 = game.add.sprite(buttonX+200, buttonY+100, motion[turn3].getEffect());
+			lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
+			square.bringToTop();
+				break;
+		case 'right':
+			if(turn3 == 4) return;
+			temp = turn3;
+			turn3++;
+			plusAgain3:
+			while (motion[turn3].getName() == motion1.key || motion[turn3].getName() == motion2.key) {
+				if(turn3 != 4) {
+					turn3++;
+					continue plusAgain3;
+				} else {
+					turn3 = temp;
+					return;
+				}
+			}
+			motion3.destroy();
+			effect3.destroy();
+			lane3.destroy();
+			motion3 = game.add.sprite(buttonX+200, buttonY, motion[turn3].getName());
+			effect3 = game.add.sprite(buttonX+200, buttonY+100, motion[turn3].getEffect());
+			lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
+			square.bringToTop();
+				break;
+		case 'enter':
+			//이 모션으로 선택했다는 효과 주기
+			break;
+		case 'esc': depth = 1; break;
             default: break;
-         } break;
-      // 레인 1 변경
-      case 4: 
-         var Motion = findMotion(motion1.key);
-         switch (inputKey) {
-            case 'left':
-               if (turn4 <= 0) {turn4 = 0; return;} turn4 = turn4-1;
-               lane1.destroy();
-               lane1 = game.add.sprite(buttonX, buttonY+200, Motion.getLane()[turn4]);
-               square.bringToTop();
-               break;
-            case 'right': 
-               if (turn4 >= 2) {turn4 = 2; return;} turn4 = turn4+1;
-               lane1.destroy();
-               lane1 = game.add.sprite(buttonX, buttonY+200, Motion.getLane()[turn4]);
-               square.bringToTop();
-               break;
-            case 'enter': 
-                   //이 레인으로 선택했다는 효과 주기
-               break;
-            case 'esc': depth = 1; break;
-            default: break;
-         } break;         
-      // 레인 2 변경
-      case 5:
-         var Motion = findMotion(motion2.key);
-         switch (inputKey) {
-            case 'left': 
-               if (turn5 <= 0) {turn5 = 0; return;} turn5 = turn5-1;
-               lane2.destroy();
-               lane2 = game.add.sprite(buttonX+100, buttonY+200, Motion.getLane()[turn5]);
-               square.bringToTop();
-               break;
-            case 'right':
-               if (turn5 >= 2) {turn5 = 2; return;} turn5 = turn5+1;
-               lane2.destroy();
-               lane2 = game.add.sprite(buttonX+100, buttonY+200, Motion.getLane()[turn5]);
-               square.bringToTop();
-               break;
-            case 'enter': 
-                   //이 레인으로 선택했다는 효과 주기
-               break;
-            case 'esc': depth = 1; break;
-            default: break;
-         }
-      // 레인 3 변경
-      case 6: 
-         var Motion = findMotion(motion3.key);
-         switch (inputKey) {
-            case 'left': 
-               if (turn6 <= 0) {turn6 = 0; return;} turn6 = turn6-1;
-               lane3.destroy();
-               lane3 = game.add.sprite(buttonX+200, buttonY+200, Motion.getLane()[turn6]);
-               square.bringToTop();
-               break;
-            case 'right': 
-               if (turn6 >= 2) {turn6 = 2; return;} turn6 = turn6+1;
-               lane3.destroy();
-               lane3 = game.add.sprite(buttonX+200, buttonY+200, Motion.getLane()[turn6]);
-               square.bringToTop();
-               break;
-            case 'enter':
-               //이 레인으로 선택했다는 효과 주기
-               break;
-            case 'esc': depth = 1; break;
-            default: break;
-         } break;
-	}
+		} break;
+	//레인 1 변경
+	case 4:
+		var Motion = findMotion(motion1.key);
+		switch (inputKey) {
+		case 'left':
+			if (turn4 <= 0) {turn4 = 0; return;} turn4 = turn4-1;
+			lane1.destroy();
+			lane1 = game.add.sprite(buttonX, buttonY+200, Motion.getLane()[turn4]);
+			square.bringToTop();
+				break;
+		case 'right':
+			if (turn4 >= 2) {turn4 = 2; return;} turn4 = turn4+1;
+			lane1.destroy();
+			lane1 = game.add.sprite(buttonX, buttonY+200, Motion.getLane()[turn4]);
+			square.bringToTop();
+				break;
+		case 'enter':
+			//이 레인으로 선택했다는 효과 주기
+			break;
+		case 'esc': depth = 1; break;
+			default: break;
+		} break;
+	// 레인 2 변경
+	case 5:
+		var Motion = findMotion(motion2.key);
+		switch (inputKey) {
+		case 'left':
+			if (turn5 <= 0) {turn5 = 0; return;} turn5 = turn5-1;
+			lane2.destroy();
+			lane2 = game.add.sprite(buttonX+100, buttonY+200, Motion.getLane()[turn5]);
+			square.bringToTop();
+				break;
+		case 'right':
+			if (turn5 >= 2) {turn5 = 2; return;} turn5 = turn5+1;
+			lane2.destroy();
+			lane2 = game.add.sprite(buttonX+100, buttonY+200, Motion.getLane()[turn5]);
+			square.bringToTop();
+				break;
+		case 'enter':
+			//이 레인으로 선택했다는 효과 주기
+			break;
+		case 'esc': depth = 1; break;
+			default: break;
+		}
+	//레인 3 변경
+	case 6:
+		var Motion = findMotion(motion3.key);
+		switch (inputKey) {
+   		case 'left': 
+      		if (turn6 <= 0) {turn6 = 0; return;} turn6 = turn6-1;
+      		lane3.destroy();
+      		lane3 = game.add.sprite(buttonX+200, buttonY+200, Motion.getLane()[turn6]);
+      		square.bringToTop();
+      		break;
+		case 'right': 
+			if (turn6 >= 2) {turn6 = 2; return;} turn6 = turn6+1;
+			lane3.destroy();
+			lane3 = game.add.sprite(buttonX+200, buttonY+200, Motion.getLane()[turn6]);
+			square.bringToTop();
+			break;
+		case 'enter':
+			//이 레인으로 선택했다는 효과 주기
+			break;
+		case 'esc': depth = 1; break;
+			default: break;
+		} break;
+	}	
 }
 
 /*

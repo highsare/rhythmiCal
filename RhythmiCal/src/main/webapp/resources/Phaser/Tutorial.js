@@ -90,11 +90,24 @@ Tutorial.prototype = {
 	 */
 	preload: function() {
 		alert("Tutorial");
+		// debug
+		game.load.image('arrow', 'assets/sprites/arrow.png');
+		// load background image
+		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
+		// load bitmapFont
+	    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
+	    // load rhythmi spritesheet
+		game.load.spritesheet('rhythmi', 'resources/Images/tutorial/rhythmiWithEyes.png', 50, 50, 16);
+		// load dialog image
+	    game.load.image("dialog", "resources/Images/tutorial/dialog.png");
 	},
 	/*
 	 * create()
 	 */
 	create: function() {
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
+		
 		// debug
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 	    sprite = game.add.sprite(400, 300, 'arrow');
@@ -208,4 +221,13 @@ function showTutorialText(tutorialTextIndex) {
 	if (typeof typewriter !== "undefined") {typewriter.destroy();}
 	if (tutorialTextArray[tutorialTextIndex].dialogY == 650) {textY = 675;} else textY = 55; //다이얼로그가 아래면 텍스트도 아래, 위면 위
 	typeWriterFunction(tutorialTextArray[tutorialTextIndex].text, 80, textY, 30);
+}
+
+function gofull() {
+	if (game.scale.isFullScreen) {
+		game.scale.stopFullScreen();
+	}
+	else {
+		game.scale.startFullScreen(false);
+	}
 }

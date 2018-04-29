@@ -46,13 +46,12 @@
 	game.state.add("Stage",Stage);
 	game.state.add("Ending",Ending);
 	
-	//game.state.start("STAGE");
+	//game.state.start("Preload");
 	//game.state.start("Intro");
 	//game.state.start("Tutorial");
 	//game.state.start("Village");
 	//game.state.start("Story");
 	game.state.start("Stage");
-
 	//game.state.start("Ending");
 </script>
 

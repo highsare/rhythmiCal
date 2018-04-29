@@ -4,10 +4,71 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="com.beatoven.rhythmical.interfaces.IntroInterface">
+  <mapper namespace="com.beatoven.rhythmical.interfaces.SystemInterface">
   
   <select id="getsaveList" resultType="save">
   	select * from save;
+  </select>
+  
+  <insert id="makeSave" parameterType="save">
+  INSERT INTO save (
+  	id
+  	,life
+  	,motionlist
+  	,stateNum
+  ) VALUES (
+  	#{id}
+  	,#{life}
+  	,#{motionlist}
+  	,#{stateNum}
+  )
+  
+  </insert>
+  
+  <update id="saveNow" parameterType="save">
+  UPDATE save
+  SET
+  	life = #{life}
+  	,motionlist = #{motionlist}
+  	,state = #{state}
+  WHERE
+  	id = #{id}
+  
+  </update>
+  
+  <select id="getStateName" parameterType="string" resultType="string">
+	SELECT
+	  	t1.statename
+	  FROM
+	  	state t1
+	  WHERE
+	  	t1.statenum = (
+	  		SELECT
+			  	t2.statenum
+			FROM
+				save t2
+			WHERE
+			  	t2.id = #{id}
+	  	)
+  </select>
+  
+  <update id="addStateNum" parameterType="string">
+  UPDATE
+  	save
+  SET
+  	statenum = statenum + 1
+  WHERE
+  	id = #{id}	
+  </update>
+  
+  <select id="getContentNum" parameterType="string" resultType="int">
+  SELECT
+  	t2.contentnum
+  FROM
+  	save t1, state t2
+  WHERE
+  	t1.id = #{id}
+  	and t1.stateNum = t2.stateNum
   </select>
   
   </mapper>
