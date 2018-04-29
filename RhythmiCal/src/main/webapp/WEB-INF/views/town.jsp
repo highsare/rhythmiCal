@@ -53,13 +53,12 @@ function preload() {
    game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
    game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
    game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
-   game.load.image('border', 'resources/Images/town/townImg/border.png'); //임시
+   game.load.image('border', 'resources/Images/town/townImg/border.png'); 
    game.load.image('textboard','resources/Images/town/townImg/textboard.png')
    game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
    game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
    game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
-   game.load.image('back','resources/Images/town/townImg/v_back.png' ); //마을 배경 이미지
-   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 흰 테두리
+   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 빨간 테두리
    game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
    game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
    game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
@@ -72,6 +71,9 @@ function preload() {
    game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
+   game.load.image('mm','resources/Images/town/townImg/mm.png');
+   
+   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
    
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
@@ -111,9 +113,14 @@ function preload() {
 
 function create() {
    //마을 배경
-   bgd = game.add.image(0, 0, 'back');
+   bgd = game.add.image(0, 0, 'mm');
    bgd.alpha = 0.5;
    bgd.scale.set(1);
+   
+   //마을BGM
+   var townbgm = game.add.audio('townBGM');
+   townbgm.loopFull();
+   townbgm.play();
    
    //메뉴 이미지 지정한 좌표에 출력
    var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
