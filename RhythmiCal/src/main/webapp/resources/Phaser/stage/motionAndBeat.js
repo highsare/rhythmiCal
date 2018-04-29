@@ -62,6 +62,8 @@ function motionEvent(motion){
 	popupCombo(true);
 	timingCheck(true);
 	
+	attackMotion();
+	
 	//모션에 따른 효과 설정
 	switch(motion){
 	case "POINT":

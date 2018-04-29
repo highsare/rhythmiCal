@@ -63,7 +63,6 @@ var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를
 var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var musicName;
 var stageNum;
-var beat;
 
 //노비토를 담을 전역 변수
 var nobeato;
@@ -120,16 +119,16 @@ Stage.prototype = {
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
+		//physics
+		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
 		
 		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / 55;
+		BPM = BPMfactor / beat;
 		beatStart = 0;
 		//고정 데이터들의 생성
-		//physics
-		game.physics.startSystem(Phaser.Physics.ARCADE);
-		//  배경색
+		//배경색
 		game.add.sprite(0,0,'stageBG');
 		game.stage.backgroundColor = '#6688ee';
 		//콤보 효과음 설정
@@ -137,9 +136,9 @@ Stage.prototype = {
 		comboSound.addMarker('comboSound', 0, 1);
 		//마을사람들 생성
 		createTownPeople();
-		//feverdancingControl(20);
-		//changeTownPeopleDepressed();
-		// 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
+		feverdancingControl(20);
+		changeTownPeopleDepressed();
+		//스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
 		beatoven.scale.set(5); 
@@ -158,12 +157,7 @@ Stage.prototype = {
 		//목숨 추가
 		iniLife(3);
 		//게임 기초 세팅
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		//DB에서 받아 온 데이터의 생성
-		stageBGM = game.add.audio('stageBGM');
-		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / 55;
-		beatStart = 0;
+		
 		//몬스터를 담을 배열 생성
 		monstersA = new Array();
 		monstersB = new Array();

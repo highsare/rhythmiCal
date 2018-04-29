@@ -42,3 +42,7 @@ function updateLife(lifeChange) {
 	}
 	console.log(life);
 }
+function attackMotion () {
+	animBeatoven = beatoven.animations.add('attack');
+	animBeatoven.play('attack',25, false); //속도
+}
