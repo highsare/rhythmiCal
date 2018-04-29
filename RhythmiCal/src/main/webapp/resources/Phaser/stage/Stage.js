@@ -77,11 +77,40 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		alert(bgmName);
 		game.load.audio('stageBGM','resources/Audios/bgm/' + bgmName);	
 		//몬스터 로드
-		game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
-		game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
+		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
+		game.load.spritesheet('GoblinHurt', 'resources/Images/characters/monsters/29x31x4_GoblinHurt.png', 29, 31, 4);
+		game.load.spritesheet('GoblinDie', 'resources/Images/characters/monsters/56x31x9_GoblinDie.png', 56, 31, 9);
+		game.load.spritesheet('Cutty', 'resources/Images/characters/monsters/21x24x12_Cutty.png', 21, 24, 12);
+		game.load.spritesheet('CuttyHurt', 'resources/Images/characters/monsters/21x24x4_CuttyHurt.png', 21, 24, 4);
+		game.load.spritesheet('CuttyDie', 'resources/Images/characters/monsters/21x24x12_CuttyDie.png', 32, 34, 12);
+		game.load.spritesheet('TheFast', 'resources/Images/characters/monsters/40x30x6_TheFast.png', 40, 30, 6);
+		game.load.spritesheet('TheFastHurt', 'resources/Images/characters/monsters/38x30x3_TheFastHurt.png', 38, 30, 3);
+		game.load.spritesheet('TheFastDie', 'resources/Images/characters/monsters/44x29x7_TheFastDie.png', 44, 29, 7);
+		game.load.spritesheet('TheFastest', 'resources/Images/characters/monsters/67x32x5_TheFastest.png', 67, 32, 5);
+		game.load.spritesheet('TheFastestHurt', 'resources/Images/characters/monsters/39x24x4_TheFastestHurt.png', 39, 24, 4);
+		game.load.spritesheet('TheFastestDie', 'resources/Images/characters/monsters/67x32x5_TheFastestDie.png', 67, 32, 5);
+		game.load.spritesheet('Troll', 'resources/Images/characters/monsters/58x42x18_Troll.png', 58, 42, 18);
+		game.load.spritesheet('TrollHurt', 'resources/Images/characters/monsters/58x42x3_TrollHurt.png', 58, 42, 3);
+		game.load.spritesheet('TrollDie', 'resources/Images/characters/monsters/58x42x9_TrollDie.png', 58, 42, 9);
+		game.load.spritesheet('BombGoblin', 'resources/Images/characters/monsters/192x288x6_BombGoblin.png', 192, 288, 6);
+		game.load.spritesheet('BombGoblinHurt', 'resources/Images/characters/monsters/192x272x2_BombGoblinHurt.png', 192, 272, 2);
+		game.load.spritesheet('BombGoblinDie', 'resources/Images/characters/monsters/256x272x8_BombGoblinDie.png', 256, 272, 8);
+		game.load.spritesheet('Bull', 'resources/Images/characters/monsters/96x77x18_Bull.png', 96, 77, 18);
+		game.load.spritesheet('BullHurt', 'resources/Images/characters/monsters/96x77x4_BullHurt.png', 96, 77, 4);
+		game.load.spritesheet('BullDie', 'resources/Images/characters/monsters/96x77x8_BullDie.png', 96, 77, 8);
+		game.load.spritesheet('BullRush', 'resources/Images/characters/monsters/96x77x6_BullRush.png', 96, 77, 6);
+		game.load.spritesheet('Wind', 'resources/Images/characters/monsters/45x45x8_Wind.png', 45, 45, 8);
+		game.load.spritesheet('WindHurt', 'resources/Images/characters/monsters/45x45x3_WindHurt.png', 45, 45, 3);
+		game.load.spritesheet('WindDie', 'resources/Images/characters/monsters/45x45x8_WindDie.png', 45, 45, 8);
+		game.load.spritesheet('Jyama', 'resources/Images/characters/monsters/40x40x8_Jyama.png', 40, 40, 8);
+		game.load.spritesheet('JyamaHurt', 'resources/Images/characters/monsters/40x40x4_JyamaHurt.png', 40, 40, 4);
+		game.load.spritesheet('JyamaDie', 'resources/Images/characters/monsters/40x40x8_JyamaDie.png', 40, 40, 8);
+		game.load.spritesheet('JyamaSkill', 'resources/Images/characters/monsters/40x40x9_JyamaSkill.png', 40, 40, 9);
+		game.load.spritesheet('Shield', 'resources/Images/characters/monsters/88x62x19_Shield.png', 88, 62, 19);
+		game.load.spritesheet('ShieldHurt', 'resources/Images/characters/monsters/90x80x4_ShieldHurt.png', 90, 80, 4);
+		game.load.spritesheet('ShieldDie', 'resources/Images/characters/monsters/90x80x5_ShieldDie.png', 90, 80, 5);
 		//모션의 종류 및 효과 등 모션 데이터를 불러와야 함
 		
 		//항상 고정적인 리소스

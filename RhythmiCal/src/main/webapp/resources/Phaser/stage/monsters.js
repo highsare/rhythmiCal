@@ -9,6 +9,7 @@ function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBea
 	this.monsterNum = monsterNum;
 	this.attackLine = attackLine;
 	this.speed = speed;
+	this.monsterName = monsterName;
 	this.health = maxHealth;
 	this.maxHealth = maxHealth;
 	this.status = "STAY"; //STAY, MOVE, STUN, DIE, CASTING, IMUNE, RUSH
@@ -18,11 +19,22 @@ function Monster(game, monsterNum, attackLine, speed, monsterName, appearanceBea
 	this.skillPercentage = 0;
 	
 	this.monsterSprite = game.add.sprite(1650, lineYLocation[attackLine], monsterName, 1);
-	this.monsterSprite.scale.set(2);
+	//몬스터 종류에 따라서 크기를 다르게 설정해준다.
+	switch (monsterNum) {
+	case 5:
+		this.monsterSprite.scale.set(0.4);
+		break;
+	case 9:
+		this.monsterSprite.scale.set(3);
+		break;
+	default:
+		this.monsterSprite.scale.set(4);
+		break;
+	}
+	this.anim = this.monsterSprite.animations.add('walk', null, 15, true);
+	this.anim.play('walk');
 	this.monsterSprite.anchor.setTo(0.5, 1);
     this.monsterSprite.smoothed = false;
-    this.anim = this.monsterSprite.animations.add('walk');
-    this.monsterSprite.animations.play('walk', 20, true);
     
     this.monsterHealthbar = game.add.group();
     for (var i = 0; i < this.maxHealth; i++) {
@@ -56,7 +68,8 @@ Monster.prototype.damage = function(damage){
 	if (this.health >= 0) {
 		//데미지를 입어 체력이 깎였다.
 		if (healthBefore > this.health) {
-			attackedMotion(this.monsterSprite);
+			//attackedMotion(monsterSprite, monsterName)
+			attackedMotion(this.monsterSprite, this.monsterName);
 			var healthBlank = game.add.sprite(3 * healthBefore, 0, 'healthBlank');
 			healthBlank.smoothed = false;
 			healthBlank.anchor.setTo(0.5, 1);
@@ -74,8 +87,12 @@ Monster.prototype.damage = function(damage){
 			}
 		}
 	} else { //체력이 0미만이되면 몬스터와 체력바를 없앤다.
-		this.monsterSprite.kill();
-		this.monsterHealthbar.kill();
+		var healthBlank = game.add.sprite(3 * healthBefore, 0, 'healthBlank');
+		healthBlank.smoothed = false;
+		healthBlank.anchor.setTo(0.5, 1);
+		this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
+		//dieMotion(monsterSprite, monsterName, monsterHealthbar)
+		dieMotion(this.monsterSprite, this.monsterName, this.monsterHealthbar);
 		if (this.monsterNum == 5 && this.status != "DIE") { //죽은 놈이 폭탄맨이라면 범위를 계산해 데미지를 입힌다.
 			//explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC)
 			this.status = "DIE";
@@ -88,22 +105,54 @@ Monster.prototype.damage = function(damage){
 
 
 //몬스터가 데미지를 받을시 모션을 실행하는 함수
-function attackedMotion(monsterSprite){
-	monsterSprite.loadTexture('beatoven'); //맞는 모션이 들어간 스프라이트
-	monsterSprite.animations.add('attackedMotion'); //애니메이션 추가
-	monsterSprite.animations.play('attackedMotion', 50, true); //애니메인션 실행
-	monsterSprite.scale.set(2); //크기 설정
-	monsterSprite.anchor.setTo(0.5,1); //앵커 설정
-    monsterSprite.smoothed = false; //안티엘리어싱 제거
+function attackedMotion(monsterSprite, monsterName){
+	var aniName = monsterName + "Hurt";
+	monsterSprite.loadTexture(aniName); //맞는 모션이 들어간 스프라이트
+	monsterSprite.animations.add('hurtMotion', null, 5, false); //애니메이션 추가
+	monsterSprite.animations.play('hurtMotion'); //애니메이션 실행
 	
 	setTimeout(function(){//맞는 모션을 실행한 후에 다시 돌려주는 함수
-		monsterSprite.loadTexture('mummy'); //다시 돌아갈 스프라이트
-		monsterSprite.animations.add('walk'); //다시 애니메이션 추가
-		monsterSprite.animations.play('walk', 20, true); //다시 애니메이션 실행
-		monsterSprite.scale.set(2); //다시 크기 설정
-		monsterSprite.anchor.setTo(0.5,1); //다시 앵커 설정
-	    monsterSprite.smoothed = false; //다시 안티엘리어싱 제거
-	}, 50); //스프라이트 되돌릴 시간 설정
+		monsterSprite.loadTexture(monsterName); //다시 돌아갈 스프라이트
+		anim = monsterSprite.animations.add('walk', null, 15, true);
+		anim.play('walk');
+		monsterSprite.animations.play('walk'); //다시 애니메이션 실행
+	}, 200); //스프라이트 되돌릴 시간 설정
+}
+
+//몬스터가 죽을 때 모션을 실행하는 함수
+function dieMotion(monsterSprite, monsterName, monsterHealthbar){
+	var aniName = monsterName + "Die";
+	monsterSprite.loadTexture(aniName); //맞는 모션이 들어간 스프라이트
+	monsterSprite.animations.add('DieMotion', null, 5, false); //애니메이션 추가
+	monsterSprite.play('DieMotion'); //애니메이션 실행
+	
+	setTimeout(function(){//죽는 모션을 실행한 후에 다시 돌려주는 함수
+		monsterSprite.kill();
+		monsterHealthbar.kill();
+	}, 2000); //스프라이트를 없애는 시간 설정
+}
+
+//몬스터가 스킬을 사용할 시 모션을 실행하는 함수
+function useSkillMotion(monsterSprite, monsterName){
+	var aniName = monsterName + "Skill";
+	monsterSprite.loadTexture(aniName); //스킬 시전 모션이 들어간 스프라이트
+	monsterSprite.animations.add('SkillMotion', null, 10, false); //애니메이션 추가
+	monsterSprite.animations.play('SkillMotion'); //애니메이션 실행
+
+	setTimeout(function(){//스킬 시전 모션을 실행한 후에 다시 돌려주는 함수
+		monsterSprite.loadTexture(monsterName); //다시 돌아갈 스프라이트
+		anim = monsterSprite.animations.add('walk', null, 15, true);
+		anim.play('walk');
+		monsterSprite.animations.play('walk'); //다시 애니메이션 실행
+	}, 1000); //스프라이트 되돌릴 시간 설정
+}
+
+//몬스터가 러쉬을 사용할 시 모션을 실행하는 함수
+function rushMotion(monsterSprite, monsterName){
+	var aniName = monsterName + "Rush";
+	monsterSprite.loadTexture(aniName); //러쉬 모션이 들어간 스프라이트
+	monsterSprite.animations.add('RushMotion', null, 15, true); //애니메이션 추가
+	monsterSprite.play('RushMotion'); //애니메이션 실행
 }
 
 //몬스터가 밀려오기 시작한다.
@@ -155,8 +204,11 @@ function commandJump(unitArray, currentBeat){
 							if (unit.monsterNum == 6) {
 								if (unit.appearanceBeat == currentBeat || unit.appearanceBeat + 1 == currentBeat) {
 									rush(unit, destination, travelTime);
-								} else if (unit.status != "RUSH") {
-									destination = unit.lineX - jumpX[unit.attackLine] * 9;
+									//rush는 중간에 DIE로 바뀌기 때문에 위의 조건을 뚫는다. 여기서 다시 확인해서 null인 cache를 불러오는 것을 방지
+								} else if (unit.status != "RUSH" && unit.status != "DIE") {
+									//rushMotion(monsterSprite, monsterName)
+									rushMotion(unit.monsterSprite, unit.monsterName);
+									destination = unit.lineX - jumpX[unit.attackLine] * 8;
 									unit.status = "RUSH";
 									travelTime = 2000;
 									rush(unit, destination, travelTime);
@@ -172,10 +224,13 @@ function commandJump(unitArray, currentBeat){
 							singleJump(unit, lineYLocation[unit.attackLine], destination);
 						}
 					} else { //몬스터의 상태가 "CASTING"이라면
-						ruinNoteBar();
 						unit.status = "MOVE";
 					}
 				} else { //확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //스킬 시전을 위한 멈춤
+					//useSkillMotion(monsterSprite, monsterName)
+					useSkillMotion(unit.monsterSprite, unit.monsterName);
+					//8번 몬스터라면 노트바를 가리는 스킬을 사용한다.
+					ruinNoteBar();
 					unit.status = "CASTING";
 				}
 			}
@@ -225,9 +280,9 @@ function hitMonster(unit, damage){
 //몬스터가 끝에 도달했을 때 처리를 하는 함수 //몬스터를 죽이고 비토벤의 체력을 줄인다.
 function arriveDestination(unit){
 	if (unit.lineX < 350) {
+		unit.status = "DIE";
 		unit.monsterSprite.destroy();
 		unit.monsterHealthbar.destroy();
-		unit.status = "DIE";
 		console.log("Arrived");
 		updateLife(-1);
 	}
