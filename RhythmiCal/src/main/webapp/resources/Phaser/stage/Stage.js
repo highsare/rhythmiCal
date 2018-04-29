@@ -99,7 +99,7 @@ Stage.prototype = {
 		game.load.spritesheet('tp2', 'resources/Images/characters/townPeople/intro_2_dancing02_60x60.png', 60, 60, 9);
 		game.load.spritesheet('tp3', 'resources/Images/characters/townPeople/intro_2_dancing03_60x60.png', 60, 60, 11);
 		game.load.spritesheet('tp4', 'resources/Images/characters/townPeople/intro_2_dancing04_60x60.png', 60, 60, 6);
-		//음표그림4개 로드   1:빨강, 2:파랑, 3:초록, 4:노랑
+		//음표그림4개 로드   1:노랑, 2:초록, 3:빨강, 4:파랑
 		for(var i=1; i<=4;i++){
 			game.load.image('note'+i, 'resources/Images/notes/note'+i+'.png');
 		}
@@ -142,7 +142,7 @@ Stage.prototype = {
 		// 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
-		beatoven.scale.set(4); 
+		beatoven.scale.set(5); 
 		beatoven.smoothed = false;
 		//하나씩 나타나는 음표를 그룹으로 주기
 		sprites = game.add.group();
