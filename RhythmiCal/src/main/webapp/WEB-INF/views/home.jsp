@@ -75,7 +75,7 @@ $(function() {
 		
 		<!-- 유효성 검사 해야 함 -->
 		if (signupPw != signupPwc) {
-			alert('비밀번호가 일치하지 않습니다.');
+			alert('비밀번호를 다시 한 번 확인해봐!');
 			return;
 		}
 		
