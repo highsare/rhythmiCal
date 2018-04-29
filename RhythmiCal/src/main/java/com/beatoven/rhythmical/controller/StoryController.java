@@ -21,6 +21,7 @@ public class StoryController {
 	@Inject
 	StoryDAO storyDao;
 	
+
 	@ResponseBody
 	@RequestMapping(value = "loadStoryContents", method = RequestMethod.POST)
 	public ArrayList<Story> loadStoryContents (int storyNum) {

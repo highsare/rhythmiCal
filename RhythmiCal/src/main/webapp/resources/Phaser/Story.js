@@ -6,6 +6,7 @@
  * 4.그 후 적절한 STATE 실행 ( 초기화 될 당시에 포함되어 있습니다)
  */
 //스토리 넘버
+<<<<<<< HEAD
 var storyNum = 14;
 	var reg = {};//음악 로드시 저장
 	var typewriter = new Typewriter(); // 글자 타이핑 효과
@@ -34,6 +35,35 @@ var storyNum = 14;
 	//실제쓰인 배경과 그 효과
 	var backimag,hikari;
 	var Story = function(game){};
+=======
+var storynum = 1;
+var reg = {};//음악 로드시 저장
+var typewriter = new Typewriter(); // 글자 타이핑 효과
+var cursors;
+var dialogueBG;
+var storyOrder;
+var npc;
+//npc 나타날 곳
+var left=70, right=1030, npcY=160;
+var switchingleftright;
+//대화문 어레이 생성
+var storyText;
+//대화문 테이블
+var arr;
+//캐릭터 이름
+var characterName;
+//배경음악
+var bgMusicName;
+//소리 효과
+var soundEffect;
+//배경이미지
+var bgImgName;
+//배경 정보
+var bgInfo;
+//실제쓰인 배경과 그 효과
+var backimag,hikari;
+var Story = function(game){};
+>>>>>>> 735069a863489499791137c6a782e4219fa5cbd5
 Story.prototype = {
 	preload: function() {
 		//비트맵형 글자폰트 로드
@@ -107,11 +137,7 @@ Story.prototype = {
 		   	storyOrder = 0;
 		   	
 	   		this.dialogueExport(storyOrder);
-		   	
-		   	
-	}, this);
-	  
-	   	
+		}, this);
 	},
 	update: function() {
 	
@@ -132,9 +158,6 @@ Story.prototype = {
 		 }else if (cursors.right.isDown){
 			 this.outfromstory();
 		 }
-		
-
-
 	},
 	render: function() {
 		//현재 대화 몇번째인가 체크 하려고 만듬.
@@ -296,13 +319,12 @@ Story.prototype = {
 			}
 
 		});
-		
-	
 	},
 
 	//게임으로 이동 
 	 gotostage: function(){
 		//모든 게임 elements 날리기.
+<<<<<<< HEAD
 		 game.world.removeAll();
 
 		 //음악 날리기
@@ -313,6 +335,10 @@ Story.prototype = {
 		}
 		//game.state.start('stage'+i);  //예를 들어 stage1 
 		
+=======
+		game.world.removeAll()
+		this.music.stop();
+		game.state.start("Preload");
+>>>>>>> 735069a863489499791137c6a782e4219fa5cbd5
 	}
-		
 }
