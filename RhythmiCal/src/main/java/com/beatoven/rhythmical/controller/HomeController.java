@@ -55,7 +55,8 @@ public class HomeController {
 		try {
 			result = homeDAO.signupMember(member);
 			
-			//신규 세이브 데이터 생성 & TODO 스테이트 넘버 0 추가 필요
+			//신규 세이브 데이터 생성
+			//Save(String id, int life, String motionlist, int stateNum)
 			Save save = new Save(member.getId(), 5, "000", 1);
 			int i = sysDAO.makeSave(save);
 			System.out.println(i);
@@ -188,7 +189,7 @@ public class HomeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
+	@RequestMapping(value = "sendConsole")
 	public String receiveConsole(String request, String order, HttpSession session) {
 		consoleBox = order;
 		session.setAttribute("order", consoleBox);

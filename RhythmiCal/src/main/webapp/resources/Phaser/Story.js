@@ -270,8 +270,6 @@ Story.prototype = {
 			}
 
 		});
-		
-	
 	},
 
 	//게임으로 이동 
@@ -279,8 +277,6 @@ Story.prototype = {
 		//모든 게임 elements 날리기.
 		game.world.removeAll()
 		this.music.stop();
-		
-		//game.state.start('Ending');
-		//game.state.start('stage'+i);  //예를 들어 stage1 
+		game.state.start("Preload");
 	}
 }

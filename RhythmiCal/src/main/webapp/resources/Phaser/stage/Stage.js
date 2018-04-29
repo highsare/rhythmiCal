@@ -87,10 +87,6 @@ Stage.prototype = {
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
-		//숫자(0~9) 스프라이트
-		for (var i = 0; i < 10; i++) {
-			game.load.spritesheet('number'+i, 'resources/Images/numbers/number_'+i+'.png', 32, 32, 20);
-		}
 		//생명력 이미지
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트
@@ -114,6 +110,10 @@ Stage.prototype = {
 		//체력바 관련 로드
 		game.load.spritesheet('healthFill', 'resources/Images/others/healthFill.png', 32, 32, 1);
 		game.load.spritesheet('healthBlank', 'resources/Images/others/healthBlank.png', 32, 32, 1);
+		//숫자(0~9) 스프라이트
+		for (var i = 0; i < 10; i++) {
+			game.load.spritesheet('number'+i, 'resources/Images/numbers/number_'+i+'.png', 32, 32, 20);
+		}
 		//클리어 및 실패 , 페이드아웃 이미지
 		game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
 		game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
