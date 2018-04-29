@@ -78,7 +78,7 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/55bpm_Mirror_Mirror.mp3');	
+		game.load.audio('stageBGM','resources/Audios/bgm/stage/55bpm_Mirror_Mirror.mp3');	
 		//몬스터 로드
 		game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
 		game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
