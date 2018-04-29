@@ -167,6 +167,10 @@ function commandJump(unitArray, currentBeat){
 	for(var i = 0; i < unitArray.length; i++ ){
 		//배열의 몬스터를 하나씩 선택
 		var unit = unitArray[i];
+		
+		if (unit.monsterNum == 5 && currentBeat > 3) {
+			hitMonster(unit, 1);
+		}//test
 		//몬스터의 상태가 DIE나 STUN이 아닌 경우
 		if(unit.status != "DIE" && unit.status != "STUN"){
 			//몬스터의 출현비트가 현재 비트보다 같거나 작은 경우에만 점프를 명령한다.

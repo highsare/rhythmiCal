@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.StoryDAO;
-import com.beatoven.rhythmical.vo.Member;
 import com.beatoven.rhythmical.vo.Story;
 
 /*스토리에서 호출되는 모든 서버로의 요청은 이곳에서 진행됩니다.*/
