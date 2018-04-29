@@ -89,23 +89,14 @@ function preload() {
    game.load.spritesheet('BC', 'resources/Images/town/produceRoom/BC.png', 100, 100);
    game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
    
-   // 모션 스프라이트 로드
-   game.load.spritesheet('point', 'resources/Images/town/produceRoom/point.png', 100, 100);
-   game.load.spritesheet('up', 'resources/Images/town/produceRoom/up.png', 100, 100);
-   game.load.spritesheet('down', 'resources/Images/town/produceRoom/down.png', 100, 100);
-   game.load.spritesheet('left', 'resources/Images/town/produceRoom/left.png', 100, 100);
-   game.load.spritesheet('right', 'resources/Images/town/produceRoom/right.png', 100, 100);
-   
-   // 효과 스프라이트 로드
-   game.load.spritesheet('fire', 'resources/Images/town/produceRoom/fire.png', 90, 90);
-   game.load.spritesheet('water', 'resources/Images/town/produceRoom/water.png', 90, 90);
-   game.load.spritesheet('sun', 'resources/Images/town/produceRoom/sun.png', 90, 90);
-   game.load.spritesheet('moon', 'resources/Images/town/produceRoom/moon.png', 90, 90);
-   game.load.spritesheet('star', 'resources/Images/town/produceRoom/star.png', 90, 90);
+   // 모션 및 효과 스프라이트
+   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 60, 120);
+	
+   // 모션 설명 배경이미지
+   game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
    
    // 네모 테두리 로드
-   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
-	
+   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
 }
 
 function create() {
