@@ -144,8 +144,6 @@ Story.prototype = {
 		game.camera.fade('#000000',1000);
 		//게임 시작
 		game.camera.onFadeComplete.add(this.gotostage,this);
-		
-		game.timer.events.loop(Phaser.Timer.SECOND * 2, game.state.start("Preload"),this);
 	},
 		
 	dialogueExport: function(storyOrder){
@@ -272,8 +270,6 @@ Story.prototype = {
 			}
 
 		});
-		
-	
 	},
 
 	//게임으로 이동 
@@ -281,8 +277,6 @@ Story.prototype = {
 		//모든 게임 elements 날리기.
 		game.world.removeAll()
 		this.music.stop();
-		
-		//game.state.start('Ending');
-		//game.state.start('stage'+i);  //예를 들어 stage1 
+		game.state.start("Preload");
 	}
 }

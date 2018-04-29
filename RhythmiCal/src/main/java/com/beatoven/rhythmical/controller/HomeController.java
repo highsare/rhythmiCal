@@ -189,7 +189,7 @@ public class HomeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
+	@RequestMapping(value = "sendConsole")
 	public String receiveConsole(String request, String order, HttpSession session) {
 		consoleBox = order;
 		session.setAttribute("order", consoleBox);
