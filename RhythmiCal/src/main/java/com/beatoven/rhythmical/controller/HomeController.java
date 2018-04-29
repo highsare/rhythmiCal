@@ -169,7 +169,7 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public boolean loginApp(Member member, HttpSession session) {
+	public String loginApp(Member member, HttpSession session) {
 		System.out.println(member);
 		
 		//유효성 검사
@@ -189,7 +189,7 @@ public class HomeController {
 			multiList.add("player1");			
 		}
 		
-		return true;
+		return "player1";
 	}
 	
 	@ResponseBody
@@ -235,7 +235,7 @@ public class HomeController {
 		try {dbValue = homeDAO.isNewbie(loginMember);}
 		catch (Exception e) {e.printStackTrace();}
 		
-		// 0이면 신규이므로 isNewbie=true, 1이면 기존이므로 isNewbie=false
+		//0이면 신규이므로 isNewbie=true, 1이면 기존이므로 isNewbie=false
 		boolean isNewbie = true;
 		switch (dbValue) {
 			case 0: isNewbie = true;
