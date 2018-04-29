@@ -32,7 +32,7 @@ var jumpX = [135,137.5,140];
 var currentBeat = 0;
 //image => popUpImage
 var popUpImage;
-var counter = 0;
+var comboCnt = 0;
 var isComboNow = false;
 var beatZone = false;
 var beat = 0;
@@ -54,6 +54,8 @@ var right_isA,right_isB,right_isC;
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
+var tempNote;
+
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
@@ -136,8 +138,7 @@ Stage.prototype = {
 		comboSound.addMarker('comboSound', 0, 1);
 		//마을사람들 생성
 		createTownPeople();
-		feverdancingControl(20);
-		changeTownPeopleDepressed();
+		//changeTownPeopleDepressed();
 		//스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
@@ -157,6 +158,8 @@ Stage.prototype = {
 		//목숨 추가
 		iniLife(3);
 		//게임 기초 세팅
+		stageBGM = game.add.audio('stageBGM');
+		
 		
 		//몬스터를 담을 배열 생성
 		monstersA = new Array();
@@ -212,6 +215,9 @@ Stage.prototype = {
 			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
 			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
 			,success : function(stageInfo) {
+				
+				//BGM 길이를 가져와야함
+				
 				bgImgName = stageInfo[0].bgImgName;
 				musicName = stageInfo[0].musicName;
 				beat = stageInfo[1];

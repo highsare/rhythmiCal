@@ -171,7 +171,11 @@ public class HomeController {
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
 	public boolean loginApp(Member member, HttpSession session) {
 		System.out.println(member);
-		session.setAttribute("id", member.getId());
+		
+		//유효성 검사
+		
+		
+		session.setAttribute("AppId", member.getId());
 		//multiplay.put("player1", member.getId());
 		
 		boolean flag = true;

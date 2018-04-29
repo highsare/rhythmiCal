@@ -4,6 +4,12 @@
 
 //비트에 맞춰서 보스가 뛴다.
 function bossJump(bossEntity) {
+	
+	var random = game.rnd.integerInRange(1, 10);
+	if (random < 4) {
+		bossSkill();
+		return;
+	}
    //1번 점프 점프
     game.add.tween(bossEntity).to({ y: 350 }, 300, Phaser.Easing.Quadratic.InOut, true, 0, 0, true);
     
@@ -15,15 +21,16 @@ function bossJump(bossEntity) {
 
 //노비토 객체
 function Boss(game, health, bossSpriteName, bossSpriteSplitNum){
+	
    
-   this.game = game;
-   this.health = health;
-   this.maxHealth = health;
-   this.status = "STAY"; //STAY , MOVE , STUN, DIE, IMUNE
+	this.game = game;
+	this.health = health;
+	this.maxHealth = health;
+	this.status = "STAY"; //STAY , MOVE , STUN, DIE, IMUNE
    
-   this.bossSprite = game.add.sprite(1420, game.world.centerY, bossSpriteName, bossSpriteSplitNum); //nobeato = 5
-   this.bossSprite.scale.set(4);
-   this.bossSprite.anchor.setTo(0.5, 1);
+	this.bossSprite = game.add.sprite(1420, game.world.centerY, bossSpriteName, bossSpriteSplitNum); //nobeato = 5
+	this.bossSprite.scale.set(4);
+	this.bossSprite.anchor.setTo(0.5, 1);
     this.bossSprite.smoothed = false;
     this.anim = this.bossSprite.animations.add('bossAni');
     this.bossSprite.animations.play('bossAni', 10, true); //nobeato = 10인데 일단 고정으로 해보고 아니면 변수로 받기로
@@ -48,11 +55,14 @@ function Boss(game, health, bossSpriteName, bossSpriteSplitNum){
 
 //노비토 객체의 데미지를 받는 함수
 Boss.prototype.damage = function(damage, bossAttackedSpriteName, bossNomalStatusSpriteName){
+	if (this.status == "IMMUNE") {
+		//이뮨 효과
+	}
    
    //이전의 체력값
    var healthBefore = this.health;
    
-   this.health -= damage;   
+   this.health -= damage; 
    
    //체력이 0보다 크다면 체력바 한칸을 없앤다.
    if (this.health >= 0) {
@@ -101,4 +111,9 @@ function attackedMotionBoss(bossSprite, bossAttackedSpriteName, bossNomalStatusS
 //보스몹 객체 유닛 데미지
 function hitBoss(bossEntity, damage, bossAttackedSpriteName, bossNomalStatusSpriteName){
    bossEntity.damage(damage, bossAttackedSpriteName, bossNomalStatusSpriteName);
+}
+
+
+function bossSkill(){
+	
 }

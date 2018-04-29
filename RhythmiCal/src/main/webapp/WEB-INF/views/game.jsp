@@ -35,7 +35,6 @@
 <script type="text/javascript">
 	var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'RhythmiCal', "game");
 	
-	game.state.add("Preload",Preload);
 	game.state.add("Intro",Intro);
 	game.state.add("Tutorial",Tutorial);
 	game.state.add("Village",Village);
