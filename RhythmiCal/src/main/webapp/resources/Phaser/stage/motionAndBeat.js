@@ -67,22 +67,26 @@ function wrongTiming(){
 
 //정확한 타이밍에서의 처리
 function motionEvent(player,motion){
-	
+	var code;
 	switch(player){
 	case "player1":
-		
+		code = 1;
 		break;
 	case "player2":
+		code = 2;
 		break;
 	case "player3":
+		code = 3;
 		break;
 	case "player4":
+		code = 4;
 		break;
 		default:break;
 	}
-	
-	if (code == tempNote) {
-		
+	console.log(tempNote);
+	if (code != tempNote) {
+		popupCombo(false);
+		return;
 	}
 	
 	

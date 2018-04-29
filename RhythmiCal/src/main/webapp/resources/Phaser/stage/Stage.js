@@ -55,7 +55,7 @@ var right_isA,right_isB,right_isC;
 //멀티유저번호
 var userNumber;
 var tempNote;
-
+var genNote
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
@@ -200,7 +200,6 @@ Stage.prototype = {
 			stageBGM.play();
 		}
 		currentBeat += 1;
-		console.log(currentBeat);
 		start();
 		jumpchar();
 		createNotes();
