@@ -11,6 +11,6 @@ import com.beatoven.rhythmical.vo.Story;
 @Mapper
 public interface StoryInterface {
 
-	public ArrayList<Story> selectStory(int storynum);
+	public ArrayList<Story> selectStory(int storyNum);
 	
 }

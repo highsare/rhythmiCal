@@ -7,42 +7,9 @@
  */
 //스토리 넘버
 
-var storyNum = 14;
-	var reg = {};//음악 로드시 저장
-	var typewriter = new Typewriter(); // 글자 타이핑 효과
-	var cursors;
-	var dialogueBG;
-	var storyOrder;
-	var npc;
-	//npc 나타날 곳
-	var left=70, right=1030, npcY=160;
-	var switchingleftright;
-	//대화문 어레이 생성
-	var storyText;
-	//대화문 테이블
-	var arr;
-	//캐릭터 이름
-	var characterName;
-	//배경음악
-	var bgMusicName;
-	//소리 효과
-	var soundEffect;
-	//배경이미지
-	var bgImgName;
-	//배경 정보
-	var bgInfo;
-	var music;
-	//실제쓰인 배경과 그 효과
-	var backimag,hikari;
-	var Story = function(game){};
-
-var storynum = 1;
-var reg = {};//음악 로드시 저장
+var storyNum = 11;
 var typewriter = new Typewriter(); // 글자 타이핑 효과
-var cursors;
-var dialogueBG;
-var storyOrder;
-var npc;
+
 //npc 나타날 곳
 var left=70, right=1030, npcY=160;
 var switchingleftright;
@@ -60,9 +27,11 @@ var soundEffect;
 var bgImgName;
 //배경 정보
 var bgInfo;
+var music;
 //실제쓰인 배경과 그 효과
-var backimag,hikari;
+var backimage,hikari;
 var Story = function(game){};
+
 
 Story.prototype = {
 	preload: function() {
@@ -73,8 +42,7 @@ Story.prototype = {
 		
 		//배경음악 일단 다 로드
 		game.load.audio('숲속',"resources/Audios/bgm/story/숲속.mp3");
-	
-		game.load.audio('전당',"resources/Audios/bgm/story/숲속2.mp3");
+		game.load.audio('전당',"resources/Audios/bgm/story/전당.mp3");
 		game.load.audio('레코드판',"resources/Audios/bgm/63bpm_Sugar.mp3");
 		game.load.audio('마을',"resources/Audios/bgm/story/마을.mp3");
 		game.load.audio('비토벤의 집',"resources/Audios/bgm/story/비토벤의 집.mp3");
@@ -140,9 +108,8 @@ Story.prototype = {
 		}, this);
 	},
 	update: function() {
-		readKey();
-		//앱에서 o누르면????   키보트 아래 누르면 다음 대화 
-		if(cursors.down.isDown || game.input.activePointer.leftButton.isDown == true) {
+		//앱에서 o누르면????   키보트 아래 누르면 다음 대화  || cursors.down.isDown || game.input.activePointer.leftButton.isDown == true
+		if( this.readKey() =="enter") {
 			//어레이가 다 담겼다면 그때 적용되게끔  	
 			if (typeof storyOrder !== "undefined"){
 				//대화에서  번째가 마지막이 아니라면 다음 대화로
@@ -154,10 +121,22 @@ Story.prototype = {
 						this.outfromstory();
 					}
 			  	}
-		  //앱에서 x 누르면??? 키보드 오른쪽 누르면 스토리에서 나가기
-		 }else if (cursors.right.isDown){
+		  //앱에서 x 누르면??? 키보드 오른쪽 누르면 스토리에서 나가기 cursors.right.isDown
+		 }else if (this.readKey() =="esc"){
 			 this.outfromstory();
 		 }
+	},
+	readKey: function() {
+		var gogo="";
+	    $.ajax({
+	      url: 'requestConsole', 
+	      async: false,
+	      success: function(inputKey) {
+	    	  
+	    	 gogo = inputKey;
+	      }
+	   });
+	    return gogo;
 	},
 	render: function() {
 		//현재 대화 몇번째인가 체크 하려고 만듬.
@@ -320,17 +299,7 @@ Story.prototype = {
 
 		});
 	},
-	readKey: function() {
-	    $.ajax({
-	      url: 'requestConsole', 
-	      success: function(inputKey) {
-	    	
-	            alert("앱에서 넘어온 값"+inputKey);
-	         
-	      }
-	   });
-	   return ""; 
-	},
+	
 
 	//게임으로 이동 
 	 gotostage: function(){
@@ -350,8 +319,7 @@ Story.prototype = {
 		}
 		
 
-		game.world.removeAll()
-		this.music.stop();
-		game.state.start("Preload");
+		
+		//game.state.start("Preload");
 	}
 }

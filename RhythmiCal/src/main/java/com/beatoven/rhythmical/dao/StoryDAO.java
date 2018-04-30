@@ -17,9 +17,9 @@ public class StoryDAO implements StoryInterface {
 	@Inject
 	SqlSession session;
 	@Override
-	public ArrayList<Story> selectStory(int storynum) {
+	public ArrayList<Story> selectStory(int storyNum) {
 		// TODO Auto-generated method stub
-		return session.getMapper(StoryInterface.class).selectStory(storynum);
+		return session.getMapper(StoryInterface.class).selectStory(storyNum);
 	}
 
 	
