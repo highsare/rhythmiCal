@@ -55,7 +55,7 @@ public class StageController {
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.
 	@ResponseBody
 	@RequestMapping(value="getStage", method = RequestMethod.POST)
-	public ArrayList<Object> getStage(int stageNum) {
+	public ArrayList<Object> getStage(String stageNum) {
 		//phaser로 보내줄 stage정보를 담을 arraylist
 		ArrayList<Object> stageInfo = new ArrayList<>();
 		//phaser로 보내줄 각 라인별로 나눈 array
@@ -64,9 +64,9 @@ public class StageController {
 		ArrayList<Monster> monsterlistC = new ArrayList<>();
 		//monster종류를 받아와서 리스트를 작성한다.
 		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
-		
 		//DB : stage 정보를 받아온다.
-		Stage stage = stageDAO.getStage(stageNum);
+		int integerStageNum = Integer.parseInt(stageNum);
+		Stage stage = stageDAO.getStage(integerStageNum);
 		//DB : music beat정보를 받아온다.
 		int beat = stageDAO.getBPM(stage.getBgmName());
 		//String Stream으로 된 몬스터리스트를 받는다.

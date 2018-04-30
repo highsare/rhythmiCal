@@ -66,18 +66,20 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 			}
 		}
 	}
+	var explosionEffectArray = new Array();
 	//범위에 있는 몬스터에게 데미지를 먹인다.
 	for (var i = 0; i < monsterInRange.length; i++) {
 		hitMonster(monsterInRange[i], 1);
-		popupImage(monsterInRange[i].lineX, lineYLocation[monsterInRange[i].attackLine], 'Wind', 10, false);
-		/*var skillE = game.add.sprite(monsterInRange[i].lineX, lineYLocation[monsterInRange[i].attackLine], 'beatoven');
-		skillE.animations.add('skillE', null, 10, false);
-		skillE.animations.play('skillE');
-		
+		//효과를 생성하고 재생하는 과정
+		popUpImage = game.add.sprite(monsterInRange[i].lineX, lineYLocation[monsterInRange[i].attackLine], 'Wind');
+		popUpImage.animations.add('popup', null, 5, false);
+		popUpImage.animations.play('popup');
+		explosionEffectArray.push(popUpImage);
 		setTimeout(function() {
-			alert();
-			skillE.destory();
-		}, 10); //실행 후 스프라이트 삭제*/
+			for (var i = 0; i < explosionEffectArray.length; i++) {
+				explosionEffectArray[i].kill();
+			}
+		}, 2000); //실행 후 스프라이트 삭제
 	}
 }
 
