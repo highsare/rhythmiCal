@@ -69,8 +69,8 @@ var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를
 var bgmName;
 var stageNum;
 
-//노비토를 담을 전역 변수
-var nobeato;
+//보스를 담을 전역 변수
+var boss;
 
 var Stage = function(game) {};
 
@@ -131,13 +131,25 @@ Stage.prototype = {
 		//비토벤 스프라이트시트
 		game.load.spritesheet('beatoven', 'resources/Images/characters/beatoven.png', 32, 32, 16);
 		//노비토 스프라이트시트
-		game.load.spritesheet('nobeato', 'resources/Images/characters/nobeato64x64.png', 64, 64, 8);
-		game.load.spritesheet('nobeatoAttacked', 'resources/Images/characters/nobeatoAttacked64x64_4.png', 64, 64, 4);
+		game.load.spritesheet('Nobeato', 'resources/Images/characters/nobeato/64x64x8_Nobeato.png', 64, 64, 8);
+		game.load.spritesheet('NobeatoJump', 'resources/Images/characters/nobeato/64x64x8_Nobeato.png', 64, 64, 8);
+		game.load.spritesheet('NobeatoHurt', 'resources/Images/characters/nobeato/64x64x4_NobeatoHurt.png', 64, 64, 4);
+		game.load.spritesheet('NobeatoDie', 'resources/Images/characters/nobeato/64x64x4_NobeatoDie.png', 64, 64, 4);
 		//노비토 스프라이트시트
 		game.load.spritesheet('tp1', 'resources/Images/characters/townPeople/intro_2_dancing01_60x60.png', 60, 60, 12);
 		game.load.spritesheet('tp2', 'resources/Images/characters/townPeople/intro_2_dancing02_60x60.png', 60, 60, 9);
 		game.load.spritesheet('tp3', 'resources/Images/characters/townPeople/intro_2_dancing03_60x60.png', 60, 60, 11);
 		game.load.spritesheet('tp4', 'resources/Images/characters/townPeople/intro_2_dancing04_60x60.png', 60, 60, 6);
+		//나보 스프라이트시트
+		game.load.spritesheet('Nabo', 'resources/Images/characters/nabo/19x39x6_Nabo.png', 19, 39, 6);
+		game.load.spritesheet('NaboHurt', 'resources/Images/characters/nabo/21x41x3_NaboHurt.png', 21, 41, 3);
+		game.load.spritesheet('NaboDie', 'resources/Images/characters/nabo/26x41x8_NaboDie.png', 26, 41, 8);
+		game.load.spritesheet('NaboJump', 'resources/Images/characters/nabo/34x42x6_NaboJump.png', 34, 42, 6);
+		//월량풍 스프라이트시트
+		game.load.spritesheet('WollYangPung', 'resources/Images/characters/wollyangpung/48x48x6_WollYangPung.png', 48, 48, 6);
+		game.load.spritesheet('WollYangPungJump', 'resources/Images/characters/wollyangpung/48x48x6_WollYangPung.png', 48, 48, 6);
+		game.load.spritesheet('WollYangPungHurt', 'resources/Images/characters/wollyangpung/48x48x6_WollYangPungHurt.png', 48, 48, 6);
+		game.load.spritesheet('WollYangPungDie', 'resources/Images/characters/wollyangpung/48x48x6_WollYangPungDie.png', 48, 48, 6);
 		//음표그림4개 로드   1:노랑, 2:초록, 3:빨강, 4:파랑
 		for(var i=1; i<=4;i++){
 			game.load.image('note'+i, 'resources/Images/notes/note'+i+'.png');
@@ -170,15 +182,15 @@ Stage.prototype = {
 		beatStart = 0;
 		//고정 데이터들의 생성
 		//배경색
-		game.add.sprite(0,0,'stageBG');
+		game.add.sprite(0, 0, 'stageBG');
 		game.stage.backgroundColor = '#6688ee';
 		//콤보 효과음 설정
 		comboSound = game.add.audio('comboSound');
 		comboSound.addMarker('comboSound', 0, 1);
 		//마을사람들 생성
 		createTownPeople();
-		feverdancingControl(20);
-		changeTownPeopleDepressed();
+		//feverdancingControl(20);
+		//changeTownPeopleDepressed();
 		//스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
@@ -215,9 +227,9 @@ Stage.prototype = {
 		}
 		
 		//Boss(game, health, bossSpriteName, bossSpriteSplitNum)
-		nobeato = new Boss(game, 40, 'nobeato', 5);
-		
-	    //Timer functions here
+		boss = new Boss(game, 5, 'WollYangPung');
+
+		//Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
 	    game.time.events.loop((Phaser.Timer.SECOND / 5) * BPM , toggleBeatZone, this);
 	},
@@ -246,8 +258,8 @@ Stage.prototype = {
 		start();
 		jumpchar();
 		createNotes();
-		bossJump(nobeato);
-		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
+		bossJump(boss);
+		hitBoss(boss, 1);
 	}
 }
 

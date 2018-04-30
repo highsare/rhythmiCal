@@ -15,7 +15,6 @@ Preload.prototype = {
 		game.world.removeAll();
 		//로고 이미지 불러오기
 		//로딩 이미지 등 불러오기
-		setResources("Stage");
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -28,7 +27,8 @@ Preload.prototype = {
 			//로딩 띄우기
 		}
 		
-		game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
+		setResources("Stage");
+		//game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
 	},
 	requestUserInfo: function(){
 		$.ajax({
@@ -83,7 +83,7 @@ function setResources (state){
 		
 	}else if (state == "Stage") {
 		//Stage assets , contentNum required
-		getStageInfo(contentNum);
+		getStageInfo(1);
 		
 	}else if (state == "Village") {
 		//Village assets
