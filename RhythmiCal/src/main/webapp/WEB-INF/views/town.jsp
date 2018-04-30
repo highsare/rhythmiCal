@@ -793,42 +793,49 @@ function multiconnection() {
          if (result != null) {
             switch (result.length) {
             case 2:
-            	if (player2 == null) {
-            		player2 = game.add.image(330, 765, 'player2');
-                    player2.scale.set(0.4);
-                    if (text1 != null) {
+				if (player2 == null) {
+					player2 = game.add.image(330, 765, 'player2');
+					player2.scale.set(0.4);
+					if (text1 != null) {
 						text1.kill(); text1 = null;
 					}
-                    sendRdm();
+					sendRdm();
 				}
-            	
-            	if (player3 != null) {player3.destroy();} 
-               break;
+        	
+				if (player3 != null) {player3.destroy();}
+				if (player4 != null) {player4.destroy();}
+				
+				break;
             case 3:
-            	if (player3 == null) {
+				if (player3 == null) {
             		player3 = game.add.image(480, 765, 'player3');
-                    player3.scale.set(0.4);
-                    if (text1 != null) {
+					player3.scale.set(0.4);
+					if (text1 != null) {
 						text1.kill(); text1 = null;
 					}
-                    sendRdm();
+					sendRdm();
 				}
             	
-            	 if (player4 != null) {player4.destroy();} 
-               break;
+				if (player4 != null) {player4.destroy();}
+				
+				break;
             case 4:
-            	if (player4 == null) {
-            		player4 = game.add.image(630, 765, 'player4');
-                    player4.scale.set(0.4);
-                    if (text1 != null) {
+				if (player4 == null) {
+					player4 = game.add.image(630, 765, 'player4');
+					player4.scale.set(0.4);
+					if (text1 != null) {
 						text1.kill(); text1 = null;
 					}
-                    sendRdm();
+					sendRdm();
 				}
-               break;
+				
+				break;
             default:
-            	if (player2 != null) {player2.destroy();}
-               break;
+				if (player2 != null) {player2.destroy();}
+				if (player3 != null) {player3.destroy();}
+				if (player4 != null) {player4.destroy();}
+				
+				break;
             }
          }
       }
