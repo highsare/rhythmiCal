@@ -116,6 +116,9 @@ Stage.prototype = {
 		//Jyama스킬 방해구름 이미지
 		game.load.spritesheet('Cloud', 'resources/Images/others/48x48x1_cloud.png', 48, 48, 1);
 		
+		//BombGoblin스킬 폭발 이미지
+		game.load.spritesheet('Explosion', 'resources/Images/others/54x51x4_Explosion.png', 54, 51, 4);
+		
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');

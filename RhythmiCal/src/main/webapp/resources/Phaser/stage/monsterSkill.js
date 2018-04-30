@@ -71,7 +71,8 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	for (var i = 0; i < monsterInRange.length; i++) {
 		hitMonster(monsterInRange[i], 1);
 		//효과를 생성하고 재생하는 과정
-		popUpImage = game.add.sprite(monsterInRange[i].lineX, lineYLocation[monsterInRange[i].attackLine], 'Wind');
+		popUpImage = game.add.sprite(monsterInRange[i].lineX - 50, lineYLocation[monsterInRange[i].attackLine] - 70, 'Explosion');
+		popUpImage.scale.set(2);
 		popUpImage.animations.add('popup', null, 5, false);
 		popUpImage.animations.play('popup');
 		explosionEffectArray.push(popUpImage);
@@ -83,13 +84,21 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	}
 }
 
-var cloudArray = [0,1];
+var cloudArray = new Array();
 var cloudIndex = 0;
 /*노트를 가리는 구름 등을 차례로 소환하는 스킬*/
 function ruinNoteBar(){
+	//어디까지 가려야 하는지 생성
 	cloudIndex++;
-	//노트바의 위치에 차례차례 생성
-	game.add.sprite(game.world.centerX - 200 + cloudIndex * 30, 750, 'Cloud');
+}
+
+function createRuinNoteBar(){
+	for (var i = 0; i < cloudIndex; i++) {
+		//노트바의 위치에 차례차례 생성
+		var cloud = game.add.sprite(game.world.centerX - 200 + i * 30, 680, 'Cloud');
+		cloud.scale.set(2);
+		cloudArray.push(cloud);
+	}
 }
 
 //몬스터와 높이를 받아서 넉백시킨다.

@@ -182,8 +182,8 @@ function commandJump(unitArray, currentBeat){
 				var random = game.rnd.integerInRange(1, 10);
 				// 확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //그냥 점프 부분
 				if (unit.skillPercentage <= random) {
-					//유닛 상태에 따라 점프와 캐스팅을 구분
-					if (unit.status != "CASTING") {
+					//유닛 상태에 따라 점프와 캐스팅을 구분 //casting는 중간에 DIE로 바뀌기 때문에 위의 조건을 뚫는다. 여기서 다시 확인해서 null인 cache를 불러오는 것을 방지
+					if (unit.status != "CASTING" && unit.status != "DIE") {
 						//몬스터의 위치가 첫 출발 때의 목적지를 설정한다.
 						if (unit.lineX == 2000) {
 							//몬스터의 상태를 rush가 아니라면 move로 바꾼다.
@@ -230,7 +230,7 @@ function commandJump(unitArray, currentBeat){
 					} else { //몬스터의 상태가 "CASTING"이라면
 						unit.status = "MOVE";
 					}
-				} else { //확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //스킬 시전을 위한 멈춤
+				} else if (unit.status != "DIE") { //확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //스킬 시전을 위한 멈춤 //casting는 중간에 DIE로 바뀌기 때문에 위의 조건을 뚫는다. 여기서 다시 확인해서 null인 cache를 불러오는 것을 방지
 					//useSkillMotion(monsterSprite, monsterName)
 					useSkillMotion(unit.monsterSprite, unit.monsterName);
 					//8번 몬스터라면 노트바를 가리는 스킬을 사용한다.
