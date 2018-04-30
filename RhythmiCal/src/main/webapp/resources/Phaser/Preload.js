@@ -452,6 +452,7 @@ function setResources (state){
 	}else if (state == "Story") {
 		//Story assets , contentNum required
 	    //스토리 실행
+		storyNum = contentNum;
 		game.state.start("Story");
 		
 		
