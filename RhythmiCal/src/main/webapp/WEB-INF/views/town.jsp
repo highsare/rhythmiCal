@@ -880,7 +880,7 @@ function isnull() {
 	if (descBackground != null) {descBackground.destroy();}
 	if (descText != null) {descText.destroy();}
 }
-
+  
 
 </script>
 </body>
