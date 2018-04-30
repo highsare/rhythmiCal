@@ -172,17 +172,31 @@ public class HomeController {
 		//multiplay.put("player1", member.getId());
 		
 		boolean flag = true;
-		for (String player : multiList) {
-			if (player.equals("player1")) {
-				flag = false;
+		Member loginMember = null;
+		try {
+			loginMember = homeDAO.loginMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (loginMember != null) {
+			//로그인 성공
+			for (String player : multiList) {
+				if (player.equals("player1")) {
+					flag = false;
+				}
 			}
+			
+			if (flag) {
+				multiList.add("player1");	
+			}
+			
+			return "player1";
+			
+		} else {
+			//로그인 실패
+			return "fail";
 		}
 		
-		if (flag) {
-			multiList.add("player1");			
-		}
-		
-		return "player1";
 	}
 	
 	@ResponseBody
