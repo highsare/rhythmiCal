@@ -16,7 +16,6 @@ Preload.prototype = {
 		//로고 이미지 불러오기
 		//로딩 이미지 등 불러오기
 		setResources("Stage");
-		
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -112,4 +111,5 @@ function setResources (state){
 	}else if (state == "HallOfFame"){
 		//HallOfFame.jsp로 이동
 	}
+	
 }

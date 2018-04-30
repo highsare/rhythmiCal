@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.StoryDAO;
-import com.beatoven.rhythmical.vo.Member;
 import com.beatoven.rhythmical.vo.Story;
 
 /*스토리에서 호출되는 모든 서버로의 요청은 이곳에서 진행됩니다.*/
@@ -21,15 +20,15 @@ public class StoryController {
 	@Inject
 	StoryDAO storyDao;
 	
-	//대사 보내기 테스트
+	//대사 가져오는메소드
 	@ResponseBody
 	@RequestMapping(value = "loadStoryContents", method = RequestMethod.POST)
 	public ArrayList<Story> loadStoryContents (int storynum) {
 		
-		//dao 테스트
-		ArrayList<Story> gogogo = storyDao.selectStory(storynum);
+		//story DB접근
+		ArrayList<Story> getStory = storyDao.selectStory(storynum);
 		
 	
-		return gogogo;
+		return getStory;
 	}
 }

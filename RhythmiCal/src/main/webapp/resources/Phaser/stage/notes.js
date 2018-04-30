@@ -11,6 +11,12 @@ function createNotes() {
 		//랜덤유저 음표 생성(생성하는 위치)
 		var note = game.add.sprite(game.width/2 + 310, 730, genNote);
 		note.anchor.setTo(0.5, 0.5);
+		if (cloudArray != null) {
+			for (var i = 0; i < cloudArray.length; i++) {
+				cloudArray[i].kill;
+			}
+			createRuinNoteBar();
+		}
 		note.scale.set(0.5);
 		game.add.tween(note).to({x:game.width/2 - 310},2000,'Linear',true,0).onComplete.add(function(note){
 			note.kill();

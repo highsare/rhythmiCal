@@ -3,20 +3,22 @@ package com.beatoven.rhythmical.vo;
 public class Stage {
 	
 	private int stageNum;
-	private String musicName;
+	private String bgmName;
 	private String monsterList;
 	private String bgImgName;
-	
+	private String bossName;
+
 	public Stage() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Stage(int stageNum, String musicName, String monsterList, String bgImgName) {
+	public Stage(int stageNum, String bgmName, String monsterList, String bgImgName, String bossName) {
 		super();
 		this.stageNum = stageNum;
-		this.musicName = musicName;
+		this.bgmName = bgmName;
 		this.monsterList = monsterList;
 		this.bgImgName = bgImgName;
+		this.bossName = bossName;
 	}
 
 	public int getStageNum() {
@@ -27,12 +29,12 @@ public class Stage {
 		this.stageNum = stageNum;
 	}
 
-	public String getMusicName() {
-		return musicName;
+	public String getBgmName() {
+		return bgmName;
 	}
 
-	public void setMusicName(String musicName) {
-		this.musicName = musicName;
+	public void setBgmName(String bgmName) {
+		this.bgmName = bgmName;
 	}
 
 	public String getMonsterList() {
@@ -51,11 +53,18 @@ public class Stage {
 		this.bgImgName = bgImgName;
 	}
 
+	public String getBossName() {
+		return bossName;
+	}
+
+	public void setBossName(String bossName) {
+		this.bossName = bossName;
+	}
+
 	@Override
 	public String toString() {
-		return "Stage [stageNum=" + stageNum + ", musicName=" + musicName + ", monsterList=" + monsterList
-				+ ", bgImgName=" + bgImgName + "]";
+		return "Stage [stageNum=" + stageNum + ", bgmName=" + bgmName + ", monsterList=" + monsterList + ", bgImgName="
+				+ bgImgName + ", bossName=" + bossName + "]";
 	}
-	
 	
 }
