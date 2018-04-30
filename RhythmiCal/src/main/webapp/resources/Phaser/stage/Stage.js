@@ -156,7 +156,7 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		//목숨 추가
-		iniLife(3);
+		iniLife(5);
 		//게임 기초 세팅
 		stageBGM = game.add.audio('stageBGM');
 		
@@ -198,7 +198,11 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
-		console.log = currentBeat;
+		if (currentBeat == numOfBeat) {
+			//비트 모두 소진
+			return;
+		}
+		console.log(currentBeat);
 		currentBeat += 1;
 		start();
 		jumpchar();
