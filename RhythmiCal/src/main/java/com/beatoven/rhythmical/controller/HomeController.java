@@ -166,9 +166,9 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public boolean loginApp(Member member, HttpSession session) {
+	public String loginApp(Member member, HttpSession session) {
 		System.out.println(member);
-		session.setAttribute("id", member.getId());
+		session.setAttribute("AppId", member.getId());
 		//multiplay.put("player1", member.getId());
 		
 		boolean flag = true;
@@ -182,7 +182,7 @@ public class HomeController {
 			multiList.add("player1");			
 		}
 		
-		return true;
+		return "player1";
 	}
 	
 	@ResponseBody
