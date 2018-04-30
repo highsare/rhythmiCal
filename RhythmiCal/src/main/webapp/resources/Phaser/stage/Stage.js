@@ -54,6 +54,7 @@ var right_isA,right_isB,right_isC;
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
+var genNote;
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
