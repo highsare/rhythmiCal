@@ -49,7 +49,7 @@ var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
   
 function preload() {
    game.world.removeAll();
-   // 깊이를 1로 초기화
+   // 깊이를 1로 초기화  
    depth = 0;
    
    // 진주 이미지   
@@ -798,12 +798,13 @@ function goHome(inputKey) {
       logoutMember();
    }
 }
+
 function frontoftown() {
 	m_back = game.add.image(750,75,'menu_sub_back');
 	m_back.alpha = 0.8;
     image = game.add.image(810, 120, 'front');
     border = game.add.image(810, 120, 'border');
-    textboard = game.add.image(810,450,'textboard');
+    textboard = game.add.image(810, 450,'textboard');
     textboard.scale.set(2);
     text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
     start = game.add.image(935, 580,'start');
