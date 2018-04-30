@@ -688,7 +688,6 @@ function createMercenary(inputKey) {
 	image = game.add.image(810, 120, 'pub');
 	border = game.add.image(805, 120, 'border');
    // 난수 발급
-   var rdm = Math.floor(Math.random() * 9999) + 1000;
    board = game.add.image(810, 520, 'board');
 
    sendRdm();
@@ -719,8 +718,14 @@ function multiconnection() {
          if (result != null) {
             switch (result.length) {
             case 2:
-               var player2 = game.add.image(330, 765, 'player2');
-               player2.scale.set(0.4);
+            	if (player2 == null) {
+            		player2 = game.add.image(330, 765, 'player2');
+                    player2.scale.set(0.4);
+                    if (text1 != null) {
+						text1.destroy();
+					}
+                    sendRdm();
+				}
                break;
             case 3:
             	if (player3 == null) {
