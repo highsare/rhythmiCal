@@ -16,8 +16,8 @@ function iniLife(lifeAmount){
 	life = lifeAmount;
 	lifeArray = new Array();
 	for (var i = 0; i < maxLife; i++){
-		lifeArray[i] = game.add.image(i * 30, 30, 'life');
-		lifeArray[i].scale.set(2);
+		lifeArray[i] = game.add.image(i * 40, 30, 'life');
+		lifeArray[i].scale.set(3);
 	}
 	updateLife(0);
 }
@@ -41,4 +41,8 @@ function updateLife(lifeChange) {
 		//stageResult(false);
 	}
 	console.log(life);
+}
+function attackMotion () {
+	animBeatoven = beatoven.animations.add('attack');
+	animBeatoven.play('attack',25, false); //속도
 }

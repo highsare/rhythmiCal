@@ -9,7 +9,14 @@
   
 	
 	<select id="selectStory" parameterType="int" resultType="story">
-		select *
+		select 
+		<!-- contentorder
+		, storynum
+		, content
+		, NVL(bgimgname," ")as bgimgname
+		, NVL(bgmusicname," ")as bgmusicname
+		, NVL(charactername," ")as charactername -->
+		*
 		from story
 		where storynum = #{storynum}
 		order by contentorder

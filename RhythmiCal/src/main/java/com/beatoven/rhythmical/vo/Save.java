@@ -6,24 +6,17 @@ public class Save {
 	private String id;
 	private int life;
 	private String motionlist;
-	private String state;
-	private int stagenum;
-	private int storynum;
+	private int stateNum;
 	
 	
 	// constructor
-<<<<<<< HEAD
-	public Save(String id, int life, String motionlist, String state, int stagenum, int storynum) {
-=======
+	public Save() {}
 	public Save(String id, int life, String motionlist, int stateNum) {
->>>>>>> parent of 881ca23... Merge pull request #16 from highsare/minahKim
 		super();
 		this.id = id;
 		this.life = life;
 		this.motionlist = motionlist;
-		this.state = state;
-		this.stagenum = stagenum;
-		this.storynum = storynum;
+		this.stateNum = stateNum;
 	}
 	
 	// getters and setters
@@ -51,42 +44,13 @@ public class Save {
 		this.motionlist = motionlist;
 	}
 
-	public String getState() {
-		return state;
+	public int getStateNum() {
+		return stateNum;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setStateNum(int stateNum) {
+		this.stateNum = stateNum;
 	}
 
-	public int getStagenum() {
-		return stagenum;
-	}
-
-	public void setStagenum(int stagenum) {
-		this.stagenum = stagenum;
-	}
-
-	public int getStorynum() {
-		return storynum;
-	}
-
-	public void setStorynum(int storynum) {
-		this.storynum = storynum;
-	}
 	
-	// toString
-	@Override
-	public String toString() {
-		return "Save [id=" + id + ", life=" + life + ", motionlist=" + motionlist + ", state=" + state + ", stagenum="
-				+ stagenum + ", storynum=" + storynum + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-
 }

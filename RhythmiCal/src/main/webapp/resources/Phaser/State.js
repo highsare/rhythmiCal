@@ -10,23 +10,18 @@ function requestState(){
 		,success : function(state){
 			alert(state);
 			if (state == "Intro") {
-				game.state.start("Intro");
 				setResources("Intro");
 			}else if (state == "Tutorial"){
-				game.state.start("Tutorial");
 				setResources("Tutorial");
 			}else if (state == "Story") {
 				requestContentNum("Story");
 			}else if (state == "Stage") {
 				requestContentNum("Stage");
 			}else if (state == "Village") {
-				game.state.start("Village");
 				setResources("Village");
 			}else if (state == "Ending") {
-				game.state.start("Ending");
 				setResources("Ending");
 			}else if (state == "HallOfFame"){
-				game.state.start("HallOfFame");
 				setResources("HallOfFame");
 			}
 		},error : function(){}

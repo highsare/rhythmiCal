@@ -21,15 +21,15 @@ public class StoryController {
 	@Inject
 	StoryDAO storyDao;
 	
-
+	//대사 보내기 테스트
 	@ResponseBody
 	@RequestMapping(value = "loadStoryContents", method = RequestMethod.POST)
-	public ArrayList<Story> loadStoryContents (int storyNum) {
+	public ArrayList<Story> loadStoryContents (int storynum) {
 		
-		//스토리 테이블 DB 가져옴
-		ArrayList<Story> selectStory = storyDao.selectStory(storyNum);
+		//dao 테스트
+		ArrayList<Story> gogogo = storyDao.selectStory(storynum);
 		
 	
-		return selectStory;
+		return gogogo;
 	}
 }
