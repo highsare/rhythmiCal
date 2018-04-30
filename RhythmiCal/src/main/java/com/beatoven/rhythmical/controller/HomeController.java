@@ -54,12 +54,10 @@ public class HomeController {
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
-			
-			//신규 세이브 데이터 생성
-			//Save(String id, int life, String motionlist, int stateNum)
-			Save save = new Save(member.getId(), 5, "000", 1);
+			//신규 세이브 데이터 생성: Save(String id, int life, String motionlist, int stateNum)
+			Save save = new Save(member.getId(), 5, "000", 1); 
 			int i = sysDAO.makeSave(save);
-			System.out.println(i);
+			System.out.println("save result: " + i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,7 +84,7 @@ public class HomeController {
 		if (loginMember != null) {
 			//로그인 성공
 			session.setAttribute("loginMember", loginMember);
-			System.out.println("login success");
+			System.out.println("login success - loginMember: " + loginMember.toString());
 			return "어서와!";
 		} else {
 			//로그인 실패
@@ -169,13 +167,9 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public String loginApp(Member member, HttpSession session) {
+	public boolean loginApp(Member member, HttpSession session) {
 		System.out.println(member);
-		
-		//유효성 검사
-		
-		
-		session.setAttribute("AppId", member.getId());
+		session.setAttribute("id", member.getId());
 		//multiplay.put("player1", member.getId());
 		
 		boolean flag = true;
@@ -189,7 +183,7 @@ public class HomeController {
 			multiList.add("player1");			
 		}
 		
-		return "player1";
+		return true;
 	}
 	
 	@ResponseBody
@@ -235,7 +229,7 @@ public class HomeController {
 		try {dbValue = homeDAO.isNewbie(loginMember);}
 		catch (Exception e) {e.printStackTrace();}
 		
-		//0이면 신규이므로 isNewbie=true, 1이면 기존이므로 isNewbie=false
+		// 0이면 신규이므로 isNewbie=true, 1이면 기존이므로 isNewbie=false
 		boolean isNewbie = true;
 		switch (dbValue) {
 			case 0: isNewbie = true;

@@ -19,7 +19,6 @@ import com.beatoven.rhythmical.vo.Stage;
 public class StageController {
 	
 	private String motionBox;
-	private String playerBox;
 	private boolean isUsed = false;
 
 	@Inject
@@ -28,12 +27,9 @@ public class StageController {
 	//모션 값 받아오기
 	@ResponseBody
 	@RequestMapping(value="sendMotion", method = RequestMethod.POST)
-	public String receiveMotion(String request,String motion, String player) {
+	public String receiveMotion(String request,String motion, String code) {
 		motionBox = motion;
-		playerBox = player;
-		
-		//코드도 저장해놓는다. 1p code = null;
-		System.out.println(playerBox);
+		System.out.println(code);
 		System.out.println(motionBox);
 		return "received";
 	}
@@ -42,16 +38,15 @@ public class StageController {
 	@ResponseBody
 	@RequestMapping(value="requestMotion", method = RequestMethod.POST)
 	public String requestMotion() {
-		if(motionBox != null && playerBox != null) {
+		if(motionBox != null) {
 			if (isUsed) {
 				System.out.println("[Motion empty]");
 				motionBox = null;
-				playerBox = null;
 				isUsed = false;
 			}else {
-				System.out.println("Motion requested "+motionBox);
+				System.out.println("Motion requested"+motionBox);
 				isUsed = true;
-				return playerBox+"/"+motionBox;
+				return motionBox;	
 			}
 		}
 		return "NOTHING";
@@ -96,7 +91,7 @@ public class StageController {
 		
 		//for Test
 		ArrayList<Object> stageInfo = new ArrayList<>();
-		int beat = 55;
+		int beat = 30;
 		ArrayList<Monster> monsterlist = new ArrayList<>();
 		ArrayList<Monster> monsterlistA = new ArrayList<>();
 		ArrayList<Monster> monsterlistB = new ArrayList<>();
@@ -141,8 +136,9 @@ public class StageController {
 		stageInfo.add(monsterlistA);
 		stageInfo.add(monsterlistB);
 		stageInfo.add(monsterlistC);
-		stageInfo.add(HomeController.multiList.size());
 		
 		return stageInfo;
 	}
+	
+	
 }

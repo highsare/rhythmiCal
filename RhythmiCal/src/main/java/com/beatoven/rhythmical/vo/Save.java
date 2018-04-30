@@ -10,6 +10,7 @@ public class Save {
 	
 	
 	// constructor
+	public Save() {}
 	public Save(String id, int life, String motionlist, int stateNum) {
 		super();
 		this.id = id;

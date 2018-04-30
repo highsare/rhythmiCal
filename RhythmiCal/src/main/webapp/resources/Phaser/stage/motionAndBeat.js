@@ -14,10 +14,8 @@ function toggleBeatZone(){
 		beat = 0;
 	}
 	if(beat % 5 == 4){
-		tempNote = userNumber;
 		beatZone = true;
 	}else if(beat % 5 == 1){
-		tempNote = 0;
 		beatZone = false;
 		if(!isComboNow){
 			popupCombo(false);
@@ -33,18 +31,11 @@ function motionCheck(){
 	$.ajax({
 		url:"requestMotion"
 		,type:"post"
-		,success:function(str){
-			if(str == "NOTHING"){
+		,success:function(motion){
+			if(motion == "NOTHING"){
 				
-			}else if(str != null){
-				var motionAndCode = str.split('/');
-				player = motionAndCode[0];
-				motion = motionAndCode[1];
-				
-				console.log(player);
-				console.log(motion);
-				
-				motionEvent(player,motion);
+			}else if(motion != null){
+				motionEvent(motion);
 			}
 		},error:function(){
 		}
@@ -66,36 +57,12 @@ function wrongTiming(){
 }
 
 //정확한 타이밍에서의 처리
-function motionEvent(player,motion){
-	var code;
-	switch(player){
-	case "player1":
-		code = 1;
-		break;
-	case "player2":
-		code = 2;
-		break;
-	case "player3":
-		code = 3;
-		break;
-	case "player4":
-		code = 4;
-		break;
-		default:break;
-	}
-	console.log(tempNote);
-	if (code != tempNote) {
-		popupCombo(false);
-		return;
-	}
-	
+function motionEvent(motion){
 	
 	popupCombo(true);
 	timingCheck(true);
 	
 	attackMotion();
-	
-	
 	
 	//모션에 따른 효과 설정
 	switch(motion){
@@ -201,22 +168,17 @@ function popupCombo(combo) {
 	if (combo) { //combo 조건
 		isComboNow = true;
 		//카운터를 1 증가
-		comboCnt++;
-		feverdancingControl(comboCnt);
+		counter++;
 		//콤보가 20의 배수일 경우에는 생명력을 1 증가 (임시로 5를 주었음) // TODO
-		if (comboCnt % 10 == 0) {
-			//환호하는 군중
-			//화려한 콤보 이펙트
-		}
-		if (comboCnt % 20 == 0) {
+		if (counter % 5 == 0) {
 			updateLife(1);
 		}
 		
 	    //숫자 애니메이션 실행
 		//카운터를 1 감소시키고(2번째 공격부터 콤보을 적용해야 하므로), 세 자리로 나누어 각 자리의 수를 구한다.
-		var firstNum = parseInt(comboCnt.toString().charAt(0));
-		var secondNum = parseInt(comboCnt.toString().charAt(1));
-		var thirdNum = parseInt(comboCnt.toString().charAt(2));
+		var firstNum = parseInt(counter.toString().charAt(0));
+		var secondNum = parseInt(counter.toString().charAt(1));
+		var thirdNum = parseInt(counter.toString().charAt(2));
 		
 		var number;
 		var popup;
@@ -241,9 +203,6 @@ function popupCombo(combo) {
 	}
 	//콤보 실패 시
 	else {
-		//낙담하는 군중
-		comboCnt = 0;
-		feverdancingControl(comboCnt);
 		timingCheck(false);
 	}
 }

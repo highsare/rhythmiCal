@@ -11,8 +11,7 @@
 <body>
 <script>
 var game = new Phaser.Game(1600, 900, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
-
-var text1,text2,messange,exit,p_back;
+var text1,text2,messange,exit,p_back,m_back;
 var cursors;
 var point;
 var image;
@@ -37,12 +36,20 @@ var m_back; // 서브메뉴 배경
 var turn1, turn2, turn3, turn4, turn5, turn6; // 모션(1~3) 및 레인(4~6)을 교체할 카운터
 var motion1, motion2, motion3, effect1, effect2, effect3, lane1, lane2, lane3; // 9개의 스프라이트 버튼
 var singleLane, doubleLane; // 싱글레인 및 더블레인 배열
-
 var temp;
-
+var descText; // 모션 설명하는 비트맵 텍스트 변수
+var desctextX = 1180;
+var desctextY = 550;
+var descBackground;
+var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
+				, '[올려치기]\nKnock Down:\n적을 잠시\n뒤로 가게 하는 효과'
+				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
+				, '[좌로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'
+				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'];
+  
 function preload() {
    game.world.removeAll();
-   // 깊이를 1로 초기화
+   // 깊이를 1로 초기화  
    depth = 0;
    
    // 진주 이미지   
@@ -53,13 +60,12 @@ function preload() {
    game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
    game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
    game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
-   game.load.image('border', 'resources/Images/town/townImg/border.png'); //임시
+   game.load.image('border', 'resources/Images/town/townImg/border.png'); 
    game.load.image('textboard','resources/Images/town/townImg/textboard.png')
    game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
    game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
    game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
-   game.load.image('back','resources/Images/town/townImg/v_back.png' ); //마을 배경 이미지
-   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 흰 테두리
+   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 빨간 테두리
    game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
    game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
    game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
@@ -72,8 +78,8 @@ function preload() {
    game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
-   game.load.image('warning', 'resources/Images/town/townImg/warning.png');
-   
+   game.load.image('mm','resources/Images/town/townImg/mm.png');
+   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
    //멀티 플레이어 표시
@@ -91,30 +97,26 @@ function preload() {
    game.load.spritesheet('BC', 'resources/Images/town/produceRoom/BC.png', 100, 100);
    game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
    
-   // 모션 스프라이트 로드
-   game.load.spritesheet('point', 'resources/Images/town/produceRoom/point.png', 100, 100);
-   game.load.spritesheet('up', 'resources/Images/town/produceRoom/up.png', 100, 100);
-   game.load.spritesheet('down', 'resources/Images/town/produceRoom/down.png', 100, 100);
-   game.load.spritesheet('left', 'resources/Images/town/produceRoom/left.png', 100, 100);
-   game.load.spritesheet('right', 'resources/Images/town/produceRoom/right.png', 100, 100);
+   // 모션 및 효과 스프라이트 로드
+   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 120, 60);
    
-   // 효과 스프라이트 로드
-   game.load.spritesheet('fire', 'resources/Images/town/produceRoom/fire.png', 90, 90);
-   game.load.spritesheet('water', 'resources/Images/town/produceRoom/water.png', 90, 90);
-   game.load.spritesheet('sun', 'resources/Images/town/produceRoom/sun.png', 90, 90);
-   game.load.spritesheet('moon', 'resources/Images/town/produceRoom/moon.png', 90, 90);
-   game.load.spritesheet('star', 'resources/Images/town/produceRoom/star.png', 90, 90);
+   // 모션 설명 배경이미지
+   game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
    
    // 네모 테두리 로드
    game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
-	
 }
 
 function create() {
    //마을 배경
-   bgd = game.add.image(0, 0, 'back');
+   bgd = game.add.image(0, 0, 'mm');
    bgd.alpha = 0.5;
    bgd.scale.set(1);
+   
+   //마을BGM
+   var townbgm = game.add.audio('townBGM');
+   townbgm.loopFull();
+   townbgm.play();
    
    //메뉴 이미지 지정한 좌표에 출력
    var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
@@ -123,7 +125,6 @@ function create() {
    var mercenary = game.add.image(137, 335, 'mercenary'); mercenary.scale.set(0.9);
    var home = game.add.image(133, 552, 'home'); home.scale.set(0.9);
    var nextstage = game.add.image(133, 442, 'nextstage'); nextstage.scale.set(0.9);
-   //var border = game.add.image(805, 120, 'border'); border.scale.set(0.9); //임시
    
    //첫 메뉴를 가리키고 있는 빨간색 테두리 출력
    point = game.add.image(x, y, 'select');
@@ -148,7 +149,9 @@ function readKey() {
     $.ajax({
       url: 'requestConsole'
       ,success: function(inputKey) {
+
         console.log(inputKey);
+
          if (inputKey != "NOTHING") {
             switch (depth) {
             // 버튼을 움직이는 단계
@@ -288,26 +291,27 @@ function createStudio() {
 
    // 버튼 포커스를 1로 초기화
    buttonFocus = 1;
-   // 순서를 0으로 초기화
-   turn = 0;
-   turn1 = 0; //'point'
-   turn2 = 1; //'up'
-   turn3 = 2; //'down'                                                         //DB 값 불러오면 turn1, 2, 3도 모션에 맞게 세팅해줘야 함!
-   turn4 = 0; //'A'
-   turn5 = 0; //'AB'
-   turn6 = 0; //'AB'
-   
+  
    // 싱글레인 및 더블레인 배열 초기화
    singleLane = ['A', 'B', 'C'];
    doubleLane = ['AB', 'BC', 'CA'];
+  
    // 중상하좌우 모션 객체 생성 후 모션 배열에 저장
-   var Point = new Motion('point', 'fire', doubleLane);
-   var Up = new Motion('up', 'water', doubleLane);
-   var Down = new Motion('down', 'sun', doubleLane);
-   var Left = new Motion('left', 'moon', singleLane);
-   var Right = new Motion('right', 'star', singleLane);
+   var Point = new Motion('point', 'fire', singleLane);
+   var Up = new Motion('up', 'water', singleLane);
+   var Down = new Motion('down', 'sun', singleLane);
+   var Left = new Motion('left', 'moon', doubleLane);
+   var Right = new Motion('right', 'star', doubleLane);
    motion = [Point, Up, Down, Left, Right];
    
+   // 모션 및 효과 스프라이트 객체 먼저 생성
+   	button1 = game.add.button(buttonX, buttonY, 'motion_effect'); button1.scale.set(1.7);
+   	button2 = game.add.button(buttonX+100, buttonY, 'motion_effect'); button2.scale.set(1.7);
+  	button3 = game.add.button(buttonX+200, buttonY, 'motion_effect'); button3.scale.set(1.7);
+  	
+  	// 모션 설명창 추가
+  	descBackground = game.add.image(1140, 508, 'descBackground'); descBackground.smoothed = false; descBackground.scale.set(3.6);
+  
    // AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
    $.ajax({
       url: 'readMotionList'
@@ -315,53 +319,45 @@ function createStudio() {
       // 성공하면 가져온 모션 리스트를 표시
       ,success: function(jsonText) {
          alert('readMotionList success');
-         alert(jsonText);
-         
-         var motionList = JSON.parse(jsonText);
-         // 첫 번째 모션
-         motion1 = game.add.sprite(buttonX, buttonY, motionList.motion[0].name);
-         effect1 = game.add.sprite(buttonX, buttonY+100, motionList.motion[0].effect);
-         lane1 = game.add.sprite(buttonX, buttonY+200, motionList.motion[0].lane);
-         
-         // 두 번째 모션
-         motion2 = game.add.sprite(buttonX+100, buttonY, motionList.motion[1].name);
-         effect2 = game.add.sprite(buttonX+100, buttonY+100, motionList.motion[1].effect);
-         lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList.motion[1].lane);
-         
-         // 세 번째 모션
-         motion3 = game.add.sprite(buttonX+200, buttonY, motionList.motion[2].name);
-         effect3 = game.add.sprite(buttonX+200, buttonY+100, motionList.motion[2].effect);
-         lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList.motion[2].lane);
-         
-         // 스퀘어 생성
-         squareX = 810; squareY = 500;
-         square = game.add.sprite(squareX, squareY, 'square');
-         square.bringToTop();
+         if (jsonText == '000') {
+        	  alert('저장된 모션이 없습니다!');
+        	  turn1 = 0; //'point'
+	   		  turn2 = 1; //'up'
+	   		  turn3 = 2; //'down'
+	   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'AB'); turn4 = 0;
+              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'AB'); turn5 = 0;
+              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'AB'); turn6 = 0;
+         }
+         else {
+        	 alert('저장된 모션이 있습니다!' + jsonText);
+        	 var motionList = JSON.parse(jsonText);
+        	 turn1 = motionList.button[0].turn;
+        	 turn2 = motionList.button[1].turn;
+        	 turn3 = motionList.button[2].turn;
+        	 alert('turn1: ' + turn1 + ' turn2: ' + turn2 + ' turn3: ' + turn3);
+        	 button1.frame = parseInt(turn1);
+        	 button2.frame = parseInt(turn2);
+        	 button3.frame = parseInt(turn3);
+        	 descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[parseInt(turn1)], 30);
+        	 lane1 = game.add.sprite(buttonX, buttonY+200, motionList.button[0].lane);
+        	 lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList.button[1].lane);
+        	 lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList.button[2].lane);
+        	 if (lane1.key == 'A' || lane1.key == 'AB') {turn4 = 0;} else if (lane1.key == 'B' || lane1.key == 'BC') {turn4 = 1;} else {turn4 = 2;}
+        	 if (lane2.key == 'A' || lane2.key == 'AB') {turn5 = 0;} else if (lane2.key == 'B' || lane2.key == 'BC') {turn5 = 1;} else {turn5 = 2;}
+        	 if (lane3.key == 'A' || lane3.key == 'AB') {turn6 = 0;} else if (lane3.key == 'B' || lane3.key == 'BC') {turn6 = 1;} else {turn6 = 2;}
+         }
       }
       // 실패하면 기본값을 표시
       ,error: function() {
           alert('readMotionList error');
-         // 첫 번째 모션
-         motion1 = game.add.sprite(buttonX, buttonY, 'point');
-         effect1 = game.add.sprite(buttonX, buttonY+100, 'fire');
-         lane1 = game.add.sprite(buttonX, buttonY+200, 'A');
-         
-         // 두 번째 모션
-         motion2 = game.add.sprite(buttonX+100, buttonY, 'up');
-         effect2 = game.add.sprite(buttonX+100, buttonY+100, 'water');
-         lane2 = game.add.sprite(buttonX+100, buttonY+200, 'A');
-         
-         // 세 번째 모션
-         motion3 = game.add.sprite(buttonX+200, buttonY, 'down');
-         effect3 = game.add.sprite(buttonX+200, buttonY+100, 'sun');
-         lane3 = game.add.sprite(buttonX+200, buttonY+200, 'A');
-         
-         // 스퀘어 생성
-         squareX = 810; squareY = 500;
-         square = game.add.sprite(squareX, squareY, 'square');
-         square.bringToTop();
       }
    });
+	 
+	// 스퀘어 생성
+   squareX = 810; squareY = 500;
+   square = game.add.sprite(squareX, squareY, 'square');
+   square.bringToTop();
+   
    //moveButtonFocus()로 넘어간다.  
    depth = 1;
 }
@@ -382,8 +378,8 @@ function moveSquare(direction) {
       squareX += (squareX + destination) > 1100? 0:destination;
    }
    game.add.tween(square).to({ y: squareY }, 300, Phaser.Easing.Exponential.Out, true, 0);
-   game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);      
-	
+   game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);
+   square.bringToTop();
 }
 
 /*
@@ -417,8 +413,8 @@ function moveButtonFocus(inputKey) {
             buttonFocus = buttonFocus+1; return;
          } break;
       case 'enter': 
-              depth = 2; 
-             break;
+            depth = 2; 
+            break;
       case 'esc': 
         isEntered = false;
         isnull();
@@ -447,9 +443,9 @@ function moveButtonFocus(inputKey) {
  */
 function saveMotionList() {
    // 현재 떠 있는 모션, 효과, 레인 스프라이트의 이름을 읽어 json String으로 만듬
-   var jsonText = "{'motion': [{'name': '" + motion1.key + "', 'effect': '" + effect1.key + "', 'lane': '" + lane1.key + "'},"
-             + "{'name': '" + motion2.key + "', 'effect': '" + effect2.key + "', 'lane': '" + lane2.key + "'},"
-             + "{'name': '" + motion3.key + "', 'effect': '" + effect3.key + "', 'lane': '" + lane3.key + "'}]}";
+   var jsonText = "{'button': [{'turn': '" + turn1 + "', 'lane': '" + lane1.key + "'},"
+             + "{'turn': '" + turn2 + "', 'lane': '" + lane2.key + "'},"
+             + "{'turn': '" + turn3 + "', 'lane': '" + lane3.key + "'}]}";
    
    // ajax를 통해 jsonText를 DB(table save)에 저장 (돌아오는 result는 int값으로, 성공 시 1/실패 시 0)
    $.ajax({
@@ -462,238 +458,223 @@ function saveMotionList() {
 }
  
 /*
- * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발)
- 철저한 들여쓰기를 생활화합시다..!
+ * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
-function moveContent(buttonFocus,inputKey) {
-	 console.log('moveContent() 진입');
-	 switch(buttonFocus) {
-	 //모션 1 변경
-	 case 1:
-		 switch (inputKey) {
-		 case 'left':
-			 if(turn1 == 0) return;
-			 temp = turn1;
-			 turn1--;
-			 minusAgain1:
-			 while (motion[turn1].getName() == motion2.key || motion[turn1].getName() == motion3.key) {
-				 if(turn1 != 0) {
-					 turn1--;
+function moveContent(buttonFocus, inputKey) {
+  console.log('moveContent() 진입');
+	switch(buttonFocus) {
+         // 모션 1 변경
+      case 1: 
+         switch (inputKey) {
+            case 'left':
+               if(turn1 == 0) return;
+               temp = turn1;
+            	turn1--;
+               minusAgain1:
+               while (turn1 == turn2 || turn1 == turn3) {
+                  if(turn1 != 0) {
+                     turn1--;
                      continue minusAgain1;
-                 }else {
-                	 turn1 = temp;
-                	 return;
-               	 }
-			 }
-			 motion1.destroy();
-			 effect1.destroy();
-			 lane1.destroy();
-			 motion1 = game.add.sprite(buttonX, buttonY, motion[turn1].getName());
-			 effect1 = game.add.sprite(buttonX, buttonY+100, motion[turn1].getEffect());
-			 lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
-			 square.bringToTop();
-			 	break;
-		 case 'right':
-			 if(turn1 == 4) return;
-			 temp = turn1;
-			 turn1++;
-			 plusAgain1:
-			 while (motion[turn1].getName() == motion2.key || motion[turn1].getName() == motion3.key) {
-				 if(turn1 != 4) {
-					 turn1++;
-                     continue plusAgain1;
-                 } else {
-                	 turn1 = temp;
+                  } else {
+                     turn1 = temp;
                      return;
-                 }
-             }
-			 motion1.destroy();
-			 effect1.destroy();
-			 lane1.destroy();
-			 motion1 = game.add.sprite(buttonX, buttonY, motion[turn1].getName());
-			 effect1 = game.add.sprite(buttonX, buttonY+100, motion[turn1].getEffect());
-			 lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
-			 square.bringToTop();
-			 	break;
-	 	case 'enter':
-	 		//이 모션으로 선택했다는 효과 주기
-	 		break;
- 		case 'esc': depth = 1; break;
- 			default: break;
-		}break;
-	//모션 2 변경
-	case 2:
-		switch (inputKey) {
-		case 'left':
-			if(turn2 == 0) return;
-			temp = turn2;
-			turn2--;
-			minusAgain2:
-			while (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
-				if(turn2 != 0) {
-					turn2--;
-					continue minusAgain2;
-				} else {
-					turn2 = temp;
-					return;
-				}
-			}
-			motion2.destroy();
-			effect2.destroy();
-			lane2.destroy();
-			motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
-			effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
-			lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
-			square.bringToTop();
-				break;
-		case 'right':
-			if(turn2 == 4) return;
-			temp = turn2;
-			turn2++;
-			plusAgain2:
-			while (motion[turn2].getName() == motion1.key || motion[turn2].getName() == motion3.key) {
-				if(turn2 != 4) {
-					turn2++;
-					continue plusAgain2;
-				} else {
-					turn2 = temp;
-					return;
-				}
-			}
-			motion2.destroy();
-            effect2.destroy();
-            lane2.destroy();
-            motion2 = game.add.sprite(buttonX+100, buttonY, motion[turn2].getName());
-            effect2 = game.add.sprite(buttonX+100, buttonY+100, motion[turn2].getEffect());
-            lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
-            square.bringToTop();
-            	break;
-       	case 'enter':
-       		//이 모션으로 선택
-       		break;
-     	case 'esc': depth = 1; break;
+                  }
+               }
+	            button1.frame = turn1;
+	            lane1.destroy(); lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
+	            descText.destroy(); descText = game.add.bitmapText(desctextX, desctextY, 'neo_font' , descArray[turn1], 30);
+	            turn4 = 0;
+	            square.bringToTop();
+               break;
+            case 'right':
+               if(turn1 == 4) return;
+               temp = turn1;
+            	turn1++;
+               plusAgain1:
+               while (turn1 == turn2 || turn1 == turn3) {
+                  if(turn1 != 4) {
+                     turn1++;
+                     continue plusAgain1;
+                  } else {
+                     turn1 = temp;
+                     return;
+                  }
+               }
+	            button1.frame = turn1;
+	            lane1.destroy();
+	            lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[0]);
+	            descText.destroy(); descText = game.add.bitmapText(desctextX, desctextY, 'neo_font' , descArray[turn1], 30);
+	            turn4 = 0;
+	            square.bringToTop();
+               break;
+            case 'enter': 
+               //이 모션으로 선택했다는 효과 주기
+               break;
+            case 'esc': depth = 1; break;
             default: break;
-		} break;
-	//모션 3 변경
-	case 3:
-		switch (inputKey) {
-		case 'left':
-			if(turn3 == 0) return;
-			temp = turn3;
-			turn3--;
-			minusAgain3:
-			while (motion[turn3].getName() == motion1.key || motion[turn3].getName() == motion2.key) {
-				if(turn3 != 0) {
-					turn3--;
-					continue minusAgain3;
-				} else {
-					turn3 = temp;
-					return;
-				}
-			}
-			motion3.destroy();
-			effect3.destroy();
-			lane3.destroy();
-			motion3 = game.add.sprite(buttonX+200, buttonY, motion[turn3].getName());
-			effect3 = game.add.sprite(buttonX+200, buttonY+100, motion[turn3].getEffect());
-			lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
-			square.bringToTop();
-				break;
-		case 'right':
-			if(turn3 == 4) return;
-			temp = turn3;
-			turn3++;
-			plusAgain3:
-			while (motion[turn3].getName() == motion1.key || motion[turn3].getName() == motion2.key) {
-				if(turn3 != 4) {
-					turn3++;
-					continue plusAgain3;
-				} else {
-					turn3 = temp;
-					return;
-				}
-			}
-			motion3.destroy();
-			effect3.destroy();
-			lane3.destroy();
-			motion3 = game.add.sprite(buttonX+200, buttonY, motion[turn3].getName());
-			effect3 = game.add.sprite(buttonX+200, buttonY+100, motion[turn3].getEffect());
-			lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
-			square.bringToTop();
-				break;
-		case 'enter':
-			//이 모션으로 선택했다는 효과 주기
-			break;
-		case 'esc': depth = 1; break;
+         } break;
+      // 모션 2 변경
+      case 2: 
+         switch (inputKey) {
+            case 'left':
+            if(turn2 == 0) return;
+               temp = turn2;
+            	turn2--;
+               minusAgain2:
+               while (turn2 == turn1 || turn2 == turn3) {
+                  if(turn2 != 0) {
+                     turn2--;
+                     continue minusAgain2;
+                  } else {
+                     turn2 = temp;
+                     return;
+                  }
+               }
+	            button2.frame = turn2;
+	            lane2.destroy(); lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
+	            descText.destroy(); descText = game.add.bitmapText(desctextX, desctextY, 'neo_font' , descArray[turn2], 30);
+	            turn5 = 0;
+	            square.bringToTop();
+               break;
+            case 'right': 
+             if(turn2 == 4) return;
+              temp = turn2;
+            	turn2++;
+               plusAgain2:
+               while (turn2 == turn1 || turn2 == turn3) {
+                  if(turn2 != 4) {
+                     turn2++;
+                     continue plusAgain2;
+                  } else {
+                     turn2 = temp;
+                     return;
+                  }
+               }
+	            button2.frame = turn2;
+	            lane2.destroy(); lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[0]);
+	            descText.destroy(); descText = game.add.bitmapText(desctextX, desctextY, 'neo_font' , descArray[turn2], 30);
+	            turn5 = 0;
+	            square.bringToTop();
+               break;
+            case 'enter':
+               //이 모션으로 선택
+               break;
+            case 'esc': depth = 1; break;
             default: break;
-		} break;
-	//레인 1 변경
-	case 4:
-		var Motion = findMotion(motion1.key);
-		switch (inputKey) {
-		case 'left':
-			if (turn4 <= 0) {turn4 = 0; return;} turn4 = turn4-1;
-			lane1.destroy();
-			lane1 = game.add.sprite(buttonX, buttonY+200, Motion.getLane()[turn4]);
-			square.bringToTop();
-				break;
-		case 'right':
-			if (turn4 >= 2) {turn4 = 2; return;} turn4 = turn4+1;
-			lane1.destroy();
-			lane1 = game.add.sprite(buttonX, buttonY+200, Motion.getLane()[turn4]);
-			square.bringToTop();
-				break;
-		case 'enter':
-			//이 레인으로 선택했다는 효과 주기
-			break;
-		case 'esc': depth = 1; break;
-			default: break;
-		} break;
-	// 레인 2 변경
-	case 5:
-		var Motion = findMotion(motion2.key);
-		switch (inputKey) {
-		case 'left':
-			if (turn5 <= 0) {turn5 = 0; return;} turn5 = turn5-1;
-			lane2.destroy();
-			lane2 = game.add.sprite(buttonX+100, buttonY+200, Motion.getLane()[turn5]);
-			square.bringToTop();
-				break;
-		case 'right':
-			if (turn5 >= 2) {turn5 = 2; return;} turn5 = turn5+1;
-			lane2.destroy();
-			lane2 = game.add.sprite(buttonX+100, buttonY+200, Motion.getLane()[turn5]);
-			square.bringToTop();
-				break;
-		case 'enter':
-			//이 레인으로 선택했다는 효과 주기
-			break;
-		case 'esc': depth = 1; break;
-			default: break;
-		}
-	//레인 3 변경
-	case 6:
-		var Motion = findMotion(motion3.key);
-		switch (inputKey) {
-   		case 'left': 
-      		if (turn6 <= 0) {turn6 = 0; return;} turn6 = turn6-1;
-      		lane3.destroy();
-      		lane3 = game.add.sprite(buttonX+200, buttonY+200, Motion.getLane()[turn6]);
-      		square.bringToTop();
-      		break;
-		case 'right': 
-			if (turn6 >= 2) {turn6 = 2; return;} turn6 = turn6+1;
-			lane3.destroy();
-			lane3 = game.add.sprite(buttonX+200, buttonY+200, Motion.getLane()[turn6]);
-			square.bringToTop();
-			break;
-		case 'enter':
-			//이 레인으로 선택했다는 효과 주기
-			break;
-		case 'esc': depth = 1; break;
-			default: break;
-		} break;
-	}	
+         } break;
+      // 모션 3 변경
+      case 3: 
+         switch (inputKey) {
+            case 'left':
+               if(turn3 == 0) return;
+                  temp = turn3;
+               	  turn3--;
+                  minusAgain3:
+                  while (turn3 == turn1 || turn3 == turn2) {
+                     if(turn3 != 0) {
+                        turn3--;
+                        continue minusAgain3;
+                     } else {
+                        turn3 = temp;
+                        return;
+                     }
+                  }
+	               button3.frame = turn3;
+	               lane3.destroy(); lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
+	               descText.destroy(); descText = game.add.bitmapText(desctextX, desctextY, 'neo_font' , descArray[turn3], 30);
+	               turn6 = 0;
+	               square.bringToTop();
+                  break;
+            case 'right':
+               if(turn3 == 4) return;
+                  temp = turn3;
+               	  turn3++;
+                  plusAgain3:
+                  while (turn3 == turn1 || turn3 == turn2) {
+                     if(turn3 != 4) {
+                        turn3++;
+                        continue plusAgain3;
+                     } else {
+                        turn3 = temp;
+                        return;
+                     }
+                  }
+	               button3.frame = turn3;
+	               lane3.destroy(); lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn3].getLane()[0]);
+	               descText.destroy(); descText = game.add.bitmapText(desctextX, desctextY, 'neo_font' , descArray[turn3], 30);
+	               turn6 = 0;
+	               square.bringToTop();
+                  break;
+            case 'enter':
+               //이 모션으로 선택했다는 효과 주기
+               break;
+            case 'esc': depth = 1; break;
+            default: break;
+         } break;
+      // 레인 1 변경
+      case 4: 
+         switch (inputKey) {
+            case 'left':
+               if (turn4 <= 0) {turn4 = 0; return;} turn4 = turn4-1;
+               lane1.destroy();
+               lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[turn4]);
+               square.bringToTop();
+               break;
+            case 'right': 
+               if (turn4 >= 2) {turn4 = 2; return;} turn4 = turn4+1;
+               lane1.destroy();
+               lane1 = game.add.sprite(buttonX, buttonY+200, motion[turn1].getLane()[turn4]);
+               square.bringToTop();
+               break;
+            case 'enter': 
+                   //이 레인으로 선택했다는 효과 주기
+               break;
+            case 'esc': depth = 1; break;
+            default: break;
+         } break;         
+      // 레인 2 변경
+      case 5:
+         switch (inputKey) {
+            case 'left': 
+               if (turn5 <= 0) {turn5 = 0; return;} turn5 = turn5-1;
+               lane2.destroy();
+               lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[turn5]);
+               square.bringToTop();
+               break;
+            case 'right':
+               if (turn5 >= 2) {turn5 = 2; return;} turn5 = turn5+1;
+               lane2.destroy();
+               lane2 = game.add.sprite(buttonX+100, buttonY+200, motion[turn2].getLane()[turn5]);
+               square.bringToTop();
+               break;
+            case 'enter': 
+               //이 레인으로 선택했다는 효과 주기
+               break;
+            case 'esc': depth = 1; break;
+            default: break;
+         } break;
+      // 레인 3 변경
+      case 6: 
+         switch (inputKey) {
+            case 'left': 
+               if (turn6 <= 0) {turn6 = 0; return;} turn6 = turn6-1;
+               lane3.destroy();
+               lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn2].getLane()[turn6]);
+               square.bringToTop();
+               break;
+            case 'right': 
+               if (turn6 >= 2) {turn6 = 2; return;} turn6 = turn6+1;
+               lane3.destroy();
+               lane3 = game.add.sprite(buttonX+200, buttonY+200, motion[turn2].getLane()[turn6]);
+               square.bringToTop();
+               break;
+            case 'enter':
+               //이 레인으로 선택했다는 효과 주기
+               break;
+            case 'esc': depth = 1; break;
+            default: break;
+         } break;
+	}
 }
 
 /*
@@ -728,7 +709,6 @@ function createMercenary(inputKey) {
 
    // 난수를 보여줄 텍스트
    text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
-   
    
    neon = game.add.image(795, 440, 'neon');
    neon.scale.set(2);
@@ -818,12 +798,13 @@ function goHome(inputKey) {
       logoutMember();
    }
 }
+
 function frontoftown() {
 	m_back = game.add.image(750,75,'menu_sub_back');
 	m_back.alpha = 0.8;
     image = game.add.image(810, 120, 'front');
     border = game.add.image(810, 120, 'border');
-    textboard = game.add.image(810,450,'textboard');
+    textboard = game.add.image(810, 450,'textboard');
     textboard.scale.set(2);
     text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
     start = game.add.image(935, 580,'start');
@@ -881,27 +862,29 @@ function playerCount() {
 }
 
 function isnull() {
-	if (text1 != null) {text1.kill(); text1 = null;}
-	if (image != null) {image.kill(); image = null;}
-	if (m_back== null) {m_back = game.add.image(750,75,'menu_sub_back');}
-	if (neon != null) {neon.kill(); neon = null;}
-	if (board != null) {board.kill(); board = null;}
-	if (messange != null) {messange.kill(); messange = null;}
-	if (exit != null) {exit.kill(); exit = null;}
-	if (text2!= null) {text2.kill(); text2 = null;}
-	if (e_select!= null) {e_select.kill(); e_select = null;}
-	if (motion1 != null) {motion1.kill(); motion1  = null;}
-	if (motion2 != null) {motion2.kill(); motion2 = null;}
-	if (motion3 != null) {motion3.kill(); motion3  = null;}
-	if (effect1 != null) {effect1.kill(); effect1 = null;}
-	if (effect2 != null) {effect2.kill(); effect2 = null;}
-	if (effect3 != null) {effect3.kill(); effeect3 = null;}
-	if (lane1 != null) {lane1.kill(); lane1 = null;}
-	if (lane2 != null) {lane2.kill(); lane2 = null;}
-	if (lane3 != null) {lane3.kill(); lane3 = null;}
-	if (square != null) {square.kill(); square = null;}
+	if (text1 != null) {text1.destroy();}
+	if (image != null) {image.destroy();}
+	if (m_back != null) {m_back.destroy();}
+	if (border != null) {border.destroy();}
+	if (textboard != null) {textboard.destroy();}
+	if (start != null) {start.destroy();}
+	if (neon != null) {neon.destroy();}
+	if (board != null) {board.destroy();}
+	if (messange != null) {messange.destroy();}
+	if (exit != null) {exit.destroy();}
+	if (text2!= null) {text2.destroy();}
+	if (e_select!= null) {e_select.destroy();}
+	if (button1 != null) {button1.destroy();}
+	if (button2 != null) {button2.destroy();}
+	if (button3 != null) {button3.destroy();}
+	if (lane1 != null) {lane1.destroy();}
+	if (lane2 != null) {lane2.destroy();}
+	if (lane3 != null) {lane3.destroy();}
+	if (square != null) {square.destroy();}
+	if (descBackground != null) {descBackground.destroy();}
+	if (descText != null) {descText.destroy();}
 }
-
+  
 
 </script>
 </body>
