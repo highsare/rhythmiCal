@@ -77,13 +77,11 @@ public class VillageController {
 	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
 	public String loginApp(Member member) {
 		String result = "";
-		if (mList.size() <= 3) {
+		if (mList.size() <= 4) {
 			if (member.getCode().equals(String.valueOf(rdmnum))) {
+				cnt = mList.size() + 1;
 				mList.add("player"+cnt);
-				if (cnt <=4) {
-					cnt++;
-				}
-				result = "player" + (cnt-1);
+				result = "player" + (cnt);
 				System.out.println(mList);
 				System.out.println(result);
 			}
@@ -113,6 +111,16 @@ public class VillageController {
 			System.out.println(rdmnum);
 			return true;
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="logOutMulti",method = RequestMethod.POST)
+	public boolean loginApp(String player) {
+		System.out.println(player);
+		
+		mList.remove(player);
+		System.out.println(mList);
+		return true;
 	}
 	
 }

@@ -801,6 +801,8 @@ function multiconnection() {
 					}
                     sendRdm();
 				}
+            	
+            	if (player3 != null) {player3.destroy();} 
                break;
             case 3:
             	if (player3 == null) {
@@ -811,6 +813,8 @@ function multiconnection() {
 					}
                     sendRdm();
 				}
+            	
+            	 if (player4 != null) {player4.destroy();} 
                break;
             case 4:
             	if (player4 == null) {
@@ -823,6 +827,7 @@ function multiconnection() {
 				}
                break;
             default:
+            	if (player2 != null) {player2.destroy();}
                break;
             }
          }
@@ -913,13 +918,11 @@ function playerCount() {
 	      url: 'playerCount'
 	      ,type: 'post'
 	      ,success: function(result) {
-	         console.log(result.length);
-	         
 			if (result != null) {
 				switch (result.length) {
 				case 2:
 					player2 = game.add.image(330, 765, 'player2');
-					player2.scale.set(0.4);	
+					player2.scale.set(0.4);
 					break;
 				case 3:
 					player3 = game.add.image(480, 765, 'player3');
