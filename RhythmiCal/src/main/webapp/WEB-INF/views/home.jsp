@@ -52,7 +52,7 @@ $(document).ready(function() {
 							$("#enters").append('<tr><td class="new"><span class="badge badge-warning">NEW</span></td><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
 						}
 						else {
-							$("#enters").append('<tr><td class="new"></td><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
+							$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
 						}
 					});
 				}
@@ -75,7 +75,7 @@ $(function() {
 		
 		<!-- 유효성 검사 해야 함 -->
 		if (signupPw != signupPwc) {
-			alert('비밀번호를 다시 한 번 확인해봐!');
+			alert('비밀번호가 일치하지 않습니다.');
 			return;
 		}
 		
@@ -252,23 +252,18 @@ td {
 <!-- 명예의 전당 글을 출력하는 테이블 -->
 <div class="center">
   <table>
-  	  <tr>
-  	  	<td class="new">
-  	  	<td class="id" style="background-image: url(resources/Images/mainPage/honor_id.png);">
-  	  	<td class="reply" style="background-image: url(resources/Images/mainPage/honor_id.png);">
-  	  </tr>
       <tr>
-        <td class="new"><span class="badge badge-warning">NEW</span></td>
+        <td class="new"></td>
         <td class="id">김민아</td>
         <td class="reply">나 다깼음</td>
       </tr>
       <tr>
-        <td class="new"><span class="badge badge-warning">NEW</span></td>
+        <td class="new"></td>
         <td class="id">김지원</td>
         <td class="reply">개쉬운데?</td>
       </tr>
       <tr>
-        <td class="new"><span class="badge badge-warning">NEW</span></td>
+        <td class="new"></td>
         <td class="id">이진주</td>
         <td class="reply">님들 제가 1빠</td>
       </tr>
