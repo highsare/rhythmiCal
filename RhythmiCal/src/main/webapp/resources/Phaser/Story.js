@@ -92,7 +92,6 @@ Story.prototype = {
 	    
 	    //텍스트 박스
 	    game.load.image("textbox", "resources/Images/tutorial/dialog.png");
-		this.loadStoryContents();
 	},
 	create: function() {
 		
@@ -286,29 +285,6 @@ Story.prototype = {
 		typewriter.start();
 
 	},
-	//DB에서 대화문 불러오기
-	loadStoryContents: function(){ 
-		$.ajax({
-			url : 'loadStoryContents'
-			,type : 'post'
-			,dataType : 'json'
-			,data: {storyNum : storyNum}
-			/*cache : false,
-			async : false,*/
-			,success:function(arrtest){
-				storyText = new Array();
-				arr = new Array();
-				arr = arrtest;
-				console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
-				
-			},error: function(){
-				alert("대화문 임포트 에러");
-			}
-
-		});
-	},
-	
-
 	//게임으로 이동 
 	 gotostage: function(){
 		//모든 게임 elements 날리기.
@@ -319,13 +295,6 @@ Story.prototype = {
 		 //음악 날리기
 		 music.destroy();
 		 game.cache.removeSound(bgMusicName);
-		if(storyNum==14){
-			game.state.start('Ending');
-		}else{
-			
-			//game.state.start('stage'+i);  //예를 들어 stage1 
-		}
-		
-		//game.state.start("Preload");
+		 //game.state.start("Preload");
 	}
 }
