@@ -34,7 +34,7 @@ Tutorial.prototype = {
 	/*
 	 * createTutorialText(): 튜토리얼 객체를 생성하는 메서드. 여기서 리드미 및 말풍선의 위치, 텍스트의 내용을 정의하면 된다.
 	 */
-		createTutorialText: function() {
+	createTutorialText: function() {
 		// index 0: 시작
 		tutorialTextArray.push(new TutorialText(300, 300, 40, 650, 
 			'비토벤! 준비는 됐나? 크크크'
@@ -89,6 +89,7 @@ Tutorial.prototype = {
 	 * preload()
 	 */
 	preload: function() {
+		alert("Tutorial");
 		// debug
 		game.load.image('arrow', 'assets/sprites/arrow.png');
 		// load background image
@@ -100,11 +101,13 @@ Tutorial.prototype = {
 		// load dialog image
 	    game.load.image("dialog", "resources/Images/tutorial/dialog.png");
 	},
-	
 	/*
 	 * create()
 	 */
 	create: function() {
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
+		
 		// debug
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 	    sprite = game.add.sprite(400, 300, 'arrow');
@@ -218,4 +221,13 @@ function showTutorialText(tutorialTextIndex) {
 	if (typeof typewriter !== "undefined") {typewriter.destroy();}
 	if (tutorialTextArray[tutorialTextIndex].dialogY == 650) {textY = 675;} else textY = 55; //다이얼로그가 아래면 텍스트도 아래, 위면 위
 	typeWriterFunction(tutorialTextArray[tutorialTextIndex].text, 80, textY, 30);
+}
+
+function gofull() {
+	if (game.scale.isFullScreen) {
+		game.scale.stopFullScreen();
+	}
+	else {
+		game.scale.startFullScreen(false);
+	}
 }

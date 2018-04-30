@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.beatoven.rhythmical.dao.HomeDAO;
+import com.beatoven.rhythmical.dao.SystemDAO;
 import com.beatoven.rhythmical.vo.FamePost;
 import com.beatoven.rhythmical.vo.Member;
+import com.beatoven.rhythmical.vo.Save;
 
 @Controller
 public class HomeController {
@@ -25,6 +27,8 @@ public class HomeController {
 	
 	@Inject
 	HomeDAO homeDAO;
+	@Inject
+	SystemDAO sysDAO;
 	
 	String consoleBox = "";
 	boolean isUsed = false;
@@ -45,22 +49,32 @@ public class HomeController {
 	//회원가입
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
-	public int signupMember(Member member) {
-		logger.debug("signupMember() 진입 - member: " + member);
+	public String signupMember(Member member) {
+		System.out.println("signupMember() 진입 - member: " + member);
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
+			//신규 세이브 데이터 생성: Save(String id, int life, String motionlist, int stateNum)
+			Save save = new Save(member.getId(), 5, "000", 1); 
+			int i = sysDAO.makeSave(save);
+			System.out.println("save result: " + i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		if (result == 1) {
+			System.out.println("signup success");
+			return "어서와!";
+		} else {
+			System.out.println("signup fail");
+			return "다시 한 번 확인해줘!";
+		}
 	}
 	
 	//로그인(세션에 값 저장)
 	@ResponseBody
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
-	public String loginMember(HttpSession session, Member member) {
-		logger.debug("loginMember() 진입 - member: " + member);
+	public String loginMember(HttpSession session, Member member, String language) {
+		System.out.println("loginMember() 진입 - member: " + member + ", language: " + language);
 		Member loginMember = null;
 		try {
 			loginMember = homeDAO.loginMember(member);
@@ -69,21 +83,20 @@ public class HomeController {
 		}
 		if (loginMember != null) {
 			//로그인 성공
-			session.setAttribute("loginedMember", loginMember);
-			System.out.println("done");
-			return "login";
-		}else {
+			session.setAttribute("loginMember", loginMember);
+			System.out.println("login success - loginMember: " + loginMember.toString());
+		} else {
 			//로그인 실패
-			System.out.println("fail");
-			return "fail";
+			System.out.println("login fail");
 		}
+		return language;
 	}
 	
 	//로그아웃
 	@ResponseBody
 	@RequestMapping(value = "logoutMember", method = RequestMethod.POST)
 	public String logoutMember(HttpSession session) {
-		logger.debug("logoutMember() 진입");
+		System.out.println("logoutMember() 진입");
 		
 		// 진주 해야하는 거 .
 		/* 플레이어가 각각 종료 했을 때 지워주기랑 플레이어 추가된 상황에서 화면에 보여주기랑 
@@ -97,7 +110,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "readFamePost", method = RequestMethod.GET)
 	public ArrayList<FamePost> readFamePost(int offset) {
-		logger.debug("readFamePost() 진입");
+		System.out.println("readFamePost() 진입");
 		int limit = 1;
 		RowBounds rowBounds = new RowBounds(offset, limit); //0, 1은 a / 1, 1은 b / 2, 1은 c
 		ArrayList<FamePost> famePostList = null;
@@ -109,6 +122,31 @@ public class HomeController {
 		return famePostList;
 	}
 	
+	// 명예의 전당 글 남기기 페이지로 이동
+	@RequestMapping(value = "hallOfFame", method = RequestMethod.GET)
+	public String hallOfFame() {
+		return "hallOfFame";
+	}
+	
+	// 명예의 전당 글 남기기
+	@ResponseBody
+	@RequestMapping(value = "writeFamePost", method = RequestMethod.POST)
+	public int writeFamePost(HttpSession session, String text) {
+		System.out.println("writeFamePost() - text: " + text);
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		FamePost famePost = new FamePost(loginMember.getId(), text);
+		
+		int result = 0;
+		try {
+			result = homeDAO.writeFamePost(famePost);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 게임을 만들기 위한 임시 game.jsp
 	@RequestMapping("game")
 	public String toGamePage() {
 		return "game";
@@ -128,9 +166,9 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public boolean loginApp(Member member, HttpSession session) {
+	public String loginApp(Member member, HttpSession session) {
 		System.out.println(member);
-		session.setAttribute("id", member.getId());
+		session.setAttribute("AppId", member.getId());
 		//multiplay.put("player1", member.getId());
 		
 		boolean flag = true;
@@ -144,11 +182,11 @@ public class HomeController {
 			multiList.add("player1");			
 		}
 		
-		return true;
+		return "player1";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "sendConsole", method = RequestMethod.POST)
+	@RequestMapping(value = "sendConsole")
 	public String receiveConsole(String request, String order, HttpSession session) {
 		consoleBox = order;
 		session.setAttribute("order", consoleBox);
@@ -180,7 +218,7 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value = "requestUserInfo", method = RequestMethod.POST)
 	public boolean requestUserInfo(HttpSession session) {
-		logger.debug("requestUserInfo() 진입");
+		System.out.println("requestUserInfo() 진입");
 		
 		// 세션에서 로그인한 멤버객체 확인
 		Member loginMember = (Member) session.getAttribute("loginMember");

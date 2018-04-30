@@ -9,22 +9,30 @@
 	<!-- 회원가입 -->
 	<insert id="signupMember" parameterType="member">
 		insert into member(id, password)
-		values(#{id}, #{pw})
+		values(#{id}, #{password})
 	</insert>
 	
 	<!-- 로그인 -->
 	<select id="loginMember" parameterType="member" resultType="member">
 		select *
 		from member
-		where id = #{id} and password = #{pw}
+		where id = #{id} and password = #{password}
 	</select>
 	
 	<!-- 명예의 전당 글 불러오기 -->
 	<select id="readFamePost" resultType="famePost">
 		select *
 		from halloffame
+		order by cleardate desc
 	</select>
 	
+	<!-- 명예의 전당 글 작성하기 -->
+	<insert id="writeFamePost" parameterType="famePost">
+		insert into halloffame (id, text)
+		values(#{id}, #{text})
+	</insert>
+	
+	<!-- 멤버가 기존 멤버인지 신규 멤버인지 확인 -->
 	<select id="isNewbie" parameterType="member" resultType="int">
 		select isNewbie
 		from member

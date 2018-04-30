@@ -9,21 +9,20 @@ function requestState(){
 		,type: 'POST'
 		,success : function(state){
 			alert(state);
-			game.world.removeAll();
 			if (state == "Intro") {
-				game.state.start("Intro");
+				setResources("Intro");
 			}else if (state == "Tutorial"){
-				game.state.start("Tutorial");
+				setResources("Tutorial");
 			}else if (state == "Story") {
 				requestContentNum("Story");
 			}else if (state == "Stage") {
 				requestContentNum("Stage");
 			}else if (state == "Village") {
-				game.state.start("Village");
+				setResources("Village");
 			}else if (state == "Ending") {
-				game.state.start("Ending");
+				setResources("Ending");
 			}else if (state == "HallOfFame"){
-				game.state.start("HallOfFame");
+				setResources("HallOfFame");
 			}
 		},error : function(){}
 	});
@@ -37,7 +36,7 @@ function requestContentNum(state){
 		,success : function(num){
 			//Stage.js의 전역변수 contentNum에 현재 state의 contentNum을 전달한다.
 			contentNum = num;
-			game.state.start(state);
+			setResources(state);
 		},error: function(){}
 	})
 }

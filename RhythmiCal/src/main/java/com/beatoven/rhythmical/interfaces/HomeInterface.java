@@ -21,6 +21,9 @@ public interface HomeInterface {
 	// 명예의 전당 글 불러오기
 	public ArrayList<FamePost> readFamePost(RowBounds rowBounds);
 
+	// 명예의 전당 글 남기기
+	public int writeFamePost(FamePost famePost);
+	
 	// 멤버가 기존 멤버인지 신규 멤버인지 확인
 	public int isNewbie(Member member);
 }

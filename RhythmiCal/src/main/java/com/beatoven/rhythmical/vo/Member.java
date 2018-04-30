@@ -4,23 +4,23 @@ public class Member {
 
 	// field
 	private String id;
-	private String pw;
+	private String password;
 	private String code;
 	
 	// getters and setters
 	public String getId() {return id;}
 	public void setId(String id) {this.id = id;}
-	public String getPw() {return pw;}
-	public void setPw(String pw) {this.pw = pw;}
+	public String getPassword() {return password;}
+	public void setPassword(String password) {this.password = password;}
 	public String getCode() {return code;}
 	public void setCode(String code) {this.code = code;}
 	
 	// constructor
 	public Member() {}
-	public Member(String id, String pw) {
+	public Member(String id, String password) {
 		super();
 		this.id = id;
-		this.pw = pw;
+		this.password = password;
 	}
 	
 	public Member(String code) {
@@ -31,6 +31,6 @@ public class Member {
 	// toString
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", pw=" + pw + ", code=" + code+"]";
+		return "Member [id=" + id + ", password=" + password + ", code=" + code+"]";
 	}
 }

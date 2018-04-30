@@ -1,36 +1,40 @@
 package com.beatoven.rhythmical.controller;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.beatoven.rhythmical.vo.State;
+import com.beatoven.rhythmical.dao.SystemDAO;
+import com.beatoven.rhythmical.vo.Member;
+
+// TODO StateController 검증 필
+
 
 @Controller
 public class StateController {
-	boolean flag = true;
-
+	int cnt = 0;
+	
+	@Inject
+	SystemDAO systemDAO;
+	
 	@ResponseBody
 	@RequestMapping(value="requestState")
-	public String stateControll() {
-		State state = new State();
+	public String requestState(HttpSession session) {
 		//DAO를 활용해 Save 테이블의 StateNum++
-		state.setState("Stage");//test
-		/*if (flag) {
-			state.setState("Stage");
-			flag = false;
-		}else {
-			state.setState("Story");
-		}*/
+		Member member = (Member)session.getAttribute("loginMember");
+		systemDAO.addStateNum(member.getId());
 		//Save 테이블의 StateNum과 같은 스테이트의 정보 반환
-		return state.getState();
+		return systemDAO.getStateName(member.getId());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="requestContentNum")
-	public int requestContentNum() {
-		int contentNum = 0;
+	public int requestContentNum(HttpSession session) {
+		Member member = (Member)session.getAttribute("loginMember");
 		//DAO를 활용해 현재 Save테이블과 State 테이블을 조인하여 컨텐츠 넘버 반환
-		return contentNum;
+		return systemDAO.getContentNum(member.getId());
 	}
 }

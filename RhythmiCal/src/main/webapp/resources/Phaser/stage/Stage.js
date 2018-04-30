@@ -32,10 +32,12 @@ var jumpX = [135,137.5,140];
 var currentBeat = 0;
 //image => popUpImage
 var popUpImage;
-var counter = 0;
+var comboCnt = 0;
 var isComboNow = false;
 var beatZone = false;
-var beat; //DB에서 음악의 비트값을 받아온다.
+var beat = 0;
+var numOfBeat;
+
 //최대체력
 var maxLife = 10; 
 var lifeArray;
@@ -54,6 +56,9 @@ var right_isA,right_isB,right_isC;
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
+var tempNote;
+var genNote;
+var multiNum;
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
@@ -73,7 +78,6 @@ Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
 		/////////////////stageNum을 받아오는 과정이 필요함
-		//this.getStageInfo(stageNum);
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
@@ -122,10 +126,6 @@ Stage.prototype = {
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
-		//숫자(0~9) 스프라이트
-		for (var i = 0; i < 10; i++) {
-			game.load.spritesheet('number'+ i, 'resources/Images/numbers/number_' + i + '.png', 32, 32, 20);
-		}
 		//생명력 이미지
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트
@@ -138,7 +138,7 @@ Stage.prototype = {
 		game.load.spritesheet('tp2', 'resources/Images/characters/townPeople/intro_2_dancing02_60x60.png', 60, 60, 9);
 		game.load.spritesheet('tp3', 'resources/Images/characters/townPeople/intro_2_dancing03_60x60.png', 60, 60, 11);
 		game.load.spritesheet('tp4', 'resources/Images/characters/townPeople/intro_2_dancing04_60x60.png', 60, 60, 6);
-		//음표그림4개 로드   1:빨강, 2:파랑, 3:초록, 4:노랑
+		//음표그림4개 로드   1:노랑, 2:초록, 3:빨강, 4:파랑
 		for(var i=1; i<=4;i++){
 			game.load.image('note'+i, 'resources/Images/notes/note'+i+'.png');
 		}
@@ -149,20 +149,27 @@ Stage.prototype = {
 		//체력바 관련 로드
 		game.load.spritesheet('healthFill', 'resources/Images/others/healthFill.png', 32, 32, 1);
 		game.load.spritesheet('healthBlank', 'resources/Images/others/healthBlank.png', 32, 32, 1);
+		//숫자(0~9) 스프라이트
+		for (var i = 0; i < 10; i++) {
+			game.load.spritesheet('number'+i, 'resources/Images/numbers/number_'+i+'.png', 32, 32, 20);
+		}
 		//클리어 및 실패 , 페이드아웃 이미지
 		game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
 		game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
 	},
 	create: function(){
-		//DB에서 받아 온 데이터의 생성
-		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / 55;
-		beatStart = 0;
-		//고정 데이터들의 생성
 		//physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-		//  배경색
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		game.input.onDown.add(gofull, this);
+		
+		stageBGM = game.add.audio("stageBGM");
+		//여기에 BPM 값을 넣는다 
+		BPM = BPMfactor / beat;
+		beatStart = 0;
+		//고정 데이터들의 생성
+		//배경색
 		game.add.sprite(0,0,'stageBG');
 		game.stage.backgroundColor = '#6688ee';
 		//콤보 효과음 설정
@@ -170,12 +177,12 @@ Stage.prototype = {
 		comboSound.addMarker('comboSound', 0, 1);
 		//마을사람들 생성
 		createTownPeople();
-		//feverdancingControl(20);
-		//changeTownPeopleDepressed();
-		// 스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
+		feverdancingControl(20);
+		changeTownPeopleDepressed();
+		//스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
-		beatoven.scale.set(4); 
+		beatoven.scale.set(5); 
 		beatoven.smoothed = false;
 		//하나씩 나타나는 음표를 그룹으로 주기
 		sprites = game.add.group();
@@ -189,14 +196,9 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		//목숨 추가
-		iniLife(3);
+		iniLife(5);
 		//게임 기초 세팅
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-		//DB에서 받아 온 데이터의 생성
-		stageBGM = game.add.audio('stageBGM');
-		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / 55;
-		beatStart = 0;
+		
 		//몬스터를 담을 배열 생성
 		monstersA = new Array();
 		monstersB = new Array();
@@ -235,6 +237,10 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
+		if (currentBeat == numOfBeat) {
+			//비트 모두 소진
+			return;
+		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -242,22 +248,14 @@ Stage.prototype = {
 		createNotes();
 		bossJump(nobeato);
 		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
-	
-	},
-	/*getStageInfo: function(stageNum){
-		$.ajax({
-			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
-			,type : "post"
-			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-			,success : function(stageInfo) {
-				bgImgName = stageInfo[0].bgImgName;
-				musicName = stageInfo[0].musicName;
-				beat = stageInfo[1];
-				monsterlistA = stageInfo[2];
-				monsterlistB = stageInfo[3];
-				monsterlistC = stageInfo[4];
-			}
-		});
-	}*/
+	}
+}
+
+function gofull() {
+	if (game.scale.isFullScreen) {
+		game.scale.stopFullScreen();
+	}
+	else {
+		game.scale.startFullScreen(false);
+	}
 }

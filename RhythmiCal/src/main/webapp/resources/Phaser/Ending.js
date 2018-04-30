@@ -1,8 +1,6 @@
 /**
  * 
  */
-	
-	
 var typewriter = new Typewriter(); // 글자 타이핑 효과
 var txt;
 var scrollingtext;
@@ -14,20 +12,21 @@ var Ending = function(game) {};
 
 Ending.prototype = {
 
-	preload:function() {
+	preload:function() {	
 		//배경음악
-	game.load.audio('ending_music',"resources/endingsrc/endingmusic.mp3");
-	//비트맵형 글자폰트 로드
-	game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png','resources/neo_font/neo_font.fnt');
-	
-	game.load.spritesheet("propose00",	"resources/endingsrc/propose00.png", 500, 283,2);
-	game.load.spritesheet("propose01",	"resources/endingsrc/propose01.png", 500, 283,2);
-	game.load.image("propose02","resources/endingsrc/propose02.png",500,283);
-	game.load.image("propose03","resources/endingsrc/propose03.png",500,283);
-	game.load.spritesheet("propose04",	"resources/endingsrc/propose04.png", 500, 283,2);
+		game.load.audio('ending_music',"resources/Audios/bgm/others/endingmusic.mp3");
+		//비트맵형 글자폰트 로드
+		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png','resources/neo_font/neo_font.fnt');
 		
+		game.load.spritesheet("propose00",	"resources/Images/ending/propose00.png", 500, 283,2);
+		game.load.spritesheet("propose01",	"resources/Images/ending/propose01.png", 500, 283,2);
+		game.load.image("propose02","resources/Images/ending/propose02.png",500,283);
+		game.load.image("propose03","resources/Images/ending/propose03.png",500,283);
+		game.load.spritesheet("propose04",	"resources/Images/ending/propose04.png", 500, 283,2);
 	},
 	create:function() {
+	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+	game.input.onDown.add(gofull, this);
 	game.add.audio('ending_music').play();
 	
 	//오른쪽 스크롤
@@ -118,7 +117,7 @@ Ending.prototype = {
 		scrollingtext = game.add.tween(credittext).to( { y:-(countn*fontsize) }, 1000*countn, Phaser.Easing.Linear.None, true);
 		scrollingtext.onComplete.add(function(){
 			fontsize = 70;
-			txt = "감사합니다."
+			txt = "Team Beatoven\n감사합니다."
 			endinglogo = game.add.bitmapText(game.world.centerX- txt.length*fontsize/2, game.world.height, 'neo_font',txt,fontsize);    
 			game.add.tween(endinglogo).to( { y: game.world.height/2}, 1000* 3, Phaser.Easing.Linear.None, true);
 		});

@@ -119,6 +119,4 @@ public class Monster {
 				+ soundEffectNum + ", deadSoundNum=" + deadSoundNum + ", appearanceBeat=" + appearanceBeat
 				+ ", attackline=" + attackline + "]";
 	}
-
-	
 }

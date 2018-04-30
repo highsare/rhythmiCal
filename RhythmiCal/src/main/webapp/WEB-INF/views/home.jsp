@@ -9,17 +9,30 @@
 <!-- title -->
 <title>Rhythmi-Cal</title>
 <!-- Road Bootstrap CDN and jQuery-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <!-- jQuery -->
 <script src="resources/JavaScriptResource/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script>
-<!-- infinitial scroll -->
+// 오늘의 날짜를 구하는 함수 (명예의 전당에서 NEW를 띄우기 위해 사용)
+function today() {
+	var date = new Date();
+
+	var year  = date.getFullYear();
+	var month = date.getMonth() + 1; // 0부터 시작하므로 1 더함
+	var day   = date.getDate();
+	
+	if (("" + month).length == 1) { month = "0" + month; }
+	if (("" + day).length   == 1) { day   = "0" + day;   }
+   
+	return "" + year + "-" + month + "-" + day;  
+}
+
+// 명예의 전당 글 출력하기 (무한스크롤 적용)
 var cnt = 0;
 var page = -1;
-$(document).ready(function () {
+var today = today();
+$(document).ready(function() {
 	$(document).scroll(function() {
 		console.log('document: ' + $(document).height() + '\n'
 					+ 'scroll: ' + $(window).scrollTop() + '\n'
@@ -33,9 +46,14 @@ $(document).ready(function () {
 			$.ajax({
 				url: 'readFamePost'
 				, data: {offset: page}
-				, success: function(data) {
-					$.each(data, function() {
-						$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id	
+				, success: function(famePostList) {
+					$.each(famePostList, function() {
+						if (today == this.clearDate.substring(0, 10)) {
+							$("#enters").append('<tr><td class="new"><span class="badge badge-warning">NEW</span></td><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
+						}
+						else {
+							$("#enters").append('<tr><td class="new"></td><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
+						}
 					});
 				}
 				, error: function() {
@@ -48,7 +66,7 @@ $(document).ready(function () {
 
 <!-- jQuery -->
 $(function() {
-	<!-- signupMember -->
+	// 회원가입 (NEW 버튼 클릭 시)
 	$('#signupMember').click(function() {
 		<!-- 아이디, 비밀번호, 비밀번호 체크 값을 가져온다. -->
 		var signupId = $('#signupId').val();
@@ -57,7 +75,7 @@ $(function() {
 		
 		<!-- 유효성 검사 해야 함 -->
 		if (signupPw != signupPwc) {
-			alert('비밀번호가 일치하지 않습니다.');
+			alert('비밀번호를 다시 한 번 확인해봐!');
 			return;
 		}
 		
@@ -71,36 +89,40 @@ $(function() {
 		    , type: 'POST'
 		    , dataType:'json'
 		    , data: {'id': signupId
-		    			, 'pw': signupPw}
+		    		,'password': signupPw}
 		    , success: function(data) {
-		        alert(data);
+		        if (data == 0) {
+					alert("회원가입 실패! \n[이미 존재하는 아이디]");
+				}
 		    }
 		    , error: function(data) {
-		    		alert(data);
+		    	alert(data);
 		    }
 		});
 	});
 	
-	<!-- loginMember -->
+	// 로그인 (LOAD 버튼 클릭 시)
 	$('#loginMember').click(function() {
 		var loginId = $('#loginId').val();
 		var loginPw = $('#loginPw').val();
+		var language = $('input[name="language"]:checked').val();
 
 		alert('loginId: ' + loginId + '\n'
-			+ 'loginPw: ' + loginPw + '\n');
+			+ 'loginPw: ' + loginPw + '\n'
+			+ 'language: ' + language);
 		
 		$.ajax({
 		    url: 'loginMember'
 		    , type: 'POST'
-		    , dataType:'json'
 		    , data: {'id': loginId
-		    			, 'pw': loginPw}
-		    , success: function(data) {
-		    	//성공 여부에 따라 game으로 간다.
-		        alert(data);
+		    		,'password': loginPw
+		    		,'language': language}
+		    , success: function(result) { // 성공하면 game으로 이동
+		    	alert(result);
+		    	document.location.href = 'game';
 		    }
-		    , error: function(data) {
-	    		alert(data);
+		    , error: function(result) { // 실패하면 알림
+		    	alert(result);
 		    }
 		});
 	});
@@ -133,7 +155,6 @@ body {
 .modal-open {
     overflow: scroll;
 }
-
 @media (min-width: 768px) {
 	.modal-dialog {
 	  width: 300px;
@@ -151,13 +172,15 @@ body {
 	  /* background-image: url(resources/honor_reply.png); */
 	}
 }
-																				
 /* 명예의 전당 table */
 td {
 	opacity: 0.9;
 	height: 82px;
 	text-align: center;
 	vertical-align: middle;
+}
+.new {
+	width: 40px;
 }
 .id {
 	width: 187px;
@@ -220,6 +243,9 @@ td {
 					<p>Please input your id and pw.</p>
 					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
 					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
+					<div class="radio">
+						<label><input type="radio" name="language" value="korean">Korean </label>
+						<label><input type="radio" name="language" value="japanese">Japanese</label></div>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="loginMember">Load Game</button></p>
 				</div>
 			</div>
@@ -229,17 +255,26 @@ td {
 
 <br><br><br><br><br><br>
 
+<!-- 명예의 전당 글을 출력하는 테이블 -->
 <div class="center">
   <table>
+  	  <tr>
+  	  	<td class="new">
+  	  	<td class="id" style="background-image: url(resources/Images/mainPage/honor_id_title.png); color: white; font-size: 20px;">WINNER</td>
+  	  	<td class="reply" style="background-image: url(resources/Images/mainPage/honor_reply_title.png); color: white; font-size: 20px;"><b>HALL OF FAME</b></td>
+  	  </tr>
       <tr>
+        <td class="new"><span class="badge badge-warning">NEW</span></td>
         <td class="id">김민아</td>
         <td class="reply">나 다깼음</td>
       </tr>
       <tr>
+        <td class="new"><span class="badge badge-warning">NEW</span></td>
         <td class="id">김지원</td>
         <td class="reply">개쉬운데?</td>
       </tr>
       <tr>
+        <td class="new"><span class="badge badge-warning">NEW</span></td>
         <td class="id">이진주</td>
         <td class="reply">님들 제가 1빠</td>
       </tr>

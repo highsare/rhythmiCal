@@ -14,8 +14,10 @@ function toggleBeatZone(){
 		beat = 0;
 	}
 	if(beat % 5 == 4){
+		tempNote = userNumber;
 		beatZone = true;
 	}else if(beat % 5 == 1){
+		tempNote = 0;
 		beatZone = false;
 		if(!isComboNow){
 			popupCombo(false);
@@ -31,11 +33,18 @@ function motionCheck(){
 	$.ajax({
 		url:"requestMotion"
 		,type:"post"
-		,success:function(motion){
-			if(motion == "NOTHING"){
+		,success:function(str){
+			if(str == "NOTHING"){
 				
-			}else if(motion != null){
-				motionEvent(motion);
+			}else if(str != null){
+				var motionAndCode = str.split('/');
+				player = motionAndCode[0];
+				motion = motionAndCode[1];
+				
+				console.log(player);
+				console.log(motion);
+				
+				motionEvent(player,motion);
 			}
 		},error:function(){
 		}
@@ -57,10 +66,36 @@ function wrongTiming(){
 }
 
 //정확한 타이밍에서의 처리
-function motionEvent(motion){
+function motionEvent(player,motion){
+	var code;
+	switch(player){
+	case "player1":
+		code = 1;
+		break;
+	case "player2":
+		code = 2;
+		break;
+	case "player3":
+		code = 3;
+		break;
+	case "player4":
+		code = 4;
+		break;
+		default:break;
+	}
+	console.log(tempNote);
+	if (code != tempNote) {
+		popupCombo(false);
+		return;
+	}
+	
 	
 	popupCombo(true);
 	timingCheck(true);
+	
+	attackMotion();
+	
+	
 	
 	//모션에 따른 효과 설정
 	switch(motion){
@@ -149,12 +184,13 @@ function timingCheck(timing){
  * int fps: 초당 호출할 프레임 수
  * boolean loop: 반복여부
  */
-function popupImage(x, y, imageName, fps, loop) {
+function popupImage(x, y, imageName, fps, loop,scale) {
 	console.log('popupImage');
 
 	popUpImage = game.add.sprite(x, y, imageName);
 	popUpImage.animations.add('popup');
 	popUpImage.animations.play('popup', fps, loop);
+	popUpImage.scale.set(scale);
 }
 
 /*
@@ -165,34 +201,39 @@ function popupCombo(combo) {
 	if (combo) { //combo 조건
 		isComboNow = true;
 		//카운터를 1 증가
-		counter++;
+		comboCnt++;
+		feverdancingControl(comboCnt);
 		//콤보가 20의 배수일 경우에는 생명력을 1 증가 (임시로 5를 주었음) // TODO
-		if (counter % 5 == 0) {
+		if (comboCnt % 10 == 0) {
+			//환호하는 군중
+			//화려한 콤보 이펙트
+		}
+		if (comboCnt % 20 == 0) {
 			updateLife(1);
 		}
 		
 	    //숫자 애니메이션 실행
 		//카운터를 1 감소시키고(2번째 공격부터 콤보을 적용해야 하므로), 세 자리로 나누어 각 자리의 수를 구한다.
-		var firstNum = parseInt(counter.toString().charAt(0));
-		var secondNum = parseInt(counter.toString().charAt(1));
-		var thirdNum = parseInt(counter.toString().charAt(2));
+		var firstNum = parseInt(comboCnt.toString().charAt(0));
+		var secondNum = parseInt(comboCnt.toString().charAt(1));
+		var thirdNum = parseInt(comboCnt.toString().charAt(2));
 		
 		var number;
 		var popup;
 		//한 자리일때
 		if (isNaN(firstNum) == false && isNaN(secondNum) == true && isNaN(thirdNum) == true) {
-			popupImage(512, 400, 'number' + firstNum, 30, false);
+			popupImage(game.world.centerX, 400, 'number' + firstNum, 30, false,3);
 		}
 		//두 자리일때
 		else if (isNaN(firstNum) == false && isNaN(secondNum) == false && isNaN(thirdNum) == true) {
-			popupImage(502, 400, 'number' + firstNum, 30, false);
-			popupImage(522, 400, 'number' + secondNum, 30, false);
+			popupImage(game.world.centerX - 30, 400, 'number' + firstNum, 30, false,3);
+			popupImage(game.world.centerX + 30, 400, 'number' + secondNum, 30, false,3);
 		}
 		//세 자리일때
 		else if (isNaN(firstNum) == false && isNaN(secondNum) == false && isNaN(thirdNum) == false) {
-			popupImage(492, 400, 'number' + firstNum, 30, false);
-			popupImage(512, 400, 'number' + secondNum, 30, false);
-			popupImage(532, 400, 'number' + thridNum, 30, false);
+			popupImage(game.world.centerX - 60, 400, 'number' + firstNum, 30, false,3);
+			popupImage(game.world.centerX, 400, 'number' + secondNum, 30, false,3);
+			popupImage(game.world.centerX + 60, 400, 'number' + thridNum, 30, false,3);
 		}
 		
 	    //콤보 효과음 실행
@@ -200,6 +241,9 @@ function popupCombo(combo) {
 	}
 	//콤보 실패 시
 	else {
+		//낙담하는 군중
+		comboCnt = 0;
+		feverdancingControl(comboCnt);
 		timingCheck(false);
 	}
 }

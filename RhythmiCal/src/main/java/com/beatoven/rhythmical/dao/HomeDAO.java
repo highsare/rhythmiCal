@@ -53,6 +53,17 @@ public class HomeDAO implements HomeInterface {
 		return famePostList;
 	}
 	
+	// 명예의 전당 글 남기기
+	public int writeFamePost(FamePost famePost) {
+		int result = 0;
+		try {
+			result = session.getMapper(HomeInterface.class).writeFamePost(famePost);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	// 멤버가 기존 멤버인지 신규 멤버인지 확인
 	@Override
 	public int isNewbie(Member member) {

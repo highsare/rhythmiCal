@@ -134,4 +134,3 @@ function stun(array){
 		array[i].status = "STUN";
 	}
 }
-
