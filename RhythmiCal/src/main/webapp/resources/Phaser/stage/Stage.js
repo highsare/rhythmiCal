@@ -76,8 +76,6 @@ var Stage = function(game) {};
 Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
-		/////////////////stageNum을 받아오는 과정이 필요함
-		this.getStageInfo(stageNum);
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
@@ -162,7 +160,6 @@ Stage.prototype = {
 		//게임 기초 세팅
 		stageBGM = game.add.audio('stageBGM');
 		
-		
 		//몬스터를 담을 배열 생성
 		monstersA = new Array();
 		monstersB = new Array();
@@ -201,6 +198,7 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
+		console.log = currentBeat;
 		currentBeat += 1;
 		start();
 		jumpchar();
@@ -208,26 +206,6 @@ Stage.prototype = {
 		bossJump(nobeato);
 		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
 	
-	},
-	getStageInfo: function(stageNum){
-		$.ajax({
-			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
-			,type : "post"
-			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-			,success : function(stageInfo) {
-				
-				//BGM 길이를 가져와야함
-				
-				bgImgName = stageInfo[0].bgImgName;
-				musicName = stageInfo[0].musicName;
-				beat = stageInfo[1];
-				monsterlistA = stageInfo[2];
-				monsterlistB = stageInfo[3];
-				monsterlistC = stageInfo[4];
-				multiNum = stageInfo[5];
-			}
-		});
 	}
 }
 
