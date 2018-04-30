@@ -25,6 +25,7 @@ var key1;
 var bgd;
 var textboard, start;
 var neon,board,rdm;
+var button1, button2, button3;
 var e_select,sprite;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
@@ -68,7 +69,7 @@ function preload() {
    game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
    game.load.image('select','resources/Images/town/townImg/select.png' );//선택 빨간 테두리
    game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
-   game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
+   game.load.image('pub','resources/Images/town/townImg/mercenery.png' ); //용병소 이미지
    game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
    game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
    game.load.image('exit_push', 'resources/Images/town/townImg/exit_push.png');
