@@ -32,10 +32,12 @@ var jumpX = [135,137.5,140];
 var currentBeat = 0;
 //image => popUpImage
 var popUpImage;
-var counter = 0;
+var comboCnt = 0;
 var isComboNow = false;
 var beatZone = false;
 var beat = 0;
+var numOfBeat;
+
 //최대체력
 var maxLife = 10; 
 var lifeArray;
@@ -54,6 +56,9 @@ var right_isA,right_isB,right_isC;
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
+var tempNote;
+var genNote;
+var multiNum;
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
@@ -61,7 +66,7 @@ var bgImgName;
 var monsterlistA; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var monsterlistB; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
 var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를 저장할 변수
-var musicName;
+var bgmName;
 var stageNum;
 
 //노비토를 담을 전역 변수
@@ -73,15 +78,50 @@ Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
 		/////////////////stageNum을 받아오는 과정이 필요함
-		this.getStageInfo(stageNum);
 		//배경 로드
-		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
+		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/stage/55bpm_Mirror_Mirror.mp3');	
+		game.load.audio('stageBGM','resources/Audios/bgm/' + bgmName);	
 		//몬스터 로드
-		game.load.spritesheet('mummy', 'resources/Images/characters/monsters/metalslug_mummy37x45.png', 37, 45, 18);
-		game.load.spritesheet('stormlord_dragon', 'resources/Images/characters/monsters/stormlord-dragon96x64.png', 96, 64, 6);
+		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
+		game.load.spritesheet('GoblinHurt', 'resources/Images/characters/monsters/29x31x4_GoblinHurt.png', 29, 31, 4);
+		game.load.spritesheet('GoblinDie', 'resources/Images/characters/monsters/56x31x9_GoblinDie.png', 56, 31, 9);
+		game.load.spritesheet('Cutty', 'resources/Images/characters/monsters/21x24x12_Cutty.png', 21, 24, 12);
+		game.load.spritesheet('CuttyHurt', 'resources/Images/characters/monsters/21x24x4_CuttyHurt.png', 21, 24, 4);
+		game.load.spritesheet('CuttyDie', 'resources/Images/characters/monsters/21x24x12_CuttyDie.png', 32, 34, 12);
+		game.load.spritesheet('TheFast', 'resources/Images/characters/monsters/40x30x6_TheFast.png', 40, 30, 6);
+		game.load.spritesheet('TheFastHurt', 'resources/Images/characters/monsters/38x30x3_TheFastHurt.png', 38, 30, 3);
+		game.load.spritesheet('TheFastDie', 'resources/Images/characters/monsters/44x29x7_TheFastDie.png', 44, 29, 7);
+		game.load.spritesheet('TheFastest', 'resources/Images/characters/monsters/67x32x5_TheFastest.png', 67, 32, 5);
+		game.load.spritesheet('TheFastestHurt', 'resources/Images/characters/monsters/39x24x4_TheFastestHurt.png', 39, 24, 4);
+		game.load.spritesheet('TheFastestDie', 'resources/Images/characters/monsters/67x32x5_TheFastestDie.png', 67, 32, 5);
+		game.load.spritesheet('Troll', 'resources/Images/characters/monsters/58x42x18_Troll.png', 58, 42, 18);
+		game.load.spritesheet('TrollHurt', 'resources/Images/characters/monsters/58x42x3_TrollHurt.png', 58, 42, 3);
+		game.load.spritesheet('TrollDie', 'resources/Images/characters/monsters/58x42x9_TrollDie.png', 58, 42, 9);
+		game.load.spritesheet('BombGoblin', 'resources/Images/characters/monsters/192x288x6_BombGoblin.png', 192, 288, 6);
+		game.load.spritesheet('BombGoblinHurt', 'resources/Images/characters/monsters/192x272x2_BombGoblinHurt.png', 192, 272, 2);
+		game.load.spritesheet('BombGoblinDie', 'resources/Images/characters/monsters/256x272x8_BombGoblinDie.png', 256, 272, 8);
+		game.load.spritesheet('Bull', 'resources/Images/characters/monsters/96x77x18_Bull.png', 96, 77, 18);
+		game.load.spritesheet('BullHurt', 'resources/Images/characters/monsters/96x77x4_BullHurt.png', 96, 77, 4);
+		game.load.spritesheet('BullDie', 'resources/Images/characters/monsters/96x77x8_BullDie.png', 96, 77, 8);
+		game.load.spritesheet('BullRush', 'resources/Images/characters/monsters/96x77x6_BullRush.png', 96, 77, 6);
+		game.load.spritesheet('Wind', 'resources/Images/characters/monsters/45x45x8_Wind.png', 45, 45, 8);
+		game.load.spritesheet('WindHurt', 'resources/Images/characters/monsters/45x45x3_WindHurt.png', 45, 45, 3);
+		game.load.spritesheet('WindDie', 'resources/Images/characters/monsters/45x45x8_WindDie.png', 45, 45, 8);
+		game.load.spritesheet('Jyama', 'resources/Images/characters/monsters/40x40x8_Jyama.png', 40, 40, 8);
+		game.load.spritesheet('JyamaHurt', 'resources/Images/characters/monsters/40x40x4_JyamaHurt.png', 40, 40, 4);
+		game.load.spritesheet('JyamaDie', 'resources/Images/characters/monsters/40x40x8_JyamaDie.png', 40, 40, 8);
+		game.load.spritesheet('JyamaSkill', 'resources/Images/characters/monsters/40x40x9_JyamaSkill.png', 40, 40, 9);
+		game.load.spritesheet('Shield', 'resources/Images/characters/monsters/88x62x19_Shield.png', 88, 62, 19);
+		game.load.spritesheet('ShieldHurt', 'resources/Images/characters/monsters/90x80x4_ShieldHurt.png', 90, 80, 4);
+		game.load.spritesheet('ShieldDie', 'resources/Images/characters/monsters/90x80x5_ShieldDie.png', 90, 80, 5);
 		//모션의 종류 및 효과 등 모션 데이터를 불러와야 함
+		
+		//Jyama스킬 방해구름 이미지
+		game.load.spritesheet('Cloud', 'resources/Images/others/48x48x1_cloud.png', 48, 48, 1);
+		
+		//BombGoblin스킬 폭발 이미지
+		game.load.spritesheet('Explosion', 'resources/Images/others/54x51x4_Explosion.png', 54, 51, 4);
 		
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
@@ -124,6 +164,7 @@ Stage.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
 		
+		stageBGM = game.add.audio("stageBGM");
 		//여기에 BPM 값을 넣는다 
 		BPM = BPMfactor / beat;
 		beatStart = 0;
@@ -155,7 +196,7 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		//목숨 추가
-		iniLife(3);
+		iniLife(5);
 		//게임 기초 세팅
 		
 		//몬스터를 담을 배열 생성
@@ -196,6 +237,10 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
+		if (currentBeat == numOfBeat) {
+			//비트 모두 소진
+			return;
+		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -203,23 +248,6 @@ Stage.prototype = {
 		createNotes();
 		bossJump(nobeato);
 		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
-	
-	},
-	getStageInfo: function(stageNum){
-		$.ajax({
-			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
-			,type : "post"
-			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-			,success : function(stageInfo) {
-				bgImgName = stageInfo[0].bgImgName;
-				musicName = stageInfo[0].musicName;
-				beat = stageInfo[1];
-				monsterlistA = stageInfo[2];
-				monsterlistB = stageInfo[3];
-				monsterlistC = stageInfo[4];
-			}
-		});
 	}
 }
 

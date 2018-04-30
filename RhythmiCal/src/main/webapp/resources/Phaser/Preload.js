@@ -15,7 +15,7 @@ Preload.prototype = {
 		game.world.removeAll();
 		//로고 이미지 불러오기
 		//로딩 이미지 등 불러오기
-		
+		setResources("Stage");
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -41,6 +41,27 @@ Preload.prototype = {
 	}
 }
 
+function getStageInfo(stageNum){
+	$.ajax({
+		url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
+		,type : "post"
+		,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
+		,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
+		,success : function(stageInfo) {
+			//BGM 길이를 가져와야함
+			bgImgName = stageInfo[0].bgImgName;
+			musicName = stageInfo[0].musicName;
+			beat = stageInfo[1];
+			monsterlistA = stageInfo[2];
+			monsterlistB = stageInfo[3];
+			monsterlistC = stageInfo[4];
+			multiNum = stageInfo[5];
+			
+			game.state.start("Stage");
+		}
+	});
+}
+
 function setResources (state){
 	if (state == "Intro") {
 		//Intro assets
@@ -62,22 +83,7 @@ function setResources (state){
 		
 	}else if (state == "Stage") {
 		//Stage assets , contentNum required
-		
-		
-		
-		
-		
-		
-		
-		
-		//스테이지 실행
-		game.state.start("Stage");
-		
-		
-		
-		
-		
-		
+		getStageInfo(contentNum);
 		
 	}else if (state == "Village") {
 		//Village assets
@@ -105,4 +111,5 @@ function setResources (state){
 	}else if (state == "HallOfFame"){
 		//HallOfFame.jsp로 이동
 	}
+	
 }

@@ -52,7 +52,7 @@ $(document).ready(function() {
 							$("#enters").append('<tr><td class="new"><span class="badge badge-warning">NEW</span></td><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
 						}
 						else {
-							$("#enters").append('<tr><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
+							$("#enters").append('<tr><td class="new"></td><td class="id">' + this.id + '</td><td class="reply">' + this.text + '</td></tr>'); //this.id = value.id
 						}
 					});
 				}
@@ -105,15 +105,18 @@ $(function() {
 	$('#loginMember').click(function() {
 		var loginId = $('#loginId').val();
 		var loginPw = $('#loginPw').val();
+		var language = $('input[name="language"]:checked').val();
 
 		alert('loginId: ' + loginId + '\n'
-			+ 'loginPw: ' + loginPw + '\n');
+			+ 'loginPw: ' + loginPw + '\n'
+			+ 'language: ' + language);
 		
 		$.ajax({
 		    url: 'loginMember'
 		    , type: 'POST'
 		    , data: {'id': loginId
-		    		,'password': loginPw}
+		    		,'password': loginPw
+		    		,'language': language}
 		    , success: function(result) { // 성공하면 game으로 이동
 		    	alert(result);
 		    	document.location.href = 'game';
@@ -240,6 +243,9 @@ td {
 					<p>Please input your id and pw.</p>
 					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
 					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
+					<div class="radio">
+						<label><input type="radio" name="language" value="korean">Korean </label>
+						<label><input type="radio" name="language" value="japanese">Japanese</label></div>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="loginMember">Load Game</button></p>
 				</div>
 			</div>
@@ -252,18 +258,23 @@ td {
 <!-- 명예의 전당 글을 출력하는 테이블 -->
 <div class="center">
   <table>
+  	  <tr>
+  	  	<td class="new">
+  	  	<td class="id" style="background-image: url(resources/Images/mainPage/honor_id_title.png); color: white; font-size: 20px;">WINNER</td>
+  	  	<td class="reply" style="background-image: url(resources/Images/mainPage/honor_reply_title.png); color: white; font-size: 20px;"><b>HALL OF FAME</b></td>
+  	  </tr>
       <tr>
-        <td class="new"></td>
+        <td class="new"><span class="badge badge-warning">NEW</span></td>
         <td class="id">김민아</td>
         <td class="reply">나 다깼음</td>
       </tr>
       <tr>
-        <td class="new"></td>
+        <td class="new"><span class="badge badge-warning">NEW</span></td>
         <td class="id">김지원</td>
         <td class="reply">개쉬운데?</td>
       </tr>
       <tr>
-        <td class="new"></td>
+        <td class="new"><span class="badge badge-warning">NEW</span></td>
         <td class="id">이진주</td>
         <td class="reply">님들 제가 1빠</td>
       </tr>

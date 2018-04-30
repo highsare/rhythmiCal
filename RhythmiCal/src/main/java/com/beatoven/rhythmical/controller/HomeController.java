@@ -54,12 +54,10 @@ public class HomeController {
 		int result = 0;
 		try {
 			result = homeDAO.signupMember(member);
-			
-			//신규 세이브 데이터 생성
-			//Save(String id, int life, String motionlist, int stateNum)
-			Save save = new Save(member.getId(), 5, "000", 1);
+			//신규 세이브 데이터 생성: Save(String id, int life, String motionlist, int stateNum)
+			Save save = new Save(member.getId(), 5, "000", 1); 
 			int i = sysDAO.makeSave(save);
-			System.out.println(i);
+			System.out.println("save result: " + i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,8 +73,8 @@ public class HomeController {
 	//로그인(세션에 값 저장)
 	@ResponseBody
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
-	public String loginMember(HttpSession session, Member member) {
-		System.out.println("loginMember() 진입 - member: " + member);
+	public String loginMember(HttpSession session, Member member, String language) {
+		System.out.println("loginMember() 진입 - member: " + member + ", language: " + language);
 		Member loginMember = null;
 		try {
 			loginMember = homeDAO.loginMember(member);
@@ -86,13 +84,12 @@ public class HomeController {
 		if (loginMember != null) {
 			//로그인 성공
 			session.setAttribute("loginMember", loginMember);
-			System.out.println("login success");
-			return "어서와!";
+			System.out.println("login success - loginMember: " + loginMember.toString());
 		} else {
 			//로그인 실패
 			System.out.println("login fail");
-			return "다시 한 번 확인해줘!";
 		}
+		return language;
 	}
 	
 	//로그아웃
@@ -169,9 +166,9 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value="loginApp",method = RequestMethod.POST)
-	public boolean loginApp(Member member, HttpSession session) {
+	public String loginApp(Member member, HttpSession session) {
 		System.out.println(member);
-		session.setAttribute("id", member.getId());
+		session.setAttribute("AppId", member.getId());
 		//multiplay.put("player1", member.getId());
 		
 		boolean flag = true;
@@ -185,7 +182,7 @@ public class HomeController {
 			multiList.add("player1");			
 		}
 		
-		return true;
+		return "player1";
 	}
 	
 	@ResponseBody

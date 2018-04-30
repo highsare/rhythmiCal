@@ -23,6 +23,7 @@
 	<select id="readFamePost" resultType="famePost">
 		select *
 		from halloffame
+		order by cleardate desc
 	</select>
 	
 	<!-- 명예의 전당 글 작성하기 -->

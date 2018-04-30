@@ -179,8 +179,7 @@ function typeWriterFunction(text, xvalue, yvalue, size) {
 		// sound: reg.track,
 		text: text
     });
-	//타이핑 시작
-	typewriter.start();
+	typewriter.start(); //타이핑 시작
 }
 
 /*
@@ -191,36 +190,49 @@ function setFullScreen() {
 	else game.scale.startFullScreen(false);
 }
 
-/*
- * changeTutorialIndex(): 좌, 우 버튼을 누를 때마다 튜토리얼의 순서를 감소 또는 증가시키는 메서드
- */
-function changeTutorialIndex() {
-	// TODO : if문 통해 적절하지 않은 tutorialIndex 리턴할 범위 지정할 것
-}
 
+/*
+ * readKey(): 키보드 키를 읽어들이는 메소드
+ */
+function readKey() {
+	$.ajax({
+		url: 'requestConsole'
+		,success: function(inputKey) {
+  			console.log('readKey() - inputKey: ' + inputKey);
+			if (inputKey != "NOTHING") {
+				switch (inputKey) {
+					case "left":
+						console.log('이전 튜토리얼 재생 요청');
+						if (tutorialIndex == 0) {alert('첫번째 튜토리얼입니다.'); return;}
+						else {tutorialIndex --; showTutorial(tutorialIndex);}	
+						break;
+					case "right":
+						console.log('다음 튜토리얼 재생 요청');
+						if (tutorialIndex == tutorialArray.length-1) {alert('마지막 튜토리얼입니다.'); return;}
+						else {tutorialIndex ++; showTutorial(tutorialIndex);}
+						break;
+				}
+			}
+		}
+  		, error: function() {}
+	});
+}
+  
 /*
  * update()
  */
+var cnt = 0;
 function update() {
-	// debug
-	sprite.rotation = game.physics.arcade.moveToPointer(sprite, 60, game.input.activePointer, 500);
-	/* changeTutorialIndex(); */
-	if (leftKey.isDown) {
-		tutorialIndex --;
-		showTutorial(tutorialIndex);	
-		return;
-	}
-	else if (rightKey.isDown) {
-		tutorialIndex ++;
-		showTutorial(tutorialIndex);
-		return;
-	}
-	else {return;}
+	sprite.rotation = game.physics.arcade.moveToPointer(sprite, 60, game.input.activePointer, 500); // debug
+	cnt++;
+	if (cnt % 30 == 0) {readKey();}
 }
 
+/*
+ * render()
+ */
 function render() {
-	// debug
-    game.debug.spriteInfo(sprite, 32, 32);
+    game.debug.spriteInfo(sprite, 32, 32); // debug
 }
 </script>
 </body>
