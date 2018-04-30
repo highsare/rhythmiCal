@@ -6,13 +6,14 @@
  * 4.그 후 적절한 STATE 실행 ( 초기화 될 당시에 포함되어 있습니다)
  */
 //스토리 넘버
-var storynum = 1;
-var reg = {};//음악 로드시 저장
+
+var storyNum = 11;
 var typewriter = new Typewriter(); // 글자 타이핑 효과
-var cursors;
+
 var dialogueBG;
 var storyOrder;
 var npc;
+
 //npc 나타날 곳
 var left=70, right=1030, npcY=160;
 var switchingleftright;
@@ -30,19 +31,25 @@ var soundEffect;
 var bgImgName;
 //배경 정보
 var bgInfo;
+
+var music;
 //실제쓰인 배경과 그 효과
-var backimag,hikari;
+var backimage,hikari;
 var Story = function(game){};
+
+
+
 Story.prototype = {
 	preload: function() {
 		//비트맵형 글자폰트 로드
 		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
-		this.loadStoryContents();
+	
 		
 		
 		//배경음악 일단 다 로드
 		game.load.audio('숲속',"resources/Audios/bgm/story/숲속.mp3");
-		game.load.audio('레코드판',"resources/Audios/bgm/story/레코드판.mp3");
+		game.load.audio('전당',"resources/Audios/bgm/story/전당.mp3");
+		game.load.audio('레코드판',"resources/Audios/bgm/63bpm_Sugar.mp3");
 		game.load.audio('마을',"resources/Audios/bgm/story/마을.mp3");
 		game.load.audio('비토벤의 집',"resources/Audios/bgm/story/비토벤의 집.mp3");
 		game.load.audio('적의 막사',"resources/Audios/bgm/story/적의 막사.mp3");
@@ -52,9 +59,11 @@ Story.prototype = {
 		//음향효과
 		game.load.audio('노크소리',"resources/Audios/bgm/story/노크소리.mp3");
 		game.load.audio('잔잔한 음악',"resources/Audios/bgm/story/잔잔한 음악.mp3");
+		game.load.audio('쿠구궁',"resources/Audios/bgm/story/쿠구궁.mp3");
 		
 		// 배경화면 로드
 		game.load.spritesheet("숲속", "resources/Images/story/bgimg/숲속.png",1600,900);
+		game.load.spritesheet("전당", "resources/Images/story/bgimg/레코드판등장.png",1600,900);
 		game.load.spritesheet("레코드판", "resources/Images/story/bgimg/레코드판.png",1600,900);
 		game.load.spritesheet("마을", "resources/Images/story/bgimg/마을.png",1600,900);
 		game.load.spritesheet("비토벤의 집", "resources/Images/story/bgimg/비토벤의 집.png",1600,900);
@@ -76,25 +85,20 @@ Story.prototype = {
 		game.load.image('마을 소년', 'resources/Images/story/npc/마을 소년.png');
 		game.load.image('부사관', 'resources/Images/story/npc/부사관.png');
 		game.load.image('비토벤', 'resources/Images/story/npc/비토벤.png');
+		game.load.image('칼든비토벤', 'resources/Images/story/npc/칼든비토벤.png');
 		game.load.image('월량풍', 'resources/Images/story/npc/월량풍.png');
 		game.load.image('적군a', 'resources/Images/story/npc/적군a.png');
 		game.load.image('적군b', 'resources/Images/story/npc/적군b.png');
-
-		
-		
-		
-	    
 	    
 	    //텍스트 박스
 	    game.load.image("textbox", "resources/Images/tutorial/dialog.png");
-	    //game.load.image("textbox", "resources/Images/story/textbox.png"); 
-	    
+		this.loadStoryContents();
 	},
 	create: function() {
 		
 		
 		cursors = game.input.keyboard.createCursorKeys();
-		this.typethetext("STORY1 ",game.world.centerX-150, game.world.centerY- 50,90);
+		this.typethetext("STORY_"+storyNum,game.world.centerX-150, game.world.centerY- 50,90);
 		
 		//2초있다가  스토리 시작
 		game.time.events.add(2000, function () {  //글자 나올때 소리 추가
@@ -110,9 +114,8 @@ Story.prototype = {
 		}, this);
 	},
 	update: function() {
-	
-		//앱에서 o누르면????   키보트 아래 누르면 다음 대화 
-		if(cursors.down.isDown || game.input.activePointer.leftButton.isDown == true) {
+		//앱에서 o누르면????   키보트 아래 누르면 다음 대화  || cursors.down.isDown || game.input.activePointer.leftButton.isDown == true
+		if( this.readKey() =="enter") {
 			//어레이가 다 담겼다면 그때 적용되게끔  	
 			if (typeof storyOrder !== "undefined"){
 				//대화에서  번째가 마지막이 아니라면 다음 대화로
@@ -124,30 +127,47 @@ Story.prototype = {
 						this.outfromstory();
 					}
 			  	}
-		  //앱에서 x 누르면??? 키보드 오른쪽 누르면 스토리에서 나가기
-		 }else if (cursors.right.isDown){
+		  //앱에서 x 누르면??? 키보드 오른쪽 누르면 스토리에서 나가기 cursors.right.isDown
+		 }else if (this.readKey() =="esc"){
 			 this.outfromstory();
 		 }
+
+	},
+	readKey: function() {
+		var gogo="";
+	    $.ajax({
+	      url: 'requestConsole', 
+	      async: false,
+	      success: function(inputKey) {
+	    	  
+	    	 gogo = inputKey;
+	      }
+	   });
+	    return gogo;
+
 	},
 	render: function() {
 		//현재 대화 몇번째인가 체크 하려고 만듬.
-		if(typeof storyOrder !== 'undefined'){
+	/*	if(typeof storyOrder !== 'undefined'){
 	    game.debug.text("현재 storyOrder 확인 = "+ storyOrder, 32, 132);
 		}if(typeof arr !=='undefined'){
-	    game.debug.text(storynum +"스토리 대화 갯 수 = " + arr.length, 32, 162);
-	    }
+	    game.debug.text(storyNum +"스토리 대화 갯 수 = " + arr.length, 32, 162);
+	    }*/
 	},
 	
 	//페이드 아웃하기
 	 outfromstory: function(){
 		//2초뒤 페이드 아웃
 		game.camera.fade('#000000',1000);
+		
 		//게임 시작
 		game.camera.onFadeComplete.add(this.gotostage,this);
 	},
 		
 	dialogueExport: function(storyOrder){
-		alert(storyOrder);
+		
+		//나중에 삭제 될꺼
+		//alert(storyOrder);
         
  		//대화문이 있으면 삭제
  		if(typeof typewriter !== "undefined"){
@@ -160,40 +180,55 @@ Story.prototype = {
  		if(typeof backimage !== "undefined"){
  			backimage.destroy();
  		}
+ 		if(typeof bgInfo !== "undefined"){
+ 			bgInfo.destroy();
+ 		}
+
+ 		if(typeof npc !== "undefined"){
+ 			npc.destroy();
+ 		}
  		
  		
  		//배경음악
  		if(storyOrder == 0){
  			bgMusicName = arr[storyOrder].bgImgName;
-	 		this.music = game.add.sound(bgMusicName);
-			this.music.play();
+	 		music = game.add.audio(bgMusicName);
+			music.play();
 			//음악 반복
-			this.music.loopFull();
+			music.loop = true; 
 			console.log("배경 음악 재생 = " + bgMusicName);
  		}
  		//배경음악 바뀜
  		else if(bgMusicName != arr[storyOrder].bgImgName){
- 			this.music.stop();
+ 			music.destroy();
+
+ 		    game.cache.removeSound(bgMusicName);
+ 		
  			bgMusicName = arr[storyOrder].bgImgName;
-	 		this.music = game.add.sound(bgMusicName);
-			this.music.play();
-			this.music.loopFull();
+ 			music = game.add.audio(bgMusicName);
+	 		music.play();
+	 		music.loop = true; 
 			console.log("배경 음악 재생 = " + bgMusicName);
  		}
  		//음악 효과
  		if(arr[storyOrder].bgMusicName != "null"){
- 			this.music = game.add.sound(arr[storyOrder].bgMusicName).play();
+ 			music = game.add.audio(arr[storyOrder].bgMusicName).play();
  			
  			console.log("음악 효과 재생 =" + arr[storyOrder].bgMusicName);
  		}
  		
 		//배경이미지
 		bgImgName = arr[storyOrder].bgImgName;
-	    backimage = game.add.sprite(0, 0, bgImgName,10);
-	    hikari = backimage.animations.add('hikari');
-	    hikari.play(10,true);
+	    backimage = game.add.sprite(0, 0, bgImgName);
+	    if(bgImgName == '전당'){
+	    	hikari = backimage.animations.add('hikari',[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]);
+	    	hikari.play(12,false);
+	    	
+	    }else{
+	    	hikari = backimage.animations.add('hikari');
+	    	hikari.play(10,true);
+	    }
 	    console.log("배경이미지 = " + bgImgName);
-	    
 	    //대화할 npc 생성
 		 if(storyOrder == 0){
 			 characterName = arr[storyOrder].characterName;
@@ -217,18 +252,19 @@ Story.prototype = {
 	    //텍스트박스
 		dialogueBG = game.add.sprite(50,650,'textbox');
 		dialogueBG.width = 1500;
-
-		this.typethetext(arr[storyOrder].characterName + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
+		var name ;
+		if(arr[storyOrder].characterName == "칼든비토벤" ){
+			name = "비토벤"
+		}else{
+			name = arr[storyOrder].characterName;
+		}
+		this.typethetext(name + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
 		
 		//배경 장소 정보 좌상단에 띄우기
- 		//if(storyOrder == 0){
+ 		
  			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
  			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
- 		/*}else if( bgImgName != arr[storyOrder].bgImgName ){
- 			bgInfo.destroy(); 
- 			bgInfo = game.add.bitmapText(50, 50, 'neo_font',arr[storyOrder].bgImgName,50);
- 			console.log("배경 정보  = " + arr[storyOrder].bgImgName);
- 		}*/
+ 		
  		
 	},
 
@@ -256,7 +292,7 @@ Story.prototype = {
 			url : 'loadStoryContents'
 			,type : 'post'
 			,dataType : 'json'
-			,data: {storynum : storynum}
+			,data: {storyNum : storyNum}
 			/*cache : false,
 			async : false,*/
 			,success:function(arrtest){
@@ -271,12 +307,29 @@ Story.prototype = {
 
 		});
 	},
+	
 
 	//게임으로 이동 
 	 gotostage: function(){
 		//모든 게임 elements 날리기.
-		game.world.removeAll()
-		this.music.stop();
-		game.state.start("Preload");
+
+
+		 game.world.removeAll();
+
+		 //음악 날리기
+		 music.destroy();
+		 game.cache.removeSound(bgMusicName);
+		if(storyNum==14){
+			game.state.start('Ending');
+		}else{
+			
+			//game.state.start('stage'+i);  //예를 들어 stage1 
+			
+		}
+		
+
+		
+		//game.state.start("Preload");
+
 	}
 }
