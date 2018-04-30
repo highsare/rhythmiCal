@@ -325,7 +325,7 @@ Story.prototype = {
 	      url: 'requestConsole', 
 	      success: function(inputKey) {
 	    	
-	            alert(inputKey);
+	            alert("앱에서 넘어온 값"+inputKey);
 	         
 	      }
 	   });
