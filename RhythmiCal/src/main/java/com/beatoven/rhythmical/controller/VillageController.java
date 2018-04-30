@@ -23,6 +23,7 @@ public class VillageController {
 	VillageDAO villageDAO;
 	int cnt = 2;
 	int rdmnum;
+	boolean isCorrect = false;
 	
 	public ArrayList<String> mList = HomeController.multiList;
 	
@@ -38,7 +39,7 @@ public class VillageController {
 		try {jsonMotionList = villageDAO.readMotionList(loginMember);}
 		catch (Exception e) {e.printStackTrace();}
 		System.out.println(jsonMotionList);
-		//String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
+//		String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
 		
 		return jsonMotionList.replaceAll("'", "\"");
 	}
@@ -57,6 +58,7 @@ public class VillageController {
 		HashMap<String, String> map = new HashMap<>();
 		
 		// 마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
+//		마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
 		map.put("id", loginMember.getId());
 		map.put("jsonText", jsonText);
 		
@@ -71,13 +73,11 @@ public class VillageController {
 	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
 	public String loginApp(Member member) {
 		String result = "";
-		if (mList.size() <= 3) {
+		if (mList.size() <= 4) {
 			if (member.getCode().equals(String.valueOf(rdmnum))) {
+				cnt = mList.size() + 1;
 				mList.add("player"+cnt);
-				if (cnt <=4) {
-					cnt++;
-				}
-				result = "player" + (cnt-1);
+				result = "player" + (cnt);
 				System.out.println(mList);
 				System.out.println(result);
 			}
@@ -107,6 +107,16 @@ public class VillageController {
 			System.out.println(rdmnum);
 			return true;
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="logOutMulti",method = RequestMethod.POST)
+	public boolean loginApp(String player) {
+		System.out.println(player);
+		
+		mList.remove(player);
+		System.out.println(mList);
+		return true;
 	}
 	
 }
