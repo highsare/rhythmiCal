@@ -23,11 +23,12 @@ public class StoryController {
 	//대사 가져오는메소드
 	@ResponseBody
 	@RequestMapping(value = "loadStoryContents", method = RequestMethod.POST)
-	public ArrayList<Story> loadStoryContents (int storynum) {
+	public ArrayList<Story> loadStoryContents (String storyNum) {
 		
 		//story DB접근
-		ArrayList<Story> getStory = storyDao.selectStory(storynum);
-		
+		ArrayList<Story> getStory = storyDao.selectStory(Integer.parseInt(storyNum));
+		System.out.println(Integer.parseInt(storyNum));
+		System.out.println(getStory);
 	
 		return getStory;
 	}
