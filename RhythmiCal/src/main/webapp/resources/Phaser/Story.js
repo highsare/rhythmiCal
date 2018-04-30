@@ -7,7 +7,7 @@
  */
 //스토리 넘버
 
-var storyNum = 11;
+var storyNum;
 var typewriter = new Typewriter(); // 글자 타이핑 효과
 
 var dialogueBG;
@@ -324,12 +324,8 @@ Story.prototype = {
 		}else{
 			
 			//game.state.start('stage'+i);  //예를 들어 stage1 
-			
 		}
 		
-
-		
 		//game.state.start("Preload");
-
 	}
 }

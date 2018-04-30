@@ -247,7 +247,17 @@ Stage.prototype = {
 		jumpchar();
 		createNotes();
 		bossJump(nobeato);
+		isFail();
 		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
+	}
+}
+
+function isFail(){
+	if (life == 0) {
+		//실패 처리
+		//실행하던거 전부 종료하고 fail 페이드아웃
+		//끝낸 다음에 fail.js 실행
+		//fail.js에서는 실패 이미지(?)를 잠시 보여주고 다시 이 스테이지를 실행한다.
 	}
 }
 
