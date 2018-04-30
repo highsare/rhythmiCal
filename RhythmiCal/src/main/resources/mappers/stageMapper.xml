@@ -5,7 +5,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 	<mapper namespace="com.beatoven.rhythmical.interfaces.StageInterface">
-	
 	  	<select id="getStage" resultType="stage" parameterType="int">
 	  		SELECT *
 	  		FROM STAGE
@@ -22,5 +21,4 @@
 	  		SELECT *
 	  		FROM MONSTER
 	  	</select>
-	  	
 	</mapper>

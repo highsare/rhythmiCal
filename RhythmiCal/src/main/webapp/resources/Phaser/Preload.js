@@ -15,6 +15,7 @@ Preload.prototype = {
 		game.world.removeAll();
 		//로고 이미지 불러오기
 		//로딩 이미지 등 불러오기
+		setResources("Village");
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -56,10 +57,383 @@ function getStageInfo(stageNum){
 			monsterlistB = stageInfo[3];
 			monsterlistC = stageInfo[4];
 			multiNum = stageInfo[5];
-			
-			game.state.start("Stage");
 		}
 	});
+	$.ajax({
+	      url: 'readMotionList'
+	      ,type : 'post'
+	      // 성공하면 가져온 모션 리스트를 표시
+	      ,success: function(jsonText) {
+	         alert('readMotionList success');
+	         if (jsonText == '000') {
+	        	  alert('저장된 모션이 없습니다!');
+	        	  turn1 = 0; //'point'
+		   		  turn2 = 1; //'up'
+		   		  turn3 = 2; //'down'
+		   		  button1.frame = turn1;
+	       	      button2.frame = turn2;
+	       	 	  button3.frame = turn3;
+		   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'A'); turn4 = 0;
+	              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'B'); turn5 = 1;
+	              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'C'); turn6 = 2;
+	              //descText 뭔가 초기화 해야함
+	              descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[turn1], 30);
+	              
+	              game.state.start("stage");
+	         }
+	         else {
+	        	 alert('저장된 모션이 있습니다!' + jsonText);
+	        	 var motionList = JSON.parse(jsonText);
+	        	 setMotion(motionList);
+	        	 game.state.start("stage");
+	         }
+	      }
+	      // 실패하면 기본값을 표시
+	      ,error: function() {
+	          alert('readMotionList error');
+	      }
+	   });
+}
+
+//DB를 참조해서 모션세팅값을 적절히 처리한다.
+function setMotion(motionList){
+	 
+	 turn1 = parseInt(motionList.button[0].turn);
+	 turn2 = parseInt(motionList.button[1].turn);
+	 turn3 = parseInt(motionList.button[2].turn);
+	 
+	 lane1 = motionList.button[0].lane.stringify();
+	 lane2 = motionList.button[1].lane.stringify();
+	 lane3 = motionList.button[2].lane.stringify();
+	 
+	 //기초 설정 초기화
+	 point_isA = false;
+	 point_isB = false;
+	 point_isC = false;
+	 up_isA = false;
+	 up_isB = false;
+	 up_isC = false;
+	 down_isA = false;
+	 down_isB = false;
+	 down_isC = false;
+	 left_isA = false;
+	 left_isB = false;
+	 left_isC = false;
+	 right_isA = false;
+	 right_isB = false;
+	 right_isC = false;
+	 
+	//1번 모션의 공격 범위 지정
+	 switch(turn1){
+	 case 0:
+		 //POINT
+		 switch(lane1){
+		 case 'A': 
+			 point_isA = true;
+			 point_isB = false;
+			 point_isC = false;
+			 break;
+		 case 'B':
+			 point_isA = false;
+			 point_isB = true;
+			 point_isC = false;
+			 break;
+		 case 'C':
+			 point_isA = false;
+			 point_isB = false;
+			 point_isC = true;
+			 break;
+		 }
+		 break;
+	 case 1:
+		 //UP
+		 switch(lane1){
+		 case 'A': 
+			 up_isA = true;
+			 up_isB = false;
+			 up_isC = false;
+			 break;
+		 case 'B':
+			 up_isA = false;
+			 up_isB = true;
+			 up_isC = false;
+			 break;
+		 case 'C':
+			 up_isA = false;
+			 up_isB = false;
+			 up_isC = true;
+			 break;
+		 }
+		 break;
+	 case 2:
+		 //DOWN
+		 switch(lane1){
+		 case 'A': 
+			 down_isA = true;
+			 down_isB = false;
+			 down_isC = false;
+			 break;
+		 case 'B':
+			 down_isA = false;
+			 down_isB = true;
+			 down_isC = false;
+			 break;
+		 case 'C':
+			 down_isA = false;
+			 down_isB = false;
+			 down_isC = true;
+			 break;
+		 }
+		 break;
+	 case 3:
+		 //LEFT
+		 switch(lane1){
+		 case 'AB': 
+			 left_isA = true;
+			 left_isB = true;
+			 left_isC = false;
+			 break;
+		 case 'BC':
+			 left_isA = false;
+			 left_isB = true;
+			 left_isC = true;
+			 break;
+		 case 'CA':
+			 left_isA = true;
+			 left_isB = false;
+			 left_isC = true;
+			 break;
+		 }
+		 break;
+	 case 4:
+		 //RIGHT
+		 switch(lane1){
+		 case 'AB': 
+			 right_isA = true;
+			 right_isB = true;
+			 right_isC = false;
+			 break;
+		 case 'BC':
+			 right_isA = false;
+			 right_isB = true;
+			 right_isC = true;
+			 break;
+		 case 'CA':
+			 right_isA = true;
+			 right_isB = false;
+			 right_isC = true;
+			 break;
+		 }
+		 break;
+	 }
+	 
+	//2번 모션의 공격 범위 지정
+	 switch(turn2){
+	 case 0:
+		 //POINT
+		 switch(lane1){
+		 case 'A': 
+			 point_isA = true;
+			 point_isB = false;
+			 point_isC = false;
+			 break;
+		 case 'B':
+			 point_isA = false;
+			 point_isB = true;
+			 point_isC = false;
+			 break;
+		 case 'C':
+			 point_isA = false;
+			 point_isB = false;
+			 point_isC = true;
+			 break;
+		 }
+		 break;
+	 case 1:
+		 //UP
+		 switch(lane1){
+		 case 'A': 
+			 up_isA = true;
+			 up_isB = false;
+			 up_isC = false;
+			 break;
+		 case 'B':
+			 up_isA = false;
+			 up_isB = true;
+			 up_isC = false;
+			 break;
+		 case 'C':
+			 up_isA = false;
+			 up_isB = false;
+			 up_isC = true;
+			 break;
+		 }
+		 break;
+	 case 2:
+		 //DOWN
+		 switch(lane1){
+		 case 'A': 
+			 down_isA = true;
+			 down_isB = false;
+			 down_isC = false;
+			 break;
+		 case 'B':
+			 down_isA = false;
+			 down_isB = true;
+			 down_isC = false;
+			 break;
+		 case 'C':
+			 down_isA = false;
+			 down_isB = false;
+			 down_isC = true;
+			 break;
+		 }
+		 break;
+	 case 3:
+		 //LEFT
+		 switch(lane1){
+		 case 'AB': 
+			 left_isA = true;
+			 left_isB = true;
+			 left_isC = false;
+			 break;
+		 case 'BC':
+			 left_isA = false;
+			 left_isB = true;
+			 left_isC = true;
+			 break;
+		 case 'CA':
+			 left_isA = true;
+			 left_isB = false;
+			 left_isC = true;
+			 break;
+		 }
+		 break;
+	 case 4:
+		 //RIGHT
+		 switch(lane1){
+		 case 'AB': 
+			 right_isA = true;
+			 right_isB = true;
+			 right_isC = false;
+			 break;
+		 case 'BC':
+			 right_isA = false;
+			 right_isB = true;
+			 right_isC = true;
+			 break;
+		 case 'CA':
+			 right_isA = true;
+			 right_isB = false;
+			 right_isC = true;
+			 break;
+		 }
+		 break;
+	 }
+	 
+	 //3번 모션의 공격 범위 지정
+	 switch(turn3){
+	 case 0:
+		 //POINT
+		 switch(lane1){
+		 case 'A': 
+			 point_isA = true;
+			 point_isB = false;
+			 point_isC = false;
+			 break;
+		 case 'B':
+			 point_isA = false;
+			 point_isB = true;
+			 point_isC = false;
+			 break;
+		 case 'C':
+			 point_isA = false;
+			 point_isB = false;
+			 point_isC = true;
+			 break;
+		 }
+		 break;
+	 case 1:
+		 //UP
+		 switch(lane1){
+		 case 'A': 
+			 up_isA = true;
+			 up_isB = false;
+			 up_isC = false;
+			 break;
+		 case 'B':
+			 up_isA = false;
+			 up_isB = true;
+			 up_isC = false;
+			 break;
+		 case 'C':
+			 up_isA = false;
+			 up_isB = false;
+			 up_isC = true;
+			 break;
+		 }
+		 break;
+	 case 2:
+		 //DOWN
+		 switch(lane1){
+		 case 'A': 
+			 down_isA = true;
+			 down_isB = false;
+			 down_isC = false;
+			 break;
+		 case 'B':
+			 down_isA = false;
+			 down_isB = true;
+			 down_isC = false;
+			 break;
+		 case 'C':
+			 down_isA = false;
+			 down_isB = false;
+			 down_isC = true;
+			 break;
+		 }
+		 break;
+	 case 3:
+		 //LEFT
+		 switch(lane1){
+		 case 'AB': 
+			 left_isA = true;
+			 left_isB = true;
+			 left_isC = false;
+			 break;
+		 case 'BC':
+			 left_isA = false;
+			 left_isB = true;
+			 left_isC = true;
+			 break;
+		 case 'CA':
+			 left_isA = true;
+			 left_isB = false;
+			 left_isC = true;
+			 break;
+		 }
+		 break;
+	 case 4:
+		 //RIGHT
+		 switch(lane1){
+		 case 'AB': 
+			 right_isA = true;
+			 right_isB = true;
+			 right_isC = false;
+			 break;
+		 case 'BC':
+			 right_isA = false;
+			 right_isB = true;
+			 right_isC = true;
+			 break;
+		 case 'CA':
+			 right_isA = true;
+			 right_isB = false;
+			 right_isC = true;
+			 break;
+		 }
+		 break;
+	 }
 }
 
 function setResources (state){
@@ -89,19 +463,8 @@ function setResources (state){
 		//Village assets
 		
 		
-		
-		
-		
-		
 		//마을 실행
 		game.state.start("Village");
-		
-		
-		
-		
-		
-		
-		
 		
 	}else if (state == "Ending") {
 		//Ending assets
