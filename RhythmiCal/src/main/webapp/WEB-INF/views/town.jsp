@@ -11,7 +11,7 @@
 <body>
 <script>
 var game = new Phaser.Game(1600, 900, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
-var text1,text2,messange,exit,p_back,m_back;
+var text1,text2,message,exit,p_back,m_back;
 var cursors;
 var point;
 var image;
@@ -24,7 +24,7 @@ var tween;
 var key1;
 var bgd;
 var textboard, start;
-var neon,board;
+var neon,board,rdm;
 var e_select,sprite;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
@@ -41,6 +41,7 @@ var descText; // 모션 설명하는 비트맵 텍스트 변수
 var desctextX = 1180;
 var desctextY = 550;
 var descBackground;
+var btnSound, doorOpen, doorClose; // 버튼 클릭, 문 열기, 문 닫기 사운드
 var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
 				, '[올려치기]\nKnock Down:\n적을 잠시\n뒤로 가게 하는 효과'
 				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
@@ -49,7 +50,7 @@ var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
   
 function preload() {
    game.world.removeAll();
-   // 깊이를 1로 초기화
+   // 깊이를 1로 초기화  
    depth = 0;
    
    // 진주 이미지   
@@ -79,7 +80,12 @@ function preload() {
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
    game.load.image('mm','resources/Images/town/townImg/mm.png');
+   
    game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
+   game.load.audio('btnSound','resources/Images/town/button_click.mp3'); //버튼 클릭
+   game.load.audio('door','resources/Images/town/door.wav'); // 문여는 소리
+   game.load.audio('door_close','resources/Images/town/door_close.mp3'); //문닫는소리
+   
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
    //멀티 플레이어 표시
@@ -98,13 +104,13 @@ function preload() {
    game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
    
    // 모션 및 효과 스프라이트 로드
-   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 120, 60);
+   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 60, 120);
    
    // 모션 설명 배경이미지
    game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
    
    // 네모 테두리 로드
-   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 95, 95);
+   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
 }
 
 function create() {
@@ -116,7 +122,12 @@ function create() {
    //마을BGM
    var townbgm = game.add.audio('townBGM');
    townbgm.loopFull();
-   townbgm.play();
+   townbgm.play("",0,0.2);
+   
+   //버튼 클릭, 문 열기, 문 닫기 사운드 추가 
+   btnSound = game.add.audio('btnSound');
+   doorOpen = game.add.audio('door');
+   doorClose = game.add.audio('door_close');
    
    //메뉴 이미지 지정한 좌표에 출력
    var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
@@ -203,19 +214,6 @@ function Motion(name, effect, lane) {
 }
 
 /*
- * findMotion(String motionKey): 현재 스프라이트의 객체명 motionKey를 받아, 현재 스프라이트에 맞는 모션 객체를 반환
- */
-function findMotion(motionKey) {
-   switch (motionKey) {
-   case 'point': return motion[0]; break;
-   case 'up': return motion[1]; break;
-   case 'down': return motion[2]; break;
-   case 'left': return motion[3]; break;
-   case 'right': return motion[4]; break;
-   }
-}  
- 
-/*
  * moveMenu(inputKey): 작업소/용병소/겜시작/겜종료 메뉴를 이동시키는 메소드
  */
 function moveMenu(inputKey) {
@@ -223,6 +221,9 @@ function moveMenu(inputKey) {
    //화살표 이미지
    tween = game.add.tween(point);
 
+   //버튼 사운드 재생
+   playBtnSound();
+   
    //키보드 별 분기처리
    switch (inputKey) {
    case 'up':
@@ -237,15 +238,14 @@ function moveMenu(inputKey) {
       } break;
    case 'esc':
 	   isnull();
-       if (point == null) {
-          point = game.add.image(x, y, 'select');
-          point.scale.set(0.9);
-       } break;
+       point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+       playDoorClose();
+       break;
    case 'enter':
       isEntered = true;
+      playDoorOpen();
       if (point != null) {
-         point.kill();
-         point = null;         
+         point.destroy();         
       } 
    
       // 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
@@ -324,9 +324,9 @@ function createStudio() {
         	  turn1 = 0; //'point'
 	   		  turn2 = 1; //'up'
 	   		  turn3 = 2; //'down'
-	   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'AB'); turn4 = 0;
-              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'AB'); turn5 = 0;
-              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'AB'); turn6 = 0;
+	   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'A'); turn4 = 0;
+              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'A'); turn5 = 0;
+              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'A'); turn6 = 0;
          }
          else {
         	 alert('저장된 모션이 있습니다!' + jsonText);
@@ -379,6 +379,8 @@ function moveSquare(direction) {
    }
    game.add.tween(square).to({ y: squareY }, 300, Phaser.Easing.Exponential.Out, true, 0);
    game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);
+   
+   playBtnSound();
    square.bringToTop();
 }
 
@@ -413,15 +415,11 @@ function moveButtonFocus(inputKey) {
             buttonFocus = buttonFocus+1; return;
          } break;
       case 'enter': 
+    	    playBtnSound();
             depth = 2; 
             break;
       case 'esc': 
         isEntered = false;
-        isnull();
-        if (point == null) {
-           point = game.add.image(x, y, 'select');
-           point.scale.set(0.9);
-        }
         
         // 레인 설정에 중복값이 있을 경우 에러를 알림
         if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
@@ -432,6 +430,9 @@ function moveButtonFocus(inputKey) {
         else {
            saveMotionList();
            isnull();
+           point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+           playBtnSound();
+           playDoorClose();
            depth = 0; // 깊이를 0으로 하여 moveMenu()로 이동 
         }
         break;
@@ -462,6 +463,7 @@ function saveMotionList() {
  */
 function moveContent(buttonFocus, inputKey) {
   console.log('moveContent() 진입');
+  playBtnSound();
 	switch(buttonFocus) {
          // 모션 1 변경
       case 1: 
@@ -686,34 +688,13 @@ function createMercenary(inputKey) {
 	image = game.add.image(810, 120, 'pub');
 	border = game.add.image(805, 120, 'border');
    // 난수 발급
-   var rdm = Math.floor(Math.random() * 9999) + 1000;
    board = game.add.image(810, 520, 'board');
 
-   $.ajax({
-      url: 'sendRdm'
-      ,type: 'post'
-      ,data: {
-         rdm: rdm
-      }
-      ,dataType: 'json'
-      ,success: function(result) {
-         console.dir(result);
-         /* if (result == "true"){
-            consle.log('성공');
-         } else {
-            text1 = game.add.bitmapText(1060, 600,'neo_font' ,'더이상 추가 불가', 60);
-         } */
-      }
-      ,error: function() {alert('createMercenary - sendRdm error');}
-   });
-
-   // 난수를 보여줄 텍스트
-   text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
+   sendRdm();
    
    neon = game.add.image(795, 440, 'neon');
    neon.scale.set(2);
-   messange = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
-   
+   message = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
 }
 
 var cnt = 0;
@@ -737,16 +718,34 @@ function multiconnection() {
          if (result != null) {
             switch (result.length) {
             case 2:
-               var player2 = game.add.image(330, 765, 'player2');
-               player2.scale.set(0.4);
+            	if (player2 == null) {
+            		player2 = game.add.image(330, 765, 'player2');
+                    player2.scale.set(0.4);
+                    if (text1 != null) {
+						text1.destroy();
+					}
+                    sendRdm();
+				}
                break;
             case 3:
-               var player3 = game.add.image(480, 765, 'player3');
-               player3.scale.set(0.4);
+            	if (player3 == null) {
+            		player3 = game.add.image(480, 765, 'player3');
+                    player3.scale.set(0.4);
+                    if (text1 != null) {
+						text1.destroy();
+					}
+                    sendRdm();
+				}
                break;
             case 4:
-               var player4 = game.add.image(630, 765, 'player4');
-               player4.scale.set(0.4);
+            	if (player4 == null) {
+            		player4 = game.add.image(630, 765, 'player4');
+                    player4.scale.set(0.4);
+                    if (text1 != null) {
+						text1.destroy();
+					}
+                    sendRdm();
+				}
                break;
             default:
                break;
@@ -756,6 +755,40 @@ function multiconnection() {
       ,error: function() {alert('update() - multiconnection error');}
    });
 }
+
+function sendRdm() {
+ // 난수 발급
+	rdm = Math.floor(Math.random() * 9999) + 1000;
+	 
+	$.ajax({
+	     url: 'sendRdm'
+	     ,type: 'post'
+	     ,data: {
+	        rdm: rdm
+	     }
+	     ,dataType: 'json'
+	     ,success: function(result) {
+	        console.dir(result);
+	     }
+	     ,error: function() {alert('createMercenary - sendRdm error');}
+	});
+
+   // 난수를 보여줄 텍스트
+	text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
+}
+
+	var cnt = 0;
+	function update() {
+	   // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.)
+	   cnt++
+	   if (cnt % 6 == 0) {
+	      readKey();
+	   }
+	   if (cnt % 12 == 0) {
+	      cnt = 0;
+	      multiconnection(); 
+	   }
+	}
 
 function myroom() {
    console.log('myroom 진입');
@@ -777,12 +810,14 @@ function myroom() {
 
 function goHome(inputKey) {
    if (inputKey == 'esc') {
-	   depth = 0; isnull(); 
+	   isnull(); 
 	   point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+	   playDoorClose();
+	   depth = 0; 
 	}
    else if (inputKey == 'enter') {
-	  exit.kill(); exit = null;
-	  e_select.kill(); e_select = null;
+	  exit.destroy();
+	  e_select.destroy();
 	  exit = game.add.image(920,580,'exit_push');
 	  exit.scale.set(0.8);	
       // 게임 종료. 검정 화면 준비.   
@@ -798,12 +833,13 @@ function goHome(inputKey) {
       logoutMember();
    }
 }
+
 function frontoftown() {
 	m_back = game.add.image(750,75,'menu_sub_back');
 	m_back.alpha = 0.8;
     image = game.add.image(810, 120, 'front');
     border = game.add.image(810, 120, 'border');
-    textboard = game.add.image(810,450,'textboard');
+    textboard = game.add.image(810, 450,'textboard');
     textboard.scale.set(2);
     text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
     start = game.add.image(935, 580,'start');
@@ -815,12 +851,14 @@ function frontoftown() {
 
 function gamestart(inputKey) {
 	if (inputKey == 'esc') {
-		depth = 0; isnull(); 
+		isnull(); 
 		point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+		playDoorClose();
+		depth = 0; 
 	}
 	   else if (inputKey == 'enter') {
-		 start.kill(); start = null;
-		 e_select.kill(); e_select = null;
+		 start.destroy();
+		 e_select.destroy();
 		 var startpush = game.add.image(970, 595,'start_push'); 
 		 startpush.scale.set(0.89);
 		 alert('Next Stroy Or Game Start');
@@ -860,6 +898,18 @@ function playerCount() {
 	   });
 }
 
+function playBtnSound() {
+     btnSound.play();
+}
+
+function playDoorOpen() {
+    doorOpen.play();
+}
+
+function playDoorClose() {
+    doorClose.play();
+}
+
 function isnull() {
 	if (text1 != null) {text1.destroy();}
 	if (image != null) {image.destroy();}
@@ -869,7 +919,7 @@ function isnull() {
 	if (start != null) {start.destroy();}
 	if (neon != null) {neon.destroy();}
 	if (board != null) {board.destroy();}
-	if (messange != null) {messange.destroy();}
+	if (message != null) {message.destroy();}
 	if (exit != null) {exit.destroy();}
 	if (text2!= null) {text2.destroy();}
 	if (e_select!= null) {e_select.destroy();}
@@ -882,7 +932,7 @@ function isnull() {
 	if (square != null) {square.destroy();}
 	if (descBackground != null) {descBackground.destroy();}
 	if (descText != null) {descText.destroy();}
-}
+ }
   
 
 </script>
