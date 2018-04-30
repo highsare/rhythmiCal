@@ -945,7 +945,7 @@ function isnull() {
 	if (square != null) {square.destroy();}
 	if (descBackground != null) {descBackground.destroy();}
 	if (descText != null) {descText.destroy();}
- }
+}
   
 </script>
 </body>
