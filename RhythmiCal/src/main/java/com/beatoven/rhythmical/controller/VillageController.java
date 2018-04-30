@@ -38,7 +38,7 @@ public class VillageController {
 		try {jsonMotionList = villageDAO.readMotionList(loginMember);}
 		catch (Exception e) {e.printStackTrace();}
 		System.out.println(jsonMotionList);
-//		String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
+		//String json = "{'motion': [{'name': 'down', 'effect': 'sun', 'lane': 'C'},{'name': 'left', 'effect': 'moon', 'lane': 'B'},{'name': 'right', 'effect': 'star', 'lane': 'A'}]}";
 		
 		return jsonMotionList.replaceAll("'", "\"");
 	}
@@ -57,7 +57,6 @@ public class VillageController {
 		HashMap<String, String> map = new HashMap<>();
 		
 		// 마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
-//		마을 테스트를 위해 주석 처리 해놓았음. 테스트할 시 로그인 상태가 아니므로 loginMember에 null이 들어가면서 오류가 뜨기 때문.
 		map.put("id", loginMember.getId());
 		map.put("jsonText", jsonText);
 		
