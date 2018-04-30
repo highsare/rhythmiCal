@@ -113,6 +113,9 @@ Stage.prototype = {
 		game.load.spritesheet('ShieldDie', 'resources/Images/characters/monsters/90x80x5_ShieldDie.png', 90, 80, 5);
 		//모션의 종류 및 효과 등 모션 데이터를 불러와야 함
 		
+		//Jyama스킬 방해구름 이미지
+		game.load.spritesheet('Cloud', 'resources/Images/others/48x48x1_cloud.png', 48, 48, 1);
+		
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');

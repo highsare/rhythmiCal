@@ -9,7 +9,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	//A라인의 범위에 있는 몬스터
 	for (var i = 0; i < arrayA.length; i++) {
 		if (arrayA[i].status != "DIE" && arrayA[i].status != "STAY") {
-			if (arrayA[i].lineX < monsterLocationX + 150 || arrayA[i].lineX > monsterLocationX - 150) {
+			if (arrayA[i].lineX < monsterLocationX + 150 && arrayA[i].lineX > monsterLocationX - 150) {
 				if (monsterAttackLine == 0) {
 					if (monsterLocationY + 95 * 3 > lineYLocation[arrayA[i].attackLine] || monsterLocationY - 95 < lineYLocation[arrayA[i].attackLine]) {
 						monsterInRange.push(arrayA[i]);
@@ -29,7 +29,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	//B라인의 범위에 있는 몬스터
 	for (var i = 0; i < arrayB.length; i++) {
 		if (arrayB[i].status != "DIE" && arrayB[i].status != "STAY") {
-			if (arrayB[i].lineX < monsterLocationX + 150 || arrayB[i].lineX > monsterLocationX - 150) {
+			if (arrayB[i].lineX < monsterLocationX + 150 && arrayB[i].lineX > monsterLocationX - 150) {
 				if (monsterAttackLine == 0) {
 					if (monsterLocationY + 95 * 3 > lineYLocation[arrayB[i].attackLine] || monsterLocationY - 95 < lineYLocation[arrayB[i].attackLine]) {
 						monsterInRange.push(arrayB[i]);
@@ -49,7 +49,7 @@ function explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC){
 	//C라인의 범위에 있는 몬스터
 	for (var i = 0; i < arrayC.length; i++) {
 		if (arrayC[i].status != "DIE" && arrayC[i].status != "STAY") {
-			if (arrayC[i].lineX < monsterLocationX + 150 || arrayC[i].lineX > monsterLocationX - 150) {
+			if (arrayC[i].lineX < monsterLocationX + 150 && arrayC[i].lineX > monsterLocationX - 150) {
 				if (monsterAttackLine == 0) {
 					if (monsterLocationY + 95 * 3 > lineYLocation[arrayC[i].attackLine] || monsterLocationY - 95 < lineYLocation[arrayC[i].attackLine]) {
 						monsterInRange.push(arrayC[i]);
@@ -89,7 +89,7 @@ var cloudIndex = 0;
 function ruinNoteBar(){
 	cloudIndex++;
 	//노트바의 위치에 차례차례 생성
-	game.add.sprite(game.world.centerX - 200 + cloudIndex*30, 750 ,'imgO');
+	game.add.sprite(game.world.centerX - 200 + cloudIndex * 30, 750, 'Cloud');
 }
 
 //몬스터와 높이를 받아서 넉백시킨다.

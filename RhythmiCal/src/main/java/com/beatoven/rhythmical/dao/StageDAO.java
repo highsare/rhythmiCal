@@ -32,7 +32,7 @@ public class StageDAO implements StageInterface{
 	}
 
 	@Override
-	public int getBPM(String bgmName) {
+	public Integer getBPM(String bgmName) {
 		// TODO jiwon
 		int result = 0;
 		try {
@@ -54,6 +54,5 @@ public class StageDAO implements StageInterface{
 				}
 				return result;
 	}
-
 	
 }
