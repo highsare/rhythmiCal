@@ -837,8 +837,8 @@ function goHome(inputKey) {
       sprite = game.add.sprite(0, 0, 'finish');
       // 원래 사이즈 보다 확대 하고 alph로 투명도 조절.moveButtonFocus
       sprite.scale.set(5);
-       sprite.anchor.setTo(0.5, 0.5);
-       sprite.alpha = 0;
+      sprite.anchor.setTo(0.5, 0.5);
+      sprite.alpha = 0;
       
        //화면에서 검정화면으로 조정.
       game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
