@@ -27,7 +27,8 @@ Preload.prototype = {
 			//로딩 띄우기
 		}
 		
-		game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
+		setResources("Stage");
+		//game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
 	},
 	requestUserInfo: function(){
 		$.ajax({
@@ -477,7 +478,7 @@ function setResources(state){
 		
 	}else if (state == "Stage") {
 		//Stage assets , contentNum required
-		getStageInfo(contentNum);
+		getStageInfo(1);
 		
 	}else if (state == "Village") {
 		//Village assets

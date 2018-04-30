@@ -10,6 +10,22 @@
 <script type="text/javascript" src="resources/JavaScriptResource/phaser-2.10.2.js"></script>
 <script type="text/javascript" src="resources/JavaScriptResource/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="resources/JavaScriptResource/typewriter.js"></script>
+<style type="text/css">
+body{
+	background-image: url("resources/Images/mainPage/image_background.gif");	
+}
+#RhythmiCal {
+	position: absolute;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 1600px;
+	height: 900px;
+	border-radius: 3px;
+}
+</style>
 </head>
 <body>
 <!-- js files here -->
@@ -31,7 +47,6 @@
 <script type="text/javascript" src="resources/Phaser/stage/Stage.js"></script>
 
 <script type="text/javascript" src="resources/Phaser/Ending.js"></script>
-
 <script type="text/javascript">
 	var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'RhythmiCal', "game");
 	
@@ -52,5 +67,6 @@
 	//game.state.start("Ending");
 </script>
 
+<div id= "RhythmiCal"></div>
 </body>
 </html>
