@@ -72,7 +72,7 @@ public class VillageController {
 	@RequestMapping(value="loginMultiApp",method = RequestMethod.POST)
 	public String loginApp(Member member) {
 		String result = "";
-		if (mList.size() <= 3) {
+		if (mList.size() < 3) {
 			if (member.getCode().equals(String.valueOf(rdmnum))) {
 				mList.add("player"+cnt);
 				if (cnt <=4) {

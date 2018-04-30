@@ -32,10 +32,11 @@ var jumpX = [135,137.5,140];
 var currentBeat = 0;
 //image => popUpImage
 var popUpImage;
-var counter = 0;
+var comboCnt = 0;
 var isComboNow = false;
 var beatZone = false;
 var beat = 0;
+var numOfBeat;
 //최대체력
 var maxLife = 10; 
 var lifeArray;
@@ -54,6 +55,9 @@ var right_isA,right_isB,right_isC;
 //Controller에서 받아올 변수들
 //멀티유저번호
 var userNumber;
+var tempNote;
+var genNote;
+var multiNum;
 var contentNum;
 
 //contentNum을 이용해 DB : stage에서 받아온 값을 저장할 변수
@@ -72,8 +76,6 @@ var Stage = function(game) {};
 Stage.prototype = {
 	preload: function(){
 		//DB에서 가져와야 할 리소스
-		/////////////////stageNum을 받아오는 과정이 필요함
-		this.getStageInfo(stageNum);
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
 		//스테이지 BGM 로드
@@ -136,8 +138,7 @@ Stage.prototype = {
 		comboSound.addMarker('comboSound', 0, 1);
 		//마을사람들 생성
 		createTownPeople();
-		feverdancingControl(20);
-		changeTownPeopleDepressed();
+		//changeTownPeopleDepressed();
 		//스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
 		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
@@ -155,8 +156,9 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		//목숨 추가
-		iniLife(3);
+		iniLife(5);
 		//게임 기초 세팅
+		stageBGM = game.add.audio('stageBGM');
 		
 		//몬스터를 담을 배열 생성
 		monstersA = new Array();
@@ -196,30 +198,18 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
-		currentBeat += 1;
+		if (currentBeat == numOfBeat) {
+			//비트 모두 소진
+			return;
+		}
 		console.log(currentBeat);
+		currentBeat += 1;
 		start();
 		jumpchar();
 		createNotes();
 		bossJump(nobeato);
 		hitBoss(nobeato, 1, 'nobeatoAttacked', 'nobeato');
 	
-	},
-	getStageInfo: function(stageNum){
-		$.ajax({
-			url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
-			,type : "post"
-			,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
-			,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
-			,success : function(stageInfo) {
-				bgImgName = stageInfo[0].bgImgName;
-				musicName = stageInfo[0].musicName;
-				beat = stageInfo[1];
-				monsterlistA = stageInfo[2];
-				monsterlistB = stageInfo[3];
-				monsterlistC = stageInfo[4];
-			}
-		});
 	}
 }
 
