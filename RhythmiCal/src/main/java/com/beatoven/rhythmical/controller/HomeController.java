@@ -73,8 +73,8 @@ public class HomeController {
 	//로그인(세션에 값 저장)
 	@ResponseBody
 	@RequestMapping(value = "loginMember", method = RequestMethod.POST)
-	public String loginMember(HttpSession session, Member member) {
-		System.out.println("loginMember() 진입 - member: " + member);
+	public String loginMember(HttpSession session, Member member, String language) {
+		System.out.println("loginMember() 진입 - member: " + member + ", language: " + language);
 		Member loginMember = null;
 		try {
 			loginMember = homeDAO.loginMember(member);
@@ -85,12 +85,11 @@ public class HomeController {
 			//로그인 성공
 			session.setAttribute("loginMember", loginMember);
 			System.out.println("login success - loginMember: " + loginMember.toString());
-			return "어서와!";
 		} else {
 			//로그인 실패
 			System.out.println("login fail");
-			return "다시 한 번 확인해줘!";
 		}
+		return language;
 	}
 	
 	//로그아웃
