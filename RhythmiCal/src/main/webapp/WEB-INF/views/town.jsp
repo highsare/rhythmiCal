@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -96,6 +97,9 @@ function preload() {
    game.load.spritesheet('AB', 'resources/Images/town/produceRoom/AB.png', 100, 100);
    game.load.spritesheet('BC', 'resources/Images/town/produceRoom/BC.png', 100, 100);
    game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
+   
+   // 모션 및 효과 스프라이트 로드
+   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 120, 60);
    
    // 모션 설명 배경이미지
    game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
@@ -884,4 +888,3 @@ function isnull() {
 
 </script>
 </body>
-</html>
