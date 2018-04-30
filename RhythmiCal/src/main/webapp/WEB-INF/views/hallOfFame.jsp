@@ -21,21 +21,28 @@ background-size: cover;
 .div_background {
 }
 .form_fame {
-	width: 540px;
+	width: 630px;
 	left: 50%;
-	margin-left: -270px;
+	margin-left: -315px;
 	position: absolute;
 	height: 100px;
 	top: 60%;
 	margin-top: -50px;
 }
 .form_content {
-	width: 540px;
+	width: 630px;
 }
 .center {
 	display: table;
 	margin-left: auto;
 	margin-right: auto;
+}
+.title {
+	background-image: url(resources/Images/mainPage/honor_reply_title.png);
+	width: 630px;
+	height: 80px;
+	padding-top: 27px;
+	padding-left: 30px;"
 }
 </style>
 <script>
@@ -56,8 +63,8 @@ $(function() {
 <body>
 <form class="form_fame">
 	<h1 class="center" style="color: white;">HALL OF FAME</h1>
-	<div class="alert alert-warning"><strong>리드미: 축하한다 비토벤! 너의 승리를 기념하기 위해 명예의 발자국을 남기자구!</strong></div>
-	<div class="form-group"><textarea class="form-control" id="text"></textarea></div>
+	<div class="center title" style=><strong>리드미: 축하한다 비토벤! 너의 승리를 기념하기 위해 명예의 발자국을 남기자구!</strong></div>
+	<textarea style="width: 630px; height: 80px; padding-left: 30px; padding-top: 27px;" id="text"></textarea>
 	<button type="submit" class="btn btn-secondary center" id="write">WRITE</button>
 </form>
 </body>
