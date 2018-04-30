@@ -33,15 +33,15 @@
 <script type="text/javascript" src="resources/Phaser/Ending.js"></script>
 
 <script type="text/javascript">
-	var game = new Phaser.Game(1600,900, Phaser.CANVAS, 'RhythmiCal', "game");
+	var game = new Phaser.Game(1600, 900, Phaser.CANVAS, 'RhythmiCal', "game");
 	
-	game.state.add("Preload",Preload);
-	game.state.add("Intro",Intro);
-	game.state.add("Tutorial",Tutorial);
-	game.state.add("Village",Village);
-	game.state.add("Story",Story);
-	game.state.add("Stage",Stage);
-	game.state.add("Ending",Ending);
+	game.state.add("Preload", Preload);
+	game.state.add("Intro", Intro);
+	game.state.add("Tutorial", Tutorial);
+	game.state.add("Village", Village);
+	game.state.add("Story", Story);
+	game.state.add("Stage", Stage);
+	game.state.add("Ending", Ending);
 	
 	game.state.start("Preload");
 	//game.state.start("Intro");

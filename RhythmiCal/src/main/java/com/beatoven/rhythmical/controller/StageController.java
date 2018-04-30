@@ -61,88 +61,60 @@ public class StageController {
 	@ResponseBody
 	@RequestMapping(value="getStage", method = RequestMethod.POST)
 	public ArrayList<Object> getStage(String stageNum) {
-		
-/*		//phaser로 보내줄 stage정보를 담을 arraylist
+		//phaser로 보내줄 stage정보를 담을 arraylist
 		ArrayList<Object> stageInfo = new ArrayList<>();
-		//phaser로 보내줄 monsterlist를 담을 arraylist
-		ArrayList<Object> monsterlist = new ArrayList<>();
-		//moster
-		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
-
-		//DB : stage 정보를 받아온다.
-		Stage stage = stageDAO.getStage(stageNum);
-		//DB : music beat정보를 받아온다.
-		int beat = stageDAO.getBeat(stage.getMusicName());
-		
-		
-		String monsterlistStream = stage.getMonsterList();
-		String monsterlistSplit[] = monsterlistStream.split("/");
-		
-		for (String monsterUnit : monsterlistSplit) {
-			
-			int attackline = Integer.parseInt(monsterUnit.substring(0, 0));
-			int monsterNum = Integer.parseInt(monsterUnit.substring(1, 2));
-			String appearanceBeat = monsterUnit.substring(3, 5);
-			
-			for (Monster m : monsterTable) {
-				if (m.getMonsterNum() == monsterNum) {
-					m.setAppearanceBeat(appearanceBeat);
-					m.setAttackline(attackline);
-					monsterlist.add(m);
-				}
-			}
-			
-		}*/
-		
-		//for Test
-		ArrayList<Object> stageInfo = new ArrayList<>();
-		int beat = 55;
-		ArrayList<Monster> monsterlist = new ArrayList<>();
+		//phaser로 보내줄 각 라인별로 나눈 array
 		ArrayList<Monster> monsterlistA = new ArrayList<>();
 		ArrayList<Monster> monsterlistB = new ArrayList<>();
 		ArrayList<Monster> monsterlistC = new ArrayList<>();
-		
-		//monsterNum, monsterName, speed, health, effectSoundName, skill, appearanceBeat, attackline
-		Monster monster0 = new Monster(0, "mummy", 1, 1, null, null, 1, 1);//노말 고블린 ^^0
-		Monster monster1 = new Monster(1, "mummy", 1, 2, null, null, 3, 1);//체력이2인 노말 ^^1
-		Monster monster2 = new Monster(2, "mummy", 2, 1, null, null, 3, 1);//속도2 ^^2
-		Monster monster3 = new Monster(3, "mummy", 3, 1, null, null, 4, 1);//속도3 ^^3
-		Monster monster4 = new Monster(4, "mummy", 1, 3, null, null, 5, 1);//탱커 ^^4
-		Monster monster5 = new Monster(5, "mummy", 1, 3, null, null, 6, 1);//폭탄맨 ^^5
-		Monster monster6 = new Monster(6, "mummy", 1, 3, null, null, 5, 1);//황소 ^^6
-		Monster monster7 = new Monster(7, "mummy", 1, 2, null, null, 4, 1);//다이노 처음부터 끝까지 ^^7
-		Monster monster8 = new Monster(8, "mummy", 1, 3, null, null, 3, 1);//노트박스 가리는 애 ^^8
-		Monster monster9 = new Monster(9, "mummy", 1, 1, null, null, 1, 1);//어그로 방패 ^^9
-		
-		monsterlist.add(monster0);
-		monsterlist.add(monster1);
-		monsterlist.add(monster2);
-		monsterlist.add(monster3);
-		monsterlist.add(monster4);
-		monsterlist.add(monster5);
-		monsterlist.add(monster6);
-		monsterlist.add(monster7);
-		monsterlist.add(monster8);
-		monsterlist.add(monster9);
-		
-		for (int i = 0; i < monsterlist.size(); i++) {
-			if (monsterlist.get(i).getAttackline() == 0) {
-				monsterlistA.add(monsterlist.get(i));
-			} else if (monsterlist.get(i).getAttackline() == 1) {
-				monsterlistB.add(monsterlist.get(i));
-			} else if (monsterlist.get(i).getAttackline() == 2) {
-				monsterlistC.add(monsterlist.get(i));
-			}
-		}
-		
-		Stage stage = new Stage(1, "55bpm_Mirror_Mirror.mp3", null, "stageBG_1.png");
-		stageInfo.add(stage);
-		stageInfo.add(beat);
-		stageInfo.add(monsterlistA);
-		stageInfo.add(monsterlistB);
-		stageInfo.add(monsterlistC);
-		stageInfo.add(HomeController.multiList.size());
-		
+		//monster종류를 받아와서 리스트를 작성한다.
+		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
+		//DB : stage 정보를 받아온다.
+		int integerStageNum = Integer.parseInt(stageNum);
+		Stage stage = stageDAO.getStage(integerStageNum);
+		//DB : music beat정보를 받아온다.
+		int beat = stageDAO.getBPM(stage.getBgmName());
+		//String Stream으로 된 몬스터리스트를 받는다.
+		String monsterlistStream = stage.getMonsterList();
+		//구분기호 /로 나눠서 String 배열에 저장한다.
+		String monsterlistSplit[] = monsterlistStream.split("/");
+		//1개씩 불러오면서 나눈다.
+		for (String monsterUnit : monsterlistSplit) {
+			int attackline = Integer.parseInt(monsterUnit.substring(0, 1));
+			int monsterNum = Integer.parseInt(monsterUnit.substring(1, 2));
+			String appearanceBeat = monsterUnit.substring(2, 5);
+			//몬스터종류를 조회해서 몬스터를 셋팅한다.
+			for (Monster m : monsterTable) {
+				if (m.getMonsterNum() == monsterNum) {
+					Monster tempMonster = new Monster(
+							m.getMonsterNum()
+							, m.getMonsterName()
+							, m.getSpeed()
+							, m.getHealth()
+							, m.getSkill()
+							, m.getSkillPercentage()
+							, m.getSoundEffectNum()
+							, m.getDeadSoundNum()
+							, Integer.parseInt(appearanceBeat)
+							, attackline);
+					if (tempMonster.getAttackline() == 0) {
+						monsterlistA.add(tempMonster);
+					} else if (tempMonster.getAttackline() == 1) {
+						monsterlistB.add(tempMonster);
+					} else if (tempMonster.getAttackline() == 2) {
+						monsterlistC.add(tempMonster);
+					}
+				}
+			}//for end monsterTable을 조회하는 for문
+		}//for end 분할돼 들어간 배열을 돌리는
+	
+		stageInfo.add(stage);	//index 0
+		stageInfo.add(beat);	//index 1
+		stageInfo.add(monsterlistA);	//index 2
+		stageInfo.add(monsterlistB);	//index 3
+		stageInfo.add(monsterlistC);	//index 4
+
 		return stageInfo;
 	}
+	
 }
