@@ -73,7 +73,7 @@ $(function() {
 		var signupPw = $('#signupPw').val();
 		var signupPwc = $('#signupPwc').val();
 		
-		<!-- 유효성 검사 해야 함 -->
+		<!-- 유효성 검사: 아이디는 영어만, 비번 일치여부 확인 -->
 		if (signupPw != signupPwc) {
 			alert('비밀번호를 다시 한 번 확인해봐!');
 			return;
