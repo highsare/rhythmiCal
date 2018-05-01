@@ -92,7 +92,7 @@ $(function() {
 		        if (data == 0) {
 				}
 		    }
-		    , error: function(data) {}
+		    , error: function(data) { alert("alsdkd");}
 		});
 	});
 	
