@@ -89,7 +89,7 @@ Intro.prototype = {
 		introMusic = game.add.audio('intro_music');
 		introMusic.play();
 
-		typethetext("인트로", game.world.centerX - 150,
+		typethetext("A long time ago in a galaxy far, far away....", game.world.centerX - 150,
 				game.world.centerY - 50, 90);
 		//몇초있다가  스토리 시작
 		game.time.events.add(800, function() { //글자 나올때 소리 추가
@@ -335,7 +335,7 @@ Intro.prototype = {
 
 			 game.time.events.add(2000, function() { 
 				 typewriter.destroy();
-				 typethetext("게임시작", game.world.centerX - 150,game.world.centerY - 50, 90,100);});
+				 typethetext("The story begins...", game.world.centerX - 150,game.world.centerY - 50, 90,100);});
 		    
 			});
 			

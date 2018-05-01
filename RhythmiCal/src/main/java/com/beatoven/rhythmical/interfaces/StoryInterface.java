@@ -13,4 +13,5 @@ public interface StoryInterface {
 
 	public ArrayList<Story> selectStory(int storynum);
 	
+	public ArrayList<Story> selectStroyJP(int storynum);
 }

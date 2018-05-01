@@ -26,7 +26,7 @@ function bossJump(bossEntity) {
 
 //보스 객체
 function Boss(game, health, bossSpriteName){
-	
+			
 	this.game = game;
 	this.health = health;
 	this.maxHealth = health;

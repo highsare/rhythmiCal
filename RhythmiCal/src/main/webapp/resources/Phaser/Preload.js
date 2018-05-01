@@ -473,7 +473,7 @@ function loadStoryContents(){
 		url : 'loadStoryContents'
 		,type : 'post'
 		,dataType : 'json'
-		,data: {storyNum : parseInt(storyNum)}
+		,data: {storyNum : parseInt(storyNum), language: language}
 		,success:function(arrtest){
 			storyText = new Array();
 			arr = new Array();

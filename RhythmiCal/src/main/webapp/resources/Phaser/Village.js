@@ -450,7 +450,13 @@ function moveButtonFocus(inputKey) {
         // 레인 설정에 중복값이 있을 경우 에러를 알림
         if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
            // TODO : 텍스트 하나 써서 띄울 것.
-           text1 = game.add.bitmapText(810, 420,'neo_font' ,'레인을 중복되게 선택할 수 없습니다!', 40);
+        	var txt;
+        	if (language == "KOREAN") {
+				txt = "레인을 중복되게 선택할 수 없습니다!";
+			}else{
+				txt = "レーインは一つだけ選んでください。" 
+			}
+           text1 = game.add.bitmapText(810, 420,'neo_font' ,txt, 40);
         }
         // 없을 경우 작업소를 나갈 때 현재의 모션 값을 디비에 저장
         else {
@@ -726,7 +732,13 @@ function createMercenary(inputKey) {
    
    neon = game.add.image(795, 440, 'neon');
    neon.scale.set(2);
-   message = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
+   var txt;
+   if (language == "KOREAN") {
+	   txt = "주인장 : 한 겜 허쉴??";
+   }else {
+	   txt = "オーナー：飲んでみな！";
+   }
+   message = game.add.bitmapText(810, 460,'neo_font' ,txt, 40);
 }
 
 function multiconnection() {
@@ -825,7 +837,13 @@ function myroom() {
    e_select.scale.set(0.8);
    textboard = game.add.image(810,450,'textboard');
    textboard.scale.set(2);
-   text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 종료합니다", 50);
+   var txt;
+   if (language == "KOREANㅇ") {
+	   txt = "게임을 종료합니다.";
+   }else{
+	   txt = "ゲームを修旅します。";
+	   }
+   text2 = game.add.bitmapText(950, 480,'neo_font' ,txt, 50);
    // 깊이를 3으로 변경 > update에서 depth에 따른 case문을 통해 goHome(inputKey)를 호출 
    /* depth = 3; */
 }
@@ -868,6 +886,12 @@ function frontoftown() {
     border = game.add.image(810, 120, 'border');
     textboard = game.add.image(810, 450,'textboard');
     textboard.scale.set(2);
+    var txt;
+    if (language == "KOREAN") {
+		txt = "스토리를 진행합니다.";
+	}else{
+		txt = "次のストーリーへ";
+	}
     text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
     start = game.add.image(935, 580,'start');
     start.scale.set(0.89);
