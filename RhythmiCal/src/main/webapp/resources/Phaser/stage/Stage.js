@@ -197,7 +197,7 @@ Stage.prototype = {
 		//feverdancingControl(20);
 		//changeTownPeopleDepressed();
 		//스프라이트 시트에서 2번째 이미지를 먼저 시작한다.
-		beatoven = game.add.sprite(150, game.world.centerY, 'beatoven',1);
+		beatoven = game.add.sprite(150,game.world.centerY, 'beatoven',1);
 		beatoven.anchor.setTo(0.5,1);
 		beatoven.scale.set(5); 
 		beatoven.smoothed = false;
