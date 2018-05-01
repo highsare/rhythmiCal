@@ -18,6 +18,7 @@ var y = 204;
 var inout = 0;
 var player1,player2,player3,player4;
 var isEntered = false;
+var villCnt = 0;
 var tween;
 var key1;
 var bgd;
@@ -32,7 +33,7 @@ var buttonFocus; // 현재 버튼이 몇 번에 있는가
 var motion; // 모션을 담는 배열
 var m_back; // 서브메뉴 배경
 var turn1, turn2, turn3, turn4, turn5, turn6; // 모션(1~3) 및 레인(4~6)을 교체할 카운터
-var motion1, motion2, motion3, effect1, effect2, effect3, lane1, lane2, lane3; // 9개의 스프라이트 버튼
+var button1, button2, button3, lane1, lane2, lane3; 
 var singleLane, doubleLane; // 싱글레인 및 더블레인 배열
 var temp;
 var descText; // 모션 설명하는 비트맵 텍스트 변수
@@ -45,132 +46,130 @@ var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
 				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
 				, '[좌로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'
 				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'];
-var cnt_Vill = 0;
 
-var Village = function(game) {};
+var Village = function(game){};
 
-Village.prototype = {
-	preload: function() {
-		game.world.removeAll();
-		   // 깊이를 1로 초기화  
-		   depth = 0;
-		   
-		   // 진주 이미지   
-		   // 마을 이미지
-		   game.load.image('menu_super_back', 'resources/Images/town/townImg/menu_0_background.png' );
-		   game.load.image('beverlyills', 'resources/Images/town/townImg/menu_0_beverlyills.png' );
-		   game.load.image('studio', 'resources/Images/town/townImg/menu_1_studio.png' );
-		   game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
-		   game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
-		   game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
-		   game.load.image('border', 'resources/Images/town/townImg/border.png'); 
-		   game.load.image('textboard','resources/Images/town/townImg/textboard.png')
-		   game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
-		   game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
-		   game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
-		   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 빨간 테두리
-		   game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
-		   game.load.image('pub','resources/Images/town/townImg/pub.png' ); //용병소 이미지
-		   game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
-		   game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
-		   game.load.image('exit_push', 'resources/Images/town/townImg/exit_push.png');
-		   game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
-		   game.load.image('board','resources/Images/town/townImg/board.png' );
-		   game.load.image('neon','resources/Images/town/townImg/neonboard.png' );
-		   game.load.image('front','resources/Images/town/townImg/front.png' );
-		   game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
-		   game.load.image('start', 'resources/Images/town/townImg/start.png');
-		   game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
-		   game.load.image('mm','resources/Images/town/townImg/mm.png');
-		   
-		   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
-		   game.load.audio('btnSound','resources/Images/town/button_click.mp3'); //버튼 클릭
-		   game.load.audio('door','resources/Images/town/door.wav'); // 문여는 소리
-		   game.load.audio('door_close','resources/Images/town/door_close.mp3'); //문닫는소리
-		   
-		   game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
-		   
-		   //멀티 플레이어 표시
-		   game.load.image('player1','resources/Images/town/townImg/player1.png');
-		   game.load.image('player2','resources/Images/town/townImg/player2.png');
-		   game.load.image('player3','resources/Images/town/townImg/player3.png');
-		   game.load.image('player4','resources/Images/town/townImg/player4.png');
-		   
-		   
-		   // 레인 스프라이트 로드
-		   game.load.spritesheet('A', 'resources/Images/town/produceRoom/A.png', 100, 100);
-		   game.load.spritesheet('B', 'resources/Images/town/produceRoom/B.png', 100, 100);
-		   game.load.spritesheet('C', 'resources/Images/town/produceRoom/C.png', 100, 100);
-		   game.load.spritesheet('AB', 'resources/Images/town/produceRoom/AB.png', 100, 100);
-		   game.load.spritesheet('BC', 'resources/Images/town/produceRoom/BC.png', 100, 100);
-		   game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
-		   
-		   // 모션 및 효과 스프라이트 로드
-		   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 60, 120);
-		   
-		   // 모션 설명 배경이미지
-		   game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
-		   
-		   // 네모 테두리 로드
-		   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
-	 }, 
-	 create: function() {
- 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT; 
-		game.input.onDown.add(gofull, this);
-		//마을 배경
-	   bgd = game.add.image(0, 0, 'mm');
-	   bgd.alpha = 0.5;
-	   bgd.scale.set(1);
-	   
-	   //마을BGM
-	   var townbgm = game.add.audio('townBGM');
-	   townbgm.loopFull();
-	   townbgm.play("",0,0.2);
-	   
-	   //버튼 클릭, 문 열기, 문 닫기 사운드 추가 
-	   btnSound = game.add.audio('btnSound');
-	   doorOpen = game.add.audio('door');
-	   doorClose = game.add.audio('door_close');
-	   
-	   //메뉴 이미지 지정한 좌표에 출력
-	   var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
-	   var beveryills = game.add.image(135, 20, 'beverlyills'); beveryills.scale.set(0.9);
-	   var studio = game.add.image(133, 223, 'studio'); studio.scale.set(0.9);
-	   var mercenary = game.add.image(137, 335, 'mercenary'); mercenary.scale.set(0.9);
-	   var home = game.add.image(133, 552, 'home'); home.scale.set(0.9);
-	   var nextstage = game.add.image(133, 442, 'nextstage'); nextstage.scale.set(0.9);
-	   
-	   //첫 메뉴를 가리키고 있는 빨간색 테두리 출력
-	   point = game.add.image(x, y, 'select');
-	   point.scale.set(0.9);
-	    
-	   p_back = game.add.image(80, 710, 'player_back');
-	   p_back.scale.set(0.85);
-	   p_back.alpha = 0.8;
-	   
-	   player1 = game.add.image(130, 765, 'player1');
-	   player1.scale.set(0.4);
-	   
-	   var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
-	   
-	   playerCount();
-	},
-	update: function() {
-		//게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.)
-		cnt_Vill++;
-	    if (cnt_Vill % 6 == 0) {
-	    	console.log("in");
-	    	readKey();
-	    }
-	    if (cnt_Vill % 12 == 0) {
-	    	cnt_Vill = 0;
-	    	multiconnection();      
-	    }   
+Village.prototype = {  
+preload : function() {
+   game.world.removeAll();
+   // 깊이를 1로 초기화  
+   depth = 0;
+   start = null;
+   
+   // 진주 이미지   
+   // 마을 이미지
+   game.load.image('menu_super_back', 'resources/Images/town/townImg/menu_0_background.png' );
+   game.load.image('beverlyills', 'resources/Images/town/townImg/menu_0_beverlyills.png' );
+   game.load.image('studio', 'resources/Images/town/townImg/menu_1_studio.png' );
+   game.load.image('mercenary', 'resources/Images/town/townImg/menu_2_mercenary.png' );
+   game.load.image('nextstage', 'resources/Images/town/townImg/menu_3_nextstage.png' );
+   game.load.image('home', 'resources/Images/town/townImg/menu_4_home.png' );
+   game.load.image('border', 'resources/Images/town/townImg/border.png'); 
+   game.load.image('textboard','resources/Images/town/townImg/textboard.png')
+   game.load.image('myroom','resources/Images/town/townImg/myroom.png' ) // 내방 이미지
+   game.load.image('hand','resources/Images/town/townImg/hand.png' ); //스마트폰 들고있는 이미지 로드
+   game.load.image('finish','resources/Images/town/townImg/black.png' ); //종료시 fade out될 검정 배경 이미지 로드
+   game.load.image('select','resources/Images/town/townImg/select.png' );//선택 빨간 테두리
+   game.load.image('menu_sub_back','resources/Images/town/townImg/menu_back.png' ); //Enter 눌렀을 때 서브메뉴 배경
+   game.load.image('pub','resources/Images/town/townImg/mercenery.png' ); //용병소 이미지
+   game.load.image('worksplace', 'resources/Images/town/townImg/office.png'); //작업소 이미지
+   game.load.image('exit','resources/Images/town/townImg/exit.png' ); //내방에서의 종료 버튼 이미지
+   game.load.image('exit_push', 'resources/Images/town/townImg/exit_push.png');
+   game.load.image('e_select','resources/Images/town/townImg/exit_line.png' ); //종료 버튼 감싸고 있는 선택 이미지
+   game.load.image('board','resources/Images/town/townImg/board.png' );
+   game.load.image('neon','resources/Images/town/townImg/neonboard.png' );
+   game.load.image('front','resources/Images/town/townImg/front.png' );
+   game.load.image('player_back','resources/Images/town/townImg/player_back.png' );
+   game.load.image('start', 'resources/Images/town/townImg/start.png');
+   game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
+   game.load.image('mm','resources/Images/town/townImg/mm.png');
+   
+   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
+   game.load.audio('btnSound','resources/Images/town/button_click.mp3'); //버튼 클릭
+   game.load.audio('door','resources/Images/town/door.wav'); // 문여는 소리
+   game.load.audio('door_close','resources/Images/town/door_close.mp3'); //문닫는소리
+   
+   game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
+   
+   //멀티 플레이어 표시
+   game.load.image('player1','resources/Images/town/townImg/player1.png');
+   game.load.image('player2','resources/Images/town/townImg/player2.png');
+   game.load.image('player3','resources/Images/town/townImg/player3.png');
+   game.load.image('player4','resources/Images/town/townImg/player4.png');
+   
+   
+   // 레인 스프라이트 로드
+   game.load.spritesheet('A', 'resources/Images/town/produceRoom/A.png', 100, 100);
+   game.load.spritesheet('B', 'resources/Images/town/produceRoom/B.png', 100, 100);
+   game.load.spritesheet('C', 'resources/Images/town/produceRoom/C.png', 100, 100);
+   game.load.spritesheet('AB', 'resources/Images/town/produceRoom/AB.png', 100, 100);
+   game.load.spritesheet('BC', 'resources/Images/town/produceRoom/BC.png', 100, 100);
+   game.load.spritesheet('CA', 'resources/Images/town/produceRoom/CA.png', 100, 100);
+   
+   // 모션 및 효과 스프라이트 로드
+   game.load.spritesheet('motion_effect', 'resources/Images/town/produceRoom/motion_effect.png', 60, 120);
+   
+   // 모션 설명 배경이미지
+   game.load.spritesheet('descBackground', 'resources/Images/town/produceRoom/descText_background.png', 100, 80);
+   
+   // 네모 테두리 로드
+   game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
+},
+create: function() {
+   //마을 배경
+   bgd = game.add.image(0, 0, 'mm');
+   bgd.alpha = 0.5;
+   bgd.scale.set(1);
+   
+   //마을BGM
+   var townbgm = game.add.audio('townBGM');
+   townbgm.loopFull();
+   townbgm.play("",0,0.2);
+   
+   //버튼 클릭, 문 열기, 문 닫기 사운드 추가 
+   btnSound = game.add.audio('btnSound');
+   doorOpen = game.add.audio('door');
+   doorClose = game.add.audio('door_close');
+   
+   //메뉴 이미지 지정한 좌표에 출력
+   var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
+   var beveryills = game.add.image(135, 20, 'beverlyills'); beveryills.scale.set(0.9);
+   var studio = game.add.image(133, 223, 'studio'); studio.scale.set(0.9);
+   var mercenary = game.add.image(137, 335, 'mercenary'); mercenary.scale.set(0.9);
+   var home = game.add.image(133, 552, 'home'); home.scale.set(0.9);
+   var nextstage = game.add.image(133, 442, 'nextstage'); nextstage.scale.set(0.9);
+   
+   //첫 메뉴를 가리키고 있는 빨간색 테두리 출력
+   point = game.add.image(x, y, 'select');
+   point.scale.set(0.9);
+    
+   p_back = game.add.image(80, 710, 'player_back');
+   p_back.scale.set(0.85);
+   p_back.alpha = 0.8;
+   
+   player1 = game.add.image(130, 765, 'player1');
+   player1.scale.set(0.4);
+   
+   var text = game.add.bitmapText(130,720, 'neo_font', 'PLAYER CONNECTION', 35);
+   
+   playerCount();
+},
+update: function() {
+	   // 게임 실행 중에 항상 key 값을 받는다. 입력한 키에 따라 readKey()가 키 별 string을 반환한다. (누르는 시점에만 반환된다.)
+	   villCnt++
+	   if (villCnt % 6 == 0) {
+	      readKey();
+	   }
+	   if (villCnt % 12 == 0) {
+	      villCnt = 0;
+	      multiconnection();      
+	   }
 	}
 }
-	/*
-	 * readKey(): 키보드 키를 읽어들이는 메소드
-	 */
+
+/*
+ * readKey(): 키보드 키를 읽어들이는 메소드
+ */
 function readKey() {
     $.ajax({
       url: 'requestConsole'
@@ -209,6 +208,9 @@ function readKey() {
    });
    return ""; 
 }
+ 
+ 
+
 /*
  * Motion(int index, String name, String effect, String lane, boolean selected): Motion 객체 생성자
  */
@@ -224,7 +226,7 @@ function Motion(name, effect, lane) {
     // toString
     this.toString = function() {'name: ' + this.name + '\n' + 'effect: ' + this.effect + '\n' + 'lane: ' + this.lane + '\n';}
 }
- 
+
 /*
  * moveMenu(inputKey): 작업소/용병소/겜시작/겜종료 메뉴를 이동시키는 메소드
  */
@@ -250,14 +252,17 @@ function moveMenu(inputKey) {
       } break;
    case 'esc':
 	   isnull();
-       point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+	   if (point == null) {
+		   point = game.add.image(x, y, 'select'); point.scale.set(0.9);
+	   }
        playDoorClose();
        break;
    case 'enter':
       isEntered = true;
       playDoorOpen();
       if (point != null) {
-         point.destroy();         
+         point.destroy(); 
+         point = null;
       } 
    
       // 화살표가 멈춰있는 위치에서 엔터를 눌렀을 때 분기 처리.
@@ -337,23 +342,28 @@ function createStudio() {
 	   		  turn2 = 1; //'up'
 	   		  turn3 = 2; //'down'
 	   		  button1.frame = turn1;
-       	      button2.frame = turn2;
-       	 	  button3.frame = turn3;
+	       	  button2.frame = turn2;
+	       	  button3.frame = turn3;
 	   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'A'); turn4 = 0;
               lane2 = game.add.sprite(buttonX+100, buttonY+200, 'B'); turn5 = 1;
               lane3 = game.add.sprite(buttonX+200, buttonY+200, 'C'); turn6 = 2;
-              //descText 뭔가 초기화 해야함
+            //descText 뭔가 초기화 해야함
               descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[turn1], 30);
-
          }
          else {
         	 alert('저장된 모션이 있습니다!' + jsonText);
-        	 
+        	 var motionList = JSON.parse(jsonText);
+        	 turn1 = parseInt(motionList.button[0].turn);
+        	 turn2 = parseInt(motionList.button[1].turn);
+        	 turn3 = parseInt(motionList.button[2].turn);
         	 alert('turn1: ' + turn1 + ' turn2: ' + turn2 + ' turn3: ' + turn3);
         	 button1.frame = turn1;
         	 button2.frame = turn2;
         	 button3.frame = turn3;
         	 descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[parseInt(turn1)], 30);
+        	 lane1 = game.add.sprite(buttonX, buttonY+200, motionList.button[0].lane);
+        	 lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList.button[1].lane);
+        	 lane3 = game.add.sprite(buttonX+200, buttonY+200, motionList.button[2].lane);
         	 if (lane1.key == 'A' || lane1.key == 'AB') {turn4 = 0;} else if (lane1.key == 'B' || lane1.key == 'BC') {turn4 = 1;} else {turn4 = 2;}
         	 if (lane2.key == 'A' || lane2.key == 'AB') {turn5 = 0;} else if (lane2.key == 'B' || lane2.key == 'BC') {turn5 = 1;} else {turn5 = 2;}
         	 if (lane3.key == 'A' || lane3.key == 'AB') {turn6 = 0;} else if (lane3.key == 'B' || lane3.key == 'BC') {turn6 = 1;} else {turn6 = 2;}
@@ -373,29 +383,28 @@ function createStudio() {
    //moveButtonFocus()로 넘어간다.  
    depth = 1;
 }
-
+ 
 function moveSquare(direction) {
-	   var destination;
-	   if (direction == "UP") {
-	      destination = -200;
-	      squareY += (squareY + destination) < 500? 0:destination;
-	   }else if(direction == "DOWN"){
-	      destination = 200;
-	      squareY += (squareY + destination) > 700? 0:destination;
-	   }else if(direction == "LEFT"){
-	      destination = -100;
-	      squareX += (squareX + destination) < 720? 0:destination;
-	   }else if(direction == "RIGHT"){
-	      destination = 100;
-	      squareX += (squareX + destination) > 1100? 0:destination;
-	   }
-	   game.add.tween(square).to({ y: squareY }, 300, Phaser.Easing.Exponential.Out, true, 0);
-	   game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);
-	   
-	   playBtnSound();
-	   square.bringToTop();
-	}		
-
+   var destination;
+   if (direction == "UP") {
+      destination = -200;
+      squareY += (squareY + destination) < 500? 0:destination;
+   }else if(direction == "DOWN"){
+      destination = 200;
+      squareY += (squareY + destination) > 700? 0:destination;
+   }else if(direction == "LEFT"){
+      destination = -100;
+      squareX += (squareX + destination) < 720? 0:destination;
+   }else if(direction == "RIGHT"){
+      destination = 100;
+      squareX += (squareX + destination) > 1100? 0:destination;
+   }
+   game.add.tween(square).to({ y: squareY }, 300, Phaser.Easing.Exponential.Out, true, 0);
+   game.add.tween(square).to({ x: squareX }, 200, Phaser.Easing.Exponential.Out, true, 0);
+   
+   playBtnSound();
+   square.bringToTop();
+}
 
 /*
  * moveButtonFocus(): 버튼을 상하좌우 이동시키는 메소드. (depth 1에서 출발)
@@ -470,7 +479,7 @@ function saveMotionList() {
       , error: function(result){alert('saveMotionList error (' + result + ')');}
    });   
 }
-
+ 
 /*
  * moveContent(int buttonFocus,inputKey): 모션을 좌우 이동시키는 메소드 (depth 2에서 출발) 
  */
@@ -524,7 +533,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter': 
                //이 모션으로 선택했다는 효과 주기
-            	depth = 1;
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -574,7 +583,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter':
                //이 모션으로 선택
-            	depth = 1;
+               depth = 1;
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -624,7 +633,7 @@ function moveContent(buttonFocus, inputKey) {
                   break;
             case 'enter':
                //이 모션으로 선택했다는 효과 주기
-            	depth = 1;
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -645,8 +654,8 @@ function moveContent(buttonFocus, inputKey) {
                square.bringToTop();
                break;
             case 'enter': 
-               //이 레인으로 선택했다는 효과 주기
-            	depth = 1;
+                   //이 레인으로 선택했다는 효과 주기
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -667,9 +676,9 @@ function moveContent(buttonFocus, inputKey) {
                square.bringToTop();
                break;
             case 'enter': 
-                //이 레인으로 선택했다는 효과 주기
-            	depth = 1;
-                break;
+               //이 레인으로 선택했다는 효과 주기
+               depth = 1; 
+               break;
             case 'esc': depth = 1; break;
             default: break;
          } break;
@@ -689,14 +698,15 @@ function moveContent(buttonFocus, inputKey) {
                square.bringToTop();
                break;
             case 'enter':
-                //이 레인으로 선택했다는 효과 주기
-            	depth = 1;
-                break;
+               //이 레인으로 선택했다는 효과 주기
+               depth = 1; 
+               break;
             case 'esc': depth = 1; break;
             default: break;
          } break;
 	}
 }
+
 /*
  * createMercenary(): 용병소 화면을 만드는 메소드
  */
@@ -708,51 +718,11 @@ function createMercenary(inputKey) {
    // 난수 발급
    board = game.add.image(810, 520, 'board');
 
-   sendRdm();f
+   sendRdm();
    
    neon = game.add.image(795, 440, 'neon');
    neon.scale.set(2);
    message = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
-}
-
-/*
- * createMercenary(): 용병소 화면을 만드는 메소드
- */
-function createMercenary(inputKey) {
-	m_back = game.add.image(750,75,'menu_sub_back');
-	m_back.alpha = 0.8;
-	image = game.add.image(810, 120, 'pub');
-	border = game.add.image(805, 120, 'border');
-   // 난수 발급
-   var rdm = Math.floor(Math.random() * 9999) + 1000;
-   board = game.add.image(810, 520, 'board');
-
-   $.ajax({
-      url: 'sendRdm'
-      ,type: 'post'
-      ,data: {
-         rdm: rdm
-      }
-      ,dataType: 'json'
-      ,success: function(result) {
-         console.dir(result);
-         /* if (result == "true"){
-            consle.log('성공');
-         } else {
-            text1 = game.add.bitmapText(1060, 600,'neo_font' ,'더이상 추가 불가', 60);
-         } */
-      }
-      ,error: function() {alert('createMercenary - sendRdm error');}
-   });
-
-   // 난수를 보여줄 텍스트
-   text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
-   
-   
-   neon = game.add.image(795, 440, 'neon');
-   neon.scale.set(2);
-   messange = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
-   
 }
 
 function multiconnection() {
@@ -763,60 +733,74 @@ function multiconnection() {
          if (result != null) {
             switch (result.length) {
             case 2:
-            	if (player2 == null) {
-            		player2 = game.add.image(330, 765, 'player2');
-                    player2.scale.set(0.4);
-                    if (text1 != null) {
+				if (player2 == null) {
+					player2 = game.add.image(330, 765, 'player2');
+					player2.scale.set(0.4);
+					if (text1 != null) {
 						text1.destroy();
 					}
-                    sendRdm();
+					sendRdm();
 				}
-               break;
+        	
+				if (player3 != null) {player3.destroy();}
+				if (player4 != null) {player4.destroy();}
+				
+				break;
             case 3:
-            	if (player3 == null) {
+				if (player3 == null) {
             		player3 = game.add.image(480, 765, 'player3');
-                    player3.scale.set(0.4);
-                    if (text1 != null) {
+					player3.scale.set(0.4);
+					if (text1 != null) {
 						text1.destroy();
 					}
-                    sendRdm();
+					sendRdm();
 				}
-               break;
+            	
+				if (player4 != null) {player4.destroy();}
+				
+				break;
             case 4:
-            	if (player4 == null) {
-            		player4 = game.add.image(630, 765, 'player4');
-                    player4.scale.set(0.4);
-                    if (text1 != null) {
+				if (player4 == null) {
+					player4 = game.add.image(630, 765, 'player4');
+					player4.scale.set(0.4);
+					if (text1 != null) {
 						text1.destroy();
 					}
-                    sendRdm();
+					sendRdm();
 				}
-               break;
+				
+				break;
             default:
-               break;
+				if (player2 != null) {player2.destroy();}
+				if (player3 != null) {player3.destroy();}
+				if (player4 != null) {player4.destroy();}
+				
+				break;
             }
          }
       }
       ,error: function() {alert('update() - multiconnection error');}
    });
 }
+
 function sendRdm() {
-	 // 난수 발급
+ // 난수 발급
 	rdm = Math.floor(Math.random() * 9999) + 1000;
 	 
 	$.ajax({
 	     url: 'sendRdm'
-    	 ,type: 'post'
-		 ,data: {
-		 rdm: rdm
-		 }
- 		,dataType: 'json'
-		,success: function(result) {
-			console.dir(result);
-		}
- 		,error: function() {alert('createMercenary - sendRdm error');}
-		});
-	// 난수를 보여줄 텍스트
+	     ,type: 'post'
+	     ,data: {
+	        rdm: rdm
+	     }
+	     ,dataType: 'json'
+	     ,success: function(result) {
+	        console.dir(result);
+	     }
+	     ,error: function() {alert('createMercenary - sendRdm error');}
+	});
+
+   // 난수를 보여줄 텍스트
 	text1 = game.add.bitmapText(1090, 630,'neo_font' ,rdm, 60);
 }
 
@@ -926,7 +910,7 @@ function playerCount() {
 	         }
 	      }
 	      ,error: function() {alert('update() - playerCount error');}
-      });
+	   });
 }
 
 function playBtnSound() {
@@ -964,3 +948,4 @@ function isnull() {
 	if (descBackground != null) {descBackground.destroy();}
 	if (descText != null) {descText.destroy();}
  }
+  

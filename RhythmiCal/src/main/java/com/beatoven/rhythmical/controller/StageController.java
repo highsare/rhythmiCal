@@ -136,7 +136,9 @@ public class StageController {
 		stageInfo.add(monsterlistA);	//index 2
 		stageInfo.add(monsterlistB);	//index 3
 		stageInfo.add(monsterlistC);	//index 4
-		
+		for (Monster string : monsterlistA) {
+			System.out.println(string);
+		}
 		return stageInfo;
 	}
 	

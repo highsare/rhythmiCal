@@ -38,7 +38,9 @@ Intro.prototype = {
 		alert(contentNum+" Intro");
 		//배경음악
 		game.load.audio('intro_music',"resources/Audios/bgm/others/intromusic.mp3");
-
+		game.load.audio('새소리',"resources/Audios/bgm/others/새소리.mp3");
+		game.load.audio('마왕',"resources/Audios/bgm/others/마왕.mp3");
+		game.load.audio('사람들도망',"resources/Audios/bgm/others/사람들도망.mp3");
 		// intro_src_로드
 		//1번째장면
 		game.load.image("intro_1_mountain",
@@ -109,7 +111,8 @@ Intro.prototype = {
 				x : 1.15,
 				y : 1.15
 			}, 10000, Phaser.Easing.Linear.None, true);
-
+			//새 소리
+			game.time.events.add(300, function() { game.add.audio("새소리").play(); });
 			/// __새______날라가는 새 스프라이트생성
 			bird = game.add.sprite(1900, 350, 'intro_1_flyingbird');
 			bird.smoothed = false;
@@ -210,7 +213,8 @@ Intro.prototype = {
 			game.add.tween(dancingpeople04).to( { x:925, y:280 }, 5000, Phaser.Easing.Linear.None, true);
 			game.add.tween(dancingpeople04).to( { x:200, y:200 }, 500, Phaser.Easing.Linear.None, true,4000);
 		    game.add.tween(dancingpeople04.scale).to( { x: 0, y: 0 }, 500, Phaser.Easing.Linear.None, true,4000);
-			
+			//사람들 도망 꺄아악
+		    game.time.events.add(3500, function() { game.add.audio("사람들도망").play(); });
 			//마왕 등장
 			mawang = game.add.image(game.width,0, "intro_2_mawang");
 			//mawang.anchor.setTo(0, 0);
@@ -249,8 +253,10 @@ Intro.prototype = {
 			 // game.add.tween(intro3village).to( { angle: -1 }, 2000, Phaser.Easing.Linear.None, true);
 		    game.add.tween(intro3village.scale).to( { x: 1, y: 1 }, 2000, Phaser.Easing.Linear.None, true);
 			
+		    //마왕 으헤헤헤 소리
+		    game.time.events.add(1000, function() { game.add.audio("마왕").play(); });
 			//마왕 등장
-			intro3mawang = game.add.sprite(100, game.height, 'intro_3_mawang');
+			intro3mawang = game.add.sprite(500, game.height, 'intro_3_mawang');
 			intro3mawang.smoothed = false;
 			var musicnasi = intro3mawang.animations.add('musicnasi');
 			intro3mawang.anchor.setTo(0, 0);

@@ -13,6 +13,7 @@
 <style type="text/css">
 body{
 	background-image: url("resources/Images/mainPage/image_background.gif");	
+	background-size: cover;
 }
 #RhythmiCal {
 	position: absolute;
@@ -58,10 +59,10 @@ body{
 	game.state.add("Stage", Stage);
 	game.state.add("Ending", Ending);
 	
-	game.state.start("Preload");
+	//game.state.start("Stage");
 	//game.state.start("Intro");
 	//game.state.start("Tutorial");
-	//game.state.start("Village");
+	game.state.start("Village");
 	//game.state.start("Story");
 	//game.state.start("Stage");
 	//game.state.start("Ending");
