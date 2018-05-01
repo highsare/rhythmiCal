@@ -4,7 +4,6 @@
 <html>
 <head>
 <!-- charset -->
-<meta charset="UTF-8">
 <!-- viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- title -->
@@ -40,7 +39,7 @@ $(document).ready(function() {
 					+ 'window: ' + $(window).height());
 		
 		var maxHeight = $(document).height();
-		var currentScroll = $(window).scrollTop() + $(window).height();
+		var currentScroll = $(window).scrollTop() + $(window).height() + 20;
 		
 		if (maxHeight <= currentScroll) {
 			page++; // 페이지 증가
@@ -60,9 +59,9 @@ $(document).ready(function() {
 				, error: function() {
 					
 				}
-			})
+			});
 	    }
-	})
+	});
 });
 
 $(function() {
@@ -96,11 +95,7 @@ $(function() {
 					alert("가입성공");
 				}
 		    }
-<<<<<<< HEAD
-		    , error: function() { alert("signupMember error");} //alerttest
-=======
 		    , error: function(data) {alert("signupMember error");} //alerttest
->>>>>>> ace473e023a6e3153a87a5a1eb3bcfefad80f22e
 		});
 	});
 	
