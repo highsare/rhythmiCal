@@ -156,7 +156,7 @@ function rushMotion(monsterSprite, monsterName){
 }
 
 //몬스터가 밀려오기 시작한다.
-function start(){
+function startMonster(){
 	commandJump(monstersA, currentBeat); //A라인 몬스터들
 	commandJump(monstersB, currentBeat); //B라인 몬스터들
 	commandJump(monstersC, currentBeat); //C라인 몬스터들

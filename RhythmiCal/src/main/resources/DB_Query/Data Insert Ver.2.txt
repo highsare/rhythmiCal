@@ -75,7 +75,7 @@ INSERT INTO BOSS(
     BOSSNAME
     ,HEALTH
 )VALUES(
-    '나보'
+    'Nabo'
     ,50
 );
 
@@ -83,22 +83,21 @@ INSERT INTO BOSS(
     BOSSNAME
     ,HEALTH
 )VALUES(
-    '월량풍'
+    'WollYangPung'
     ,60
 );
 INSERT INTO BOSS(
     BOSSNAME
     ,HEALTH
 )VALUES(
-    '노비토'
+    'Nobeato'
     ,70
 );
 INSERT INTO BOSS(
     BOSSNAME
     ,HEALTH
 )VALUES(
-    '노비토각성'
+    'Nobeato2'
     ,80
 );
-
 COMMIT;

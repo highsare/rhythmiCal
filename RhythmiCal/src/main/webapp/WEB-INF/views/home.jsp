@@ -96,7 +96,11 @@ $(function() {
 					alert("가입성공");
 				}
 		    }
+<<<<<<< HEAD
 		    , error: function() { alert("signupMember error");} //alerttest
+=======
+		    , error: function(data) {alert("signupMember error");} //alerttest
+>>>>>>> ace473e023a6e3153a87a5a1eb3bcfefad80f22e
 		});
 	});
 	
@@ -227,8 +231,8 @@ td {
 					<h4 class="modal-title">Signup</h4>
 					<p>Please input your new id and pw.</p>
 					<p><input type="text" placeholder="ID" id="signupId" name="signupId"></p>
-					<p><input type="text" placeholder="PW" id="signupPw" name="signupPw"></p>
-					<p><input type="text" placeholder="PW check" id="signupPwc" name="signupPwc"></p>
+					<p><input type="password" placeholder="PW" id="signupPw" name="signupPw"></p>
+					<p><input type="password" placeholder="PW check" id="signupPwc" name="signupPwc"></p>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="signupMember">New Game</button></p>
 				</div>
 			</div>
@@ -245,7 +249,7 @@ td {
 					<h4 class="modal-title">Login</h4>
 					<p>Please input your id and pw.</p>
 					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
-					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
+					<p><input type="password" placeholder="PW" id="loginPw" name="loginPw"></p>
 					<div class="radio">
 						<label><input type="radio" name="language" value="KOREAN">Korean </label>
 						<label><input type="radio" name="language" value="JAPANESE">Japanese</label></div>
