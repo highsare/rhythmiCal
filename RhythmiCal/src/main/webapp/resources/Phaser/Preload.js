@@ -117,12 +117,16 @@ function getStageInfo(num){
 					//{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
 					if (jsonText == '000') {
 						var motionList = "default";
+						console.log("000");
+						console.log(motionList);
 						setMotion(motionList);
 						game.stage.backgroundColor = '#000000';
 						game.state.start("Stage");
 					}
 					else {
 						var motionList = JSON.parse(jsonText);
+						console.log("MotionList Here");
+						console.log(motionList);
 						setMotion(motionList);
 						game.stage.backgroundColor = '#000000';
 						game.state.start("Stage");
@@ -167,9 +171,17 @@ function setMotion(motionList){
 	 turn2 = parseInt(motionList.button[1].turn);
 	 turn3 = parseInt(motionList.button[2].turn);
 	 
-	 lane1 = motionList.button[0].lane;
-	 lane2 = motionList.button[1].lane;
-	 lane3 = motionList.button[2].lane;
+	 lane1 = (motionList.button[0].lane).toString();
+	 lane2 = (motionList.button[1].lane).toString();
+	 lane3 = (motionList.button[2].lane).toString();
+	 
+	 console.log(turn1);
+	 console.log(turn2);
+	 console.log(turn3);
+	 console.log(lane1);
+	 console.log(lane2);
+	 console.log(lane3);
+	 
 	 
 	//1번 모션의 공격 범위 지정
 	 switch(turn1){
@@ -178,17 +190,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 point_isA = true;
-			 point_isB = false;
-			 point_isC = false;
 			 break;
 		 case 'B':
-			 point_isA = false;
 			 point_isB = true;
-			 point_isC = false;
 			 break;
 		 case 'C':
-			 point_isA = false;
-			 point_isB = false;
 			 point_isC = true;
 			 break;
 		 }
@@ -198,17 +204,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 up_isA = true;
-			 up_isB = false;
-			 up_isC = false;
 			 break;
 		 case 'B':
-			 up_isA = false;
 			 up_isB = true;
-			 up_isC = false;
 			 break;
 		 case 'C':
-			 up_isA = false;
-			 up_isB = false;
 			 up_isC = true;
 			 break;
 		 }
@@ -218,17 +218,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 down_isA = true;
-			 down_isB = false;
-			 down_isC = false;
 			 break;
 		 case 'B':
-			 down_isA = false;
 			 down_isB = true;
-			 down_isC = false;
 			 break;
 		 case 'C':
-			 down_isA = false;
-			 down_isB = false;
 			 down_isC = true;
 			 break;
 		 }
@@ -239,16 +233,13 @@ function setMotion(motionList){
 		 case 'AB': 
 			 left_isA = true;
 			 left_isB = true;
-			 left_isC = false;
 			 break;
 		 case 'BC':
-			 left_isA = false;
 			 left_isB = true;
 			 left_isC = true;
 			 break;
 		 case 'CA':
 			 left_isA = true;
-			 left_isB = false;
 			 left_isC = true;
 			 break;
 		 }
@@ -259,16 +250,13 @@ function setMotion(motionList){
 		 case 'AB': 
 			 right_isA = true;
 			 right_isB = true;
-			 right_isC = false;
 			 break;
 		 case 'BC':
-			 right_isA = false;
 			 right_isB = true;
 			 right_isC = true;
 			 break;
 		 case 'CA':
 			 right_isA = true;
-			 right_isB = false;
 			 right_isC = true;
 			 break;
 		 }
@@ -282,17 +270,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 point_isA = true;
-			 point_isB = false;
-			 point_isC = false;
 			 break;
 		 case 'B':
-			 point_isA = false;
 			 point_isB = true;
-			 point_isC = false;
 			 break;
 		 case 'C':
-			 point_isA = false;
-			 point_isB = false;
 			 point_isC = true;
 			 break;
 		 }
@@ -302,17 +284,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 up_isA = true;
-			 up_isB = false;
-			 up_isC = false;
 			 break;
 		 case 'B':
-			 up_isA = false;
 			 up_isB = true;
-			 up_isC = false;
 			 break;
 		 case 'C':
-			 up_isA = false;
-			 up_isB = false;
 			 up_isC = true;
 			 break;
 		 }
@@ -322,17 +298,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 down_isA = true;
-			 down_isB = false;
-			 down_isC = false;
 			 break;
 		 case 'B':
-			 down_isA = false;
 			 down_isB = true;
-			 down_isC = false;
 			 break;
 		 case 'C':
-			 down_isA = false;
-			 down_isB = false;
 			 down_isC = true;
 			 break;
 		 }
@@ -343,16 +313,13 @@ function setMotion(motionList){
 		 case 'AB': 
 			 left_isA = true;
 			 left_isB = true;
-			 left_isC = false;
 			 break;
 		 case 'BC':
-			 left_isA = false;
 			 left_isB = true;
 			 left_isC = true;
 			 break;
 		 case 'CA':
 			 left_isA = true;
-			 left_isB = false;
 			 left_isC = true;
 			 break;
 		 }
@@ -363,16 +330,13 @@ function setMotion(motionList){
 		 case 'AB': 
 			 right_isA = true;
 			 right_isB = true;
-			 right_isC = false;
 			 break;
 		 case 'BC':
-			 right_isA = false;
 			 right_isB = true;
 			 right_isC = true;
 			 break;
 		 case 'CA':
 			 right_isA = true;
-			 right_isB = false;
 			 right_isC = true;
 			 break;
 		 }
@@ -386,17 +350,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 point_isA = true;
-			 point_isB = false;
-			 point_isC = false;
 			 break;
 		 case 'B':
-			 point_isA = false;
 			 point_isB = true;
-			 point_isC = false;
 			 break;
 		 case 'C':
-			 point_isA = false;
-			 point_isB = false;
 			 point_isC = true;
 			 break;
 		 }
@@ -406,17 +364,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 up_isA = true;
-			 up_isB = false;
-			 up_isC = false;
 			 break;
 		 case 'B':
-			 up_isA = false;
 			 up_isB = true;
-			 up_isC = false;
 			 break;
 		 case 'C':
-			 up_isA = false;
-			 up_isB = false;
 			 up_isC = true;
 			 break;
 		 }
@@ -426,17 +378,11 @@ function setMotion(motionList){
 		 switch(lane1){
 		 case 'A': 
 			 down_isA = true;
-			 down_isB = false;
-			 down_isC = false;
 			 break;
 		 case 'B':
-			 down_isA = false;
 			 down_isB = true;
-			 down_isC = false;
 			 break;
 		 case 'C':
-			 down_isA = false;
-			 down_isB = false;
 			 down_isC = true;
 			 break;
 		 }
@@ -447,16 +393,13 @@ function setMotion(motionList){
 		 case 'AB': 
 			 left_isA = true;
 			 left_isB = true;
-			 left_isC = false;
 			 break;
 		 case 'BC':
-			 left_isA = false;
 			 left_isB = true;
 			 left_isC = true;
 			 break;
 		 case 'CA':
 			 left_isA = true;
-			 left_isB = false;
 			 left_isC = true;
 			 break;
 		 }
@@ -467,16 +410,13 @@ function setMotion(motionList){
 		 case 'AB': 
 			 right_isA = true;
 			 right_isB = true;
-			 right_isC = false;
 			 break;
 		 case 'BC':
-			 right_isA = false;
 			 right_isB = true;
 			 right_isC = true;
 			 break;
 		 case 'CA':
 			 right_isA = true;
-			 right_isB = false;
 			 right_isC = true;
 			 break;
 		 }
