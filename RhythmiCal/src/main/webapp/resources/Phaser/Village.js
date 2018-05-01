@@ -327,7 +327,7 @@ function createStudio() {
    // AJAX를 통해 DB(table save)로부터 모션 리스트를 읽음
    $.ajax({
       url: 'readMotionList'
-      ,type : 'post'
+      ,type : 'post' 
       // 성공하면 가져온 모션 리스트를 표시
       ,success: function(jsonText) {
          alert('readMotionList success');

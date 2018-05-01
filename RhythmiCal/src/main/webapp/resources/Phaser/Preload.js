@@ -64,20 +64,11 @@ function getStageInfo(stageNum){
 	      // 성공하면 가져온 모션 리스트를 표시
 	      ,success: function(jsonText) {
 	         alert('readMotionList success');
+	         //{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
 	         if (jsonText == '000') {
 	        	  alert('저장된 모션이 없습니다!');
-	        	  turn1 = 0; //'point'
-		   		  turn2 = 1; //'up'
-		   		  turn3 = 2; //'down'
-		   		  button1.frame = turn1;
-	       	      button2.frame = turn2;
-	       	 	  button3.frame = turn3;
-		   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'A'); turn4 = 0;
-	              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'B'); turn5 = 1;
-	              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'C'); turn6 = 2;
-	              //descText 뭔가 초기화 해야함
-	              descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[turn1], 30);
-	              
+	        	  var motionList = "default";
+	        	  setMotion(motionList);
 	              game.state.start("stage");
 	         }
 	         else {
@@ -96,14 +87,7 @@ function getStageInfo(stageNum){
 
 //DB를 참조해서 모션세팅값을 적절히 처리한다.
 function setMotion(motionList){
-	 
-	 turn1 = parseInt(motionList.button[0].turn);
-	 turn2 = parseInt(motionList.button[1].turn);
-	 turn3 = parseInt(motionList.button[2].turn);
-	 
-	 lane1 = motionList.button[0].lane.stringify();
-	 lane2 = motionList.button[1].lane.stringify();
-	 lane3 = motionList.button[2].lane.stringify();
+	
 	 
 	 //기초 설정 초기화
 	 point_isA = false;
@@ -121,6 +105,21 @@ function setMotion(motionList){
 	 right_isA = false;
 	 right_isB = false;
 	 right_isC = false;
+
+	 if (motionList == "default") {
+		 point_isA = true;
+		 up_isB = true;
+		 down_isC = true;
+		 return;
+	 }
+	 
+	 turn1 = parseInt(motionList.button[0].turn);
+	 turn2 = parseInt(motionList.button[1].turn);
+	 turn3 = parseInt(motionList.button[2].turn);
+	 
+	 lane1 = motionList.button[0].lane;
+	 lane2 = motionList.button[1].lane;
+	 lane3 = motionList.button[2].lane;
 	 
 	//1번 모션의 공격 범위 지정
 	 switch(turn1){

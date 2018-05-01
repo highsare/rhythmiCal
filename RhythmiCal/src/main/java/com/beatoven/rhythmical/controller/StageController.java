@@ -3,6 +3,7 @@ package com.beatoven.rhythmical.controller;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.StageDAO;
+import com.beatoven.rhythmical.dao.SystemDAO;
 import com.beatoven.rhythmical.vo.Monster;
+import com.beatoven.rhythmical.vo.Save;
 import com.beatoven.rhythmical.vo.Stage;
 
 /*스테이지에서 호출되는 모든 서버로의 요청은 이곳에서 진행됩니다.*/
@@ -24,6 +27,7 @@ public class StageController {
 
 	@Inject
 	StageDAO stageDAO;
+	SystemDAO sysDAO;
 	
 	//모션 값 받아오기
 	@ResponseBody
@@ -55,6 +59,24 @@ public class StageController {
 			}
 		}
 		return "NOTHING";
+	}
+	
+	//생명력 변동시 저장
+	@ResponseBody
+	@RequestMapping(value="saveLife", method = RequestMethod.POST)
+	public int savaLife(int life,HttpSession session) {
+		//담아보낼 save 객체 생성
+		Save save = new Save();
+		
+		//세션에서 아이디를 활용하여 id 세팅
+		save.setId((String)session.getAttribute("loginMember"));
+		//변동될 생명력 세팅
+		save.setLife(life);
+		
+		//쿼리 실행
+		sysDAO.saveLife(save);
+		
+		return 0;
 	}
 	
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.
