@@ -42,11 +42,18 @@ var desctextY = 550;
 var descBackground;
 var beatoven_walk;
 var btnSound, doorOpen, doorClose, multiPlus; // 버튼 클릭, 문 열기, 문 닫기 사운드, 멀티 추가 사용
-var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
-				, '[올려치기]\nKnock Down:\n적을 잠시\n뒤로 가게 하는 효과'
-				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
+var descArray = (language == "KOREAN"?
+				[ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
+				, '[올려치기]\nKnock Back:\n적을 2걸음\n뒤로 가게 하는 효과'
+				, '[내려치기]\nStun:\n적을 3턴 \n멈추게하는 는 효과'
 				, '[좌로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'
-				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'];
+				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격']
+				:
+				['「突き」\nトリプルアタック\n攻撃力が3倍！'
+				,'「アップ」\nノックバック\n敵を2歩前\n押し付ける'
+				,'「ダウン」\nスタン\n敵を３ノート分\n気絶させる'
+				,'「ヒダリ」\nワイド\n２つのレーインに攻撃'
+				,'「ミギ」\nワイド\n２つのレーインに攻撃']);
 
 var Village = function(game){};
 
