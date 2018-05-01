@@ -65,21 +65,20 @@ $(document).ready(function() {
 	})
 });
 
-<!-- jQuery -->
 $(function() {
 	// 회원가입 (NEW 버튼 클릭 시)
 	$('#signupMember').click(function() {
-		<!-- 아이디, 비밀번호, 비밀번호 체크 값을 가져온다. -->
 		var signupId = $('#signupId').val();
 		var signupPw = $('#signupPw').val();
 		var signupPwc = $('#signupPwc').val();
 		
-		<!-- 유효성 검사: 아이디는 영어만, 비번 일치여부 확인 -->
 		var pattern1 = /(^[a-zA-Z])/;
 		if(!pattern1.test(signupId)){
+			alert('아이디는 영문만 사용할 수 있어!');
 		    return false;
 		}
 		if (signupPw != signupPwc) {
+			alert('비밀번호를 다시 한 번 확인해봐!');
 			return false;
 		}
 		$.ajax({
@@ -90,6 +89,7 @@ $(function() {
 		    		,'password': signupPw}
 		    , success: function(data) {
 		        if (data == 0) {
+		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
 				}
 		    }
 		    , error: function(data) { alert("alsdkd");}
