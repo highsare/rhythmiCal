@@ -85,7 +85,7 @@ $(function() {
 		}
 		$.ajax({
 		    url: 'signupMember'
-		    , type: 'POST'
+		    , type: 'post'
 		    , dataType:'json'
 		    , data: {'id': signupId
 		    		,'password': signupPw}
