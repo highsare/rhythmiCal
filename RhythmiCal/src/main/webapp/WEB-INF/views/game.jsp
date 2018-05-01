@@ -13,6 +13,7 @@
 <style type="text/css">
 body{
 	background-image: url("resources/Images/mainPage/image_background.gif");	
+	background-size: cover;
 }
 #RhythmiCal {
 	position: absolute;
