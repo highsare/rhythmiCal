@@ -14,6 +14,16 @@
 		where storynum = #{storynum}
 		order by contentorder
 	</select>
+	
+	<select id="selectStroyJP" parameterType="int" resultMap="stroy">
+		SELECT *
+		FROM
+			story_jp
+		WHERE
+			storynum = #{storynum}
+		ORDER BY
+			contentorder
+	</select>
   
   
   </mapper>
