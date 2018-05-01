@@ -42,11 +42,18 @@ var desctextY = 550;
 var descBackground;
 var beatoven_walk;
 var btnSound, doorOpen, doorClose; // 버튼 클릭, 문 열기, 문 닫기 사운드
-var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
-				, '[올려치기]\nKnock Down:\n적을 잠시\n뒤로 가게 하는 효과'
-				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
+var descArray = (language == "KOREAN"?
+				[ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
+				, '[올려치기]\nKnock Back:\n적을 2걸음\n뒤로 가게 하는 효과'
+				, '[내려치기]\nStun:\n적을 3턴 \n멈추게하는 효과'
 				, '[좌로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'
-				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'];
+				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격']
+				:
+				['「突き」\nトリプルアタック\n攻撃力が3倍！'
+				,'「アップ」\nノックバック\n敵を2歩前\n押し付ける'
+				,'「ダウン」\nスタン\n敵を３ノート分\n気絶させる'
+				,'「ヒダリ」\nワイド\n２つのレーインに攻撃'
+				,'「ミギ」\nワイド\n２つのレーインに攻撃']);
 
 var Village = function(game){};
 
@@ -448,7 +455,13 @@ function moveButtonFocus(inputKey) {
         // 레인 설정에 중복값이 있을 경우 에러를 알림
         if (lane1.key == lane2.key || lane2.key == lane3.key || lane3.key == lane1.key) {
            // TODO : 텍스트 하나 써서 띄울 것.
-           text1 = game.add.bitmapText(810, 420,'neo_font' ,'레인을 중복되게 선택할 수 없습니다!', 40);
+        	var txt;
+        	if (language == "KOREAN") {
+				txt = "레인을 중복되게 선택할 수 없습니다!";
+			}else{
+				txt = "レーインは一つだけ選んでください。" 
+			}
+           text1 = game.add.bitmapText(810, 420,'neo_font' ,txt, 40);
         }
         // 없을 경우 작업소를 나갈 때 현재의 모션 값을 디비에 저장
         else {
@@ -724,7 +737,13 @@ function createMercenary(inputKey) {
    
    neon = game.add.image(795, 440, 'neon');
    neon.scale.set(2);
-   message = game.add.bitmapText(810, 460,'neo_font' ,'주인장: 한겜허쉴?', 40);
+   var txt;
+   if (language == "KOREAN") {
+	   txt = "주인장 : 한 겜 허쉴??";
+   }else {
+	   txt = "オーナー：飲んでみな！";
+   }
+   message = game.add.bitmapText(810, 460,'neo_font' ,txt, 40);
 }
 
 function multiconnection() {
@@ -820,7 +839,13 @@ function myroom() {
    e_select.scale.set(0.8);
    textboard = game.add.image(810,450,'textboard');
    textboard.scale.set(2);
-   text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 종료합니다", 50);
+   var txt;
+   if (language == "KOREANㅇ") {
+	   txt = "게임을 종료합니다.";
+   }else{
+	   txt = "ゲームを修旅します。";
+	   }
+   text2 = game.add.bitmapText(950, 480,'neo_font' ,txt, 50);
    // 깊이를 3으로 변경 > update에서 depth에 따른 case문을 통해 goHome(inputKey)를 호출 
    /* depth = 3; */
 }
@@ -863,6 +888,12 @@ function frontoftown() {
     border = game.add.image(810, 120, 'border');
     textboard = game.add.image(810, 450,'textboard');
     textboard.scale.set(2);
+    var txt;
+    if (language == "KOREAN") {
+		txt = "스토리를 진행합니다.";
+	}else{
+		txt = "次のストーリーへ";
+	}
     text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
     start = game.add.image(935, 580,'start');
     start.scale.set(0.89);
