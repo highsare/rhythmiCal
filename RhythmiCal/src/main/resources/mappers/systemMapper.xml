@@ -25,12 +25,10 @@
   
   </insert>
   
-  <update id="saveNow" parameterType="save">
+  <update id="saveLife" parameterType="save">
   UPDATE save
   SET
   	life = #{life}
-  	,motionlist = #{motionlist}
-  	,state = #{state}
   WHERE
   	id = #{id}
   

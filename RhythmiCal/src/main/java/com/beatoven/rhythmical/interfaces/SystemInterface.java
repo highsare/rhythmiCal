@@ -17,8 +17,8 @@ public interface SystemInterface {
 	//세이브 슬롯 만들기
 	public int makeSave(Save save);
 	
-	//세이브하기
-	public int saveNow(Save save);
+	//라이프 세이브하기
+	public int saveLife(Save save);
 	
 	//세이브에서 스테이트 가져오기
 	public String getStateName(String id);
