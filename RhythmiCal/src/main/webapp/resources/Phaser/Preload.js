@@ -9,6 +9,7 @@
 var isLogo = true;
 var language = "KOREAN";
 var Preload = function(game){};
+var gameLoading;
 
 Preload.prototype = {
 	preload : function(){
@@ -16,22 +17,37 @@ Preload.prototype = {
 		game.world.removeAll();
 		setLanguage();
 		//로고 이미지 불러오기
-		//로딩 이미지 등 불러오기
+		game.load.spritesheet('gameLoding', 'resources/Images/preload/32x32x1_BeatovenFace.png', 32, 32, 1);
+		//프로그래스 이미지 등 불러오기
+		game.load.spritesheet('progressBar', 'resources/Images/preload/852x480x13_ProgressBar.png', 852, 480, 13);
 		
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
 		
+		//배경색 지정
+		game.stage.backgroundColor = '#FF9966';
 		//로고 혹은 로딩 화면 생성
 		if (isLogo) {
 			//로고 띄우기
+			gameLoding = game.add.sprite(game.world.centerX, game.world.centerY, 'gameLoding');
+			gameLoding.scale.set(15);
+			gameLoding.anchor.setTo(0.5, 0.5);
+			gameLoding.smoothed = false;
+			var progressBar = game.add.sprite(game.world.centerX, game.world.centerY + 200, 'progressBar');
+			progressBar.scale.set(0.5);
+			progressBar.anchor.setTo(0.5, 0.5);
+			progressBar.smoothed = false;
+			var progressBarAni = progressBar.animations.add('loading', null, 30, false);
+			progressBarAni.play('loading');
 		}else {
 			//로딩 띄우기
 		}
 		
-		//setResources("Stage");
-		//game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
+		game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
+	},
+	update : function(){
 	},
 	requestUserInfo: function(){
 		$.ajax({
