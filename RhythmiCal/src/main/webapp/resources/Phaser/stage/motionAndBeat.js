@@ -93,10 +93,13 @@ function motionEvent(player,motion){
 	popupCombo(true);
 	timingCheck(true);
 	
+	console.log("MotionEvent");
+	console.log(motion);
+	console.log(point_isA);
+	console.log(left_isB);
+	console.log(right_isC);
+	
 	attackMotion();
-	
-	
-	
 	//모션에 따른 효과 설정
 	switch(motion){
 	case "POINT"://데미지 3
@@ -137,23 +140,29 @@ function motionEvent(player,motion){
 		break;
 	case "LEFT"://레인 2개
 		if (left_isA) {
+			attackLine(monstersA, 1);
 			playAttackEffect(310, 140, 'NomalAttackEffect');
 		}
 		if (left_isB) {
+			attackLine(monstersB, 1);
 			playAttackEffect(280, 340, 'NomalAttackEffect');
 		}
 		if (left_isC) {
+			attackLine(monstersC, 1);
 			playAttackEffect(250, 540, 'NomalAttackEffect');
 		}
 		break;
 	case "RIGHT"://레인2개
 		if (right_isA) {
+			attackLine(monstersA, 1);
 			playAttackEffect(310, 140, 'NomalAttackEffect');
 		}
 		if (right_isB) {
+			attackLine(monstersB, 1);
 			playAttackEffect(280, 340, 'NomalAttackEffect');
 		}
 		if (right_isC) {
+			attackLine(monstersC, 1);
 			playAttackEffect(250, 540, 'NomalAttackEffect');
 		}
 		break;
