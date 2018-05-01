@@ -81,12 +81,20 @@ function getStageInfo(num){
 		,success : function(stageInfo) {
 			console.log(stageInfo);
 			//BGM 길이를 가져와야함
+			//스테이지 배경을 나타냄
 			bgImgName = stageInfo[0].bgImgName;
+			//스테이지 브금을 나타냄
 			musicName = stageInfo[0].musicName;
+			
+			bossName = stageInfo[0].bossName;
+			
+			//BPM 값임
 			beat = stageInfo[1];
+			//몬스터의 리스트
 			monsterlistA = stageInfo[2];
 			monsterlistB = stageInfo[3];
 			monsterlistC = stageInfo[4];
+			//연결된 유저 수
 			multiNum = stageInfo[5];
 			$.ajax({
 				url: 'readMotionList'
