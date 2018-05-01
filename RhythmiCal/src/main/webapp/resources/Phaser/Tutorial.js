@@ -35,7 +35,7 @@ Tutorial.prototype = {
 	 * createTutorialText(): 튜토리얼 객체를 생성하는 메서드. 여기서 리드미 및 말풍선의 위치, 텍스트의 내용을 정의하면 된다.
 	 */
 	createTutorialText: function() {
-		if (language == "JAPANSES") {
+		if (language == "JAPANESE") {
 			// index 0: 시작
 			tutorialTextArray.push(new TutorialText(300, 300, 40, 650, 
 				'ビトベン! 準備はいいかい? ククククク'
@@ -156,6 +156,7 @@ Tutorial.prototype = {
 	 * create()
 	 */
 	create: function() {
+		// 전체화면 적용
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
 		
@@ -168,8 +169,7 @@ Tutorial.prototype = {
 		// create leftKey, rightKey
 		leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 		rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		// 전체화면 적용
-		game.input.onDown.add(setFullScreen, this);
+		
 		// 튜토리얼 객체 생성
 		this.createTutorialText();
 		// 튜토리얼임을 안내
@@ -235,14 +235,6 @@ function typeWriterFunction(text, xvalue, yvalue, size) {
     });
 	//타이핑 시작
 	typewriter.start();
-}
-
-/*
- * setFullScreen(): 전체화면 메소드
- */
-function setFullScreen() {
-	if (game.scale.isFullScreen) {game.scale.stopFullScreen();}
-	else game.scale.startFullScreen(false);
 }
 
 /*

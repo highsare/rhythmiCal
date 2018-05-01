@@ -175,6 +175,10 @@ Stage.prototype = {
 		game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
 		game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
+		//ABC 레인 알파벳 로드
+		game.load.image('A', 'resources/Images/stage/line_A.png');
+		game.load.image('B', 'resources/Images/stage/line_B.png');
+		game.load.image('C', 'resources/Images/stage/line_C.png');
 	},
 	create: function(){
 		//physics
@@ -193,6 +197,11 @@ Stage.prototype = {
 		//콤보 효과음 설정
 		comboSound = game.add.audio('comboSound');
 		comboSound.addMarker('comboSound', 0, 1);
+		//ABC 레인을 표시하는 스프라이트 생성
+		game.add.image(300, 150, 'A');
+		game.add.image(280, 340, 'B');
+		game.add.image(250, 540, 'C');
+		
 		//마을사람들 생성
 		createTownPeople();
 		//feverdancingControl(20);

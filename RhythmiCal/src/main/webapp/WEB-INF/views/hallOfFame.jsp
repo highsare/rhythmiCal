@@ -53,9 +53,16 @@ $(function() {
 			url: 'writeFamePost'
 			, type: 'post'
 			, data: {text: text}
-			, success: function(result) {}
-			, error: function(result) {}
-		});	
+			, success: function(result) {
+				if (result == 1) {
+					alert('축하해 ! 명예의전당에 너의 이름을 남겼어!');
+				}
+				else {
+					// 명예의 전당 글이 들어가지 않았음.
+				}
+			}
+			, error: function() {}
+		});
 	});
 });
 </script>

@@ -66,14 +66,18 @@ public class StageController {
 	@ResponseBody
 	@RequestMapping(value="saveLife", method = RequestMethod.POST)
 	public int saveLife(int life,HttpSession session) {
+	public int saveLife(String life,HttpSession session) {
 		//담아보낼 save 객체 생성
 		Save save = new Save();
 		
 		//세션에서 아이디를 활용하여 id 세팅
 		save.setId(((Member)session.getAttribute("loginMember")).getId());
+		System.out.println(((Member)session.getAttribute("loginMember")).getId());
+		System.out.println(life);
 		//변동될 생명력 세팅
 		save.setLife(life);
 		System.out.println("세이브 왜 ㅇ나떠"+save.toString());
+		save.setLife(Integer.parseInt(life));
 		//쿼리 실행
 		
 		

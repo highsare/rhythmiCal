@@ -61,6 +61,14 @@ public class SystemDAO implements SystemInterface{
 		//}
 		return session.getMapper(SystemInterface.class).saveLife(save);
 		
+=======
+		try {
+			session.getMapper(SystemInterface.class).saveLife(save);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+>>>>>>> 58946922028e0a767253a46dbf64b5811a38c37a
 	}
 
 	@Override

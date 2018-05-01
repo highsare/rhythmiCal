@@ -85,7 +85,7 @@ $(function() {
 		}
 		$.ajax({
 		    url: 'signupMember'
-		    , type: 'POST'
+		    , type: 'post'
 		    , dataType:'json'
 		    , data: {'id': signupId
 		    		,'password': signupPw}
@@ -97,10 +97,13 @@ $(function() {
 				}
 		    }
 
+<<<<<<< HEAD
 		    , error: function() { alert("signupMember error");} //alerttest
 
+=======
+		    , error: function(data) {alert("signupMember error");} //alerttest
+>>>>>>> 58946922028e0a767253a46dbf64b5811a38c37a
 		});
-	});
 	
 	// 로그인 (LOAD 버튼 클릭 시)
 	$('#loginMember').click(function() {
