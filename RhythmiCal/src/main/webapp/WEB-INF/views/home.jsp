@@ -92,9 +92,11 @@ $(function() {
 		    , success: function(data) {
 		        if (data == 0) {
 		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
+				}else{
+					alert("가입성공");
 				}
 		    }
-		    , error: function(data) { alert("signupMember error");} //alerttest
+		    , error: function() { alert("signupMember error");} //alerttest
 		});
 	});
 	
