@@ -15,7 +15,6 @@ Preload.prototype = {
 		game.world.removeAll();
 		//로고 이미지 불러오기
 		//로딩 이미지 등 불러오기
-		setResources("Village");
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -436,7 +435,28 @@ function setMotion(motionList){
 	 }
 }
 
-function setResources (state){
+//DB에서 대화문 불러오기
+function loadStoryContents(){
+	console.log("Re:"+storyNum);
+	$.ajax({
+		url : 'loadStoryContents'
+		,type : 'post'
+		,dataType : 'json'
+		,data: {storyNum : parseInt(storyNum)}
+		,success:function(arrtest){
+			storyText = new Array();
+			arr = new Array();
+			arr = arrtest;
+			console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
+			game.state.start("Story");
+		},error: function(){
+			alert("대화문 임포트 에러");
+		}
+
+	});
+}
+
+function setResources(state){
 	if (state == "Intro") {
 		//Intro assets
 		//인트로 실행
@@ -453,8 +473,8 @@ function setResources (state){
 		//Story assets , contentNum required
 	    //스토리 실행
 		storyNum = contentNum;
-		game.state.start("Story");
-		
+		console.log('storyNum'+storyNum);
+		loadStoryContents();
 		
 	}else if (state == "Stage") {
 		//Stage assets , contentNum required
