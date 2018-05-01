@@ -4,6 +4,7 @@
 <html>
 <head>
 <!-- charset -->
+<meta charset="UTF-8">
 <!-- viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- title -->
@@ -39,7 +40,7 @@ $(document).ready(function() {
 					+ 'window: ' + $(window).height());
 		
 		var maxHeight = $(document).height();
-		var currentScroll = $(window).scrollTop() + $(window).height() + 20;
+		var currentScroll = $(window).scrollTop() + $(window).height();
 		
 		if (maxHeight <= currentScroll) {
 			page++; // 페이지 증가
@@ -59,9 +60,9 @@ $(document).ready(function() {
 				, error: function() {
 					
 				}
-			});
+			})
 	    }
-	});
+	})
 });
 
 $(function() {
@@ -84,18 +85,20 @@ $(function() {
 		}
 		$.ajax({
 		    url: 'signupMember'
-		    , type: 'POST'
+		    , type: 'post'
 		    , dataType:'json'
 		    , data: {'id': signupId
 		    		,'password': signupPw}
 		    , success: function(data) {
 		        if (data == 0) {
 		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
-				}else{
+				} else {
 					alert("가입성공");
 				}
 		    }
-		    , error: function(data) {alert("signupMember error");} //alerttest
+		    , error: function(data) {
+		    	alert("signupMember error"); //test
+		    }
 		});
 	});
 	
@@ -107,14 +110,14 @@ $(function() {
 		
 		$.ajax({
 		    url: 'loginMember'
-		    , type: 'POST'
+		    , type: 'post'
 		    , data: {'id': loginId
 		    		,'password': loginPw
 		    		,'language': language}
 		    , success: function(result) { // 성공하면 game으로 이동
 		    	if (result != "loginFail") {
 		    		document.location.href = 'game';					
-				}else{
+				} else {
 					alert("로그인에 실패했어...");
 				}
 		    }

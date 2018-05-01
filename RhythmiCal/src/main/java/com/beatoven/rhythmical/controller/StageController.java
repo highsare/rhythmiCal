@@ -77,12 +77,17 @@ public class StageController {
 		System.out.println(life);
 		System.out.println(Integer.parseInt(life));
 		//변동될 생명력 세팅
+
+	
+		System.out.println("세이브 왜 ㅇ나떠"+save.toString());
+
 		save.setLife(Integer.parseInt(life));
 		
+
 		//쿼리 실행
-		sysDAO.saveLife(save);
 		
-		return 0;
+		
+		return sysDAO.saveLife(save);
 	}
 	
 	@ResponseBody
