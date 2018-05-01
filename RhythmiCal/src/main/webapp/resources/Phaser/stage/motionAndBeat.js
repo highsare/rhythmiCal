@@ -126,13 +126,13 @@ function motionEvent(player,motion){
 	case "DOWN"://넉백
 		if (down_isA) {
 			playAttackEffect(310, 140, 'KnockBackEffect');
-			knockback(monstersA,lineYLocation[unit.attackLine]);			
+			knockback(monstersA,lineYLocation[0]);			
 		}else if (down_isB) {
 			playAttackEffect(280, 340, 'KnockBackEffect');
-			knockback(monstersB,lineYLocation[unit.attackLine]);
+			knockback(monstersB,lineYLocation[1]);
 		}else if (down_isC) {
 			playAttackEffect(250, 540, 'KnockBackEffect');
-			knockback(monstersC,lineYLocation[unit.attackLine]);			
+			knockback(monstersC,lineYLocation[2]);			
 		}
 		break;
 	case "LEFT"://레인 2개
@@ -182,20 +182,15 @@ function timingCheck(timing){
 	notePop.scale.setTo(1,1);
 	noteAni = notePop.animations.add('play', null, 15, true);
 	noteAni.play('play');
-}////바로 밑에 코드랑 주석 확인///////////////////////해서 적용할지 안 할지 결정
-	
-	//이미지를 이동할 필요가 없을 수 있음
-	/*//이벤트 발생시킴  ( o, x )
+	//이벤트 발생시킴  ( o, x )
 	game.time.events.add(
 		0 
-		,function() {    
-			//y좌표까지 이동
-			game.add.tween(notePop).to({y: 450}, 500, Phaser.Easing.Linear.None, true);    
+		,function() {        
 			//그러면서 투명도0 까지 변화면서 사라짐
 			game.add.tween(notePop).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
 			}
 		, this);
-}*/
+}
 
 /* 
  * popupImage(): 이미지를 팝업하는 메서드

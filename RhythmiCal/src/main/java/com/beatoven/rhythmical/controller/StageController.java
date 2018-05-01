@@ -28,6 +28,8 @@ public class StageController {
 
 	@Inject
 	StageDAO stageDAO;
+	
+	@Inject
 	SystemDAO sysDAO;
 	
 	//모션 값 받아오기
@@ -73,6 +75,7 @@ public class StageController {
 		save.setId(((Member)session.getAttribute("loginMember")).getId());
 		System.out.println(((Member)session.getAttribute("loginMember")).getId());
 		System.out.println(life);
+		System.out.println(Integer.parseInt(life));
 		//변동될 생명력 세팅
 		save.setLife(Integer.parseInt(life));
 		
@@ -80,6 +83,14 @@ public class StageController {
 		sysDAO.saveLife(save);
 		
 		return 0;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getLife",method = RequestMethod.POST)
+	public int getLife(HttpSession session) {
+		Member member = (Member)session.getAttribute("loginMember");
+		System.out.println(member);
+		return sysDAO.getLife(member.getId());
 	}
 	
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.

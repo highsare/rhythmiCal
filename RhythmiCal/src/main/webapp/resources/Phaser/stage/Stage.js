@@ -214,7 +214,7 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		//목숨 추가
-		iniLife(5);
+		iniLife();
 		//게임 기초 세팅
 		
 		//몬스터를 담을 배열 생성

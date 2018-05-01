@@ -82,4 +82,10 @@ public class SystemDAO implements SystemInterface{
 		};*/
 		return session.getMapper(SystemInterface.class).makeSave(save);
 	}
+
+	@Override
+	public int getLife(String id) {
+		// TODO Auto-generated method stub
+		return session.getMapper(SystemInterface.class).getLife(id);
+	}
 }

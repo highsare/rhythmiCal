@@ -73,6 +73,18 @@ function setLanguage(){
 
 function getStageInfo(num){
 	$.ajax({
+		url:'getLife'
+		,type:'post'
+		,success:function(numLife){
+			life = numLife;
+			console.log("getLife : "+life);
+		},error:function(){
+			console.log("GET LIFE FAIL");
+		}
+	});
+	
+	
+	$.ajax({
 		url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
 		,type : "post"
 		,data : {stageNum : num}

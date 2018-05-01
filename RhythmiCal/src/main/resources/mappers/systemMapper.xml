@@ -31,8 +31,17 @@
   	life = #{life}
   WHERE
   	id = #{id}
-  
   </update>
+  
+  <select id="getLife" parameterType="string" resultType="int">
+  SELECT
+  	life
+  FROM
+  	SAVE
+  WHERE
+  	id = #{id}
+  
+  </select>
   
   <select id="getStateName" parameterType="string" resultType="string">
 	SELECT
