@@ -86,11 +86,12 @@ public class HomeController {
 			session.setAttribute("loginMember", loginMember);
 			session.setAttribute("language", language);
 			System.out.println("login success - loginMember: " + loginMember.toString());
+			return language;
 		} else {
 			//로그인 실패
 			System.out.println("login fail");
+			return "loginFail";
 		}
-		return language;
 	}
 	
 	//로그아웃

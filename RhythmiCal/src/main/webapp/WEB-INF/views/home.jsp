@@ -92,8 +92,7 @@ $(function() {
 		        if (data == 0) {
 				}
 		    }
-		    , error: function(data) {
-		    }
+		    , error: function(data) {}
 		});
 	});
 	
@@ -110,7 +109,11 @@ $(function() {
 		    		,'password': loginPw
 		    		,'language': language}
 		    , success: function(result) { // 성공하면 game으로 이동
-		    	document.location.href = 'game';
+		    	if (result != "loginFail") {
+		    		document.location.href = 'game';					
+				}else{
+					alert("실패");
+				}
 		    }
 		    , error: function(result) { // 실패하면 알림
 		    }

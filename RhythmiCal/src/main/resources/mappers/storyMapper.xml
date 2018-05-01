@@ -15,7 +15,7 @@
 		order by contentorder
 	</select>
 	
-	<select id="selectStroyJP" parameterType="int" resultMap="stroy">
+	<select id="selectStroyJP" parameterType="int" resultType="story">
 		SELECT *
 		FROM
 			story_jp
