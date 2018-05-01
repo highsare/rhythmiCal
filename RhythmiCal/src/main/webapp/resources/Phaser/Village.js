@@ -841,7 +841,7 @@ function myroom() {
    textboard = game.add.image(810,450,'textboard');
    textboard.scale.set(2);
    var txt;
-   if (language == "KOREANㅇ") {
+   if (language == "KOREAN") {
 	   txt = "게임을 종료합니다.";
    }else{
 	   txt = "ゲームを修旅します。";

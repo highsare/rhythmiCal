@@ -75,12 +75,12 @@ public class SystemDAO implements SystemInterface{
 
 	@Override
 	public int makeSave(Save save) {
-		try {
+		/*try {
 			session.getMapper(SystemInterface.class).makeSave(save);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		};
-		return 0;
+		};*/
+		return session.getMapper(SystemInterface.class).makeSave(save);
 	}
 }
