@@ -72,11 +72,13 @@ $(function() {
 		var signupPw = $('#signupPw').val();
 		var signupPwc = $('#signupPwc').val();
 		
+		// 아이디 유효성 검사 (영문만 사용 가능)
 		var pattern1 = /(^[a-zA-Z])/;
 		if(!pattern1.test(signupId)){
 			alert('아이디는 영문만 사용할 수 있어!');
 		    return false;
 		}
+		// 비밀번호 유효성 검사 (같은지 확인)
 		if (signupPw != signupPwc) {
 			alert('비밀번호를 다시 한 번 확인해봐!');
 			return false;
@@ -92,7 +94,7 @@ $(function() {
 		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
 				}
 		    }
-		    , error: function(data) { alert("alsdkd");}
+		    , error: function(data) { alert("signupMember error");} //alerttest
 		});
 	});
 	
@@ -112,7 +114,7 @@ $(function() {
 		    	if (result != "loginFail") {
 		    		document.location.href = 'game';					
 				}else{
-					alert("실패");
+					alert("로그인에 실패했어...");
 				}
 		    }
 		    , error: function(result) { // 실패하면 알림
@@ -206,7 +208,7 @@ td {
 </div>
 
 <!-- Background Music -->
-<embed class="bgm" src="resources/Audios/bgm/jsp/bgm_home.mp3" autostart="true" height="0" loop=1></embed>
+<embed class="bgm" src="resources/Audios/bgm/jsp/bgm_home.mp3" autostart="true" height="0" loop="true"></embed>
 
 <div class="center">
 	<!-- Game Button -->
