@@ -141,8 +141,6 @@ Tutorial.prototype = {
 	 * preload()
 	 */
 	preload: function() {
-		// debug
-		game.load.image('arrow', 'assets/sprites/arrow.png');
 		// load background image
 		game.load.image('background','resources/Images/tutorial/tutorial.png');
 		// load bitmapFont
@@ -159,17 +157,6 @@ Tutorial.prototype = {
 		// 전체화면 적용
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
-		
-		// debug
-		game.physics.startSystem(Phaser.Physics.ARCADE);
-	    sprite = game.add.sprite(400, 300, 'arrow');
-	    sprite.anchor.setTo(0.5, 0.5);
-	    game.physics.enable(sprite, Phaser.Physics.ARCADE);
-	    sprite.body.allowRotation = false;
-		// create leftKey, rightKey
-		leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-		rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		
 		// 튜토리얼 객체 생성
 		this.createTutorialText();
 		// 튜토리얼임을 안내
@@ -184,8 +171,6 @@ Tutorial.prototype = {
 	 * update()
 	 */
 	update: function() {
-		// debug
-		sprite.rotation = game.physics.arcade.moveToPointer(sprite, 60, game.input.activePointer, 500);
 		tutoCnt++;
 		if (tutoCnt % 6 == 0) {
 			$.ajax({
@@ -212,10 +197,6 @@ Tutorial.prototype = {
 			});
 			tutoCnt = 0;
 		}
-	},
-	render: function() {
-		// debug
-	    game.debug.spriteInfo(sprite, 32, 32);
 	}
 }
 
