@@ -96,9 +96,9 @@ $(function() {
 					alert("가입성공");
 				}
 		    }
+
 		    , error: function(data) {alert("signupMember error");} //alerttest
 		});
-	});
 	
 	// 로그인 (LOAD 버튼 클릭 시)
 	$('#loginMember').click(function() {

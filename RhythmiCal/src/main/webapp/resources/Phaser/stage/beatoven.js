@@ -36,7 +36,7 @@ function updateLife(lifeChange) {
 		,success: function(){
 			console.log("Life Updated! > "+life);
 		},error: function(){}
-	})
+	});
 	
 	if(life > 0 && life < maxLife){
 		for (var i = 0; i < life; i++) {
