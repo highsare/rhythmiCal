@@ -3,7 +3,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STGE_CUBIZ_54BPM.MP3'
+    'bgm_stage_cubiz_54bpm.mp3'
     ,54
     ,189
 );
@@ -12,7 +12,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STGE_HIQ_50BPM.MP3'
+    'bgm_stage_hiq_50bpm.MP3'
     ,50
     ,150
 );
@@ -21,7 +21,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STAGE_INEVITABLE_53BPM.MP3'
+    'bgm_stage_inevitable_53bpm.MP3'
     ,53
     ,160
 );
@@ -30,7 +30,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STGE_MIRROR_55BPM.MP3'
+    'bgm_stage_mirror_55bpm.MP3'
     ,55
     ,161
 );
@@ -39,7 +39,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STAGE_MRTEA_60BPM.MP3'
+    'bgm_stage_mrtea_60bpm.MP3'
     ,60
     ,161
 );
@@ -48,7 +48,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STAGE_NEWTIRES_70BPM.MP3'
+    'bgm_stage_newtires_70bpm.MP3'
     ,70
     ,129
 );
@@ -57,7 +57,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STAGE_RESPECOGNIZE_51BPM.MP3'
+    'bgm_stage_respecognize_51bpm.MP3'
     ,51
     ,158
 );
@@ -66,7 +66,7 @@ INSERT INTO BGM(
     ,BPM
     ,NUMOFBEAT
 ) VALUES (
-    'BGM_STAGE_SEVENTWENTY_56BPM.MP3'
+    'bgm_stage_seventwenty_56bpm.MP3'
     ,56
     ,180
 );
