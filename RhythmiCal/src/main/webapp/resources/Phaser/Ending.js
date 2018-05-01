@@ -147,6 +147,10 @@ Ending.prototype = {
 			}
 			endinglogo = game.add.bitmapText(game.world.centerX- txt.length*fontsize/2, game.world.height, 'neo_font',txt,fontsize);    
 			game.add.tween(endinglogo).to( { y: game.world.height/2}, 1000* 3, Phaser.Easing.Linear.None, true);
+			game.time.events.add(2000, function() {
+				game.camera.flash(0x000000, 500);
+				document.location.href = 'hallOfFame';
+			}, self);
 		});
 	}
 }
