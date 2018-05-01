@@ -96,7 +96,13 @@ function motionEvent(player,motion){
 	console.log("MotionEvent");
 	console.log(motion);
 	console.log(point_isA);
+	console.log(point_isB);
+	console.log(point_isC);
+	console.log(left_isA);
 	console.log(left_isB);
+	console.log(left_isC);
+	console.log(right_isA);
+	console.log(right_isB);
 	console.log(right_isC);
 	
 	attackMotion();
@@ -104,26 +110,26 @@ function motionEvent(player,motion){
 	switch(motion){
 	case "POINT"://데미지 3
 		if (point_isA) {
-			attackLine(monstersA, pointDamage);
+			attackLine(monstersA, 3);
 			playAttackEffect(310, 140, 'PointEffect');			
 		}else if (point_isB) {
-			attackLine(monstersB, pointDamage);			
+			attackLine(monstersB, 3);			
 			playAttackEffect(280, 340, 'PointEffect');
 		}else if (point_isC) {
-			attackLine(monstersC, pointDamage);			
+			attackLine(monstersC, 3);			
 			playAttackEffect(250, 540, 'PointEffect');	
 		}
 		break;
 	case "UP"://스턴
 		if (up_isA) {
 			playAttackEffect(310, 140, 'StunEffect');
-			stun();
+			stun(monstersA);
 		}else if (up_isB) {
 			playAttackEffect(280, 340, 'StunEffect');
-			stun();
+			stun(monstersB);
 		}else if(up_isC) {
 			playAttackEffect(250, 540, 'StunEffect');
-			stun();			
+			stun(monstersC);			
 		}
 		break;
 	case "DOWN"://넉백

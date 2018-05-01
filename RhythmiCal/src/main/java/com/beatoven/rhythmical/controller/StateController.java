@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.SystemDAO;
@@ -21,7 +22,7 @@ public class StateController {
 	SystemDAO systemDAO;
 	
 	@ResponseBody
-	@RequestMapping(value="requestState")
+	@RequestMapping(value="requestState", method = RequestMethod.POST)
 	public String requestState(HttpSession session) {
 		//DAO를 활용해 Save 테이블의 StateNum++
 		Member member = (Member)session.getAttribute("loginMember");
