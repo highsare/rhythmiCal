@@ -97,7 +97,7 @@ $(function() {
 				}
 		    }
 		    , error: function(data) {
-		    	alert("이상한데?? 다시 한 번 시도해봐!");
+		    	//alert("이상한데?? 다시 한 번 시도해봐!");
 		    }
 		});
 	});
