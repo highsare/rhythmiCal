@@ -105,7 +105,6 @@ function getStageInfo(stageNum){
 //DB를 참조해서 모션세팅값을 적절히 처리한다.
 function setMotion(motionList){
 	
-	 
 	 //기초 설정 초기화
 	 point_isA = false;
 	 point_isB = false;
