@@ -7,14 +7,17 @@
  * 		그 후 마을 start
  */
 var isLogo = true;
+var language = "KOREAN";
 var Preload = function(game){};
 
 Preload.prototype = {
 	preload : function(){
 		alert("Preload");
 		game.world.removeAll();
+		setLanguage();
 		//로고 이미지 불러오기
 		//로딩 이미지 등 불러오기
+		
 	},
 	create: function(){
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
@@ -27,7 +30,7 @@ Preload.prototype = {
 			//로딩 띄우기
 		}
 		
-		setResources("Stage");
+		//setResources("Stage");
 		//game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
 	},
 	requestUserInfo: function(){
@@ -39,6 +42,20 @@ Preload.prototype = {
 			}
 		});
 	}
+}
+
+function setLanguage(){
+	$.ajax({
+		url:'setLanguage'
+		,type: 'post'
+		,success: function(str){
+			language = str;
+			alert("language is "+language);
+		},error: function(){
+			language = "KOREAN";
+			alert("language Setting Fail");;
+		}
+	})
 }
 
 function getStageInfo(stageNum){

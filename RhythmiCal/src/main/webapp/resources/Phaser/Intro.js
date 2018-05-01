@@ -7,6 +7,7 @@
 
 var typewriter = new Typewriter(); // 글자 타이핑 효과
 var introMusic;
+var introText;
 
 //1장면
 var mountain;
@@ -141,7 +142,12 @@ Intro.prototype = {
 			}, 10000, Phaser.Easing.Linear.None, true);
 
 			//자막
-			typethetext("음악이 세상 무엇보다 소중했던 세계가 있었다.", 150, 800, 60, 100)
+			if (language == "KOREAN") {
+				introText = "음악이 세상 무엇보다 소중했던 세계가 있었다.";
+			}else {
+				introText = "音楽がなによりも大事な世界があった。。";
+			}
+			typethetext(introText, 150, 800, 60, 100)
 
 			//움직임 enable 정의
 			game.physics.enable(bird, Phaser.Physics.ARCADE);
@@ -211,7 +217,12 @@ Intro.prototype = {
 			game.add.tween(mawang).to({ x : 260 ,y:0}, 500, Phaser.Easing.Linear.None, true,3000);
 			
 			//자막
-			typethetext("음악이 너무 싫었던 마왕... 그 이름 노.비.토", 150, 800, 60, 100)
+			if (language == "KOREAN") {
+				introText = "음악이 너무 싫었던 마왕... 그 이름 노.비.토";
+			}else {
+				introText = "音楽が大嫌いだった魔王。。その名はノ。ビ。ト。";
+			}
+			typethetext(introText, 150, 800, 60, 100);
 		});//두번째 장면 끝
 
 		//_________세번째 장면 시작
@@ -263,7 +274,12 @@ Intro.prototype = {
 			//right = player.animations.add('right', [1,2,3,4,5,6,2,3], 10, true);
 			
 			//자막
-			typethetext("마왕은 세상으로부터 음악을 빼앗기 시작했다.", 150, 800, 60, 100)
+			if (language == "KOREAN") {
+				introText = "노비토는 세상으로부터 음악을 빼앗기 시작했다.";
+			}else {
+				introText = "ノビとは世の中から音楽を奪い始めた";
+			}
+			typethetext(introText, 150, 800, 60, 100);
 		});//세번째 장면 끝
 		 
 		
@@ -300,7 +316,12 @@ Intro.prototype = {
 			var beatovenappear = game.add.tween(intro4beatoven).to( { x: 	200, y: 0 }, 8000, Phaser.Easing.Linear.None, true);
 			
 			//자막
-			typethetext("비토벤의 마을은 절체절명의 상황을 맞이하는데..", 150, 800, 60, 100);
+			if (language == "KOREAN") {
+				introText = "이윽고, 비토벤의 마을은 절체절명의 상황을 맞이하는데..";
+			}else {
+				introText = "そして、今、ビトベンの村は絶体絶命の状況になる。。。";
+			}
+			typethetext(introText, 150, 800, 60, 100);
 			
 			//비토벤 걸어옴
 			beatovenappear.onComplete.add(function(){

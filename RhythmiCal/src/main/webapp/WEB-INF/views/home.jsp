@@ -244,8 +244,8 @@ td {
 					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
 					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
 					<div class="radio">
-						<label><input type="radio" name="language" value="korean">Korean </label>
-						<label><input type="radio" name="language" value="japanese">Japanese</label></div>
+						<label><input type="radio" name="language" value="KOREAN">Korean </label>
+						<label><input type="radio" name="language" value="JAPANESE">Japanese</label></div>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="loginMember">Load Game</button></p>
 				</div>
 			</div>

@@ -84,6 +84,7 @@ public class HomeController {
 		if (loginMember != null) {
 			//로그인 성공
 			session.setAttribute("loginMember", loginMember);
+			session.setAttribute("language", language);
 			System.out.println("login success - loginMember: " + loginMember.toString());
 		} else {
 			//로그인 실패
