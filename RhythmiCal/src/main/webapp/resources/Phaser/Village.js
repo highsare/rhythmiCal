@@ -42,6 +42,7 @@ var desctextY = 550;
 var descBackground;
 var beatoven_walk;
 var btnSound, doorOpen, doorClose, multiPlus; // 버튼 클릭, 문 열기, 문 닫기 사운드, 멀티 추가 사용
+var townbgm;
 var descArray = (language == "KOREAN"?
 				[ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
 				, '[올려치기]\nKnock Back:\n적을 2걸음\n뒤로 가게 하는 효과'
@@ -132,7 +133,7 @@ create: function() {
    bgd.scale.set(1);
    
    //마을BGM
-   var townbgm = game.add.audio('townBGM');
+   townbgm = game.add.audio('townBGM');
    townbgm.loopFull();
    townbgm.play("",0,0.2);
    
@@ -933,6 +934,7 @@ function gamestart(inputKey) {
 	    game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 	    
 	    game.time.events.add(3000,function(){
+	    	townbgm.stop();
 	    	game.state.start("Preload");
 	    });
    }

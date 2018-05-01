@@ -44,7 +44,7 @@ Preload.prototype = {
 			//로딩 띄우기
 		}
 		
-		game.time.events.loop(Phaser.Timer.SECOND * 3, requestState, this);
+		game.time.events.loop(Phaser.Timer.SECOND * 1.5, requestState, this);
 	},
 	update : function(){
 	},
@@ -71,11 +71,11 @@ function setLanguage(){
 	})
 }
 
-function getStageInfo(stageNum){
+function getStageInfo(num){
 	$.ajax({
 		url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
 		,type : "post"
-		,data : {stageNum : stageNum}
+		,data : {stageNum : num}
 		,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
 		,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
 		,success : function(stageInfo) {
@@ -88,30 +88,32 @@ function getStageInfo(stageNum){
 			monsterlistB = stageInfo[3];
 			monsterlistC = stageInfo[4];
 			multiNum = stageInfo[5];
+			$.ajax({
+				url: 'readMotionList'
+				,type : 'post'
+				// 성공하면 가져온 모션 리스트를 표시
+				,success: function(jsonText) {
+					console.log(jsonText);
+					//{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
+					if (jsonText == '000') {
+						var motionList = "default";
+						setMotion(motionList);
+						game.stage.backgroundColor = '#000000';
+						game.state.start("Stage");
+					}
+					else {
+						var motionList = JSON.parse(jsonText);
+						setMotion(motionList);
+						game.stage.backgroundColor = '#000000';
+						game.state.start("Stage");
+					}
+				}
+				//실패하면 기본값을 표시
+				,error: function() {
+			}
+			});
 		}
 	});
-	$.ajax({
-	      url: 'readMotionList'
-	      ,type : 'post'
-	      // 성공하면 가져온 모션 리스트를 표시
-	      ,success: function(jsonText) {
-	    	  console.log(jsonText);
-	         //{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
-	         if (jsonText == '000') {
-	        	  var motionList = "default";
-	        	  setMotion(motionList);
-	              game.state.start("stage");
-	         }
-	         else {
-	        	 var motionList = JSON.parse(jsonText);
-	        	 setMotion(motionList);
-	        	 game.state.start("stage");
-	         }
-	      }
-	      // 실패하면 기본값을 표시
-	      ,error: function() {
-	      }
-	   });
 }
 
 //DB를 참조해서 모션세팅값을 적절히 처리한다.
@@ -475,6 +477,7 @@ function loadStoryContents(){
 			arr = new Array();
 			arr = arrtest;
 			console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
+			game.stage.backgroundColor = '#000000';
 			game.state.start("Story");
 		},error: function(){
 		}
@@ -486,12 +489,14 @@ function setResources(state){
 	if (state == "Intro") {
 		//Intro assets
 		//인트로 실행
+		game.stage.backgroundColor = '#000000';
 		game.state.start("Intro");
 		
 		
 	}else if (state == "Tutorial"){
 		//Totorial assets
 	    //튜토리얼 실행
+		game.stage.backgroundColor = '#000000';
 		game.state.start("Tutorial");
 		
 		
@@ -504,6 +509,7 @@ function setResources(state){
 		
 	}else if (state == "Stage") {
 		//Stage assets , contentNum required
+		console.log('setResources : '+contentNum);
 		getStageInfo(contentNum);
 		
 	}else if (state == "Village") {
@@ -511,11 +517,13 @@ function setResources(state){
 		
 		
 		//마을 실행
+		game.stage.backgroundColor = '#000000';
 		game.state.start("Village");
 		
 	}else if (state == "Ending") {
 		//Ending assets
 		//엔딩 크레딧 실행
+		game.stage.backgroundColor = '#000000';
 		game.state.start("Ending");
 		
 	}else if (state == "HallOfFame"){

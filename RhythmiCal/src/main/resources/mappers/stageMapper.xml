@@ -9,6 +9,7 @@
 	  		SELECT *
 	  		FROM STAGE
 	  		WHERE stageNum = #{stageNum}
+	  			
 	  	</select>
 	  	
 	  	<select id="getBPM" parameterType="string" resultType="int">

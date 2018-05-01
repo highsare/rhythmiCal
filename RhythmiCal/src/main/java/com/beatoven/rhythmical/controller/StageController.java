@@ -89,17 +89,24 @@ public class StageController {
 		ArrayList<Monster> monsterlistA = new ArrayList<>();
 		ArrayList<Monster> monsterlistB = new ArrayList<>();
 		ArrayList<Monster> monsterlistC = new ArrayList<>();
+		
+		
 		//monster종류를 받아와서 리스트를 작성한다.
 		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
+		
 		//DB : stage 정보를 받아온다.
 		int integerStageNum = Integer.parseInt(stageNum);
 		Stage stage = stageDAO.getStage(integerStageNum);
+		
 		//DB : music beat정보를 받아온다.
 		int beat = stageDAO.getBPM(stage.getBgmName());
+		
 		//String Stream으로 된 몬스터리스트를 받는다.
 		String monsterlistStream = stage.getMonsterList();
+		
 		//구분기호 /로 나눠서 String 배열에 저장한다.
 		String monsterlistSplit[] = monsterlistStream.split("/");
+		
 		//1개씩 불러오면서 나눈다.
 		for (String monsterUnit : monsterlistSplit) {
 			int attackline = Integer.parseInt(monsterUnit.substring(0, 1));
