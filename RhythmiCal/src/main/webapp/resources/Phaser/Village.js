@@ -41,19 +41,12 @@ var desctextX = 1180;
 var desctextY = 550;
 var descBackground;
 var beatoven_walk;
-var btnSound, doorOpen, doorClose; // 버튼 클릭, 문 열기, 문 닫기 사운드
-var descArray = (language == "KOREAN"?
-				[ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
-				, '[올려치기]\nKnock Back:\n적을 2걸음\n뒤로 가게 하는 효과'
-				, '[내려치기]\nStun:\n적을 3턴 \n멈추게하는 효과'
+var btnSound, doorOpen, doorClose, multiPlus; // 버튼 클릭, 문 열기, 문 닫기 사운드, 멀티 추가 사용
+var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
+				, '[올려치기]\nKnock Down:\n적을 잠시\n뒤로 가게 하는 효과'
+				, '[내려치기]\nStun:\n적을 잠시 \n멈추게 하는 효과'
 				, '[좌로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'
-				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격']
-				:
-				['「突き」\nトリプルアタック\n攻撃力が3倍！'
-				,'「アップ」\nノックバック\n敵を2歩前\n押し付ける'
-				,'「ダウン」\nスタン\n敵を３ノート分\n気絶させる'
-				,'「ヒダリ」\nワイド\n２つのレーインに攻撃'
-				,'「ミギ」\nワイド\n２つのレーインに攻撃']);
+				, '[우로치기]\n2 lanes:\n두 개의 레인에\n동시 공격'];
 
 var Village = function(game){};
 
@@ -97,6 +90,7 @@ preload : function() {
    game.load.audio('btnSound','resources/Audios/effectSound/village/effect_village_button_click.mp3'); //버튼 클릭
    game.load.audio('door_open','resources/Audios/effectSound/village/effect_village_door_open.wav'); // 문여는 소리
    game.load.audio('door_close','resources/Audios/effectSound/village/effect_village_door_close.mp3'); //문닫는소리
+   game.load.audio('multi_plus','resources/Audios/effectSound/village/effect_village_multi_plus.mp3');
    
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
@@ -139,6 +133,7 @@ create: function() {
    btnSound = game.add.audio('btnSound');
    doorOpen = game.add.audio('door_open');
    doorClose = game.add.audio('door_close');
+   multiPlus = game.add.audio('multi_plus');
    
    //메뉴 이미지 지정한 좌표에 출력
    var superMenu = game.add.image(60, 70, 'menu_super_back'); superMenu.scale.set(0.9); superMenu.alpha = 0.8;
@@ -760,6 +755,7 @@ function multiconnection() {
 					if (text1 != null) {
 						text1.destroy();
 					}
+					multiPlus.play();
 					sendRdm();
 				}
         	
@@ -774,6 +770,7 @@ function multiconnection() {
 					if (text1 != null) {
 						text1.destroy();
 					}
+					multiPlus.play();
 					sendRdm();
 				}
             	
@@ -787,6 +784,7 @@ function multiconnection() {
 					if (text1 != null) {
 						text1.destroy();
 					}
+					multiPlus.play();
 					sendRdm();
 				}
 				
