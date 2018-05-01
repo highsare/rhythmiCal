@@ -15,7 +15,7 @@ var typewriter = new Typewriter();
 var rhythmi, dialog, text;
 var tutorialTextArray = new Array();
 var tutorialTextIndex = 0;
-
+var tutoCnt = 0;
 var Tutorial = function(game) {};
 
 /*
@@ -186,20 +186,32 @@ Tutorial.prototype = {
 	update: function() {
 		// debug
 		sprite.rotation = game.physics.arcade.moveToPointer(sprite, 60, game.input.activePointer, 500);
-		/* changetutorialTextIndex(); */
-		if (leftKey.isDown) {
-			tutorialTextIndex --;
-			if(tutorialTextIndex < 0){ tutorialTextIndex = 0; return;}
-			showTutorialText(tutorialTextIndex);	
-			return;
+		tutoCnt++;
+		if (tutoCnt % 6 == 0) {
+			$.ajax({
+				url:'requestConsole'
+				,type:'get'
+				,success:function(console){
+					if (console != null) {
+						if (console == "enter") {
+							tutorialTextIndex++;
+							if(tutorialTextIndex > 7){ 
+								game.state.start("Preload");
+								return;
+							}
+							showTutorialText(tutorialTextIndex);
+						}else if (console == "esc"){
+							tutorialTextIndex--;
+							if(tutorialTextIndex <= 0){ 
+								tutorialTextIndex = 0;
+							}
+							showTutorialText(tutorialTextIndex);
+						}
+					}
+				},error:function(console){}
+			});
+			tutoCnt = 0;
 		}
-		else if (rightKey.isDown) {
-			tutorialTextIndex ++;
-			if(tutorialTextIndex > 7){ tutorialTextIndex = 7; return;}
-			showTutorialText(tutorialTextIndex);
-			return;
-		}
-		else {return;}
 	},
 	render: function() {
 		// debug
@@ -252,17 +264,17 @@ function showTutorialText(tutorialTextIndex) {
 	// 리드미
 	if (typeof rhythmi !== "undefined") {rhythmi.destroy();}
 	rhythmi = game.add.sprite(tutorialTextArray[tutorialTextIndex].rhythmiX, tutorialTextArray[tutorialTextIndex].rhythmiY, 'rhythmi');
-		// 시작과 끝은 리드미를 크게 보여준다
-		if (tutorialTextIndex == 0 || tutorialTextIndex == tutorialTextArray.length-1) {rhythmi.smoothed = false; rhythmi.scale.set(5);}
-		
+	// 시작과 끝은 리드미를 크게 보여준다
+	if (tutorialTextIndex == 0 || tutorialTextIndex == tutorialTextArray.length-1) {rhythmi.smoothed = false; rhythmi.scale.set(5);}
+	
 	var eyeBlink = rhythmi.animations.add('eyeBlink', null, 12, true);
 	eyeBlink.play('eyeBlink');
-	
-		// 모션을 소개할 때(index 2)에는 모션/효과/레인 버튼을 보여준다
-		if (tutorialTextIndex == 2) {
-			
-		}
-	
+
+	// 모션을 소개할 때(index 2)에는 모션/효과/레인 버튼을 보여준다
+	if (tutorialTextIndex == 2) {
+		
+	}
+
 	// 말풍선
 	if (typeof dialog !== "undefined") {dialog.destroy();}
 	dialog = game.add.sprite(tutorialTextArray[tutorialTextIndex].dialogX, tutorialTextArray[tutorialTextIndex].dialogY, 'dialog');

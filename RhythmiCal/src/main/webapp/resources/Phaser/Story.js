@@ -296,6 +296,6 @@ Story.prototype = {
 		 //음악 날리기
 		 music.destroy();
 		 game.cache.removeSound(bgMusicName);
-		 //game.state.start("Preload");
+		 game.state.start("Preload");
 	}
 }
