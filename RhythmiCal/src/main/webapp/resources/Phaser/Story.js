@@ -9,7 +9,7 @@
 
 var storyNum;
 var typewriter = new Typewriter(); // 글자 타이핑 효과
-
+var storyCnt = 0;
 var dialogueBG;
 var storyOrder;
 var npc;
@@ -112,23 +112,25 @@ Story.prototype = {
 	},
 	update: function() {
 		//앱에서 o누르면????   키보트 아래 누르면 다음 대화  || cursors.down.isDown || game.input.activePointer.leftButton.isDown == true
-		if( this.readKey() =="enter") {
-			//어레이가 다 담겼다면 그때 적용되게끔  	
-			if (typeof storyOrder !== "undefined"){
-				//대화에서  번째가 마지막이 아니라면 다음 대화로
-				  	if (storyOrder != arr.length-1) {
+		if (storyCnt % 6 == 0) {
+			if( this.readKey() =="enter") {
+				//어레이가 다 담겼다면 그때 적용되게끔  	
+				if (typeof storyOrder !== "undefined"){
+					//대화에서  번째가 마지막이 아니라면 다음 대화로
+					if (storyOrder != arr.length-1) {
 						storyOrder += 1;
-					  	this.dialogueExport(storyOrder);
-					  	//마지막 대화라면 빠져나가기
+						this.dialogueExport(storyOrder);
+						//마지막 대화라면 빠져나가기
 					}else if (storyOrder == arr.length-1){
 						this.outfromstory();
 					}
-			  	}
-		  //앱에서 x 누르면??? 키보드 오른쪽 누르면 스토리에서 나가기 cursors.right.isDown
-		 }else if (this.readKey() =="esc"){
-			 this.outfromstory();
-		 }
-
+				}
+				//앱에서 x 누르면??? 키보드 오른쪽 누르면 스토리에서 나가기 cursors.right.isDown
+			}else if (this.readKey() =="esc"){
+				this.outfromstory();
+			}
+			storyCnt = 0;
+		}
 	},
 	readKey: function() {
 		var gogo="";
