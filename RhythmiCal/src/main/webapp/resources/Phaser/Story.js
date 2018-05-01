@@ -188,7 +188,7 @@ Story.prototype = {
  		
  		
  		//배경음악
- 		if(storyOrder == 0){
+ 		if(typeof storyOrder !== "undefined" && storyOrder == 0){
  			bgMusicName = arr[storyOrder].bgImgName;
 	 		music = game.add.audio(bgMusicName);
 			music.play();
@@ -199,9 +199,11 @@ Story.prototype = {
  		}
  		//배경음악 바뀜
  		else if(bgMusicName != arr[storyOrder].bgImgName){
- 			music.destroy();
-
- 		    game.cache.removeSound(bgMusicName);
+ 			
+ 			if(typeof music !== "undefined") {
+ 				music.destroy();
+ 				game.cache.removeSound(bgMusicName);
+ 			}
  		
  			bgMusicName = arr[storyOrder].bgImgName;
  			music = game.add.audio(bgMusicName);
