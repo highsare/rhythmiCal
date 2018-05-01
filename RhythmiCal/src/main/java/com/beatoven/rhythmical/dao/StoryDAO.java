@@ -16,12 +16,15 @@ import com.beatoven.rhythmical.vo.Story;
 public class StoryDAO implements StoryInterface {
 	@Inject
 	SqlSession session;
+	
 	@Override
 	public ArrayList<Story> selectStory(int storynum) {
 		// TODO Auto-generated method stub
 		return session.getMapper(StoryInterface.class).selectStory(storynum);
 	}
-
-	
-	
+	@Override
+	public ArrayList<Story> selectStroyJP(int storynum) {
+		// TODO Auto-generated method stub
+		return session.getMapper(StoryInterface.class).selectStroyJP(storynum);
+	}
 }

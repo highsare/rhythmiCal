@@ -7,3 +7,4 @@ RhythmiCal/src/main/webapp/WEB-INF/spring/root-context.xml
 RhythmiCal/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 *.MF
 *.class
+RhythmiCal/target/m2e-wtp/web-resources/META-INF/maven/com.beatoven/rhythmical/pom.properties
