@@ -81,7 +81,7 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/' + bgmName);	
+		game.load.audio('stageBGM','resources/Audios/bgm/stage/' + bgmName);	
 		//몬스터 로드
 		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
 		game.load.spritesheet('GoblinHurt', 'resources/Images/characters/monsters/29x31x4_GoblinHurt.png', 29, 31, 4);
@@ -125,7 +125,7 @@ Stage.prototype = {
 		
 		//항상 고정적인 리소스
 		//콤보 효과음 로드
-		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
+		game.load.audio('comboSound', 'resources/Audios/effectSound/stage/effect_stage_combo.mp3');
 		//생명력 이미지
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트

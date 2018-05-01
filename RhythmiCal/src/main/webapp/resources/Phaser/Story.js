@@ -47,19 +47,19 @@ Story.prototype = {
 		
 		
 		//배경음악 일단 다 로드
-		game.load.audio('숲속',"resources/Audios/bgm/story/숲속.mp3");
-		game.load.audio('전당',"resources/Audios/bgm/story/전당.mp3");
-		game.load.audio('레코드판',"resources/Audios/bgm/63bpm_Sugar.mp3");
-		game.load.audio('마을',"resources/Audios/bgm/story/마을.mp3");
-		game.load.audio('비토벤의 집',"resources/Audios/bgm/story/비토벤의 집.mp3");
-		game.load.audio('적의 막사',"resources/Audios/bgm/story/적의 막사.mp3");
-		game.load.audio('노비토의 막사',"resources/Audios/bgm/story/노비토의 막사.mp3");
-		game.load.audio('Dok3의 집',"resources/Audios/bgm/story/Dok3의 집.mp3");
+		game.load.audio('숲속',"resources/Audios/bgm/story/bgm_story_forest.mp3");
+		game.load.audio('전당',"resources/Audios/bgm/story/bgm_story_hallOfFame.mp3");
+		game.load.audio('레코드판',"resources/Audios/bgm/story/bgm_story_sugar_63bpm.mp3");
+		game.load.audio('마을',"resources/Audios/bgm/story/bgm_story_village.mp3");
+		game.load.audio('비토벤의 집',"resources/Audios/bgm/story/bgm_story_beatovenHouse.mp3");
+		game.load.audio('적의 막사',"resources/Audios/bgm/story/bgm_story_enemyBarrack.mp3");
+		game.load.audio('노비토의 막사',"resources/Audios/bgm/story/bgm_story_nobeatoBarrack.mp3");
+		game.load.audio('Dok3의 집',"resources/Audios/bgm/story/bgm_story_dok3House.mp3");
 		
 		//음향효과
-		game.load.audio('노크소리',"resources/Audios/bgm/story/노크소리.mp3");
-		game.load.audio('잔잔한 음악',"resources/Audios/bgm/story/잔잔한 음악.mp3");
-		game.load.audio('쿠구궁',"resources/Audios/bgm/story/쿠구궁.mp3");
+		game.load.audio('노크소리',"resources/Audios/effectSound/effectSound/effect_story_knock.mp3");
+		game.load.audio('잔잔한 음악',"resources/Audios/bgm/effectSound/effect_story_classic.mp3");
+		game.load.audio('쿠구궁',"resources/Audios/bgm/effectSound/effect_story_earthquake.mp3");
 		
 		// 배경화면 로드
 		game.load.spritesheet("숲속", "resources/Images/story/bgimg/숲속.png",1600,900);

@@ -14,7 +14,7 @@ Ending.prototype = {
 
 	preload:function() {	
 		//배경음악
-		game.load.audio('ending_music',"resources/Audios/bgm/others/endingmusic.mp3");
+		game.load.audio('ending_music',"resources/Audios/bgm/ending/bgm_ending.mp3");
 		//비트맵형 글자폰트 로드
 		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png','resources/neo_font/neo_font.fnt');
 		

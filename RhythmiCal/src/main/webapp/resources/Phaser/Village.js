@@ -84,10 +84,10 @@ preload : function() {
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
    game.load.image('mm','resources/Images/town/townImg/mm.png');
    
-   game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
-   game.load.audio('btnSound','resources/Images/town/button_click.mp3'); //버튼 클릭
-   game.load.audio('door','resources/Images/town/door.wav'); // 문여는 소리
-   game.load.audio('door_close','resources/Images/town/door_close.mp3'); //문닫는소리
+   game.load.audio('townBGM','resources/Audios/bgm/village/bgm_village.mp3');	//마을브금
+   game.load.audio('btnSound','resources/Audios/effectSound/village/effect_village_button_click.mp3'); //버튼 클릭
+   game.load.audio('door_open','resources/Audios/effectSound/village/effect_village_door_open.wav'); // 문여는 소리
+   game.load.audio('door_close','resources/Audios/effectSound/village/effect_village_door_close.mp3'); //문닫는소리
    
    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
    
@@ -128,7 +128,7 @@ create: function() {
    
    //버튼 클릭, 문 열기, 문 닫기 사운드 추가 
    btnSound = game.add.audio('btnSound');
-   doorOpen = game.add.audio('door');
+   doorOpen = game.add.audio('door_open');
    doorClose = game.add.audio('door_close');
    
    //메뉴 이미지 지정한 좌표에 출력

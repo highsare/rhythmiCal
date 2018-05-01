@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
 <!-- charset -->
@@ -207,7 +208,9 @@ td {
 <!-- Ajax를 통해 로그인 및 회원가입 구현해야 함. 로그인 시에는 유효성검사 필요. 아이디는 영문자만. 회원가입 시 패스워드는 두 번. 일치여부 체크. -->
 <!-- Ajax를 통해 DB에서 명예의전당 글 불러와야 함. -->
 <!-- Modal 모양을 게임과 어울리게 레트로로 해야 함. -->
-<!-- 시작화면에 BGM 깔아야 함. 게임과 잘 어울리는 핵심 BGM이어야 함. -->
+
+<!-- Background Music -->
+<embed src="resources/Audios/bgm/main/bgm_main_children.mp3" hidden="false" loop=1>
 
 <!-- Main Logo -->
 <div class="center">

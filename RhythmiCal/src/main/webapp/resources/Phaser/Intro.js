@@ -37,10 +37,10 @@ Intro.prototype = {
 	preload:function() {
 		alert(contentNum+" Intro");
 		//배경음악
-		game.load.audio('intro_music',"resources/Audios/bgm/others/intromusic.mp3");
-		game.load.audio('새소리',"resources/Audios/bgm/others/새소리.mp3");
-		game.load.audio('마왕',"resources/Audios/bgm/others/마왕.mp3");
-		game.load.audio('사람들도망',"resources/Audios/bgm/others/사람들도망.mp3");
+		game.load.audio('intro_music',"resources/Audios/bgm/intro/bgm_intro.mp3");
+		game.load.audio('새소리',"resources/Audios/effectSound/intro/effect_intro_bird_singing.mp3");
+		game.load.audio('마왕',"resources/Audios/effectSound/intro/effect_intro_nobeato_laughing.mp3");
+		game.load.audio('사람들도망',"resources/Audios/effectSound/intro/effect_intro_people_runaway.mp3");
 		// intro_src_로드
 		//1번째장면
 		game.load.image("intro_1_mountain",
