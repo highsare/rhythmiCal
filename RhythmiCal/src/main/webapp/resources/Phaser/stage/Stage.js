@@ -83,7 +83,8 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/stage/' + bgmName);	
+		game.load.audio('stageBGM1','resources/Audios/bgm/stage/bgm_cubiz_54bpm.mp3');	
+		game.load.audio('stageBGM2','resources/Audios/bgm/stage/bgm_newtires_70bpm.mp3');
 		//몬스터 로드
 		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
 		game.load.spritesheet('GoblinHurt', 'resources/Images/characters/monsters/29x31x4_GoblinHurt.png', 29, 31, 4);
@@ -186,9 +187,14 @@ Stage.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
 		
-		stageBGM = game.add.audio("stageBGM");
+		if (contentNum == 10) {
+			stageBGM = game.add.audio('stageBGM1');
+			BPM = BPMfactor / 54;
+		}else if (contentNum == 11) {
+			stageBGM = game.add.audio('stageBGM2');
+			BPM = BPMfactor / 70;
+		}
 		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / beat;
 		beatStart = 0;
 		//고정 데이터들의 생성
 		//배경색
