@@ -840,12 +840,14 @@ function myroom() {
    e_select.scale.set(0.8);
    textboard = game.add.image(810,450,'textboard');
    textboard.scale.set(2);
+   alert(language);
    var txt;
-   if (language == "KOREANㅇ") {
+   if (language == "KOREAN") {
 	   txt = "게임을 종료합니다.";
    }else{
 	   txt = "ゲームを修旅します。";
 	   }
+   alert(txt);
    text2 = game.add.bitmapText(950, 480,'neo_font' ,txt, 50);
    // 깊이를 3으로 변경 > update에서 depth에 따른 case문을 통해 goHome(inputKey)를 호출 
    /* depth = 3; */
@@ -895,7 +897,7 @@ function frontoftown() {
 	}else{
 		txt = "次のストーリーへ";
 	}
-    text2 = game.add.bitmapText(950, 480,'neo_font' ,"게임을 시작합니다.", 50);
+    text2 = game.add.bitmapText(950, 480, 'neo_font' , txt, 50);
     start = game.add.image(935, 580,'start');
     start.scale.set(0.89);
     e_select = game.add.sprite(940, 580, 'e_select');
