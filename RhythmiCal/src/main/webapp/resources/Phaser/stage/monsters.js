@@ -289,15 +289,24 @@ function arriveDestination(unit){
 }
 //가장 단순하게 데미지를 주는 메소드
 function attackLine(unitArray, damage){
+	var checkMonsterNine = false;
 	for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
 		if(unit.status != "DIE"){
 			if (unit.monsterNum == 9) {//몬스터 번호가 9인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
-				hitMonster(unit, damage);
-				break;
+				checkMonsterNine = true;
 			}
-			hitMonster(unit,damage);
 		}
+	}
+	if (checkMonsterNine) {
+		for (var i = 0; i < unitArray.length; i++) {
+			var unit = unitArray[i];
+			if (unit.monsterNum == 9 && unit.status != "DIE") {
+				hitMonster(unit, damage);
+			}
+		}
+	} else {
+		hitMonster(unit, damage);
 	}
 }
 

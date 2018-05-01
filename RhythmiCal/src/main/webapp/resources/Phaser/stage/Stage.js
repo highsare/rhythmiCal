@@ -124,6 +124,11 @@ Stage.prototype = {
 		game.load.spritesheet('Explosion', 'resources/Images/others/54x51x4_Explosion.png', 54, 51, 4);
 		
 		//항상 고정적인 리소스
+		//모션에 따른 효과의 이펙트
+		game.load.spritesheet('StunEffect', 'resources/Images/effect/1200x180x10_StunEffect.png', 1200, 180, 10);
+		game.load.spritesheet('KnockBackEffect', 'resources/Images/effect/1200x180x8_KnockBackEffect.png', 1200, 180, 8);
+		game.load.spritesheet('PoinEffect', 'resources/Images/effect/1200x180x12_PointEffect.png', 1200, 180, 12);
+		game.load.spritesheet('NomalAttackEffect', 'resources/Images/effect/1200x180x5_NomalAttackEffect.png', 1200, 180, 5);
 		//콤보 효과음 로드
 		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
 		//생명력 이미지
@@ -156,8 +161,8 @@ Stage.prototype = {
 		}
 		//음표배경 로드
 		game.load.image('noteBG', 'resources/Images/notes/noteBG.png');
-		game.load.image('imgO', 'resources/Images/notes/imgO.png');
-		game.load.image('imgX', 'resources/Images/notes/imgX.png');
+		game.load.spritesheet('imgO', 'resources/Images/notes/342x306x18_imgO.png');
+		game.load.spritesheet('imgX', 'resources/Images/notes/304x262x7_imgX.png');
 		//체력바 관련 로드
 		game.load.spritesheet('healthFill', 'resources/Images/others/healthFill.png', 32, 32, 1);
 		game.load.spritesheet('healthBlank', 'resources/Images/others/healthBlank.png', 32, 32, 1);
