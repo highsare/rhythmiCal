@@ -171,94 +171,62 @@ function setMotion(motionList){
 	 turn2 = parseInt(motionList.button[1].turn);
 	 turn3 = parseInt(motionList.button[2].turn);
 	 
-	 lane1 = (motionList.button[0].lane).toString();
-	 lane2 = (motionList.button[1].lane).toString();
-	 lane3 = (motionList.button[2].lane).toString();
+	 lane1 = motionList.button[0].lane;
+	 lane2 = motionList.button[1].lane;
+	 lane3 = motionList.button[2].lane;
 	 
-	 console.log(turn1);
-	 console.log(turn2);
-	 console.log(turn3);
-	 console.log(lane1);
-	 console.log(lane2);
-	 console.log(lane3);
 	 
 	 
 	//1번 모션의 공격 범위 지정
 	 switch(turn1){
 	 case 0:
 		 //POINT
-		 switch(lane1){
-		 case 'A': 
-			 point_isA = true;
-			 break;
-		 case 'B':
-			 point_isB = true;
-			 break;
-		 case 'C':
-			 point_isC = true;
-			 break;
+		 if (lane1 == "A") {
+			point_isA = true;
+		 }else if(lane1 == "B"){
+			point_isB = true;
+		 }else if(lane1 == "C"){
+			point_isC = true;
 		 }
 		 break;
 	 case 1:
 		 //UP
-		 switch(lane1){
-		 case 'A': 
-			 up_isA = true;
-			 break;
-		 case 'B':
-			 up_isB = true;
-			 break;
-		 case 'C':
-			 up_isC = true;
-			 break;
+		 if (lane1 == "A") {
+			up_isA = true;
+		 }else if(lane1 == "B"){
+			up_isB = true;
+		 }else if(lane1 == "C"){
+			up_isC = true;
 		 }
 		 break;
 	 case 2:
 		 //DOWN
-		 switch(lane1){
-		 case 'A': 
-			 down_isA = true;
-			 break;
-		 case 'B':
-			 down_isB = true;
-			 break;
-		 case 'C':
-			 down_isC = true;
-			 break;
+		 if (lane1 == "A") {
+			down_isA = true;
+		 }else if(lane1 == "B"){
+			down_isB = true;
+		 }else if(lane1 == "C"){
+			down_isC = true;
 		 }
 		 break;
 	 case 3:
 		 //LEFT
-		 switch(lane1){
-		 case 'AB': 
-			 left_isA = true;
-			 left_isB = true;
-			 break;
-		 case 'BC':
-			 left_isB = true;
-			 left_isC = true;
-			 break;
-		 case 'CA':
-			 left_isA = true;
-			 left_isC = true;
-			 break;
+		 if (lane1 == "AB") {
+			left_isA = true;
+		 }else if(lane1 == "BC"){
+			left_isB = true;
+		 }else if(lane1 == "CA"){
+			left_isC = true;
 		 }
 		 break;
 	 case 4:
 		 //RIGHT
-		 switch(lane1){
-		 case 'AB': 
+		 if(lane1 == "AB") {
 			 right_isA = true;
+		 }else if(lane1 == "BC"){
 			 right_isB = true;
-			 break;
-		 case 'BC':
-			 right_isB = true;
+		 }else if(lane1 == "CA"){
 			 right_isC = true;
-			 break;
-		 case 'CA':
-			 right_isA = true;
-			 right_isC = true;
-			 break;
 		 }
 		 break;
 	 }
@@ -267,78 +235,52 @@ function setMotion(motionList){
 	 switch(turn2){
 	 case 0:
 		 //POINT
-		 switch(lane1){
-		 case 'A': 
-			 point_isA = true;
-			 break;
-		 case 'B':
-			 point_isB = true;
-			 break;
-		 case 'C':
-			 point_isC = true;
-			 break;
+		 if (lane2 == "A") {
+			point_isA = true;
+		 }else if(lane2 == "B"){
+			point_isB = true;
+		 }else if(lane2 == "C"){
+			point_isC = true;
 		 }
 		 break;
 	 case 1:
 		 //UP
-		 switch(lane1){
-		 case 'A': 
-			 up_isA = true;
-			 break;
-		 case 'B':
-			 up_isB = true;
-			 break;
-		 case 'C':
-			 up_isC = true;
-			 break;
+		 if (lane2 == "A") {
+			up_isA = true;
+		 }else if(lane2 == "B"){
+			up_isB = true;
+		 }else if(lane2 == "C"){
+			up_isC = true;
 		 }
 		 break;
 	 case 2:
 		 //DOWN
-		 switch(lane1){
-		 case 'A': 
-			 down_isA = true;
-			 break;
-		 case 'B':
-			 down_isB = true;
-			 break;
-		 case 'C':
-			 down_isC = true;
-			 break;
+		 if (lane2 == "A") {
+			down_isA = true;
+		 }else if(lane2 == "B"){
+			down_isB = true;
+		 }else if(lane2 == "C"){
+			down_isC = true;
 		 }
 		 break;
 	 case 3:
 		 //LEFT
-		 switch(lane1){
-		 case 'AB': 
-			 left_isA = true;
-			 left_isB = true;
-			 break;
-		 case 'BC':
-			 left_isB = true;
-			 left_isC = true;
-			 break;
-		 case 'CA':
-			 left_isA = true;
-			 left_isC = true;
-			 break;
+		 if (lane2 == "AB") {
+			left_isA = true;
+		 }else if(lane2 == "BC"){
+			left_isB = true;
+		 }else if(lane2 == "CA"){
+			left_isC = true;
 		 }
 		 break;
 	 case 4:
 		 //RIGHT
-		 switch(lane1){
-		 case 'AB': 
+		 if(lane2 == "AB") {
 			 right_isA = true;
+		 }else if(lane2 == "BC"){
 			 right_isB = true;
-			 break;
-		 case 'BC':
-			 right_isB = true;
+		 }else if(lane2 == "CA"){
 			 right_isC = true;
-			 break;
-		 case 'CA':
-			 right_isA = true;
-			 right_isC = true;
-			 break;
 		 }
 		 break;
 	 }
@@ -347,78 +289,52 @@ function setMotion(motionList){
 	 switch(turn3){
 	 case 0:
 		 //POINT
-		 switch(lane1){
-		 case 'A': 
-			 point_isA = true;
-			 break;
-		 case 'B':
-			 point_isB = true;
-			 break;
-		 case 'C':
-			 point_isC = true;
-			 break;
+		 if (lane3 == "A") {
+			point_isA = true;
+		 }else if(lane3 == "B"){
+			point_isB = true;
+		 }else if(lane3 == "C"){
+			point_isC = true;
 		 }
 		 break;
 	 case 1:
 		 //UP
-		 switch(lane1){
-		 case 'A': 
-			 up_isA = true;
-			 break;
-		 case 'B':
-			 up_isB = true;
-			 break;
-		 case 'C':
-			 up_isC = true;
-			 break;
+		 if (lane3 == "A") {
+			up_isA = true;
+		 }else if(lane3 == "B"){
+			up_isB = true;
+		 }else if(lane3 == "C"){
+			up_isC = true;
 		 }
 		 break;
 	 case 2:
 		 //DOWN
-		 switch(lane1){
-		 case 'A': 
-			 down_isA = true;
-			 break;
-		 case 'B':
-			 down_isB = true;
-			 break;
-		 case 'C':
-			 down_isC = true;
-			 break;
+		 if (lane3 == "A") {
+			down_isA = true;
+		 }else if(lane3 == "B"){
+			down_isB = true;
+		 }else if(lane3 == "C"){
+			down_isC = true;
 		 }
 		 break;
 	 case 3:
 		 //LEFT
-		 switch(lane1){
-		 case 'AB': 
-			 left_isA = true;
-			 left_isB = true;
-			 break;
-		 case 'BC':
-			 left_isB = true;
-			 left_isC = true;
-			 break;
-		 case 'CA':
-			 left_isA = true;
-			 left_isC = true;
-			 break;
+		 if (lane3 == "AB") {
+			left_isA = true;
+		 }else if(lane3 == "BC"){
+			left_isB = true;
+		 }else if(lane3 == "CA"){
+			left_isC = true;
 		 }
 		 break;
 	 case 4:
 		 //RIGHT
-		 switch(lane1){
-		 case 'AB': 
+		 if(lane3 == "AB") {
 			 right_isA = true;
+		 }else if(lane3 == "BC"){
 			 right_isB = true;
-			 break;
-		 case 'BC':
-			 right_isB = true;
+		 }else if(lane3 == "CA"){
 			 right_isC = true;
-			 break;
-		 case 'CA':
-			 right_isA = true;
-			 right_isC = true;
-			 break;
 		 }
 		 break;
 	 }
