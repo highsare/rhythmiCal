@@ -1,4 +1,4 @@
-/**실제로 게임이 이루어지는 화면입니다.
+	/**실제로 게임이 이루어지는 화면입니다.
  *DB에서 받아온 데이터를 기초해서 각기 다른 스테이지를 만들어냅니다. 
  *1.DB에서 적절한 데이터와 함께 호출됨
  *2.데이터 초기화
@@ -70,7 +70,7 @@ var bgmName;
 var stageNum;
 
 //보스를 담을 전역 변수
-var boss;
+var boss, bossName;
 
 var Stage = function(game) {};
 
@@ -231,7 +231,9 @@ Stage.prototype = {
 		}
 		
 		//Boss(game, health, bossSpriteName, bossSpriteSplitNum)
-		boss = new Boss(game, 5, 'WollYangPung');
+		if (bossName != null) {
+			boss = new Boss(game, 5, bossName);			
+		}
 
 		//Timer functions here
 	    game.time.events.loop(Phaser.Timer.SECOND * BPM, this.loopFunction, this);
@@ -255,11 +257,11 @@ Stage.prototype = {
 		}
 		currentBeat += 1;
 		console.log(currentBeat);
-		start();
+		startMonster();
 		jumpchar();
 		createNotes();
-		hitBoss(boss, 1);
-		bossJump(nobeato);
+		//hitBoss(boss, 1);
+		//bossJump();
 		isFail();
 	}
 }

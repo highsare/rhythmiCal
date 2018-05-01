@@ -136,12 +136,14 @@ public class StageController {
 				}
 			}//for end monsterTable을 조회하는 for문
 		}//for end 분할돼 들어간 배열을 돌리는
+		
 	
 		stageInfo.add(stage);	//index 0
 		stageInfo.add(beat);	//index 1
 		stageInfo.add(monsterlistA);	//index 2
 		stageInfo.add(monsterlistB);	//index 3
 		stageInfo.add(monsterlistC);	//index 4
+	
 		for (Monster string : monsterlistA) {
 			System.out.println(string);
 		}
