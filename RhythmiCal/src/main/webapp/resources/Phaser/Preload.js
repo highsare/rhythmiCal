@@ -493,7 +493,7 @@ function setResources(state){
 		
 	}else if (state == "Stage") {
 		//Stage assets , contentNum required
-		getStageInfo(1);
+		getStageInfo(contentNum);
 		
 	}else if (state == "Village") {
 		//Village assets
