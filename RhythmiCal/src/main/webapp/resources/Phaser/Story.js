@@ -94,20 +94,18 @@ Story.prototype = {
 	    game.load.image("textbox", "resources/Images/tutorial/dialog.png");
 	},
 	create: function() {
-		
+		storyOrder = 0;
 		
 		cursors = game.input.keyboard.createCursorKeys();
 		this.typethetext("STORY_"+storyNum,game.world.centerX-150, game.world.centerY- 50,90);
 		
 		//2초있다가  스토리 시작
 		game.time.events.add(2000, function () {  //글자 나올때 소리 추가
-		
+			
 			//카메라 페이드 인
 			game.camera.flash(0x000000, 3000);   
 		
 			typewriter.destroy();
-			
-		   	storyOrder = 0;
 		   	
 	   		this.dialogueExport(storyOrder);
 		}, this);
@@ -216,7 +214,12 @@ Story.prototype = {
  			console.log("음악 효과 재생 =" + arr[storyOrder].bgMusicName);
  		}
  		
-		//배경이미지
+		//배경이미지 
+ 		//배경바뀌면 전환효과
+        if(bgImgName != arr[storyOrder].bgImgName){
+            //카메라 페이드 인
+           game.camera.flash(0x000000, 500);   
+         }
 		bgImgName = arr[storyOrder].bgImgName;
 	    backimage = game.add.sprite(0, 0, bgImgName);
 	    if(bgImgName == '전당'){

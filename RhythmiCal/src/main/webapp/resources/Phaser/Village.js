@@ -40,6 +40,7 @@ var descText; // 모션 설명하는 비트맵 텍스트 변수
 var desctextX = 1180;
 var desctextY = 550;
 var descBackground;
+var beatoven_walk;
 var btnSound, doorOpen, doorClose; // 버튼 클릭, 문 열기, 문 닫기 사운드
 var descArray = [ '[찌르기]\nTriple Attack:\n공격력이\n3배로 증가'
 				, '[올려치기]\nKnock Down:\n적을 잠시\n뒤로 가게 하는 효과'
@@ -83,6 +84,7 @@ preload : function() {
    game.load.image('start', 'resources/Images/town/townImg/start.png');
    game.load.image('start_push', 'resources/Images/town/townImg/start_push.png');
    game.load.image('mm','resources/Images/town/townImg/mm.png');
+   game.load.spritesheet('beatoven_walk', 'resources/Images/town/townImg/beatoven_walk.png', 32, 32, 6); // 비토벤 스프라이트시트
    
    game.load.audio('townBGM','resources/Images/town/townbgm.mp3');	//마을브금
    game.load.audio('btnSound','resources/Images/town/button_click.mp3'); //버튼 클릭
@@ -852,7 +854,12 @@ function goHome(inputKey) {
 function frontoftown() {
 	m_back = game.add.image(750,75,'menu_sub_back');
 	m_back.alpha = 0.8;
+	
     image = game.add.image(810, 120, 'front');
+    beatoven_walk = game.add.sprite(840,230, 'beatoven_walk'); 
+	beatoven_walk.scale.set(4); 
+	beatoven_walk.smoothed = false; 
+	
     border = game.add.image(810, 120, 'border');
     textboard = game.add.image(810, 450,'textboard');
     textboard.scale.set(2);
@@ -872,11 +879,30 @@ function gamestart(inputKey) {
 		depth = 0; 
 	}
 	   else if (inputKey == 'enter') {
-		 start.destroy();
-		 e_select.destroy();
-		 var startpush = game.add.image(970, 595,'start_push'); 
-		 startpush.scale.set(0.89);
-		 alert('Next Stroy Or Game Start');
+		start.destroy();
+		e_select.destroy();
+		var startpush = game.add.image(970, 595,'start_push'); 
+		startpush.scale.set(0.89);
+		alert('Next Stroy Or Game Start');
+		 
+		var walk = beatoven_walk.animations.add('walk');
+		beatoven_walk.play('walk',3,true); //속도
+		
+		game.add.tween(beatoven_walk).to({x: 1800}, 5000, Phaser.Easing.Linear.None, true, 0);
+	
+		
+		// 게임 종료. 검정 화면 준비.   
+	    sprite = game.add.sprite(0, 0, 'finish');
+	    
+	    // 원래 사이즈 보다 확대 하고 alph로 투명도 조절.moveButtonFocus
+	    sprite.scale.set(5);
+	    sprite.anchor.setTo(0.5, 0.5);
+	    sprite.alpha = 0;
+	    
+	    //화면에서 검정화면으로 조정.
+	    game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+		
+		
 	   }
 }
 function playerCount() {
@@ -939,6 +965,7 @@ function isnull() {
 	if (text2!= null) {text2.destroy();}
 	if (e_select!= null) {e_select.destroy();}
 	if (button1 != null) {button1.destroy();}
+	if (beatoven_walk != null) {beatoven_walk.destroy();}
 	if (button2 != null) {button2.destroy();}
 	if (button3 != null) {button3.destroy();}
 	if (lane1 != null) {lane1.destroy();}
