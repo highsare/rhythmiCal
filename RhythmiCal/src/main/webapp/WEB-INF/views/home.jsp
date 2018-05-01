@@ -94,7 +94,7 @@ $(function() {
 		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
 				}
 		    }
-		    , error: function(data) { alert("signupMember error");} //alerttest
+		    , error: function(data) {alert("signupMember error");} //alerttest
 		});
 	});
 	
@@ -225,8 +225,8 @@ td {
 					<h4 class="modal-title">Signup</h4>
 					<p>Please input your new id and pw.</p>
 					<p><input type="text" placeholder="ID" id="signupId" name="signupId"></p>
-					<p><input type="text" placeholder="PW" id="signupPw" name="signupPw"></p>
-					<p><input type="text" placeholder="PW check" id="signupPwc" name="signupPwc"></p>
+					<p><input type="password" placeholder="PW" id="signupPw" name="signupPw"></p>
+					<p><input type="password" placeholder="PW check" id="signupPwc" name="signupPwc"></p>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="signupMember">New Game</button></p>
 				</div>
 			</div>

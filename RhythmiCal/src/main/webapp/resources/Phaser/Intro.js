@@ -87,13 +87,14 @@ Intro.prototype = {
 
 		introMusic = game.add.audio('intro_music');
 		introMusic.play();
-
-		typethetext("A long time ago in a galaxy far, far away....", game.world.centerX - 150,
-				game.world.centerY - 50, 90);
+		introMusic.volume =3;
+		introtypethetext("A long time ago in a galaxy far, far away....", 120,game.world.centerY - 50, 60,35);
+		
+		game.time.events.add(5000, function() {
 		//몇초있다가  스토리 시작
-		game.time.events.add(800, function() { //글자 나올때 소리 추가
+		game.time.events.add(10, function() { //글자 나올때 소리 추가
 			//카메라 페이드 인
-			game.camera.flash(0x000000, 300);
+			game.camera.flash(0x000000, 600);
 			typewriter.destroy();
 			//배경화면 추가
 			mountain = game.add.image(0, 0, "intro_1_mountain");
@@ -111,7 +112,7 @@ Intro.prototype = {
 				y : 1.15
 			}, 10000, Phaser.Easing.Linear.None, true);
 			//새 소리
-			game.time.events.add(300, function() { game.add.audio("새소리").play(); });
+			game.time.events.add(700, function() { game.add.audio("새소리").play(); });
 			/// __새______날라가는 새 스프라이트생성
 			bird = game.add.sprite(1900, 350, 'intro_1_flyingbird');
 			bird.smoothed = false;
@@ -149,7 +150,7 @@ Intro.prototype = {
 			}else {
 				introText = "音楽がなによりも大事な世界があった。。";
 			}
-			typethetext(introText, 150, 800, 60, 100)
+			introtypethetext(introText, 70, 800, 60, 100)
 
 			//움직임 enable 정의
 			game.physics.enable(bird, Phaser.Physics.ARCADE);
@@ -225,7 +226,7 @@ Intro.prototype = {
 			}else {
 				introText = "音楽が大嫌いだった魔王。。その名はノ。ビ。ト。";
 			}
-			typethetext(introText, 150, 800, 60, 100);
+			introtypethetext(introText, 70, 800, 60, 100);
 		});//두번째 장면 끝
 
 		//_________세번째 장면 시작
@@ -284,7 +285,7 @@ Intro.prototype = {
 			}else {
 				introText = "ノビとは世の中から音楽を奪い始めた";
 			}
-			typethetext(introText, 150, 800, 60, 100);
+			introtypethetext(introText, 70, 800, 60, 100);
 		});//세번째 장면 끝
 		 
 		
@@ -326,7 +327,7 @@ Intro.prototype = {
 			}else {
 				introText = "そして、今、ビトベンの村は絶体絶命の状況になる。。。";
 			}
-			typethetext(introText, 150, 800, 60, 100);
+			introtypethetext(introText, 70, 800, 50, 100);
 			
 			//비토벤 걸어옴
 			beatovenappear.onComplete.add(function(){
@@ -334,11 +335,11 @@ Intro.prototype = {
 
 			 game.time.events.add(2000, function() { 
 				 typewriter.destroy();
-				 typethetext("The story begins...", game.world.centerX - 150,game.world.centerY - 50, 90,100);});
+				 introtypethetext("The story begins...", 340,game.world.centerY - 50, 90,30);});
 		    
 			});
 			
-			game.time.events.add(12000, function() {
+			game.time.events.add(14000, function() {
 				//스토리1번으로 보냄
 				introMusic.stop();
 				game.state.start("Preload");
@@ -346,9 +347,11 @@ Intro.prototype = {
 			
 		});//네번째 장면 끝
 		
-	}
+	});
+	},
+	
 }
-function typethetext(txt, xvalue, yvalue, size, speed) {
+function introtypethetext(txt, xvalue, yvalue, size, speed) {
 	//타이핑효과 함수 (텍스트값,x위치 , y위치)
 	//글자 타이핑효과 정의
 	typewriter.init(game, {
@@ -357,7 +360,7 @@ function typethetext(txt, xvalue, yvalue, size, speed) {
 		time : speed,
 		fontFamily : "neo_font",
 		fontSize : size || 50,
-		maxWidth : 1400,
+		maxWidth : 1600,
 		//타이핑 소리 줌
 		// sound: reg.track,
 		text : txt
