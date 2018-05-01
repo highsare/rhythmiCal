@@ -1,0 +1,104 @@
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STGE_CUBIZ_54BPM.MP3'
+    ,54
+    ,189
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STGE_HIQ_50BPM.MP3'
+    ,50
+    ,150
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STAGE_INEVITABLE_53BPM.MP3'
+    ,53
+    ,160
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STGE_MIRROR_55BPM.MP3'
+    ,55
+    ,161
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STAGE_MRTEA_60BPM.MP3'
+    ,60
+    ,161
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STAGE_NEWTIRES_70BPM.MP3'
+    ,70
+    ,129
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STAGE_RESPECOGNIZE_51BPM.MP3'
+    ,51
+    ,158
+);
+INSERT INTO BGM(
+    BGMNAME
+    ,BPM
+    ,NUMOFBEAT
+) VALUES (
+    'BGM_STAGE_SEVENTWENTY_56BPM.MP3'
+    ,56
+    ,180
+);
+
+INSERT INTO BOSS(
+    BOSSNAME
+    ,HEALTH
+)VALUES(
+    '나보'
+    ,50
+);
+
+INSERT INTO BOSS(
+    BOSSNAME
+    ,HEALTH
+)VALUES(
+    '월량풍'
+    ,60
+);
+INSERT INTO BOSS(
+    BOSSNAME
+    ,HEALTH
+)VALUES(
+    '노비토'
+    ,70
+);
+INSERT INTO BOSS(
+    BOSSNAME
+    ,HEALTH
+)VALUES(
+    '노비토각성'
+    ,80
+);
+
+COMMIT;
