@@ -177,7 +177,7 @@ function motionEvent(player,motion){
 
 function playAttackEffect(x, y, effectName){
 	var effect = game.add.sprite(x, y, effectName);
-	effect.anchor.setTo(0.5, 0.5);
+	effect.anchor.setTo(0, 0);
 	effect.scale.set(1);
 	anim = effect.animations.add('play', null, 15, false);
 	anim.play('play').onComplete.add(function(effect){
