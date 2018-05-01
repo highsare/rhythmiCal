@@ -201,6 +201,9 @@ td {
 	background-image: url(resources/Images/mainPage/honor_reply.png);
 	background-repeat: no-repeat;
 }
+.bgm {
+	visibility: hidden;
+}
 </style>
 </head>
 <body class="responsive center">
@@ -209,13 +212,14 @@ td {
 <!-- Ajax를 통해 DB에서 명예의전당 글 불러와야 함. -->
 <!-- Modal 모양을 게임과 어울리게 레트로로 해야 함. -->
 
-<!-- Background Music -->
-<embed src="resources/Audios/bgm/main/bgm_main_children.mp3" hidden="false" loop=1>
 
 <!-- Main Logo -->
 <div class="center">
 	<img src="resources/Images/mainPage/rhythmical.png" style="width: 100%" class="center"><br>
 </div>
+
+<!-- Background Music -->
+<embed class="bgm" src="resources/Audios/bgm/jsp/bgm_home.mp3" autostart="true" height="0" loop=1></embed>
 
 <div class="center">
 	<!-- Game Button -->
