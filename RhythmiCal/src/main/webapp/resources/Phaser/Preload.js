@@ -13,7 +13,7 @@ var gameLoading;
 
 Preload.prototype = {
 	preload : function(){
-		game.world.removeAll();
+		//game.world.removeAll();
 		setLanguage();
 		//로고 이미지 불러오기
 		game.load.spritesheet('gameLoding', 'resources/Images/preload/32x32x1_BeatovenFace.png', 32, 32, 1);
@@ -75,9 +75,11 @@ function getStageInfo(stageNum){
 	$.ajax({
 		url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
 		,type : "post"
+		,data : {stageNum : stageNum}
 		,dataType : "json" // 데이터 타입을 제이슨 꼭해야함, 다른방법도 2가지있음
 		,cache : false // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안댐
 		,success : function(stageInfo) {
+			console.log(stageInfo);
 			//BGM 길이를 가져와야함
 			bgImgName = stageInfo[0].bgImgName;
 			musicName = stageInfo[0].musicName;
@@ -93,6 +95,7 @@ function getStageInfo(stageNum){
 	      ,type : 'post'
 	      // 성공하면 가져온 모션 리스트를 표시
 	      ,success: function(jsonText) {
+	    	  console.log(jsonText);
 	         //{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
 	         if (jsonText == '000') {
 	        	  var motionList = "default";

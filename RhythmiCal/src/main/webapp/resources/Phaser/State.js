@@ -33,6 +33,7 @@ function requestContentNum(state){
 		url:'requestContentNum'
 		,type:'POST'
 		,success : function(num){
+			console.log(num);
 			//Stage.js의 전역변수 contentNum에 현재 state의 contentNum을 전달한다.
 			contentNum = num;
 			setResources(state);

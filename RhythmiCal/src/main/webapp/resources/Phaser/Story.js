@@ -57,9 +57,9 @@ Story.prototype = {
 		game.load.audio('Dok3의 집',"resources/Audios/bgm/story/bgm_story_dok3House.mp3");
 		
 		//음향효과
-		game.load.audio('노크소리',"resources/Audios/effectSound/effectSound/effect_story_knock.mp3");
-		game.load.audio('잔잔한 음악',"resources/Audios/bgm/effectSound/effect_story_classic.mp3");
-		game.load.audio('쿠구궁',"resources/Audios/bgm/effectSound/effect_story_earthquake.mp3");
+		game.load.audio('노크소리',"resources/Audios/effectSound/story/effect_story_knock.mp3");
+		game.load.audio('잔잔한 음악',"resources/Audios/effectSound/story/effect_story_classic.mp3");
+		game.load.audio('쿠구궁',"resources/Audios/effectSound/story/effect_story_earthquake.mp3");
 		
 		// 배경화면 로드
 		game.load.spritesheet("숲속", "resources/Images/story/bgimg/숲속.png",1600,900);

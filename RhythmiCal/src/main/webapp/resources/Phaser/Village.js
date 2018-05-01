@@ -909,7 +909,7 @@ function gamestart(inputKey) {
 		playDoorClose();
 		depth = 0; 
 	}
-	   else if (inputKey == 'enter') {
+	else if (inputKey == 'enter') {
 		start.destroy();
 		e_select.destroy();
 		var startpush = game.add.image(970, 595,'start_push'); 
@@ -931,9 +931,11 @@ function gamestart(inputKey) {
 	    
 	    //화면에서 검정화면으로 조정.
 	    game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
-		
-		
-	   }
+	    
+	    game.time.events.add(3000,function(){
+	    	game.state.start("Preload");
+	    });
+   }
 }
 function playerCount() {
 	$.ajax({

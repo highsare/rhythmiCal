@@ -92,7 +92,6 @@ public class StageController {
 		//monster종류를 받아와서 리스트를 작성한다.
 		ArrayList<Monster> monsterTable = stageDAO.getMonsterTable();
 		//DB : stage 정보를 받아온다.
-		stageNum = "1";
 		int integerStageNum = Integer.parseInt(stageNum);
 		Stage stage = stageDAO.getStage(integerStageNum);
 		//DB : music beat정보를 받아온다.
