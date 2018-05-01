@@ -60,6 +60,7 @@ body{
 	game.state.add("Ending", Ending);
 	
 	game.state.start("Preload");
+	
 </script>
 
 <div id= "RhythmiCal"></div>
