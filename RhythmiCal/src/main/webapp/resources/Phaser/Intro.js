@@ -35,7 +35,6 @@ var Intro = function(game) {};
 
 Intro.prototype = {
 	preload:function() {
-		alert(contentNum+" Intro");
 		//배경음악
 		game.load.audio('intro_music',"resources/Audios/bgm/intro/bgm_intro.mp3");
 		game.load.audio('새소리',"resources/Audios/effectSound/intro/effect_intro_bird_singing.mp3");

@@ -8,7 +8,6 @@ function requestState(){
 		url: 'requestState'
 		,type: 'POST'
 		,success : function(state){
-			alert(state);
 			if (state == "Intro") {
 				setResources("Intro");
 			}else if (state == "Tutorial"){

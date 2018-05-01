@@ -303,8 +303,8 @@ function logoutMember() {
    $.ajax({
       url: 'logoutMember'
       ,type: 'post'
-      ,success: function() {alert('logoutMember() - ajax success');}
-      ,error: function() {alert('logoutMember() - ajax error');}
+      ,success: function() {}
+      ,error: function() {}
    });
 }
 /*
@@ -346,9 +346,7 @@ function createStudio() {
       ,type : 'post' 
       // 성공하면 가져온 모션 리스트를 표시
       ,success: function(jsonText) {
-         alert('readMotionList success');
          if (jsonText == '000') {
-        	  alert('저장된 모션이 없습니다!');
         	  turn1 = 0; //'point'
 	   		  turn2 = 1; //'up'
 	   		  turn3 = 2; //'down'
@@ -362,12 +360,10 @@ function createStudio() {
               descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[turn1], 30);
          }
          else {
-        	 alert('저장된 모션이 있습니다!' + jsonText);
         	 var motionList = JSON.parse(jsonText);
         	 turn1 = parseInt(motionList.button[0].turn);
         	 turn2 = parseInt(motionList.button[1].turn);
         	 turn3 = parseInt(motionList.button[2].turn);
-        	 alert('turn1: ' + turn1 + ' turn2: ' + turn2 + ' turn3: ' + turn3);
         	 button1.frame = turn1;
         	 button2.frame = turn2;
         	 button3.frame = turn3;
@@ -382,7 +378,6 @@ function createStudio() {
       }
       // 실패하면 기본값을 표시
       ,error: function() {
-          alert('readMotionList error');
       }
    });
 	 
@@ -492,8 +487,8 @@ function saveMotionList() {
       url: 'saveMotionList'
       , type: 'post'
       , data: {jsonText: jsonText}
-      , success: function(result) {alert('saveMotionList success (' + result + ')');}
-      , error: function(result){alert('saveMotionList error (' + result + ')');}
+      , success: function(result) {}
+      , error: function(result){}
    });   
 }
  
@@ -805,7 +800,7 @@ function multiconnection() {
             }
          }
       }
-      ,error: function() {alert('update() - multiconnection error');}
+      ,error: function() {}
    });
 }
 
@@ -823,7 +818,7 @@ function sendRdm() {
 	     ,success: function(result) {
 	        console.dir(result);
 	     }
-	     ,error: function() {alert('createMercenary - sendRdm error');}
+	     ,error: function() {}
 	});
 
    // 난수를 보여줄 텍스트
@@ -919,7 +914,6 @@ function gamestart(inputKey) {
 		e_select.destroy();
 		var startpush = game.add.image(970, 595,'start_push'); 
 		startpush.scale.set(0.89);
-		alert('Next Stroy Or Game Start');
 		 
 		var walk = beatoven_walk.animations.add('walk');
 		beatoven_walk.play('walk',3,true); //속도
@@ -971,7 +965,7 @@ function playerCount() {
 				}
 	         }
 	      }
-	      ,error: function() {alert('update() - playerCount error');}
+	      ,error: function() {}
 	   });
 }
 

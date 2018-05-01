@@ -13,7 +13,6 @@ var gameLoading;
 
 Preload.prototype = {
 	preload : function(){
-		alert("Preload");
 		game.world.removeAll();
 		setLanguage();
 		//로고 이미지 불러오기
@@ -66,10 +65,8 @@ function setLanguage(){
 		,type: 'post'
 		,success: function(str){
 			language = str;
-			alert("language is "+language);
 		},error: function(){
 			language = "KOREAN";
-			alert("language Setting Fail");;
 		}
 	})
 }
@@ -96,16 +93,13 @@ function getStageInfo(stageNum){
 	      ,type : 'post'
 	      // 성공하면 가져온 모션 리스트를 표시
 	      ,success: function(jsonText) {
-	         alert('readMotionList success');
 	         //{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
 	         if (jsonText == '000') {
-	        	  alert('저장된 모션이 없습니다!');
 	        	  var motionList = "default";
 	        	  setMotion(motionList);
 	              game.state.start("stage");
 	         }
 	         else {
-	        	 alert('저장된 모션이 있습니다!' + jsonText);
 	        	 var motionList = JSON.parse(jsonText);
 	        	 setMotion(motionList);
 	        	 game.state.start("stage");
@@ -113,7 +107,6 @@ function getStageInfo(stageNum){
 	      }
 	      // 실패하면 기본값을 표시
 	      ,error: function() {
-	          alert('readMotionList error');
 	      }
 	   });
 }
@@ -481,7 +474,6 @@ function loadStoryContents(){
 			console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
 			game.state.start("Story");
 		},error: function(){
-			alert("대화문 임포트 에러");
 		}
 
 	});

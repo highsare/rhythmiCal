@@ -275,8 +275,8 @@ function logoutMember() {
    $.ajax({
       url: 'logoutMember'
       ,type: 'post'
-      ,success: function() {alert('logoutMember() - ajax success');}
-      ,error: function() {alert('logoutMember() - ajax error');}
+      ,success: function() {}
+      ,error: function() {}
    });
 }
 /*
@@ -318,9 +318,7 @@ function createStudio() {
       ,type : 'post'
       // 성공하면 가져온 모션 리스트를 표시
       ,success: function(jsonText) {
-         alert('readMotionList success');
          if (jsonText == '000') {
-        	  alert('저장된 모션이 없습니다!');
         	  turn1 = 0; //'point'
 	   		  turn2 = 1; //'up'
 	   		  turn3 = 2; //'down'

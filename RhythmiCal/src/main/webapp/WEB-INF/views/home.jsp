@@ -77,19 +77,11 @@ $(function() {
 		<!-- 유효성 검사: 아이디는 영어만, 비번 일치여부 확인 -->
 		var pattern1 = /(^[a-zA-Z])/;
 		if(!pattern1.test(signupId)){
-		    alert('아이디는 영문만 사용할 수 있어!');
 		    return false;
 		}
 		if (signupPw != signupPwc) {
-			alert('비밀번호를 다시 한 번 확인해봐!');
 			return false;
 		}
-		
-		<!-- test code -->
-		alert('signupId: ' + signupId + '\n'
-			+ 'signupPw: ' + signupPw + '\n'
-			+ 'signupPwc: ' + signupPwc);
-		
 		$.ajax({
 		    url: 'signupMember'
 		    , type: 'POST'
@@ -98,11 +90,9 @@ $(function() {
 		    		,'password': signupPw}
 		    , success: function(data) {
 		        if (data == 0) {
-					alert("회원가입 실패! \n[이미 존재하는 아이디]");
 				}
 		    }
 		    , error: function(data) {
-		    	alert(data);
 		    }
 		});
 	});
@@ -112,10 +102,6 @@ $(function() {
 		var loginId = $('#loginId').val();
 		var loginPw = $('#loginPw').val();
 		var language = $('input[name="language"]:checked').val();
-
-		alert('loginId: ' + loginId + '\n'
-			+ 'loginPw: ' + loginPw + '\n'
-			+ 'language: ' + language);
 		
 		$.ajax({
 		    url: 'loginMember'
@@ -124,11 +110,9 @@ $(function() {
 		    		,'password': loginPw
 		    		,'language': language}
 		    , success: function(result) { // 성공하면 game으로 이동
-		    	alert(result);
 		    	document.location.href = 'game';
 		    }
 		    , error: function(result) { // 실패하면 알림
-		    	alert(result);
 		    }
 		});
 	});

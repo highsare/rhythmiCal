@@ -53,8 +53,8 @@ $(function() {
 			url: 'writeFamePost'
 			, type: 'post'
 			, data: {text: text}
-			, success: function(result) {alert(result);}
-			, error: function(result) {alert(result);}
+			, success: function(result) {}
+			, error: function(result) {}
 		});	
 	});
 });

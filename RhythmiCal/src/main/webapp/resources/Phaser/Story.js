@@ -164,8 +164,6 @@ Story.prototype = {
 	dialogueExport: function(storyOrder){
 		
 		//나중에 삭제 될꺼
-		//alert(storyOrder);
-        
  		//대화문이 있으면 삭제
  		if(typeof typewriter !== "undefined"){
  			typewriter.destroy();

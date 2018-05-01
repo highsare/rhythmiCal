@@ -141,7 +141,6 @@ Tutorial.prototype = {
 	 * preload()
 	 */
 	preload: function() {
-		alert("Tutorial");
 		// debug
 		game.load.image('arrow', 'assets/sprites/arrow.png');
 		// load background image
