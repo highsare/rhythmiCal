@@ -243,7 +243,7 @@ td {
 					<h4 class="modal-title">Login</h4>
 					<p>Please input your id and pw.</p>
 					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
-					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
+					<p><input type="password" placeholder="PW" id="loginPw" name="loginPw"></p>
 					<div class="radio">
 						<label><input type="radio" name="language" value="KOREAN">Korean </label>
 						<label><input type="radio" name="language" value="JAPANESE">Japanese</label></div>
