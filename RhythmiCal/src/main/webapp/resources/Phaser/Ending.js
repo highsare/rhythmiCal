@@ -14,7 +14,7 @@ Ending.prototype = {
 
 	preload:function() {	
 		//배경음악
-		game.load.audio('ending_music',"resources/Audios/bgm/others/endingmusic.mp3");
+		game.load.audio('ending_music',"resources/Audios/bgm/ending/bgm_ending.mp3");
 		//비트맵형 글자폰트 로드
 		game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png','resources/neo_font/neo_font.fnt');
 		
@@ -83,24 +83,46 @@ Ending.prototype = {
 	},
 	scrolltextonside:function(){
 			//______왼쪽 스크롤
-		txt = "[프로젝트: 리드미칼] \n\n";
-		txt += "조장: 문희재 \n\n";
-		txt += "조원: 김민아 \n\n";
-		txt += "조원: 김지원 \n\n";
-		txt += "조원: 노정훈 \n\n";
-		txt += "조원: 이진주 \n\n";
-		txt += "\n\n";
-		txt += "[출연]\n\n"; //ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-		txt += "주인공: 비토벤\n\n";
-		txt += "칼: 리드미\n\n";
-		txt += "마왕: 노비토\n\n";
-		txt += "주민1: 직장인아저씨\n\n";
-		txt += "주민2: 멜로디온아저씨\n\n";
-		txt += "주민3: 팔긴아저씨\n\n";
-		txt += "주민4: 안경아줌마\n\n";
-		txt += "몬스터1: 꼬맹이\n\n";
-		txt += "몬스터2: 초록괴물\n\n";
-		txt += "몬스터3: 팬더괴물";
+		if (language == "KOREAN") {
+			txt = "[프로젝트: 리드미칼] \n\n";
+			txt += "조장: 문희재 \n\n";
+			txt += "조원: 김민아 \n\n";
+			txt += "조원: 김지원 \n\n";
+			txt += "조원: 노정훈 \n\n";
+			txt += "조원: 이진주 \n\n";
+			txt += "\n\n";
+			txt += "[출연]\n\n"; //ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+			txt += "주인공: 비토벤\n\n";
+			txt += "칼: 리드미\n\n";
+			txt += "마왕: 노비토\n\n";
+			txt += "주민1: 직장인아저씨\n\n";
+			txt += "주민2: 멜로디온아저씨\n\n";
+			txt += "주민3: 팔긴아저씨\n\n";
+			txt += "주민4: 안경아줌마\n\n";
+			txt += "몬스터1: 꼬맹이\n\n";
+			txt += "몬스터2: 초록괴물\n\n";
+			txt += "몬스터3: 팬더괴물";
+		}else{
+			txt += "「プロジェクト：リズミカル」\n\n";
+			txt += "チーム長：ムン　ヒジェ\n\n";
+			txt += "チーム員：キム　ミナ\n\n";
+			txt += "チーム員：キム　ジワン\n\n";
+			txt += "チーム員：ノ　ジョンフン\n\n";
+			txt += "チーム員：イ　ジンジュ\n\n";
+			txt += "\n\n";
+			txt += "「出演」\n\n";
+			txt += "主人公：ビトベン\n\n";
+			txt += "刀：リズミ\n\n";
+			txt += "魔王：ノビと\n\n";
+			txt += "住民１：サラリーマンのおじいさん\n\n";
+			txt += "住民２：メロディアンのおじいさん\n\n";
+			txt += "住民３：腕の長いおじいさん\n\n";
+			txt += "住民４：メガネのおばあさん\n\n";
+			txt += "モンスター１：チビ\n\n";
+			txt += "モンスター２：緑モンスター\n\n";
+			txt += "モンスター３：パンダモンスター\n\n";
+			
+		}
 		
 		//엔터 갯수 해서 올라가는 글 높이 구할라고..
 		var countn = 1;
@@ -117,9 +139,18 @@ Ending.prototype = {
 		scrollingtext = game.add.tween(credittext).to( { y:-(countn*fontsize) }, 1000*countn, Phaser.Easing.Linear.None, true);
 		scrollingtext.onComplete.add(function(){
 			fontsize = 70;
-			txt = "Team Beatoven\n감사합니다."
+			txt += "Team Beatoven\n";
+			if (language == "KOREAN") {
+				txt += "감사합니다!";
+			}else {
+				txt += "ありがとうございます！";
+			}
 			endinglogo = game.add.bitmapText(game.world.centerX- txt.length*fontsize/2, game.world.height, 'neo_font',txt,fontsize);    
 			game.add.tween(endinglogo).to( { y: game.world.height/2}, 1000* 3, Phaser.Easing.Linear.None, true);
+			game.time.events.add(2000, function() {
+				game.camera.flash(0x000000, 500);
+				document.location.href = 'hallOfFame';
+			}, self);
 		});
 	}
 }

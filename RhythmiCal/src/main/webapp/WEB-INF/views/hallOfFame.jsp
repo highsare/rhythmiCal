@@ -61,6 +61,10 @@ $(function() {
 </script>
 </head>
 <body>
+<!-- Background Music -->
+<embed class="bgm" src="resources/Audios/bgm/jsp/bgm_halloffame.mp3" autostart="true" height="0" loop=1></embed>
+
+<!-- FamePost Form -->
 <form class="form_fame">
 	<h1 class="center" style="color: white;">HALL OF FAME</h1>
 	<div class="center title" style=><strong>리드미: 축하한다 비토벤! 너의 승리를 기념하기 위해 명예의 발자국을 남기자구!</strong></div>

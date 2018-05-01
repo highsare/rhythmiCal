@@ -47,19 +47,19 @@ Story.prototype = {
 		
 		
 		//배경음악 일단 다 로드
-		game.load.audio('숲속',"resources/Audios/bgm/story/숲속.mp3");
-		game.load.audio('전당',"resources/Audios/bgm/story/전당.mp3");
-		game.load.audio('레코드판',"resources/Audios/bgm/63bpm_Sugar.mp3");
-		game.load.audio('마을',"resources/Audios/bgm/story/마을.mp3");
-		game.load.audio('비토벤의 집',"resources/Audios/bgm/story/비토벤의 집.mp3");
-		game.load.audio('적의 막사',"resources/Audios/bgm/story/적의 막사.mp3");
-		game.load.audio('노비토의 막사',"resources/Audios/bgm/story/노비토의 막사.mp3");
-		game.load.audio('Dok3의 집',"resources/Audios/bgm/story/Dok3의 집.mp3");
+		game.load.audio('숲속',"resources/Audios/bgm/story/bgm_story_forest.mp3");
+		game.load.audio('전당',"resources/Audios/bgm/story/bgm_story_hallOfFame.mp3");
+		game.load.audio('레코드판',"resources/Audios/bgm/story/bgm_story_sugar_63bpm.mp3");
+		game.load.audio('마을',"resources/Audios/bgm/story/bgm_story_village.mp3");
+		game.load.audio('비토벤의 집',"resources/Audios/bgm/story/bgm_story_beatovenHouse.mp3");
+		game.load.audio('적의 막사',"resources/Audios/bgm/story/bgm_story_enemyBarrack.mp3");
+		game.load.audio('노비토의 막사',"resources/Audios/bgm/story/bgm_story_nobeatoBarrack.mp3");
+		game.load.audio('Dok3의 집',"resources/Audios/bgm/story/bgm_story_dok3House.mp3");
 		
 		//음향효과
-		game.load.audio('노크소리',"resources/Audios/bgm/story/노크소리.mp3");
-		game.load.audio('잔잔한 음악',"resources/Audios/bgm/story/잔잔한 음악.mp3");
-		game.load.audio('쿠구궁',"resources/Audios/bgm/story/쿠구궁.mp3");
+		game.load.audio('노크소리',"resources/Audios/effectSound/effectSound/effect_story_knock.mp3");
+		game.load.audio('잔잔한 음악',"resources/Audios/bgm/effectSound/effect_story_classic.mp3");
+		game.load.audio('쿠구궁',"resources/Audios/bgm/effectSound/effect_story_earthquake.mp3");
 		
 		// 배경화면 로드
 		game.load.spritesheet("숲속", "resources/Images/story/bgimg/숲속.png",1600,900);
@@ -92,23 +92,20 @@ Story.prototype = {
 	    
 	    //텍스트 박스
 	    game.load.image("textbox", "resources/Images/tutorial/dialog.png");
-		this.loadStoryContents();
 	},
 	create: function() {
-		
+		storyOrder = 0;
 		
 		cursors = game.input.keyboard.createCursorKeys();
 		this.typethetext("STORY_"+storyNum,game.world.centerX-150, game.world.centerY- 50,90);
 		
 		//2초있다가  스토리 시작
 		game.time.events.add(2000, function () {  //글자 나올때 소리 추가
-		
+			
 			//카메라 페이드 인
 			game.camera.flash(0x000000, 3000);   
 		
 			typewriter.destroy();
-			
-		   	storyOrder = 0;
 		   	
 	   		this.dialogueExport(storyOrder);
 		}, this);
@@ -217,7 +214,12 @@ Story.prototype = {
  			console.log("음악 효과 재생 =" + arr[storyOrder].bgMusicName);
  		}
  		
-		//배경이미지
+		//배경이미지 
+ 		//배경바뀌면 전환효과
+        if(bgImgName != arr[storyOrder].bgImgName){
+            //카메라 페이드 인
+           game.camera.flash(0x000000, 500);   
+         }
 		bgImgName = arr[storyOrder].bgImgName;
 	    backimage = game.add.sprite(0, 0, bgImgName);
 	    if(bgImgName == '전당'){
@@ -286,29 +288,6 @@ Story.prototype = {
 		typewriter.start();
 
 	},
-	//DB에서 대화문 불러오기
-	loadStoryContents: function(){ 
-		$.ajax({
-			url : 'loadStoryContents'
-			,type : 'post'
-			,dataType : 'json'
-			,data: {storyNum : storyNum}
-			/*cache : false,
-			async : false,*/
-			,success:function(arrtest){
-				storyText = new Array();
-				arr = new Array();
-				arr = arrtest;
-				console.log(" 스토리 대화문 컬럼 수 = " + arr.length);
-				
-			},error: function(){
-				alert("대화문 임포트 에러");
-			}
-
-		});
-	},
-	
-
 	//게임으로 이동 
 	 gotostage: function(){
 		//모든 게임 elements 날리기.
@@ -319,13 +298,6 @@ Story.prototype = {
 		 //음악 날리기
 		 music.destroy();
 		 game.cache.removeSound(bgMusicName);
-		if(storyNum==14){
-			game.state.start('Ending');
-		}else{
-			
-			//game.state.start('stage'+i);  //예를 들어 stage1 
-		}
-		
-		//game.state.start("Preload");
+		 //game.state.start("Preload");
 	}
 }

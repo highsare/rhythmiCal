@@ -81,7 +81,7 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/' + bgmName);	
+		game.load.audio('stageBGM','resources/Audios/bgm/stage/' + bgmName);	
 		//몬스터 로드
 		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
 		game.load.spritesheet('GoblinHurt', 'resources/Images/characters/monsters/29x31x4_GoblinHurt.png', 29, 31, 4);
@@ -129,7 +129,7 @@ Stage.prototype = {
 		game.load.spritesheet('PoinEffect', 'resources/Images/effect/1200x180x12_PointEffect.png', 1200, 180, 12);
 		game.load.spritesheet('NomalAttackEffect', 'resources/Images/effect/1200x180x5_NomalAttackEffect.png', 1200, 180, 5);
 		//콤보 효과음 로드
-		game.load.audio('comboSound', 'resources/Audios/effectSound/sounds_collect_coin.mp3');
+		game.load.audio('comboSound', 'resources/Audios/effectSound/stage/effect_stage_combo.mp3');
 		//생명력 이미지
 		game.load.image('life', 'resources/Images/others/trebleclef.png');
 		//비토벤 스프라이트시트
@@ -253,10 +253,6 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
-		if (currentBeat == numOfBeat) {
-			//비트 모두 소진
-			return;
-		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -272,8 +268,17 @@ function isFail(){
 	if (life == 0) {
 		//실패 처리
 		//실행하던거 전부 종료하고 fail 페이드아웃
+		stageResult(false);
 		//끝낸 다음에 fail.js 실행
+		game.time.events.add(5000, function() {
+			requestContentNum("Stage");
+		});
 		//fail.js에서는 실패 이미지(?)를 잠시 보여주고 다시 이 스테이지를 실행한다.
+	}else if(currentBeat >= numOfBeat){
+		stageResult(true);
+		game.time.events.add(5000, function() {
+			game.state.start("Preload");
+		});
 	}
 }
 

@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
 <!-- charset -->
@@ -73,10 +74,15 @@ $(function() {
 		var signupPw = $('#signupPw').val();
 		var signupPwc = $('#signupPwc').val();
 		
-		<!-- 유효성 검사 해야 함 -->
+		<!-- 유효성 검사: 아이디는 영어만, 비번 일치여부 확인 -->
+		var pattern1 = /(^[a-zA-Z])/;
+		if(!pattern1.test(signupId)){
+		    alert('아이디는 영문만 사용할 수 있어!');
+		    return false;
+		}
 		if (signupPw != signupPwc) {
 			alert('비밀번호를 다시 한 번 확인해봐!');
-			return;
+			return false;
 		}
 		
 		<!-- test code -->
@@ -195,6 +201,9 @@ td {
 	background-image: url(resources/Images/mainPage/honor_reply.png);
 	background-repeat: no-repeat;
 }
+.bgm {
+	visibility: hidden;
+}
 </style>
 </head>
 <body class="responsive center">
@@ -202,12 +211,15 @@ td {
 <!-- Ajax를 통해 로그인 및 회원가입 구현해야 함. 로그인 시에는 유효성검사 필요. 아이디는 영문자만. 회원가입 시 패스워드는 두 번. 일치여부 체크. -->
 <!-- Ajax를 통해 DB에서 명예의전당 글 불러와야 함. -->
 <!-- Modal 모양을 게임과 어울리게 레트로로 해야 함. -->
-<!-- 시작화면에 BGM 깔아야 함. 게임과 잘 어울리는 핵심 BGM이어야 함. -->
+
 
 <!-- Main Logo -->
 <div class="center">
 	<img src="resources/Images/mainPage/rhythmical.png" style="width: 100%" class="center"><br>
 </div>
+
+<!-- Background Music -->
+<embed class="bgm" src="resources/Audios/bgm/jsp/bgm_home.mp3" autostart="true" height="0" loop=1></embed>
 
 <div class="center">
 	<!-- Game Button -->
@@ -244,8 +256,8 @@ td {
 					<p><input type="text" placeholder="ID" id="loginId" name="loginId"></p>
 					<p><input type="text" placeholder="PW" id="loginPw" name="loginPw"></p>
 					<div class="radio">
-						<label><input type="radio" name="language" value="korean">Korean </label>
-						<label><input type="radio" name="language" value="japanese">Japanese</label></div>
+						<label><input type="radio" name="language" value="KOREAN">Korean </label>
+						<label><input type="radio" name="language" value="JAPANESE">Japanese</label></div>
 					<p><button type="button" class="btn btn-default" data-dismiss="modal" id="loginMember">Load Game</button></p>
 				</div>
 			</div>
