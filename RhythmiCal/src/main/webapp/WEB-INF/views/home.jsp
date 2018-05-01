@@ -99,7 +99,6 @@ $(function() {
 		    , error: function(data) {
 		    	alert("signupMember error"); //test
 		    }
-		});
 	});
 	
 	// 로그인 (LOAD 버튼 클릭 시)

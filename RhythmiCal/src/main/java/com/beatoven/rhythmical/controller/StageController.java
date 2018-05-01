@@ -65,6 +65,7 @@ public class StageController {
 	//생명력 변동시 저장
 	@ResponseBody
 	@RequestMapping(value="saveLife", method = RequestMethod.POST)
+	public int saveLife(int life,HttpSession session) {
 	public int saveLife(String life,HttpSession session) {
 		//담아보낼 save 객체 생성
 		Save save = new Save();
@@ -74,12 +75,13 @@ public class StageController {
 		System.out.println(((Member)session.getAttribute("loginMember")).getId());
 		System.out.println(life);
 		//변동될 생명력 세팅
+		save.setLife(life);
+		System.out.println("세이브 왜 ㅇ나떠"+save.toString());
 		save.setLife(Integer.parseInt(life));
-		
 		//쿼리 실행
-		sysDAO.saveLife(save);
 		
-		return 0;
+		
+		return sysDAO.saveLife(save);
 	}
 	
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.

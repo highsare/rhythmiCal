@@ -50,7 +50,7 @@ function updateLife(lifeChange) {
 		life = 0;
 		//stageResult(false);
 	}
-	console.log(life);
+	console.log("라이프는"+life);
 }
 function attackMotion () {
 	animBeatoven = beatoven.animations.add('attack');
