@@ -91,13 +91,13 @@ $(function() {
 		    		,'password': signupPw}
 		    , success: function(data) {
 		        if (data == 0) {
-		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
+		        	alert("이미 우리 마을의 주민이 아닌가?");
 				} else {
-					alert("가입성공");
+					alert("어서와 음악의 마을에! 크크크크");
 				}
 		    }
 		    , error: function(data) {
-		    	alert("signupMember error"); //test
+		    	alert("이상한데?? 다시 한 번 시도해봐!");
 		    }
 		});
 	});
