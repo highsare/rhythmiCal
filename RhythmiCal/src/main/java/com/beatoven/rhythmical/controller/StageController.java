@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.StageDAO;
 import com.beatoven.rhythmical.dao.SystemDAO;
+import com.beatoven.rhythmical.vo.Member;
 import com.beatoven.rhythmical.vo.Monster;
 import com.beatoven.rhythmical.vo.Save;
 import com.beatoven.rhythmical.vo.Stage;
@@ -64,12 +65,12 @@ public class StageController {
 	//생명력 변동시 저장
 	@ResponseBody
 	@RequestMapping(value="saveLife", method = RequestMethod.POST)
-	public int savaLife(int life,HttpSession session) {
+	public int saveLife(int life,HttpSession session) {
 		//담아보낼 save 객체 생성
 		Save save = new Save();
 		
 		//세션에서 아이디를 활용하여 id 세팅
-		save.setId((String)session.getAttribute("loginMember"));
+		save.setId(((Member)session.getAttribute("loginMember")).getId());
 		//변동될 생명력 세팅
 		save.setLife(life);
 		
@@ -143,7 +144,7 @@ public class StageController {
 		stageInfo.add(monsterlistA);	//index 2
 		stageInfo.add(monsterlistB);	//index 3
 		stageInfo.add(monsterlistC);	//index 4
-	
+		stageInfo.add(HomeController.multiList.size());
 		for (Monster string : monsterlistA) {
 			System.out.println(string);
 		}

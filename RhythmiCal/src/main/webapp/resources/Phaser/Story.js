@@ -72,6 +72,7 @@ Story.prototype = {
 		game.load.spritesheet("Dok3의 집", "resources/Images/story/bgimg/Dok3의 집.png",1600,900);
 		
 		//npc 이미지 로드
+		game.load.image('나레이션', 'resources/Images/story/npc/나레이션.png');
 		game.load.image('???', 'resources/Images/story/npc/누군가.png');
 		game.load.image('Dok3', 'resources/Images/story/npc/Dok3.png');
 		game.load.image('그녀', 'resources/Images/story/npc/그녀.png');
@@ -191,8 +192,9 @@ Story.prototype = {
  			bgMusicName = arr[storyOrder].bgImgName;
 	 		music = game.add.audio(bgMusicName);
 			music.play();
+			music.loopFull();
 			//음악 반복
-			music.loop = true; 
+			
 			console.log("배경 음악 재생 = " + bgMusicName);
  		}
  		//배경음악 바뀜
@@ -204,7 +206,7 @@ Story.prototype = {
  			bgMusicName = arr[storyOrder].bgImgName;
  			music = game.add.audio(bgMusicName);
 	 		music.play();
-	 		music.loop = true; 
+	 		music.loopFull();
 			console.log("배경 음악 재생 = " + bgMusicName);
  		}
  		//음악 효과

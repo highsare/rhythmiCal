@@ -49,7 +49,7 @@ public class HomeController {
 	//회원가입
 	@ResponseBody
 	@RequestMapping(value = "signupMember", method = RequestMethod.POST)
-	public String signupMember(Member member) {
+	public int signupMember(Member member) {
 		System.out.println("signupMember() 진입 - member: " + member);
 		int result = 0;
 		try {
@@ -63,11 +63,12 @@ public class HomeController {
 		}
 		if (result == 1) {
 			System.out.println("signup success");
-			return "어서와!";
+			//return "어서와!";
 		} else {
 			System.out.println("signup fail");
-			return "다시 한 번 확인해줘!";
+			//return "다시 한 번 확인해줘!";
 		}
+		return result;
 	}
 	
 	//로그인(세션에 값 저장)
