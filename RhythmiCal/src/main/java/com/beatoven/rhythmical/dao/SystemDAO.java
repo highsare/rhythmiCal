@@ -55,13 +55,7 @@ public class SystemDAO implements SystemInterface{
 	@Override
 	public int saveLife(Save save) {
 
-		//try {
-			
-		//} catch (Exception e) {
-		//	e.printStackTrace();
-		//}
 		return session.getMapper(SystemInterface.class).saveLife(save);
-		
 
 	}
 

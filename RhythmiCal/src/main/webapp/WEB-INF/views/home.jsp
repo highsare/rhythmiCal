@@ -92,18 +92,14 @@ $(function() {
 		    , success: function(data) {
 		        if (data == 0) {
 		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
-				}else{
+				} else {
 					alert("가입성공");
 				}
 		    }
-
-<<<<<<< HEAD
-		    , error: function() { alert("signupMember error");} //alerttest
-
-=======
-		    , error: function(data) {alert("signupMember error");} //alerttest
->>>>>>> 58946922028e0a767253a46dbf64b5811a38c37a
-		});
+		    , error: function(data) {
+		    	alert("signupMember error"); //test
+		    }
+	});
 	
 	// 로그인 (LOAD 버튼 클릭 시)
 	$('#loginMember').click(function() {
@@ -113,14 +109,14 @@ $(function() {
 		
 		$.ajax({
 		    url: 'loginMember'
-		    , type: 'POST'
+		    , type: 'post'
 		    , data: {'id': loginId
 		    		,'password': loginPw
 		    		,'language': language}
 		    , success: function(result) { // 성공하면 game으로 이동
 		    	if (result != "loginFail") {
 		    		document.location.href = 'game';					
-				}else{
+				} else {
 					alert("로그인에 실패했어...");
 				}
 		    }
