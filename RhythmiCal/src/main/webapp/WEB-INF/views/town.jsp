@@ -25,7 +25,6 @@ var key1;
 var bgd;
 var textboard, start;
 var neon,board,rdm;
-var button1, button2, button3;
 var e_select,sprite;
 var key; // 키보드 버튼
 var depth; // 작업소 깊이
@@ -35,7 +34,7 @@ var buttonFocus; // 현재 버튼이 몇 번에 있는가
 var motion; // 모션을 담는 배열
 var m_back; // 서브메뉴 배경
 var turn1, turn2, turn3, turn4, turn5, turn6; // 모션(1~3) 및 레인(4~6)을 교체할 카운터
-var motion1, motion2, motion3, effect1, effect2, effect3, lane1, lane2, lane3; // 9개의 스프라이트 버튼
+var button1, button2, button3, lane1, lane2, lane3; 
 var singleLane, doubleLane; // 싱글레인 및 더블레인 배열
 var temp;
 var descText; // 모션 설명하는 비트맵 텍스트 변수
@@ -326,19 +325,19 @@ function createStudio() {
 	   		  turn2 = 1; //'up'
 	   		  turn3 = 2; //'down'
 	   		  lane1 = game.add.sprite(buttonX, buttonY+200, 'A'); turn4 = 0;
-              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'A'); turn5 = 0;
-              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'A'); turn6 = 0;
+              lane2 = game.add.sprite(buttonX+100, buttonY+200, 'B'); turn5 = 1;
+              lane3 = game.add.sprite(buttonX+200, buttonY+200, 'C'); turn6 = 2;
          }
          else {
         	 alert('저장된 모션이 있습니다!' + jsonText);
         	 var motionList = JSON.parse(jsonText);
-        	 turn1 = motionList.button[0].turn;
-        	 turn2 = motionList.button[1].turn;
-        	 turn3 = motionList.button[2].turn;
+        	 turn1 = parseInt(motionList.button[0].turn);
+        	 turn2 = parseInt(motionList.button[1].turn);
+        	 turn3 = parseInt(motionList.button[2].turn);
         	 alert('turn1: ' + turn1 + ' turn2: ' + turn2 + ' turn3: ' + turn3);
-        	 button1.frame = parseInt(turn1);
-        	 button2.frame = parseInt(turn2);
-        	 button3.frame = parseInt(turn3);
+        	 button1.frame = turn1;
+        	 button2.frame = turn2;
+        	 button3.frame = turn3;
         	 descText = game.add.bitmapText(desctextX, desctextY, 'neo_font', descArray[parseInt(turn1)], 30);
         	 lane1 = game.add.sprite(buttonX, buttonY+200, motionList.button[0].lane);
         	 lane2 = game.add.sprite(buttonX+100, buttonY+200, motionList.button[1].lane);
@@ -512,6 +511,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter': 
                //이 모션으로 선택했다는 효과 주기
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -561,6 +561,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter':
                //이 모션으로 선택
+               depth = 1;
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -610,6 +611,7 @@ function moveContent(buttonFocus, inputKey) {
                   break;
             case 'enter':
                //이 모션으로 선택했다는 효과 주기
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -631,6 +633,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter': 
                    //이 레인으로 선택했다는 효과 주기
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -652,6 +655,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter': 
                //이 레인으로 선택했다는 효과 주기
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;
@@ -673,6 +677,7 @@ function moveContent(buttonFocus, inputKey) {
                break;
             case 'enter':
                //이 레인으로 선택했다는 효과 주기
+               depth = 1; 
                break;
             case 'esc': depth = 1; break;
             default: break;

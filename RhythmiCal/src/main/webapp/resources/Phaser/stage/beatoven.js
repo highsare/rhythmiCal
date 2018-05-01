@@ -28,6 +28,16 @@ function iniLife(lifeAmount){
  */
 function updateLife(lifeChange) {
 	life += lifeChange;
+	
+	$.ajax({
+		url:'saveLife'
+		,type:'post'
+		,data: {life:life}
+		,success: function(){
+			console.log("Life Updated! > "+life);
+		},error: function(){}
+	})
+	
 	if(life > 0 && life < maxLife){
 		for (var i = 0; i < life; i++) {
 			lifeArray[i].visible = true;

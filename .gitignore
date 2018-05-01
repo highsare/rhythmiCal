@@ -6,3 +6,4 @@ RhythmiCal/src/main/resources/db.properties
 RhythmiCal/src/main/webapp/WEB-INF/spring/root-context.xml
 RhythmiCal/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 *.MF
+*.class

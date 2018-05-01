@@ -249,10 +249,6 @@ Stage.prototype = {
 		if (currentBeat == 0) {
 			stageBGM.play();
 		}
-		if (currentBeat == numOfBeat) {
-			//비트 모두 소진
-			return;
-		}
 		currentBeat += 1;
 		console.log(currentBeat);
 		start();
@@ -268,8 +264,17 @@ function isFail(){
 	if (life == 0) {
 		//실패 처리
 		//실행하던거 전부 종료하고 fail 페이드아웃
+		stageResult(false);
 		//끝낸 다음에 fail.js 실행
+		game.time.events.add(5000, function() {
+			requestContentNum("Stage");
+		});
 		//fail.js에서는 실패 이미지(?)를 잠시 보여주고 다시 이 스테이지를 실행한다.
+	}else if(currentBeat >= numOfBeat){
+		stageResult(true);
+		game.time.events.add(5000, function() {
+			game.state.start("Preload");
+		});
 	}
 }
 
