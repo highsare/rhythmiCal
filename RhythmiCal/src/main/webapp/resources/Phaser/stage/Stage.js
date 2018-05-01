@@ -69,6 +69,8 @@ var monsterlistC; //moster테이블을 조회해 만든 arraylist:monsterlist를
 var bgmName;
 var stageNum;
 
+var resultFlag = true;
+
 //보스를 담을 전역 변수
 var boss, bossName;
 
@@ -160,8 +162,8 @@ Stage.prototype = {
 		}
 		//음표배경 로드
 		game.load.image('noteBG', 'resources/Images/notes/noteBG.png');
-		game.load.image('imgO', 'resources/Images/notes/342x306x18_imgO.png');
-		game.load.image('imgX', 'resources/Images/notes/304x262x7_imgX.png');
+		game.load.spritesheet('imgO', 'resources/Images/notes/342x306x18_imgO.png',342,306,18);
+		game.load.spritesheet('imgX', 'resources/Images/notes/304x262x7_imgX.png',304,262,7);
 		//체력바 관련 로드
 		game.load.spritesheet('healthFill', 'resources/Images/others/healthFill.png', 32, 32, 1);
 		game.load.spritesheet('healthBlank', 'resources/Images/others/healthBlank.png', 32, 32, 1);
@@ -273,12 +275,14 @@ function isFail(){
 		stageResult(false);
 		//끝낸 다음에 fail.js 실행
 		game.time.events.add(5000, function() {
+			resultFlag = true;
 			requestContentNum("Stage");
 		});
 		//fail.js에서는 실패 이미지(?)를 잠시 보여주고 다시 이 스테이지를 실행한다.
 	}else if(currentBeat >= numOfBeat){
 		stageResult(true);
 		game.time.events.add(5000, function() {
+			resultFlag = true;
 			game.state.start("Preload");
 		});
 	}

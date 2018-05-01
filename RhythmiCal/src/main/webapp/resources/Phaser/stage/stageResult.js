@@ -3,8 +3,12 @@
  */
 
 //스테이지 결과 표시하기
+
 function stageResult(result){
-	
+	if (!resultFlag) {
+		return;
+	}
+	resultFlag = false;
 	//게임화면을 블러 처리한다.
 	fadeoutToBlur();
 	
