@@ -73,11 +73,11 @@ public class StageController {
 		save.setId(((Member)session.getAttribute("loginMember")).getId());
 		//변동될 생명력 세팅
 		save.setLife(life);
-		
+		System.out.println("세이브 왜 ㅇ나떠"+save.toString());
 		//쿼리 실행
-		sysDAO.saveLife(save);
 		
-		return 0;
+		
+		return sysDAO.saveLife(save);
 	}
 	
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.

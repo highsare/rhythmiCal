@@ -36,7 +36,7 @@ function updateLife(lifeChange) {
 		,success: function(){
 			console.log("Life Updated! > "+life);
 		},error: function(){}
-	})
+	});
 	
 	if(life > 0 && life < maxLife){
 		for (var i = 0; i < life; i++) {
@@ -50,7 +50,7 @@ function updateLife(lifeChange) {
 		life = 0;
 		//stageResult(false);
 	}
-	console.log(life);
+	console.log("라이프는"+life);
 }
 function attackMotion () {
 	animBeatoven = beatoven.animations.add('attack');

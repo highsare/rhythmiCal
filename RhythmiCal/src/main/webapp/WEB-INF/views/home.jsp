@@ -97,10 +97,11 @@ $(function() {
 				}
 		    }
 <<<<<<< HEAD
+
 		    , error: function() { alert("signupMember error");} //alerttest
 =======
-		    , error: function(data) {alert("signupMember error");} //alerttest
 >>>>>>> ace473e023a6e3153a87a5a1eb3bcfefad80f22e
+
 		});
 	});
 	

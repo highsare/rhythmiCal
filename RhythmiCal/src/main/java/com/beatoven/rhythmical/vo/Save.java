@@ -51,6 +51,10 @@ public class Save {
 	public void setStateNum(int stateNum) {
 		this.stateNum = stateNum;
 	}
+	@Override
+	public String toString() {
+		return "Save [id=" + id + ", life=" + life + ", motionlist=" + motionlist + ", stateNum=" + stateNum + "]";
+	}
 
 	
 }
