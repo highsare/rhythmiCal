@@ -4,7 +4,6 @@
 <html>
 <head>
 <!-- charset -->
-<meta charset="UTF-8">
 <!-- viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- title -->
@@ -40,7 +39,7 @@ $(document).ready(function() {
 					+ 'window: ' + $(window).height());
 		
 		var maxHeight = $(document).height();
-		var currentScroll = $(window).scrollTop() + $(window).height();
+		var currentScroll = $(window).scrollTop() + $(window).height() + 20;
 		
 		if (maxHeight <= currentScroll) {
 			page++; // 페이지 증가
@@ -60,9 +59,9 @@ $(document).ready(function() {
 				, error: function() {
 					
 				}
-			})
+			});
 	    }
-	})
+	});
 });
 
 $(function() {
@@ -85,22 +84,23 @@ $(function() {
 		}
 		$.ajax({
 		    url: 'signupMember'
-		    , type: 'post'
+		    , type: 'POST'
 		    , dataType:'json'
 		    , data: {'id': signupId
 		    		,'password': signupPw}
 		    , success: function(data) {
 		        if (data == 0) {
-		        	alert("이미 우리 마을의 주민이 아닌가?");
-				} else {
-					alert("어서와 음악의 마을에! 크크크크");
+		        	alert("회원가입 실패! \n[이미 존재하는 아이디]");
+				}else{
+					alert("가입성공");
 				}
 		    }
-		    , error: function(data) {
-		    	//alert("이상한데?? 다시 한 번 시도해봐!");
-		    }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 448c0f91625b57788d54653890eb429b7a8f0412
+		    , error: function(data) {alert("signupMember error");} //alerttest
 		});
-	});
 	
 	// 로그인 (LOAD 버튼 클릭 시)
 	$('#loginMember').click(function() {
@@ -110,14 +110,14 @@ $(function() {
 		
 		$.ajax({
 		    url: 'loginMember'
-		    , type: 'post'
+		    , type: 'POST'
 		    , data: {'id': loginId
 		    		,'password': loginPw
 		    		,'language': language}
 		    , success: function(result) { // 성공하면 game으로 이동
 		    	if (result != "loginFail") {
 		    		document.location.href = 'game';					
-				} else {
+				}else{
 					alert("로그인에 실패했어...");
 				}
 		    }

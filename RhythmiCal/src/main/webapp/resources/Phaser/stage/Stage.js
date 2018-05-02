@@ -243,12 +243,15 @@ Stage.prototype = {
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
 			monstersA[i] = new Monster(game, monsterlistA[i].monsterNum, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+			monstersA[i].status = "STAY";
 		}
 		for (var i = 0; i < monsterlistB.length; i++) {
 			monstersB[i] = new Monster(game, monsterlistB[i].monsterNum, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+			monstersB[i].status = "STAY";
 		}
 		for (var i = 0; i < monsterlistC.length; i++) {
 			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+			monstersC[i].status = "STAY";
 		}
 		
 		//Boss(game, health, bossSpriteName, bossSpriteSplitNum)
@@ -275,6 +278,12 @@ Stage.prototype = {
 		//add 1 currentBeat
 		if (currentBeat == 0) {
 			stageBGM.play();
+		}else if(currentBeat >= 60){
+			if (currentBeat >= 65) {
+				stageBGM.stop();
+			}
+			stageResult(true);
+			return;
 		}
 		currentBeat += 1;
 		console.log(currentBeat);
@@ -284,6 +293,7 @@ Stage.prototype = {
 		//hitBoss(boss, 1);
 		//bossJump();
 		isFail();
+	
 	}
 }
 

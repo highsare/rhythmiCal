@@ -161,9 +161,10 @@ function setMotion(motionList){
 	 right_isC = false;
 
 	 if (motionList == "default") {
-		 point_isA = true;
+		 point_isB = true;
+		 left_isA = true;
+		 left_isC = true;
 		 up_isB = true;
-		 down_isC = true;
 		 return;
 	 }
 	 
