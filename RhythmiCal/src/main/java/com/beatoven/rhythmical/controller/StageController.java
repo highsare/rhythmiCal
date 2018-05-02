@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beatoven.rhythmical.dao.StageDAO;
 import com.beatoven.rhythmical.dao.SystemDAO;
+import com.beatoven.rhythmical.dao.VillageDAO;
 import com.beatoven.rhythmical.vo.Member;
 import com.beatoven.rhythmical.vo.Monster;
 import com.beatoven.rhythmical.vo.Save;
@@ -28,7 +29,12 @@ public class StageController {
 
 	@Inject
 	StageDAO stageDAO;
+	
+	@Inject
 	SystemDAO sysDAO;
+	
+	@Inject
+	VillageDAO villDAO;
 	
 	//모션 값 받아오기
 	@ResponseBody
@@ -68,18 +74,22 @@ public class StageController {
 	public int saveLife(String life,HttpSession session) {
 		//담아보낼 save 객체 생성
 		Save save = new Save();
-		
+		Member member = (Member)session.getAttribute("loginMember");
 		//세션에서 아이디를 활용하여 id 세팅
-		save.setId(((Member)session.getAttribute("loginMember")).getId());
-		System.out.println(((Member)session.getAttribute("loginMember")).getId());
-		System.out.println(life);
-		//변동될 생명력 세팅
+		save.setId(member.getId());
 		save.setLife(Integer.parseInt(life));
-		
+		save.setMotionlist(villDAO.readMotionList(member));
+		//변동될 생명력 세팅
 		//쿼리 실행
-		sysDAO.saveLife(save);
-		
-		return 0;
+		return sysDAO.saveLife(save);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getLife",method = RequestMethod.POST)
+	public int getLife(HttpSession session) {
+		Member member = (Member)session.getAttribute("loginMember");
+		System.out.println(member);
+		return sysDAO.getLife(member.getId());
 	}
 	
 	//stageNum을 통해서 stage생성에 필요한 정보를 받아온다.
@@ -105,7 +115,7 @@ public class StageController {
 		int beat = stageDAO.getBPM(stage.getBgmName());
 		
 		//String Stream으로 된 몬스터리스트를 받는다.
-		String monsterlistStream = stage.getMonsterList();
+		String monsterlistStream = "00002/10002/20002/00004/14004/20004/00006/15006/20006/00008/17008/20008/00010/17010/20010/00012/10012/20012/00014/15014/20014/00016/15016/20016/00018/10018/20018/00020/17020/20020/00022/14022/20022/00024/14024/20024/00026/15026/20026/00028/12028/20028/00030/17030/20030/00032/10032/20032/00034/14034/20034/00036/15036/20036/00038/10038/20038/00040/17040/20040/00042/10042/20042/00044/14044/20044/00046/15046/20046/00048/10048/20048/00050/17050/20050";
 		
 		//구분기호 /로 나눠서 String 배열에 저장한다.
 		String monsterlistSplit[] = monsterlistStream.split("/");

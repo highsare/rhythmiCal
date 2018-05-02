@@ -83,7 +83,10 @@ Stage.prototype = {
 		//배경 로드
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
-		game.load.audio('stageBGM','resources/Audios/bgm/stage/' + bgmName);	
+
+		game.load.audio('stageBGM1','resources/Audios/bgm/stage/bgm_stage_hiq_50bpm.mp3');	
+		game.load.audio('stageBGM2','resources/Audios/bgm/stage/bgm_stage_mrtea_60bpm.mp3');
+
 		//몬스터 로드
 		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
 		game.load.spritesheet('GoblinHurt', 'resources/Images/characters/monsters/29x31x4_GoblinHurt.png', 29, 31, 4);
@@ -175,6 +178,10 @@ Stage.prototype = {
 		game.load.spritesheet('msgclear', 'resources/Images/others/clear.png', 32, 32, 5);
 		game.load.spritesheet('msgfail', 'resources/Images/others/fail.png', 32, 32, 4);
 		game.load.image('blackScreen', 'resources/Images/others/black.png');
+		//ABC 레인 알파벳 로드
+		game.load.image('A', 'resources/Images/stage/line_A.png');
+		game.load.image('B', 'resources/Images/stage/line_B.png');
+		game.load.image('C', 'resources/Images/stage/line_C.png');
 	},
 	create: function(){
 		//physics
@@ -182,9 +189,16 @@ Stage.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
 		
-		stageBGM = game.add.audio("stageBGM");
+
+		if (contentNum%2 == 0) {
+			stageBGM = game.add.audio('stageBGM1');
+			BPM = BPMfactor / 50;
+		}else if (contentNum%2 == 1) {
+			stageBGM = game.add.audio('stageBGM2');
+			BPM = BPMfactor / 60;
+		}
+
 		//여기에 BPM 값을 넣는다 
-		BPM = BPMfactor / beat;
 		beatStart = 0;
 		//고정 데이터들의 생성
 		//배경색
@@ -193,6 +207,11 @@ Stage.prototype = {
 		//콤보 효과음 설정
 		comboSound = game.add.audio('comboSound');
 		comboSound.addMarker('comboSound', 0, 1);
+		//ABC 레인을 표시하는 스프라이트 생성
+		game.add.image(300, 150, 'A');
+		game.add.image(280, 340, 'B');
+		game.add.image(250, 540, 'C');
+		
 		//마을사람들 생성
 		createTownPeople();
 		//feverdancingControl(20);
@@ -214,7 +233,7 @@ Stage.prototype = {
 		//그룹에  noteBG이미지 넣기
 		noteBgGroup.add(noteBG);
 		//목숨 추가
-		iniLife(5);
+		iniLife();
 		//게임 기초 세팅
 		
 		//몬스터를 담을 배열 생성
@@ -224,12 +243,15 @@ Stage.prototype = {
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
 			monstersA[i] = new Monster(game, monsterlistA[i].monsterNum, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+			monstersA[i].status = "STAY";
 		}
 		for (var i = 0; i < monsterlistB.length; i++) {
 			monstersB[i] = new Monster(game, monsterlistB[i].monsterNum, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+			monstersB[i].status = "STAY";
 		}
 		for (var i = 0; i < monsterlistC.length; i++) {
 			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+			monstersC[i].status = "STAY";
 		}
 		
 		//Boss(game, health, bossSpriteName, bossSpriteSplitNum)
@@ -256,6 +278,12 @@ Stage.prototype = {
 		//add 1 currentBeat
 		if (currentBeat == 0) {
 			stageBGM.play();
+		}else if(currentBeat >= 60){
+			if (currentBeat >= 65) {
+				stageBGM.stop();
+			}
+			stageResult(true);
+			return;
 		}
 		currentBeat += 1;
 		console.log(currentBeat);
@@ -265,6 +293,7 @@ Stage.prototype = {
 		//hitBoss(boss, 1);
 		//bossJump();
 		isFail();
+	
 	}
 }
 
@@ -272,10 +301,11 @@ function isFail(){
 	if (life == 0) {
 		//실패 처리
 		//실행하던거 전부 종료하고 fail 페이드아웃
-		stageResult(false);
+		//stageResult(false);
 		//끝낸 다음에 fail.js 실행
 		game.time.events.add(5000, function() {
 			resultFlag = true;
+			updateLife(7);
 			requestContentNum("Stage");
 		});
 		//fail.js에서는 실패 이미지(?)를 잠시 보여주고 다시 이 스테이지를 실행한다.

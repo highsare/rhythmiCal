@@ -93,6 +93,7 @@ Monster.prototype.damage = function(damage){
 		this.monsterHealthbar.replace(this.monsterHealthbar.children[healthBefore], healthBlank);
 		//dieMotion(monsterSprite, monsterName, monsterHealthbar)
 		dieMotion(this.monsterSprite, this.monsterName, this.monsterHealthbar);
+		
 		if (this.monsterNum == 5 && this.status != "DIE") { //죽은 놈이 폭탄맨이라면 범위를 계산해 데미지를 입힌다.
 			//explosion(monsterAttackLine, monsterLocationX, arrayA, arrayB, arrayC)
 			this.status = "DIE";
@@ -174,7 +175,59 @@ function commandJump(unitArray, currentBeat){
 				var destination; //목적지를 담을 변수
 				//몬스터가 마지막 점프인지 아닌지를 확인해서 처리한다.
 				arriveDestination(unit);
-				//1~10을 발생시킴
+				
+				if (unit.status != "CASTING" && unit.status != "DIE") {
+					//몬스터의 위치가 첫 출발 때의 목적지를 설정한다.
+					if (unit.lineX == 2000) {
+						//몬스터의 상태를 rush가 아니라면 move로 바꾼다.
+						if (unit.status != "RUSH") {
+							unit.status = "MOVE";
+						}
+						//속도에 따라 처리
+						switch(unit.speed){
+						case 1: 
+						case 3:	destination = 1695 - jumpX[unit.attackLine];	
+						break;
+						case 2: destination = 1695 - jumpX[unit.attackLine] * unit.speed; 
+						break;
+						defualt:break;
+						}
+					}else{ //첫 점프가 아닐 경우 속도를 곱해서 이동시킨다.
+						destination = unit.lineX - jumpX[unit.attackLine] * unit.speed;
+					}
+					//몬스터 종류가 6황소, 7다이노 이라면
+					if (unit.monsterNum == 6 || unit.monsterNum == 7) {
+						var travelTime = 600;
+						if (unit.monsterNum == 6) {
+							if (unit.appearanceBeat == currentBeat || unit.appearanceBeat + 1 == currentBeat) {
+								rush(unit, destination, travelTime);
+								//rush는 중간에 DIE로 바뀌기 때문에 위의 조건을 뚫는다. 여기서 다시 확인해서 null인 cache를 불러오는 것을 방지
+							} else if (unit.status != "RUSH" && unit.status != "DIE") {
+								//rushMotion(monsterSprite, monsterName)
+								rushMotion(unit.monsterSprite, unit.monsterName);
+								destination = unit.lineX - jumpX[unit.attackLine] * 8;
+								unit.status = "RUSH";
+								travelTime = 2000;
+								rush(unit, destination, travelTime);
+							}
+						} else if (unit.monsterNum == 7 && unit.status != "RUSH") {
+							destination = unit.lineX - jumpX[unit.attackLine] * 12 - 31; //-31은 2000에서 바로 출발하기 때문에 보정함
+							unit.status = "RUSH";
+							travelTime = 2000;
+							rush(unit, destination, travelTime);
+						}
+					} else {//몬스터 종류가 황소나 다이노가 아니라면
+						//설정된 높이와 목적지로 몬스터를 점프시킨다.
+						singleJump(unit, lineYLocation[unit.attackLine], destination);
+					}
+				} else { //몬스터의 상태가 "CASTING"이라면
+					unit.status = "MOVE";
+				}
+			}
+				
+				
+				
+				/*//1~10을 발생시킴
 				var random = game.rnd.integerInRange(1, 10);
 				// 확률에 따라 그냥 점프와 스킬시전을 위한 멈춤을 구분 //그냥 점프 부분
 				if (unit.skillPercentage <= random) {
@@ -233,8 +286,8 @@ function commandJump(unitArray, currentBeat){
 					ruinNoteBar();
 					unit.status = "CASTING";
 				}
-			}
-		} else { // DIE거나 STUN이다.
+			}*/
+		}else { // DIE거나 STUN이다.
 			if (unit.status == "STUN") {
 				unit.counter++;
 				if (unit.counter == 3) {
@@ -279,36 +332,30 @@ function hitMonster(unit, damage){
 }
 //몬스터가 끝에 도달했을 때 처리를 하는 함수 //몬스터를 죽이고 비토벤의 체력을 줄인다.
 function arriveDestination(unit){
-	if (unit.lineX < 350) {
+	if (unit.lineX < 350 && unit.status != "DIE") {
 		unit.status = "DIE";
 		unit.monsterSprite.destroy();
 		unit.monsterHealthbar.destroy();
 		console.log("Arrived");
-		updateLife(-1);
+		updateLife(0);
 	}
 }
 //가장 단순하게 데미지를 주는 메소드
 function attackLine(unitArray, damage){
 	var checkMonsterNine = false;
-	for(var i = 0; i < unitArray.length; i++){
+	/*for(var i = 0; i < unitArray.length; i++){
 		var unit = unitArray[i];
 		if(unit.status != "DIE"){
 			if (unit.monsterNum == 9) {//몬스터 번호가 9인 방패몬스터를 만나면 뒤의 몬스터에게 데미지를 먹이지 않는다.
 				checkMonsterNine = true;
 			}
 		}
-	}
-	if (checkMonsterNine) {
-		for (var i = 0; i < unitArray.length; i++) {
-			var unit = unitArray[i];
-			if (unit.monsterNum == 9 && unit.status != "DIE") {
-				hitMonster(unit, damage);
-				break;
-			}
-			hitMonster(unit,damage);
+	}*/
+	for (var i = 0; i < unitArray.length; i++) {
+		var unit = unitArray[i];
+		if (unit.status != "STAY" || unit.lineX < 1500) {
+			hitMonster(unit, damage);
 		}
-	} else {
-		hitMonster(unit, damage);
 	}
 }
 

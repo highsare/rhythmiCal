@@ -12,8 +12,8 @@ function jumpchar () {
     animBeatoven.play('jump');
 }
 
-function iniLife(lifeAmount){
-	life = lifeAmount;
+function iniLife(){
+	
 	lifeArray = new Array();
 	for (var i = 0; i < maxLife; i++){
 		lifeArray[i] = game.add.image(i * 40, 30, 'life');
@@ -28,11 +28,12 @@ function iniLife(lifeAmount){
  */
 function updateLife(lifeChange) {
 	life += lifeChange;
-	
+	console.log("Update Life In "+life);
 	$.ajax({
 		url:'saveLife'
 		,type:'post'
 		,data: {life:life}
+		,dataType : 'text'
 		,success: function(){
 			console.log("Life Updated! > "+life);
 		},error: function(){}
@@ -50,7 +51,7 @@ function updateLife(lifeChange) {
 		life = 0;
 		//stageResult(false);
 	}
-	console.log(life);
+	console.log("라이프는"+life);
 }
 function attackMotion () {
 	animBeatoven = beatoven.animations.add('attack');

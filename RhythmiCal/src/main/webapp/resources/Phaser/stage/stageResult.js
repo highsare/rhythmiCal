@@ -10,7 +10,8 @@ function stageResult(result){
 	}
 	resultFlag = false;
 	//게임화면을 블러 처리한다.
-	fadeoutToBlur();
+	//fadeoutToBlur();
+	fadeout();
 	
 	//스테이지 클리어 또는 실패 시 결과 안내 이미지를 위한 변수
 	var item;
@@ -20,10 +21,10 @@ function stageResult(result){
 		//스테이지결과 안내 생성
 		for (var i = 0; i < 5; i++) {
 			//글자 하나를 선택
-			item = game.add.sprite(190 + 80 * i, -50, 'msgclear', i);
+			item = game.add.sprite(game.world.centerX + 80 * i, -300, 'msgclear', i);
 			
 			//글자 크기를 조절
-			item.scale.set(4);
+			item.scale.set(6);
 			
 			//안티앨리어싱 제거
 			item.smoothed = false;
@@ -32,8 +33,12 @@ function stageResult(result){
 			item.anchor.setTo(0.5, 0.5);
 			
 			//글자에 움직임 부여
-			tween = game.add.tween(item).to( { y: 245 }, 2400, Phaser.Easing.Bounce.Out, true, 1000 + 400 * i);
+			tween = game.add.tween(item).to( { y: game.world.centerY }, 2400, Phaser.Easing.Bounce.Out, true, 1000 + 400 * i);
 			
+			
+			game.time.events.add(3000, function() {
+				game.state.start("Preload");
+			});
 		}
 	} else {
 		//스테이지결과 안내 생성

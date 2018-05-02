@@ -44,22 +44,15 @@ public class SystemDAO implements SystemInterface{
 
 	@Override
 	public int addStateNum(String id) {
-		try {
-			session.getMapper(SystemInterface.class).addStateNum(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
+		
+		return session.getMapper(SystemInterface.class).addStateNum(id);
 	}
 
 	@Override
 	public int saveLife(Save save) {
-		try {
-			session.getMapper(SystemInterface.class).saveLife(save);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
+
+		return session.getMapper(SystemInterface.class).saveLife(save);
+
 	}
 
 	@Override
@@ -81,5 +74,11 @@ public class SystemDAO implements SystemInterface{
 			e.printStackTrace();
 		};*/
 		return session.getMapper(SystemInterface.class).makeSave(save);
+	}
+
+	@Override
+	public int getLife(String id) {
+		// TODO Auto-generated method stub
+		return session.getMapper(SystemInterface.class).getLife(id);
 	}
 }

@@ -93,67 +93,88 @@ function motionEvent(player,motion){
 	popupCombo(true);
 	timingCheck(true);
 	
+	console.log("MotionEvent");
+	console.log(motion);
+	console.log(point_isA);
+	console.log(point_isB);
+	console.log(point_isC);
+	console.log(left_isA);
+	console.log(left_isB);
+	console.log(left_isC);
+	console.log(right_isA);
+	console.log(right_isB);
+	console.log(right_isC);
+	
 	attackMotion();
-	
-	
-	
 	//모션에 따른 효과 설정
 	switch(motion){
 	case "POINT"://데미지 3
 		if (point_isA) {
-			attackLine(monstersA, pointDamage);
+			attackLine(monstersA, 1);
+			attackLine(monstersA, 1);
+			attackLine(monstersA, 1);
 			playAttackEffect(310, 140, 'PointEffect');			
 		}else if (point_isB) {
-			attackLine(monstersB, pointDamage);			
+			attackLine(monstersB, 1);
+			attackLine(monstersB, 1);
+			attackLine(monstersB, 1);
 			playAttackEffect(280, 340, 'PointEffect');
 		}else if (point_isC) {
-			attackLine(monstersC, pointDamage);			
+			attackLine(monstersC, 1);
+			attackLine(monstersC, 1);
+			attackLine(monstersC, 1);
 			playAttackEffect(250, 540, 'PointEffect');	
 		}
 		break;
 	case "UP"://스턴
 		if (up_isA) {
 			playAttackEffect(310, 140, 'StunEffect');
-			stun();
+			stun(monstersA);
 		}else if (up_isB) {
 			playAttackEffect(280, 340, 'StunEffect');
-			stun();
+			stun(monstersB);
 		}else if(up_isC) {
 			playAttackEffect(250, 540, 'StunEffect');
-			stun();			
+			stun(monstersC);			
 		}
 		break;
 	case "DOWN"://넉백
 		if (down_isA) {
 			playAttackEffect(310, 140, 'KnockBackEffect');
-			knockback(monstersA,lineYLocation[unit.attackLine]);			
+			knockback(monstersA,lineYLocation[0]);			
 		}else if (down_isB) {
 			playAttackEffect(280, 340, 'KnockBackEffect');
-			knockback(monstersB,lineYLocation[unit.attackLine]);
+			knockback(monstersB,lineYLocation[1]);
 		}else if (down_isC) {
 			playAttackEffect(250, 540, 'KnockBackEffect');
-			knockback(monstersC,lineYLocation[unit.attackLine]);			
+			knockback(monstersC,lineYLocation[2]);			
 		}
 		break;
 	case "LEFT"://레인 2개
 		if (left_isA) {
+			attackLine(monstersA, 1);
 			playAttackEffect(310, 140, 'NomalAttackEffect');
 		}
 		if (left_isB) {
+			attackLine(monstersB, 1);
 			playAttackEffect(280, 340, 'NomalAttackEffect');
 		}
 		if (left_isC) {
+			attackLine(monstersC, 1);
 			playAttackEffect(250, 540, 'NomalAttackEffect');
 		}
 		break;
 	case "RIGHT"://레인2개
 		if (right_isA) {
+			attackLine(monstersA, 1);
 			playAttackEffect(310, 140, 'NomalAttackEffect');
 		}
 		if (right_isB) {
+			attackLine(monstersB, 1);
 			playAttackEffect(280, 340, 'NomalAttackEffect');
 		}
 		if (right_isC) {
+			attackLine(monstersC, 1);
 			playAttackEffect(250, 540, 'NomalAttackEffect');
 		}
 		break;
@@ -162,7 +183,7 @@ function motionEvent(player,motion){
 
 function playAttackEffect(x, y, effectName){
 	var effect = game.add.sprite(x, y, effectName);
-	effect.anchor.setTo(0.5, 0.5);
+	effect.anchor.setTo(0, 0);
 	effect.scale.set(1);
 	anim = effect.animations.add('play', null, 15, false);
 	anim.play('play').onComplete.add(function(effect){
@@ -182,20 +203,15 @@ function timingCheck(timing){
 	notePop.scale.setTo(1,1);
 	noteAni = notePop.animations.add('play', null, 15, true);
 	noteAni.play('play');
-}////바로 밑에 코드랑 주석 확인///////////////////////해서 적용할지 안 할지 결정
-	
-	//이미지를 이동할 필요가 없을 수 있음
-	/*//이벤트 발생시킴  ( o, x )
+	//이벤트 발생시킴  ( o, x )
 	game.time.events.add(
 		0 
-		,function() {    
-			//y좌표까지 이동
-			game.add.tween(notePop).to({y: 450}, 500, Phaser.Easing.Linear.None, true);    
+		,function() {        
 			//그러면서 투명도0 까지 변화면서 사라짐
 			game.add.tween(notePop).to({alpha: 0}, 500, Phaser.Easing.Linear.None, true);
 			}
 		, this);
-}*/
+}
 
 /* 
  * popupImage(): 이미지를 팝업하는 메서드

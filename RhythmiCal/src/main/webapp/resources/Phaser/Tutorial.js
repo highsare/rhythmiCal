@@ -92,7 +92,7 @@ Tutorial.prototype = {
 			  + '\n그들과 맞서기 전에 우선 알아둬야 할 것들이 있어.'
 			  + '\n지금부터 알려주는 것들은 꼭 명심해야 해! 이봐!! 겁먹지 말라구!'));
 			// index 1: 비토벤의 위치
-			tutorialTextArray.push(new TutorialText(147, 407, 40, 650,
+			tutorialTextArray.push(new TutorialText(14, 482, 40, 650,
 				'우선 넌 이 쪽에 서서 날 휘둘러 적들을 공격하면 된다.'
 			  + '\n네가 어떻게 움직여서 날 휘두르냐에 따라 공격의 효과가 달라지고,'
 			  + '\n어느 레인에서 달려오는 적들을 죽일 것인지가 달라지지!'
@@ -105,25 +105,25 @@ Tutorial.prototype = {
 			  + '\n모션에 따라 한 레인에만 설정이 가능한 것도 있고, 두 레인에 설정 가능한 것도 있다!'
 			  + '\n이러한 정비는 반드시 전투를 시작하기 전 마을에서 하고 가도록 해야 한다는거 잊지 말고!'));
 			// index 3: 레인
-			tutorialTextArray.push(new TutorialText(200, 150, 40, 650,
+			tutorialTextArray.push(new TutorialText(165, 505, 40, 650,
 				'자, 그렇다면 레인은 무엇이냐?'
 			  + '\n적의 군대는 세 줄을 이루어 달려올거다. 즉 레인은 A, B, C 세 개로 이루어지지!'
 			  + '\n만약 네가 찌르기 모션에 레인 A를 설정하고 게임을 시작했다면,'
 			  + '\n날 들고 앞으로 찔렀을 경우 레인 A에서 달려오던 적들이 모두 데미지를 받게 된다!'));
 			// index 4: 몬스터
-			tutorialTextArray.push(new TutorialText(400, 100, 40, 650, 
+			tutorialTextArray.push(new TutorialText(1268, 388, 40, 650, 
 				'너가 상대하게 될 적이다! 밑에 그리드가 보이나? 적들은 저 칸에 맞추어 달려온다.'
 			  + '\n하지만 적에 따라서는 한 번에 몇 칸을 뛰어버리는 애들도 있으니 조심!'
 			  + '\n그리고 적의 머리 위에 있는 체력이 보이나? 한 번 휘두를 때 한 칸씩 사라지지.'
 			  + '\n하지만 적이 다가올 때까지 적을 없애지 못한다면 네 생명도 하나씩 사라진다구!'));
 			// index 5: 생명력
-			tutorialTextArray.push(new TutorialText(83, 70, 40, 650,
+			tutorialTextArray.push(new TutorialText(215, 260, 40, 650,
 				'어..어어 비토벤? 우..울고있는거야? 괜찮아..넌 죽지않아! 나를 믿으라구!!!'
 			  + '\n진정해 비토벤. 넌 생각보다 쉽게 죽지않아. 이 위에있는 높은음자리표가 보이나?'
 			  + '\nn번 연속으로 콤보 공격에 성공하면 하나의 생명을 얻을 수 있다구!'
 			  + '\n여기서 콤보 공격이란, 연속으로 리듬에 맞추어 공격을 하는 것을 의미하지!'));
 			// index 6: 음표(황금음표 포함) //TODO : 황금음표
-			tutorialTextArray.push(new TutorialText(714, 763, 40, 30, 
+			tutorialTextArray.push(new TutorialText(625, 780, 40, 30, 
 				'우리가 또 리듬의 전사가 아닌가? 리듬으로 마왕을 무찔러야 하지 않겠는가?'
 			  + '\n자, 비트에 맞게 오른쪽에서 흘러나오는 음표가 가운데에 올 때 날 휘둘러라!'
 			  + '\n그리고 음표의 색은 너와 네 용병들을 나타낸다! 물론 자신의 차례에 맞게 쳐야하지!'
@@ -141,10 +141,8 @@ Tutorial.prototype = {
 	 * preload()
 	 */
 	preload: function() {
-		// debug
-		game.load.image('arrow', 'assets/sprites/arrow.png');
 		// load background image
-		game.load.image('stageBG','resources/Images/stage/stageBG_1.png');
+		game.load.image('background','resources/Images/tutorial/tutorial.png');
 		// load bitmapFont
 	    game.load.bitmapFont('neo_font', 'resources/neo_font/neo_font.png', 'resources/neo_font/neo_font.fnt');
 	    // load rhythmi spritesheet
@@ -159,17 +157,6 @@ Tutorial.prototype = {
 		// 전체화면 적용
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
-		
-		// debug
-		game.physics.startSystem(Phaser.Physics.ARCADE);
-	    sprite = game.add.sprite(400, 300, 'arrow');
-	    sprite.anchor.setTo(0.5, 0.5);
-	    game.physics.enable(sprite, Phaser.Physics.ARCADE);
-	    sprite.body.allowRotation = false;
-		// create leftKey, rightKey
-		leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-		rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		
 		// 튜토리얼 객체 생성
 		this.createTutorialText();
 		// 튜토리얼임을 안내
@@ -184,8 +171,6 @@ Tutorial.prototype = {
 	 * update()
 	 */
 	update: function() {
-		// debug
-		sprite.rotation = game.physics.arcade.moveToPointer(sprite, 60, game.input.activePointer, 500);
 		tutoCnt++;
 		if (tutoCnt % 6 == 0) {
 			$.ajax({
@@ -212,10 +197,6 @@ Tutorial.prototype = {
 			});
 			tutoCnt = 0;
 		}
-	},
-	render: function() {
-		// debug
-	    game.debug.spriteInfo(sprite, 32, 32);
 	}
 }
 
@@ -247,15 +228,17 @@ function changetutorialTextIndex() {
 /*
  * showTutorialText(): 튜토리얼(리드미, 말풍선, 텍스트)을 표시하는 메서드
  */
+var background;
 function showTutorialText(tutorialTextIndex) {
 	// console and fade in
 	console.log('showTutorialText() 진입');
 	game.camera.flash(0x000000, 500);
 	// set background image
-	game.add.sprite(0,0,'stageBG');
+	if (background != null) {background.destroy();}
+	background = game.add.sprite(0,0,'background'); background.scale.set(0.9);
 	// 리드미
 	if (typeof rhythmi !== "undefined") {rhythmi.destroy();}
-	rhythmi = game.add.sprite(tutorialTextArray[tutorialTextIndex].rhythmiX, tutorialTextArray[tutorialTextIndex].rhythmiY, 'rhythmi');
+	rhythmi = game.add.sprite(tutorialTextArray[tutorialTextIndex].rhythmiX, tutorialTextArray[tutorialTextIndex].rhythmiY, 'rhythmi'); rhythmi.scale.set(3);
 	// 시작과 끝은 리드미를 크게 보여준다
 	if (tutorialTextIndex == 0 || tutorialTextIndex == tutorialTextArray.length-1) {rhythmi.smoothed = false; rhythmi.scale.set(5);}
 	
@@ -275,9 +258,21 @@ function showTutorialText(tutorialTextIndex) {
 	// 텍스트
 	if (typeof typewriter !== "undefined") {typewriter.destroy();}
 	if (tutorialTextArray[tutorialTextIndex].dialogY == 650) {textY = 675;} else textY = 55; //다이얼로그가 아래면 텍스트도 아래, 위면 위
-	typeWriterFunction(tutorialTextArray[tutorialTextIndex].text, 80, textY, 30);
+	//일본어 일때 바꾸기
+	if(language != "JAPANESE"){
+		typeWriterFunction(tutorialTextArray[tutorialTextIndex].text, 80, textY, 30);
+		}else{
+			//일본어 아닐때는 그냥 비트맵쓰는 메소드로 올림
+			japanese(name + " : "+ arr[storyOrder].content + "  >>");
+		}
 }
+//일본어 비트맵 아닌 일반폰트로 나오게하는 메소드
+function japanese(txtjp){
+	var style = { font: "16px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 1400 };
 
+	    textjp = game.add.text(80, textY, txtjp, style);
+
+}
 function gofull() {
 	if (game.scale.isFullScreen) {
 		game.scale.stopFullScreen();

@@ -13,7 +13,7 @@ var storyCnt = 0;
 var dialogueBG;
 var storyOrder;
 var npc;
-
+var textjp;
 //npc 나타날 곳
 var left=70, right=1030, npcY=160;
 var switchingleftright;
@@ -166,6 +166,9 @@ Story.prototype = {
 		
 	dialogueExport: function(storyOrder){
 		
+		if (textjp!=null){
+			textjp.destroy();
+		} 
 		//나중에 삭제 될꺼
  		//대화문이 있으면 삭제
  		if(typeof typewriter !== "undefined"){
@@ -188,7 +191,7 @@ Story.prototype = {
  		
  		
  		//배경음악
- 		if(storyOrder == 0){
+ 		if(typeof storyOrder !== "undefined" && storyOrder == 0){
  			bgMusicName = arr[storyOrder].bgImgName;
 	 		music = game.add.audio(bgMusicName);
 			music.play();
@@ -199,9 +202,11 @@ Story.prototype = {
  		}
  		//배경음악 바뀜
  		else if(bgMusicName != arr[storyOrder].bgImgName){
- 			music.destroy();
-
- 		    game.cache.removeSound(bgMusicName);
+ 			
+ 			if(typeof music !== "undefined") {
+ 				music.destroy();
+ 				game.cache.removeSound(bgMusicName);
+ 			}
  		
  			bgMusicName = arr[storyOrder].bgImgName;
  			music = game.add.audio(bgMusicName);
@@ -262,7 +267,11 @@ Story.prototype = {
 		}else{
 			name = arr[storyOrder].characterName;
 		}
+		if(language != "JAPANESE"){
 		this.typethetext(name + " : "+ arr[storyOrder].content + "  >>", 100, 700,50);
+		}else{
+			this.japanese(name + " : "+ arr[storyOrder].content + "  >>");
+		}
 		
 		//배경 장소 정보 좌상단에 띄우기
  		
@@ -271,7 +280,13 @@ Story.prototype = {
  		
  		
 	},
+japanese: function (txtjp){
+	var style = { font: "16px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 1600 };
 
+	    textjp = game.add.text(100, 700, txtjp, style);
+
+	    //textjp.setTextBounds(16, 16, 768, 568);
+},
 	//타이핑효과 함수 (텍스트값,x위치 , y위치)
 	typethetext: function (txt, xvalue, yvalue, size) {
 		//글자 타이핑효과 정의

@@ -20,6 +20,8 @@ public interface SystemInterface {
 	//라이프 세이브하기
 	public int saveLife(Save save);
 	
+	public int getLife(String id);
+	
 	//세이브에서 스테이트 가져오기
 	public String getStateName(String id);
 

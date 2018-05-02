@@ -73,6 +73,18 @@ function setLanguage(){
 
 function getStageInfo(num){
 	$.ajax({
+		url:'getLife'
+		,type:'post'
+		,success:function(numLife){
+			life = numLife;
+			console.log("getLife : "+life);
+		},error:function(){
+			console.log("GET LIFE FAIL");
+		}
+	});
+	
+	
+	$.ajax({
 		url : "getStage" // a.jsp 의 제이슨오브젝트값을 가져옴
 		,type : "post"
 		,data : {stageNum : num}
@@ -105,12 +117,16 @@ function getStageInfo(num){
 					//{"button": [{"turn": "4", "lane": "AB"},{"turn": "3", "lane": "CA"},{"turn": "2", "lane": "C"}]}
 					if (jsonText == '000') {
 						var motionList = "default";
+						console.log("000");
+						console.log(motionList);
 						setMotion(motionList);
 						game.stage.backgroundColor = '#000000';
 						game.state.start("Stage");
 					}
 					else {
 						var motionList = JSON.parse(jsonText);
+						console.log("MotionList Here");
+						console.log(motionList);
 						setMotion(motionList);
 						game.stage.backgroundColor = '#000000';
 						game.state.start("Stage");
@@ -145,9 +161,10 @@ function setMotion(motionList){
 	 right_isC = false;
 
 	 if (motionList == "default") {
-		 point_isA = true;
+		 point_isB = true;
+		 left_isA = true;
+		 left_isC = true;
 		 up_isB = true;
-		 down_isC = true;
 		 return;
 	 }
 	 
@@ -159,106 +176,58 @@ function setMotion(motionList){
 	 lane2 = motionList.button[1].lane;
 	 lane3 = motionList.button[2].lane;
 	 
+	 
+	 
 	//1번 모션의 공격 범위 지정
 	 switch(turn1){
 	 case 0:
 		 //POINT
-		 switch(lane1){
-		 case 'A': 
-			 point_isA = true;
-			 point_isB = false;
-			 point_isC = false;
-			 break;
-		 case 'B':
-			 point_isA = false;
-			 point_isB = true;
-			 point_isC = false;
-			 break;
-		 case 'C':
-			 point_isA = false;
-			 point_isB = false;
-			 point_isC = true;
-			 break;
+		 if (lane1 == "A") {
+			point_isA = true;
+		 }else if(lane1 == "B"){
+			point_isB = true;
+		 }else if(lane1 == "C"){
+			point_isC = true;
 		 }
 		 break;
 	 case 1:
 		 //UP
-		 switch(lane1){
-		 case 'A': 
-			 up_isA = true;
-			 up_isB = false;
-			 up_isC = false;
-			 break;
-		 case 'B':
-			 up_isA = false;
-			 up_isB = true;
-			 up_isC = false;
-			 break;
-		 case 'C':
-			 up_isA = false;
-			 up_isB = false;
-			 up_isC = true;
-			 break;
+		 if (lane1 == "A") {
+			up_isA = true;
+		 }else if(lane1 == "B"){
+			up_isB = true;
+		 }else if(lane1 == "C"){
+			up_isC = true;
 		 }
 		 break;
 	 case 2:
 		 //DOWN
-		 switch(lane1){
-		 case 'A': 
-			 down_isA = true;
-			 down_isB = false;
-			 down_isC = false;
-			 break;
-		 case 'B':
-			 down_isA = false;
-			 down_isB = true;
-			 down_isC = false;
-			 break;
-		 case 'C':
-			 down_isA = false;
-			 down_isB = false;
-			 down_isC = true;
-			 break;
+		 if (lane1 == "A") {
+			down_isA = true;
+		 }else if(lane1 == "B"){
+			down_isB = true;
+		 }else if(lane1 == "C"){
+			down_isC = true;
 		 }
 		 break;
 	 case 3:
 		 //LEFT
-		 switch(lane1){
-		 case 'AB': 
-			 left_isA = true;
-			 left_isB = true;
-			 left_isC = false;
-			 break;
-		 case 'BC':
-			 left_isA = false;
-			 left_isB = true;
-			 left_isC = true;
-			 break;
-		 case 'CA':
-			 left_isA = true;
-			 left_isB = false;
-			 left_isC = true;
-			 break;
+		 if (lane1 == "AB") {
+			left_isA = true;
+		 }else if(lane1 == "BC"){
+			left_isB = true;
+		 }else if(lane1 == "CA"){
+			left_isC = true;
 		 }
 		 break;
 	 case 4:
 		 //RIGHT
-		 switch(lane1){
-		 case 'AB': 
+		 if(lane1 == "AB") {
 			 right_isA = true;
+		 }else if(lane1 == "BC"){
 			 right_isB = true;
-			 right_isC = false;
-			 break;
-		 case 'BC':
-			 right_isA = false;
-			 right_isB = true;
+		 }else if(lane1 == "CA"){
 			 right_isC = true;
-			 break;
-		 case 'CA':
-			 right_isA = true;
-			 right_isB = false;
-			 right_isC = true;
-			 break;
 		 }
 		 break;
 	 }
@@ -267,102 +236,52 @@ function setMotion(motionList){
 	 switch(turn2){
 	 case 0:
 		 //POINT
-		 switch(lane1){
-		 case 'A': 
-			 point_isA = true;
-			 point_isB = false;
-			 point_isC = false;
-			 break;
-		 case 'B':
-			 point_isA = false;
-			 point_isB = true;
-			 point_isC = false;
-			 break;
-		 case 'C':
-			 point_isA = false;
-			 point_isB = false;
-			 point_isC = true;
-			 break;
+		 if (lane2 == "A") {
+			point_isA = true;
+		 }else if(lane2 == "B"){
+			point_isB = true;
+		 }else if(lane2 == "C"){
+			point_isC = true;
 		 }
 		 break;
 	 case 1:
 		 //UP
-		 switch(lane1){
-		 case 'A': 
-			 up_isA = true;
-			 up_isB = false;
-			 up_isC = false;
-			 break;
-		 case 'B':
-			 up_isA = false;
-			 up_isB = true;
-			 up_isC = false;
-			 break;
-		 case 'C':
-			 up_isA = false;
-			 up_isB = false;
-			 up_isC = true;
-			 break;
+		 if (lane2 == "A") {
+			up_isA = true;
+		 }else if(lane2 == "B"){
+			up_isB = true;
+		 }else if(lane2 == "C"){
+			up_isC = true;
 		 }
 		 break;
 	 case 2:
 		 //DOWN
-		 switch(lane1){
-		 case 'A': 
-			 down_isA = true;
-			 down_isB = false;
-			 down_isC = false;
-			 break;
-		 case 'B':
-			 down_isA = false;
-			 down_isB = true;
-			 down_isC = false;
-			 break;
-		 case 'C':
-			 down_isA = false;
-			 down_isB = false;
-			 down_isC = true;
-			 break;
+		 if (lane2 == "A") {
+			down_isA = true;
+		 }else if(lane2 == "B"){
+			down_isB = true;
+		 }else if(lane2 == "C"){
+			down_isC = true;
 		 }
 		 break;
 	 case 3:
 		 //LEFT
-		 switch(lane1){
-		 case 'AB': 
-			 left_isA = true;
-			 left_isB = true;
-			 left_isC = false;
-			 break;
-		 case 'BC':
-			 left_isA = false;
-			 left_isB = true;
-			 left_isC = true;
-			 break;
-		 case 'CA':
-			 left_isA = true;
-			 left_isB = false;
-			 left_isC = true;
-			 break;
+		 if (lane2 == "AB") {
+			left_isA = true;
+		 }else if(lane2 == "BC"){
+			left_isB = true;
+		 }else if(lane2 == "CA"){
+			left_isC = true;
 		 }
 		 break;
 	 case 4:
 		 //RIGHT
-		 switch(lane1){
-		 case 'AB': 
+		 if(lane2 == "AB") {
 			 right_isA = true;
+		 }else if(lane2 == "BC"){
 			 right_isB = true;
-			 right_isC = false;
-			 break;
-		 case 'BC':
-			 right_isA = false;
-			 right_isB = true;
+		 }else if(lane2 == "CA"){
 			 right_isC = true;
-			 break;
-		 case 'CA':
-			 right_isA = true;
-			 right_isB = false;
-			 right_isC = true;
-			 break;
 		 }
 		 break;
 	 }
@@ -371,102 +290,52 @@ function setMotion(motionList){
 	 switch(turn3){
 	 case 0:
 		 //POINT
-		 switch(lane1){
-		 case 'A': 
-			 point_isA = true;
-			 point_isB = false;
-			 point_isC = false;
-			 break;
-		 case 'B':
-			 point_isA = false;
-			 point_isB = true;
-			 point_isC = false;
-			 break;
-		 case 'C':
-			 point_isA = false;
-			 point_isB = false;
-			 point_isC = true;
-			 break;
+		 if (lane3 == "A") {
+			point_isA = true;
+		 }else if(lane3 == "B"){
+			point_isB = true;
+		 }else if(lane3 == "C"){
+			point_isC = true;
 		 }
 		 break;
 	 case 1:
 		 //UP
-		 switch(lane1){
-		 case 'A': 
-			 up_isA = true;
-			 up_isB = false;
-			 up_isC = false;
-			 break;
-		 case 'B':
-			 up_isA = false;
-			 up_isB = true;
-			 up_isC = false;
-			 break;
-		 case 'C':
-			 up_isA = false;
-			 up_isB = false;
-			 up_isC = true;
-			 break;
+		 if (lane3 == "A") {
+			up_isA = true;
+		 }else if(lane3 == "B"){
+			up_isB = true;
+		 }else if(lane3 == "C"){
+			up_isC = true;
 		 }
 		 break;
 	 case 2:
 		 //DOWN
-		 switch(lane1){
-		 case 'A': 
-			 down_isA = true;
-			 down_isB = false;
-			 down_isC = false;
-			 break;
-		 case 'B':
-			 down_isA = false;
-			 down_isB = true;
-			 down_isC = false;
-			 break;
-		 case 'C':
-			 down_isA = false;
-			 down_isB = false;
-			 down_isC = true;
-			 break;
+		 if (lane3 == "A") {
+			down_isA = true;
+		 }else if(lane3 == "B"){
+			down_isB = true;
+		 }else if(lane3 == "C"){
+			down_isC = true;
 		 }
 		 break;
 	 case 3:
 		 //LEFT
-		 switch(lane1){
-		 case 'AB': 
-			 left_isA = true;
-			 left_isB = true;
-			 left_isC = false;
-			 break;
-		 case 'BC':
-			 left_isA = false;
-			 left_isB = true;
-			 left_isC = true;
-			 break;
-		 case 'CA':
-			 left_isA = true;
-			 left_isB = false;
-			 left_isC = true;
-			 break;
+		 if (lane3 == "AB") {
+			left_isA = true;
+		 }else if(lane3 == "BC"){
+			left_isB = true;
+		 }else if(lane3 == "CA"){
+			left_isC = true;
 		 }
 		 break;
 	 case 4:
 		 //RIGHT
-		 switch(lane1){
-		 case 'AB': 
+		 if(lane3 == "AB") {
 			 right_isA = true;
+		 }else if(lane3 == "BC"){
 			 right_isB = true;
-			 right_isC = false;
-			 break;
-		 case 'BC':
-			 right_isA = false;
-			 right_isB = true;
+		 }else if(lane3 == "CA"){
 			 right_isC = true;
-			 break;
-		 case 'CA':
-			 right_isA = true;
-			 right_isB = false;
-			 right_isC = true;
-			 break;
 		 }
 		 break;
 	 }

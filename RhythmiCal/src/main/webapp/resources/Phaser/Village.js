@@ -127,6 +127,9 @@ preload : function() {
    game.load.spritesheet('square', 'resources/Images/town/produceRoom/square.png', 100, 100);
 },
 create: function() {
+   //전체화면 적용
+   game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+   game.input.onDown.add(gofull, this);
    //마을 배경
    bgd = game.add.image(0, 0, 'mm');
    bgd.alpha = 0.5;
@@ -840,14 +843,12 @@ function myroom() {
    e_select.scale.set(0.8);
    textboard = game.add.image(810,450,'textboard');
    textboard.scale.set(2);
-   alert(language);
    var txt;
    if (language == "KOREAN") {
 	   txt = "게임을 종료합니다.";
    }else{
 	   txt = "ゲームを修旅します。";
 	   }
-   alert(txt);
    text2 = game.add.bitmapText(950, 480,'neo_font' ,txt, 50);
    // 깊이를 3으로 변경 > update에서 depth에 따른 case문을 통해 goHome(inputKey)를 호출 
    /* depth = 3; */
@@ -986,7 +987,14 @@ function playDoorOpen() {
 function playDoorClose() {
     doorClose.play();
 }
-
+function gofull() {
+	if (game.scale.isFullScreen) {
+		game.scale.stopFullScreen();
+	}
+	else {
+		game.scale.startFullScreen(false);
+	}
+}
 function isnull() {
 	if (text1 != null) {text1.destroy();}
 	if (image != null) {image.destroy();}
