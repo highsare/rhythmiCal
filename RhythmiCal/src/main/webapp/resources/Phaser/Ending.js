@@ -21,7 +21,7 @@ Ending.prototype = {
 		game.load.spritesheet("propose00",	"resources/Images/ending/propose00.png", 500, 283,2);
 		game.load.spritesheet("propose01",	"resources/Images/ending/propose01.png", 500, 283,2);
 		game.load.image("propose02","resources/Images/ending/propose02.png",500,283);
-		game.load.image("propose03","resources/Images/ending/propose03.png",500,283);
+		game.load.spritesheet("propose03","resources/Images/ending/propose03.png",500,283);
 		game.load.spritesheet("propose04",	"resources/Images/ending/propose04.png", 500, 283,2);
 	},
 	create:function() {
@@ -39,7 +39,7 @@ Ending.prototype = {
 	//propose00.scale.setTo(1, 1);
 	propose00.alpha=0;
 	var singing = propose00.animations.add('singing');
-	propose00.play('singing', 1, true);
+	propose00.play('singing', 3, true);
 	game.add.tween(propose00).to( { alpha : 1 }, 3000, Phaser.Easing.Linear.None, true,1000);
 	
 	//2장면
@@ -48,7 +48,7 @@ Ending.prototype = {
 	propose00.destroy();
 	propose01 = game.add.sprite(100,300,'propose01');
 	var blink = propose01.animations.add('blink');
-	propose01.play('blink',1,true);
+	propose01.play('blink',3,true);
 	
 	//3장면
 	game.time.events.add(7000, function () {   
@@ -59,13 +59,14 @@ Ending.prototype = {
 	game.time.events.add(4000, function () {   
 		propose02.destroy();
 		propose03 = game.add.image(100,300,'propose03'); 
-		
+		var suprise = propose03.animations.add('suprise');
+		propose03.play('suprise',3,true);
 		//5장면
 		game.time.events.add(5000, function () {   
 			propose03.destroy();
 			propose04 = game.add.sprite(100,300,'propose04');
 			var wedding = propose04.animations.add('wedding');
-			propose04.play('wedding',1,true);
+			propose04.play('wedding',3,true);
 				game.add.tween(propose04).to( { alpha : 0 }, 3000, Phaser.Easing.Linear.None, true,7000);
 				
 			});

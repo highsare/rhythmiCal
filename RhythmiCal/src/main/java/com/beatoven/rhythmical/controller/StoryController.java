@@ -27,7 +27,7 @@ public class StoryController {
 		//story DB접근
 		ArrayList<Story> getStory = new ArrayList<>();
 		if (language.equals("JAPANESE")) {
-			getStory = storyDao.selectStory(Integer.parseInt(storyNum));
+			getStory = storyDao.selectStroyJP(Integer.parseInt(storyNum));
 			System.out.println(Integer.parseInt(storyNum));
 			System.out.println(getStory);
 		}else {
