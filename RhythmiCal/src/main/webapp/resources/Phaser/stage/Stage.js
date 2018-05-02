@@ -84,8 +84,8 @@ Stage.prototype = {
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
 
-		game.load.audio('stageBGM1','resources/Audios/bgm/stage/bgm_stage_cubicz_54bpm.mp3');	
-		game.load.audio('stageBGM2','resources/Audios/bgm/stage/bgm_stage_newtires_70bpm.mp3');
+		game.load.audio('stageBGM1','resources/Audios/bgm/stage/bgm_stage_hiq_50bpm.mp3');	
+		game.load.audio('stageBGM2','resources/Audios/bgm/stage/bgm_stage_mrtea_60bpm.mp3');
 
 		//몬스터 로드
 		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
@@ -190,12 +190,12 @@ Stage.prototype = {
 		game.input.onDown.add(gofull, this);
 		
 
-		if (contentNum == 10) {
+		if (contentNum%2 == 0) {
 			stageBGM = game.add.audio('stageBGM1');
-			BPM = BPMfactor / 54;
-		}else if (contentNum == 11) {
+			BPM = BPMfactor / 50;
+		}else if (contentNum%2 == 1) {
 			stageBGM = game.add.audio('stageBGM2');
-			BPM = BPMfactor / 70;
+			BPM = BPMfactor / 60;
 		}
 
 		//여기에 BPM 값을 넣는다 

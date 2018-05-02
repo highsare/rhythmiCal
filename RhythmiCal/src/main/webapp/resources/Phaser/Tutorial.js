@@ -141,8 +141,6 @@ Tutorial.prototype = {
 	 * preload()
 	 */
 	preload: function() {
-		// debug
-		game.load.image('arrow', 'assets/sprites/arrow.png');
 		// load background image
 		game.load.image('background','resources/Images/tutorial/tutorial.png');
 		// load bitmapFont
@@ -159,17 +157,6 @@ Tutorial.prototype = {
 		// 전체화면 적용
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 		game.input.onDown.add(gofull, this);
-		
-		// debug
-		game.physics.startSystem(Phaser.Physics.ARCADE);
-	    sprite = game.add.sprite(400, 300, 'arrow');
-	    sprite.anchor.setTo(0.5, 0.5);
-	    game.physics.enable(sprite, Phaser.Physics.ARCADE);
-	    sprite.body.allowRotation = false;
-		// create leftKey, rightKey
-		leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-		rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		
 		// 튜토리얼 객체 생성
 		this.createTutorialText();
 		// 튜토리얼임을 안내
@@ -184,8 +171,6 @@ Tutorial.prototype = {
 	 * update()
 	 */
 	update: function() {
-		// debug
-		sprite.rotation = game.physics.arcade.moveToPointer(sprite, 60, game.input.activePointer, 500);
 		tutoCnt++;
 		if (tutoCnt % 6 == 0) {
 			$.ajax({
@@ -212,10 +197,6 @@ Tutorial.prototype = {
 			});
 			tutoCnt = 0;
 		}
-	},
-	render: function() {
-		// debug
-	    game.debug.spriteInfo(sprite, 32, 32);
 	}
 }
 
@@ -277,9 +258,21 @@ function showTutorialText(tutorialTextIndex) {
 	// 텍스트
 	if (typeof typewriter !== "undefined") {typewriter.destroy();}
 	if (tutorialTextArray[tutorialTextIndex].dialogY == 650) {textY = 675;} else textY = 55; //다이얼로그가 아래면 텍스트도 아래, 위면 위
-	typeWriterFunction(tutorialTextArray[tutorialTextIndex].text, 80, textY, 30);
+	//일본어 일때 바꾸기
+	if(language != "JAPANESE"){
+		typeWriterFunction(tutorialTextArray[tutorialTextIndex].text, 80, textY, 30);
+		}else{
+			//일본어 아닐때는 그냥 비트맵쓰는 메소드로 올림
+			japanese(name + " : "+ arr[storyOrder].content + "  >>");
+		}
 }
+//일본어 비트맵 아닌 일반폰트로 나오게하는 메소드
+function japanese(txtjp){
+	var style = { font: "16px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: 1400 };
 
+	    textjp = game.add.text(80, textY, txtjp, style);
+
+}
 function gofull() {
 	if (game.scale.isFullScreen) {
 		game.scale.stopFullScreen();
