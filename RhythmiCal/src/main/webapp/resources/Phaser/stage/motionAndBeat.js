@@ -110,13 +110,19 @@ function motionEvent(player,motion){
 	switch(motion){
 	case "POINT"://데미지 3
 		if (point_isA) {
-			attackLine(monstersA, 3);
+			attackLine(monstersA, 1);
+			attackLine(monstersA, 1);
+			attackLine(monstersA, 1);
 			playAttackEffect(310, 140, 'PointEffect');			
 		}else if (point_isB) {
-			attackLine(monstersB, 3);			
+			attackLine(monstersB, 1);
+			attackLine(monstersB, 1);
+			attackLine(monstersB, 1);
 			playAttackEffect(280, 340, 'PointEffect');
 		}else if (point_isC) {
-			attackLine(monstersC, 3);			
+			attackLine(monstersC, 1);
+			attackLine(monstersC, 1);
+			attackLine(monstersC, 1);
 			playAttackEffect(250, 540, 'PointEffect');	
 		}
 		break;

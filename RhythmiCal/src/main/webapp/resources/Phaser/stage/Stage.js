@@ -84,8 +84,8 @@ Stage.prototype = {
 		game.load.image('stageBG','resources/Images/stage/' + bgImgName);
 		//스테이지 BGM 로드
 
-		game.load.audio('stageBGM1','resources/Audios/bgm/stage/bgm_cubiz_54bpm.mp3');	
-		game.load.audio('stageBGM2','resources/Audios/bgm/stage/bgm_newtires_70bpm.mp3');
+		game.load.audio('stageBGM1','resources/Audios/bgm/stage/bgm_stage_cubicz_54bpm.mp3');	
+		game.load.audio('stageBGM2','resources/Audios/bgm/stage/bgm_stage_newtires_70bpm.mp3');
 
 		//몬스터 로드
 		game.load.spritesheet('Goblin', 'resources/Images/characters/monsters/26x32x6_Goblin.png', 26, 32, 6);
@@ -243,12 +243,15 @@ Stage.prototype = {
 		//Monster(game, attackLine, speed, monsterName, appearanceBeat)
 		for (var i = 0; i < monsterlistA.length; i++) {
 			monstersA[i] = new Monster(game, monsterlistA[i].monsterNum, monsterlistA[i].attackline, monsterlistA[i].speed, monsterlistA[i].monsterName, monsterlistA[i].appearanceBeat, monsterlistA[i].health);
+			monstersA[i].status = "STAY";
 		}
 		for (var i = 0; i < monsterlistB.length; i++) {
 			monstersB[i] = new Monster(game, monsterlistB[i].monsterNum, monsterlistB[i].attackline, monsterlistB[i].speed, monsterlistB[i].monsterName, monsterlistB[i].appearanceBeat, monsterlistB[i].health);
+			monstersB[i].status = "STAY";
 		}
 		for (var i = 0; i < monsterlistC.length; i++) {
 			monstersC[i] = new Monster(game, monsterlistC[i].monsterNum, monsterlistC[i].attackline, monsterlistC[i].speed, monsterlistC[i].monsterName, monsterlistC[i].appearanceBeat, monsterlistC[i].health);
+			monstersC[i].status = "STAY";
 		}
 		
 		//Boss(game, health, bossSpriteName, bossSpriteSplitNum)
@@ -275,6 +278,12 @@ Stage.prototype = {
 		//add 1 currentBeat
 		if (currentBeat == 0) {
 			stageBGM.play();
+		}else if(currentBeat >= 60){
+			if (currentBeat >= 65) {
+				stageBGM.stop();
+			}
+			stageResult(true);
+			return;
 		}
 		currentBeat += 1;
 		console.log(currentBeat);
@@ -284,6 +293,7 @@ Stage.prototype = {
 		//hitBoss(boss, 1);
 		//bossJump();
 		isFail();
+	
 	}
 }
 
